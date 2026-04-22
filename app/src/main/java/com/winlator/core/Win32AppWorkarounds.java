@@ -3,6 +3,7 @@ package com.winlator.core;
 import com.winlator.XServerDisplayActivity;
 import com.winlator.container.Container;
 import com.winlator.container.DXWrappers;
+import com.winlator.winhandler.WinEnums;
 import com.winlator.winhandler.WinHandler;
 import com.winlator.xserver.ScreenInfo;
 import com.winlator.xserver.Window;
@@ -137,7 +138,14 @@ public class Win32AppWorkarounds {
                 ScreenInfo screenInfo = activity.getScreenInfo();
                 return (ScreenSizeWorkaround) () -> (screenInfo.width+4)+"x"+(screenInfo.height+4);
             case "chronocross_launcher.exe":
-                return (WindowWorkaround) (window) -> window.attributes.setTransparent(true);
+                return (WindowWorkaround) (window) -> {
+                    window.attributes.setTransparent(true);
+                    final WinHandler winHandler = activity.getWinHandler();
+                    AppUtils.runDelayed(() -> {
+                        winHandler.showWindow(window.getHandle(), WinEnums.SW_MINIMIZE);
+                        winHandler.showWindow(window.getHandle(), WinEnums.SW_RESTORE);
+                    }, 500);
+                };
             case "dino.exe":
             case "dino2.exe":
             case "bof4.exe":
