@@ -15,10 +15,12 @@
 #define WRITE_FILE(filename, code, sizeInBytes) \
     do { \
         char path[PATH_MAX] = {0}; \
-        sprintf(path, APP_CACHE_DIR "/%s", filename); \
+        snprintf(path, sizeof(path), "%s/%s", getAppCacheDir(), filename); \
         FILE* f = fopen(path, "wb"); \
-        fwrite((const char*)code, 1, sizeInBytes, f); \
-        fclose(f); \
+        if (f) { \
+            fwrite((const char*)code, 1, sizeInBytes, f); \
+            fclose(f); \
+        } \
     } \
     while(0)
 

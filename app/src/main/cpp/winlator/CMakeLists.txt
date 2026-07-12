@@ -7,6 +7,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -Wno-unused-function -Wimplicit-function
 include_directories(include)
 
 add_library(winlator SHARED
+            src/app_paths.c
             src/drawable.c
             src/gpu_image.c
             src/gpu_helper.c

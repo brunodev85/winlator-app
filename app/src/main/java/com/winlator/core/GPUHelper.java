@@ -26,6 +26,10 @@ public abstract class GPUHelper {
         System.loadLibrary("winlator");
     }
 
+    public static void initialize(Context context) {
+        initializeNativePaths(context.getCacheDir().getPath());
+    }
+
     private static ArrayMap<String, String> loadGPUInformation(Context context) {
         final Thread thread = Thread.currentThread();
         final ArrayMap<String, String> gpuInfo = new ArrayMap<>();
@@ -155,6 +159,8 @@ public abstract class GPUHelper {
     }
 
     public static native String[] vkGetDeviceExtensions();
+
+    private static native void initializeNativePaths(String cacheDir);
 
     @CriticalNative
     public static native int vkGetApiVersion();

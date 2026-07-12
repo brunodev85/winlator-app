@@ -3,6 +3,7 @@ package com.winlator.xenvironment.components;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Process;
+import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 
@@ -15,6 +16,7 @@ import com.winlator.core.FileUtils;
 import com.winlator.core.GeneralComponents;
 import com.winlator.core.LocaleHelper;
 import com.winlator.core.ProcessHelper;
+import com.winlator.core.ProfilePathRelocator;
 import com.winlator.widget.LogView;
 import com.winlator.xconnector.UnixSocketConfig;
 import com.winlator.xenvironment.EnvironmentComponent;
@@ -24,6 +26,7 @@ import java.io.File;
 import java.util.List;
 
 public class GuestProgramLauncherComponent extends EnvironmentComponent {
+    private static final String TAG = "GuestProgramLauncher";
     private String guestExecutable;
     private static int pid = -1;
     private EnvVars envVars;
@@ -35,9 +38,13 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
     public void start() {
         synchronized (lock) {
             stop();
-            extractBox64File();
+            if (!prepareBox64()) {
+                if (terminationCallback != null) terminationCallback.call(-1);
+                return;
+            }
             copyDefaultBox64RCFile();
             pid = execGuestProgram();
+            if (pid == -1 && terminationCallback != null) terminationCallback.call(-1);
         }
     }
 
@@ -86,6 +93,12 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
     private int execGuestProgram() {
         RootFS rootFS = environment.getRootFS();
         File rootDir = rootFS.getRootDir();
+        Context context = environment.getContext();
+        String box64Version = getBox64Version(context);
+        if (box64Version.equals(DefaultVersion.BOX64) && !ProfilePathRelocator.ensureRootAlias(rootDir)) {
+            Log.e(TAG, "Stable rootfs alias is unavailable");
+            return -1;
+        }
 
         EnvVars envVars = new EnvVars();
         addBox64EnvVars(envVars);
@@ -96,16 +109,22 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
         envVars.put("TMPDIR", rootDir+"/tmp");
         envVars.put("DISPLAY", ":0");
         envVars.put("PATH", rootDir+rootFS.getWinePath()+"/bin:"+rootDir+"/usr/local/bin:"+rootDir+"/usr/bin");
-        envVars.put("LD_LIBRARY_PATH", rootFS.getLibDir().getPath());
+        if (box64Version.equals(DefaultVersion.BOX64)) {
+            envVars.put("LD_LIBRARY_PATH", "/system/lib64:"+context.getApplicationInfo().nativeLibraryDir);
+        }
+        else {
+            envVars.put("LD_LIBRARY_PATH", rootFS.getLibDir().getPath());
+        }
         envVars.put("BOX64_LD_LIBRARY_PATH", rootDir+"/lib/x86_64-linux-gnu");
         envVars.put("ANDROID_SYSVSHM_SERVER", rootDir+UnixSocketConfig.SYSVSHM_SERVER_PATH);
+        envVars.put("WINLATOR_ROOTFS", rootDir);
 
         if (this.envVars != null) envVars.putAll(this.envVars);
 
         File shmDir = new File(rootDir, "/tmp/shm");
         if (!shmDir.isDirectory()) shmDir.mkdirs();
 
-        String command = rootDir+"/usr/local/bin/box64 "+guestExecutable;
+        String command = getBox64Executable(context, box64Version)+" "+guestExecutable;
 
         return ProcessHelper.exec(command, envVars, rootDir, (status) -> {
             synchronized (lock) {
@@ -115,16 +134,38 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
         });
     }
 
-    private void extractBox64File() {
+    private boolean prepareBox64() {
         Context context = environment.getContext();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String box64Version = preferences.getString("box64_version", DefaultVersion.BOX64);
+        String box64Version = getBox64Version(context);
         String currentBox64Version = preferences.getString("current_box64_version", "");
+
+        if (box64Version.equals(DefaultVersion.BOX64)) {
+            File nativeLibraryDir = new File(context.getApplicationInfo().nativeLibraryDir);
+            boolean complete = new File(nativeLibraryDir, "libbox64launcher.so").isFile()
+                && new File(nativeLibraryDir, "libbox64.so").isFile()
+                && new File(nativeLibraryDir, "libglibcloader.so").isFile();
+            if (!complete) Log.e(TAG, "Packaged Box64 runtime is incomplete");
+            return complete;
+        }
 
         if (!box64Version.equals(currentBox64Version)) {
             GeneralComponents.extractFile(GeneralComponents.Type.BOX64, context, box64Version, DefaultVersion.BOX64);
             preferences.edit().putString("current_box64_version", box64Version).apply();
         }
+        return true;
+    }
+
+    private String getBox64Version(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString("box64_version", DefaultVersion.BOX64);
+    }
+
+    private File getBox64Executable(Context context, String box64Version) {
+        if (box64Version.equals(DefaultVersion.BOX64)) {
+            return new File(context.getApplicationInfo().nativeLibraryDir, "libbox64launcher.so");
+        }
+        return new File(environment.getRootFS().getRootDir(), "/usr/local/bin/box64");
     }
 
     private void copyDefaultBox64RCFile() {

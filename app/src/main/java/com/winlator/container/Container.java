@@ -1,5 +1,7 @@
 package com.winlator.container;
 
+import android.content.Context;
+
 import com.winlator.box64.Box64Preset;
 import com.winlator.core.AppUtils;
 import com.winlator.core.EnvVars;
@@ -23,7 +25,7 @@ public class Container {
     public static final String DEFAULT_DXWRAPPER = DXWrappers.DXVK;
     public static final String DEFAULT_WINCOMPONENTS = "direct3d=1,directsound=1,directmusic=1,directshow=0,directplay=0,xaudio=1,vcrun2005=0,vcrun2010=1,wmdecoder=1";
     public static final String FALLBACK_WINCOMPONENTS = "direct3d=0,directsound=0,directmusic=0,directshow=0,directplay=0,xaudio=0,vcrun2005=0,vcrun2010=0,wmdecoder=0";
-    public static final String DEFAULT_DRIVES = "D:"+AppUtils.DIRECTORY_DOWNLOADS +"E:"+AppUtils.INTERNAL_STORAGE;
+    public static final String DEFAULT_DRIVES = "D:"+AppUtils.DIRECTORY_DOWNLOADS;
     public static final byte STARTUP_SELECTION_NORMAL = 0;
     public static final byte STARTUP_SELECTION_ESSENTIAL = 1;
     public static final byte STARTUP_SELECTION_AGGRESSIVE = 2;
@@ -53,6 +55,15 @@ public class Container {
     public Container(int id) {
         this.id = id;
         this.name = "Container-"+id;
+    }
+
+    public Container(Context context, int id) {
+        this(id);
+        drives = getDefaultDrives(context);
+    }
+
+    public static String getDefaultDrives(Context context) {
+        return DEFAULT_DRIVES+"E:"+AppUtils.getInternalStorage(context);
     }
 
     public String getName() {

@@ -13,6 +13,7 @@ import com.winlator.core.AppUtils;
 import com.winlator.core.DownloadProgressDialog;
 import com.winlator.core.FileUtils;
 import com.winlator.core.PreloaderDialog;
+import com.winlator.core.ProfilePathRelocator;
 import com.winlator.core.TarCompressorUtils;
 import com.winlator.core.WineInfo;
 
@@ -26,7 +27,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class RootFSInstaller {
-    public static final byte LATEST_VERSION = 19; // TODO increment it on rootfs update
+    public static final byte LATEST_VERSION = 20; // Profile-safe rootfs paths
     public static final byte UPDATE_WINEPREFIX_VERSION = 16; // set it if main wine version change
     public static final String FILENAME = "rootfs.tzst";
 
@@ -55,10 +56,11 @@ public abstract class RootFSInstaller {
         dialog.show(R.string.installing_system_files);
         Executors.newSingleThreadExecutor().execute(() -> {
             clearRootDir(rootDir);
+            boolean aliasReady = ProfilePathRelocator.ensureRootAlias(rootDir);
             final long contentLength = TarCompressorUtils.getContentLength(TarCompressorUtils.Type.ZSTD, activity, FILENAME, rootDir);
             AtomicLong totalSizeRef = new AtomicLong();
 
-            boolean success = TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, activity, FILENAME, rootDir, (file, size) -> {
+            boolean success = aliasReady && TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, activity, FILENAME, rootDir, (file, size) -> {
                 if (size > 0) {
                     long totalSize = totalSizeRef.addAndGet(size);
                     final int progress = (int)(((float)totalSize / contentLength) * 100);
@@ -67,7 +69,8 @@ public abstract class RootFSInstaller {
                 return file;
             });
 
-            if (success) {
+            File installedWineDir = new File(rootDir, "opt/installed-wine");
+            if (success && ProfilePathRelocator.relocateTree(installedWineDir)) {
                 rootFS.createRFSVersionFile(LATEST_VERSION);
                 resetContainerRFSVersions(activity);
             }

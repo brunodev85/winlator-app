@@ -2,6 +2,7 @@ package com.winlator.core;
 
 import android.os.Process;
 import android.system.Os;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -23,6 +24,7 @@ import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 
 public abstract class ProcessHelper {
+    private static final String TAG = "ProcessHelper";
     public enum PState {RUNNING, SLEEPING, WAITING, ZOMBIE, STOPPED, DEAD, OTHER}
     private static final ArrayList<Callback<String>> debugCallbacks = new ArrayList<>();
     private static final byte SIGCONT = 18;
@@ -69,7 +71,9 @@ public abstract class ProcessHelper {
             if (debugCallbacks.isEmpty()) processBuilder.redirectOutput(new File("/dev/null")).redirectErrorStream(true);
 
             Map<String, String> environment = processBuilder.environment();
-            for (String name : envVars) environment.put(name, envVars.get(name));
+            if (envVars != null) {
+                for (String name : envVars) environment.put(name, envVars.get(name));
+            }
 
             java.lang.Process process = processBuilder.start();
             Field pidField = process.getClass().getDeclaredField("pid");
@@ -84,7 +88,9 @@ public abstract class ProcessHelper {
 
             if (terminationCallback != null) createWaitForThread(process, terminationCallback);
         }
-        catch (Exception e) {}
+        catch (Exception e) {
+            Log.e(TAG, "Failed to start process: "+command, e);
+        }
         return pid;
     }
 
@@ -101,7 +107,9 @@ public abstract class ProcessHelper {
                     }
                 }
             }
-            catch (IOException e) {}
+            catch (IOException e) {
+                Log.e(TAG, "Failed to read process output", e);
+            }
         });
     }
 
@@ -111,7 +119,10 @@ public abstract class ProcessHelper {
                 int status = process.waitFor();
                 terminationCallback.call(status);
             }
-            catch (InterruptedException e) {}
+            catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                Log.e(TAG, "Interrupted while waiting for process", e);
+            }
         });
     }
 
