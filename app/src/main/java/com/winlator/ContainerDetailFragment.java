@@ -461,7 +461,7 @@ public class ContainerDetailFragment extends Fragment {
         final LinearLayout parent = view.findViewById(R.id.LLDrives);
         final View emptyTextView = view.findViewById(R.id.TVDrivesEmptyText);
         LayoutInflater inflater = LayoutInflater.from(context);
-        final String drives = isEditMode() ? container.getDrives() : Container.DEFAULT_DRIVES;
+        final String drives = isEditMode() ? container.getDrives() : Container.getDefaultDrives(context);
         final String[] driveLetters = new String[Container.MAX_DRIVE_LETTERS];
         for (int i = 0; i < driveLetters.length; i++) driveLetters[i] = ((char)(i + 68))+":";
 
@@ -525,8 +525,8 @@ public class ContainerDetailFragment extends Fragment {
                     editText.setText(AppUtils.DIRECTORY_DOWNLOADS);
                     break;
                 case R.id.menu_item_internal_storage:
-                    drive.path = AppUtils.INTERNAL_STORAGE;
-                    editText.setText(AppUtils.INTERNAL_STORAGE);
+                    drive.path = AppUtils.getInternalStorage(activity);
+                    editText.setText(drive.path);
                     break;
                 default:
                     Container container = manager.getContainerById(menuItem.getOrder());

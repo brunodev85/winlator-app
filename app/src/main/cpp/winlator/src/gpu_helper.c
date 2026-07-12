@@ -14,6 +14,13 @@
 
 EGLContext globalEGLContext = EGL_NO_CONTEXT;
 
+JNIEXPORT void JNICALL
+Java_com_winlator_core_GPUHelper_initializeNativePaths(JNIEnv *env, jclass obj, jstring cacheDir) {
+    const char* cacheDirC = (*env)->GetStringUTFChars(env, cacheDir, NULL);
+    setAppCacheDir(cacheDirC);
+    (*env)->ReleaseStringUTFChars(env, cacheDir, cacheDirC);
+}
+
 JNIEXPORT jobjectArray JNICALL
 Java_com_winlator_core_GPUHelper_vkGetDeviceExtensions(JNIEnv *env, jclass obj) {
     VkInstanceCreateInfo createInfo = {0};
@@ -64,7 +71,10 @@ done:
 JNIEXPORT jint JNICALL
 Java_com_winlator_core_GPUHelper_vkGetApiVersion() {
     int version = 0;
-    char* content = fileGetContents(APP_CACHE_DIR "/.vk-api-version", NULL, NULL);
+    char cacheFile[PATH_MAX] = {0};
+    snprintf(cacheFile, sizeof(cacheFile), "%s/.vk-api-version", getAppCacheDir());
+
+    char* content = fileGetContents(cacheFile, NULL, NULL);
     if (content) {
         version = strtol(content, NULL, 10);
         MEMFREE(content);
@@ -116,7 +126,7 @@ Java_com_winlator_core_GPUHelper_vkGetApiVersion() {
 
     char value[32] = {0};
     sprintf(value, "%d", version);
-    filePutContents(APP_CACHE_DIR "/.vk-api-version", value, strlen(value));
+    filePutContents(cacheFile, value, strlen(value));
 
 done:
     if (instance) vkDestroyInstance(instance, NULL);

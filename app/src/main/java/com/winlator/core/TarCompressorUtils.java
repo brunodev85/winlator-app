@@ -147,6 +147,7 @@ public abstract class TarCompressorUtils {
 
     private static boolean extract(Type type, InputStream source, File destination, OnExtractFileListener onExtractFileListener) {
         if (source == null) return false;
+        boolean relocateProfilePaths = ProfilePathRelocator.shouldRelocate(destination);
         try (InputStream inStream = getCompressorInputStream(type, source);
              ArchiveInputStream tar = new TarArchiveInputStream(inStream)) {
             TarArchiveEntry entry;
@@ -164,12 +165,16 @@ public abstract class TarCompressorUtils {
                 }
                 else {
                     if (entry.isSymbolicLink()) {
-                        FileUtils.symlink(entry.getLinkName(), file.getAbsolutePath());
+                        String linkName = relocateProfilePaths
+                            ? ProfilePathRelocator.relocatePath(entry.getLinkName(), destination)
+                            : entry.getLinkName();
+                        FileUtils.symlink(linkName, file.getAbsolutePath());
                     }
                     else {
                         try (BufferedOutputStream outStream = new BufferedOutputStream(new FileOutputStream(file), StreamUtils.BUFFER_SIZE)) {
                             if (!StreamUtils.copy(tar, outStream)) return false;
                         }
+                        if (relocateProfilePaths && !ProfilePathRelocator.relocateFile(file)) return false;
                     }
                 }
 

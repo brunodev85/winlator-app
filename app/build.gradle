@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+import com.github.luben.zstd.ZstdInputStream
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
+
+def secureFolderJniDir = file("$buildDir/generated/secureFolderJni")
+
 android {
     compileSdk 34
 
@@ -9,6 +14,10 @@ android {
         targetSdkVersion 28
         versionCode 28
         versionName "11.1"
+
+        ndk {
+            abiFilters 'arm64-v8a'
+        }
     }
 
     buildTypes {
@@ -16,10 +25,38 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            ndk {
-                abiFilters 'arm64-v8a'
-            }
         }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDir secureFolderJniDir
+        }
+    }
+
+    packagingOptions {
+        doNotStrip '**/libbox64.so'
+        doNotStrip '**/libbox64launcher.so'
+        doNotStrip '**/libglibcloader.so'
+        pickFirst '**/libc++_shared.so'
+        pickFirst '**/libFLAC.so'
+        pickFirst '**/libfluidsynth.so'
+        pickFirst '**/libfluidsynth-assetloader.so'
+        pickFirst '**/libgio-2.0.so'
+        pickFirst '**/libglib-2.0.so'
+        pickFirst '**/libgmodule-2.0.so'
+        pickFirst '**/libgobject-2.0.so'
+        pickFirst '**/libgthread-2.0.so'
+        pickFirst '**/libinstpatch-1.0.so'
+        pickFirst '**/liboboe.so'
+        pickFirst '**/libogg.so'
+        pickFirst '**/libopus.so'
+        pickFirst '**/libpcre.so'
+        pickFirst '**/libpcreposix.so'
+        pickFirst '**/libsndfile.so'
+        pickFirst '**/libvorbis.so'
+        pickFirst '**/libvorbisenc.so'
+        pickFirst '**/libvorbisfile.so'
     }
 
     lintOptions {
@@ -34,6 +71,69 @@ android {
             path 'src/main/cpp/CMakeLists.txt'
         }
     }
+}
+
+def extractTarEntry = { File archive, String entryName, File output ->
+    output.parentFile.mkdirs()
+    def found = false
+    archive.withInputStream { fileInput ->
+        new ZstdInputStream(fileInput).withCloseable { zstdInput ->
+            new TarArchiveInputStream(zstdInput).withCloseable { tarInput ->
+                def entry
+                while ((entry = tarInput.nextTarEntry) != null) {
+                    if (entry.name.replaceFirst('^\\./', '') == entryName) {
+                        output.withOutputStream { tarInput.transferTo(it) }
+                        found = true
+                        break
+                    }
+                }
+            }
+        }
+    }
+    if (!found) throw new GradleException("Missing $entryName in $archive")
+}
+
+tasks.register('generateSecureFolderRuntime') {
+    def box64Archive = file('src/main/assets/box64/box64-0.4.0.tzst')
+    def rootfsArchive = file('src/main/assets/rootfs.tzst')
+    def launcherSource = file('src/main/cpp/box64launcher/box64_launcher.c')
+    def outputDir = file("$secureFolderJniDir/arm64-v8a")
+    def box64Output = file("$outputDir/libbox64.so")
+    def loaderOutput = file("$outputDir/libglibcloader.so")
+    def launcherOutput = file("$outputDir/libbox64launcher.so")
+
+    inputs.files(box64Archive, rootfsArchive, launcherSource)
+    outputs.files(box64Output, loaderOutput, launcherOutput)
+
+    doLast {
+        delete outputDir
+        extractTarEntry(box64Archive, 'usr/local/bin/box64', box64Output)
+        extractTarEntry(rootfsArchive, 'usr/lib/ld-linux-aarch64.so.1', loaderOutput)
+
+        def hostTag
+        def osName = System.getProperty('os.name').toLowerCase(Locale.ROOT)
+        if (osName.contains('windows')) hostTag = 'windows-x86_64'
+        else if (osName.contains('mac')) hostTag = 'darwin-x86_64'
+        else hostTag = 'linux-x86_64'
+
+        def compilerName = osName.contains('windows')
+            ? 'aarch64-linux-android26-clang.cmd'
+            : 'aarch64-linux-android26-clang'
+        def compiler = new File(
+            android.ndkDirectory,
+            "toolchains/llvm/prebuilt/$hostTag/bin/$compilerName"
+        )
+        if (!compiler.isFile()) throw new GradleException("Android NDK compiler not found: $compiler")
+
+        exec {
+            commandLine compiler, '-O2', '-Wall', '-Wextra', '-Werror',
+                '-fPIE', '-pie', launcherSource, '-o', launcherOutput
+        }
+    }
+}
+
+tasks.named('preBuild').configure {
+    dependsOn tasks.named('generateSecureFolderRuntime')
 }
 
 dependencies {

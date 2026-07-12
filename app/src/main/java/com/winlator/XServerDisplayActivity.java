@@ -48,6 +48,7 @@ import com.winlator.core.DefaultVersion;
 import com.winlator.core.EnvVars;
 import com.winlator.core.FileUtils;
 import com.winlator.core.GeneralComponents;
+import com.winlator.core.GPUHelper;
 import com.winlator.core.KeyValueSet;
 import com.winlator.core.LocaleHelper;
 import com.winlator.core.PreloaderDialog;
@@ -138,6 +139,7 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        GPUHelper.initialize(this);
         AppUtils.setActivityTheme(this);
         super.onCreate(savedInstanceState);
         AppUtils.hideSystemUI(this);
@@ -456,7 +458,7 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
         }
 
         WineStartMenuCreator.create(this, container);
-        WineUtils.createDosdevicesSymlinks(container, true);
+        WineUtils.createDosdevicesSymlinks(this, container, true);
 
         String startupSelection = String.valueOf(container.getStartupSelection());
         if (!startupSelection.equals(container.getExtra("startupSelection")) || wineprefixWasUpdated) {

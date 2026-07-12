@@ -37,6 +37,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.winlator.R;
 import com.winlator.SettingsFragment;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -44,8 +45,14 @@ import java.util.TimerTask;
 
 public abstract class AppUtils {
     public static final String DIRECTORY_DOWNLOADS = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
-    public static final String INTERNAL_STORAGE = "/data/data/com.winlator/storage";
+    public static final String LEGACY_INTERNAL_STORAGE = "/data/data/com.winlator/storage";
     private static WeakReference<Toast> globalToastReference = null;
+
+    public static String getInternalStorage(Context context) {
+        File directory = new File(context.getDataDir(), "storage");
+        if (!directory.isDirectory()) directory.mkdirs();
+        return directory.getPath();
+    }
 
     public static class RestartApplicationOptions {
         public int selectedMenuItemId;

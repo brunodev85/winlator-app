@@ -28,6 +28,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.winlator.contentdialog.AboutDialog;
 import com.winlator.core.AppUtils;
 import com.winlator.core.Callback;
+import com.winlator.core.GPUHelper;
 import com.winlator.core.LocaleHelper;
 import com.winlator.core.PreloaderDialog;
 import com.winlator.xenvironment.RootFSInstaller;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        GPUHelper.initialize(this);
         AppUtils.setActivityTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);

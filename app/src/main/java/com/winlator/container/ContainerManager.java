@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.winlator.R;
+import com.winlator.core.AppUtils;
 import com.winlator.core.Callback;
 import com.winlator.core.FileUtils;
 import com.winlator.core.TarCompressorUtils;
@@ -50,10 +51,16 @@ public class ContainerManager {
                 for (File file : files) {
                     if (file.isDirectory()) {
                         if (file.getName().startsWith(RootFS.USER+"-")) {
-                            Container container = new Container(Integer.parseInt(file.getName().replace(RootFS.USER+"-", "")));
+                            Container container = new Container(context, Integer.parseInt(file.getName().replace(RootFS.USER+"-", "")));
                             container.setRootDir(new File(homeDir, RootFS.USER+"-"+container.id));
                             JSONObject data = new JSONObject(FileUtils.readString(container.getConfigFile()));
                             container.loadData(data);
+                            String drives = container.getDrives();
+                            String migratedDrives = drives.replace(AppUtils.LEGACY_INTERNAL_STORAGE, AppUtils.getInternalStorage(context));
+                            if (!migratedDrives.equals(drives)) {
+                                container.setDrives(migratedDrives);
+                                container.saveData();
+                            }
                             containers.add(container);
                             maxContainerId = Math.max(maxContainerId, container.id);
                         }
@@ -103,7 +110,7 @@ public class ContainerManager {
             File containerDir = new File(homeDir, RootFS.USER+"-"+id);
             if (!containerDir.mkdirs()) return null;
 
-            Container container = new Container(id);
+            Container container = new Container(context, id);
             container.setRootDir(containerDir);
             container.loadData(data);
 
@@ -135,7 +142,7 @@ public class ContainerManager {
             return;
         }
 
-        Container dstContainer = new Container(id);
+        Container dstContainer = new Container(context, id);
         dstContainer.setRootDir(dstDir);
         dstContainer.setName(srcContainer.getName()+" ("+context.getString(R.string.copy)+")");
         dstContainer.setScreenSize(srcContainer.getScreenSize());

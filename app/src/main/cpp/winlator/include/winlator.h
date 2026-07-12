@@ -11,7 +11,6 @@
 #define BITMASK_UNSET(bits, flag) bits &= ~flag
 #define GETEXP(x) (31 - __builtin_clz(x))
 
-#define APP_CACHE_DIR "/data/data/com.winlator/cache"
 #define LIBVULKAN_PATH "/system/lib64/libvulkan.so"
 
 #define CLOSEFD(x) \
@@ -37,6 +36,9 @@
 
 #include <unistd.h>
 #include <syscall.h>
+
+const char* getAppCacheDir();
+void setAppCacheDir(const char* path);
 
 static inline pid_t currentThreadId() {
 #ifdef __ANDROID__
