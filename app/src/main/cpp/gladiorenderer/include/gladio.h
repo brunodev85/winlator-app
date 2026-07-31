@@ -12,6 +12,8 @@
 #define CLIENT_RING_BUFFER_SIZE 33554432
 #define THREAD_POOL_NUM_THREADS 4
 #define PIXEL_READ_CACHE_SKIP_FRAMES 3
+// Compiled into the rootfs-side libGL; ProfilePathRelocator rewrites this fixed path per profile.
+#define X11_SERVER_PATH "/data/data/com.winlator/files/rootfs/tmp/.X11-unix/X0"
 #define GL_STRING_VERSION "3.3"
 #define GL_STRING_RENDERER "Gladio"
 #define GL_STRING_SHADING_LANGUAGE_VERSION "3.30"
