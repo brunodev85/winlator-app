@@ -4,7 +4,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.text.InputType;
 import android.view.InputDevice;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.FrameLayout;
 import com.winlator.core.AppUtils;
 import com.winlator.math.Mathf;
 import com.winlator.math.XForm;
+import com.winlator.renderer.GLRenderer;
 import com.winlator.renderer.ViewTransformation;
 import com.winlator.winhandler.MouseEventFlags;
 import com.winlator.winhandler.WinHandler;
@@ -40,6 +44,9 @@ public class TouchpadView extends View implements View.OnCapturedPointerListener
     private final XServer xServer;
     private Runnable fourFingersTapCallback;
     private final float[] xform = XForm.getInstance();
+    private StylusInputHandler stylusInputHandler;
+    private boolean softKeyboardVisible = false;
+    private boolean stylusScreenModeActive = false;
 
     public TouchpadView(Context context, XServer xServer, boolean capturePointerOnExternalMouse) {
         super(context);
@@ -55,6 +62,19 @@ public class TouchpadView extends View implements View.OnCapturedPointerListener
             setOnCapturedPointerListener(this);
             setOnClickListener(view -> requestPointerCapture());
         }
+    }
+
+    @Override
+    public boolean onCheckIsTextEditor() {
+        return true;
+    }
+
+    @Override
+    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+        outAttrs.inputType = InputType.TYPE_NULL;
+        outAttrs.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NONE;
+
+        return new XServerInputConnection(this, xServer);
     }
 
     private static StateListDrawable createTransparentBackground() {
@@ -136,6 +156,17 @@ public class TouchpadView extends View implements View.OnCapturedPointerListener
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (stylusInputHandler != null && StylusInputHandler.isStylusEvent(event)) {
+            boolean handled = stylusInputHandler.onTouchEvent(event);
+            if (handled) {
+                setStylusScreenModeActive(event.getActionMasked() != MotionEvent.ACTION_CANCEL);
+                return true;
+            }
+        }
+        else if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+            setStylusScreenModeActive(false);
+        }
+
         int actionIndex = event.getActionIndex();
         int pointerId = event.getPointerId(actionIndex);
         int actionMasked = event.getActionMasked();
@@ -353,6 +384,48 @@ public class TouchpadView extends View implements View.OnCapturedPointerListener
         this.moveCursorToTouchpoint = moveCursorToTouchpoint;
     }
 
+    public void setStylusConfig(StylusConfig config) {
+        cancelStylusInput();
+
+        stylusInputHandler = (config != null)
+                    ? new StylusInputHandler(this, xServer, xform, config)
+                    : null;
+    }
+
+    public boolean onStylusGenericMotionEvent(MotionEvent event) {
+        if (stylusInputHandler == null || !StylusInputHandler.isStylusEvent(event))
+            return false;
+
+        boolean handled = stylusInputHandler.onGenericMotionEvent(event);
+        if (!handled)
+            return false;
+
+        int action = event.getActionMasked();
+
+        if (action == MotionEvent.ACTION_HOVER_ENTER || action == MotionEvent.ACTION_HOVER_MOVE) {
+            setStylusScreenModeActive(true);
+        }
+        else if (action == MotionEvent.ACTION_HOVER_EXIT && !softKeyboardVisible) {
+            setStylusScreenModeActive(false);
+        }
+
+        return true;
+    }
+
+    public void cancelStylusInput() {
+        if (stylusInputHandler != null)
+            stylusInputHandler.cancel();
+
+        stylusScreenModeActive = false;
+        updateScreenOffset();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        cancelStylusInput();
+        super.onDetachedFromWindow();
+    }
+
     public boolean onExternalMouseEvent(MotionEvent event) {
         boolean handled = false;
         if (isEnabled() && event.isFromSource(InputDevice.SOURCE_MOUSE)) {
@@ -429,6 +502,57 @@ public class TouchpadView extends View implements View.OnCapturedPointerListener
         else {
             event.setSource(event.getSource() | InputDevice.SOURCE_MOUSE);
             return onExternalMouseEvent(event);
+        }
+    }
+
+    public void setSoftKeyboardVisible(boolean visible) {
+        softKeyboardVisible = visible;
+
+        if (stylusInputHandler != null)
+            stylusInputHandler.setSoftKeyboardVisible(visible);
+
+        if (!visible) {
+            stylusScreenModeActive = false;
+
+            if (isFocusableInTouchMode()) {
+                clearFocus();
+                setFocusableInTouchMode(false);
+            }
+        }
+
+        updateScreenOffset();
+    }
+
+    private void setStylusScreenModeActive(boolean active) {
+        if (stylusScreenModeActive == active)
+            return;
+
+        stylusScreenModeActive = active;
+        updateScreenOffset();
+    }
+
+    private void updateScreenOffset() {
+        GLRenderer renderer = xServer.getRenderer();
+        if (renderer == null)
+            return;
+
+        if (!softKeyboardVisible) {
+            renderer.setManualScreenOffsetYEnabled(false);
+            renderer.setScreenOffsetYRelativeToCursor(false);
+            return;
+        }
+
+        if (stylusScreenModeActive) {
+            if (!renderer.isManualScreenOffsetYEnabled()) {
+                renderer.setManualScreenOffsetY(renderer.getCurrentScreenOffsetY());
+                renderer.setManualScreenOffsetYEnabled(true);
+            }
+
+            renderer.setScreenOffsetYRelativeToCursor(false);
+        }
+        else {
+            renderer.setManualScreenOffsetYEnabled(false);
+            renderer.setScreenOffsetYRelativeToCursor(true);
         }
     }
 }

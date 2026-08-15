@@ -58,6 +58,8 @@ public class GLRenderer implements GLSurfaceView.Renderer, WindowManager.OnWindo
     private int cursorBackColor = 0xffffff;
     private int cursorForeColor = 0x000000;
     private boolean screenOffsetYRelativeToCursor = false;
+    private boolean manualScreenOffsetYEnabled = false;
+    private float manualScreenOffsetY = 0.0f;
     private float magnifierZoom = 1.0f;
     protected short surfaceWidth;
     protected short surfaceHeight;
@@ -129,13 +131,16 @@ public class GLRenderer implements GLSurfaceView.Renderer, WindowManager.OnWindo
 
         float pointerX = 0;
         float pointerY = 0;
-        float magnifierZoom = !screenOffsetYRelativeToCursor ? this.magnifierZoom : 1.0f;
+        boolean hasScreenOffset = screenOffsetYRelativeToCursor || manualScreenOffsetYEnabled;
+        float magnifierZoom = !hasScreenOffset ? this.magnifierZoom : 1.0f;
 
         if (magnifierZoom != 1.0f) {
             pointerX = Mathf.clamp(xServer.pointer.getX() * magnifierZoom - xServer.screenInfo.width * 0.5f, 0, xServer.screenInfo.width * Math.abs(1.0f - magnifierZoom));
         }
 
-        if (screenOffsetYRelativeToCursor || magnifierZoom != 1.0f) {
+        if (manualScreenOffsetYEnabled) {
+            pointerY = Mathf.clamp(manualScreenOffsetY, 0, xServer.screenInfo.height * 0.5f);
+        } else if (screenOffsetYRelativeToCursor || magnifierZoom != 1.0f) {
             float scaleY = magnifierZoom != 1.0f ? Math.abs(1.0f - magnifierZoom) : 0.5f;
             float offsetY = xServer.screenInfo.height * (screenOffsetYRelativeToCursor ? 0.25f : 0.5f);
             pointerY = Mathf.clamp(xServer.pointer.getY() * magnifierZoom - offsetY, 0, xServer.screenInfo.height * scaleY);
@@ -379,6 +384,35 @@ public class GLRenderer implements GLSurfaceView.Renderer, WindowManager.OnWindo
 
     public void setScreenOffsetYRelativeToCursor(boolean screenOffsetYRelativeToCursor) {
         this.screenOffsetYRelativeToCursor = screenOffsetYRelativeToCursor;
+        xServerView.requestRender();
+    }
+
+    public float getCurrentScreenOffsetY() {
+        if (manualScreenOffsetYEnabled)
+            return manualScreenOffsetY;
+
+        if (screenOffsetYRelativeToCursor) {
+            return Mathf.clamp(xServer.pointer.getY() - xServer.screenInfo.height * 0.25f, 0, xServer.screenInfo.height * 0.5f);
+        }
+
+        return 0.0f;
+    }
+
+    public boolean isManualScreenOffsetYEnabled() {
+        return manualScreenOffsetYEnabled;
+    }
+
+    public float getManualScreenOffsetY() {
+        return manualScreenOffsetY;
+    }
+
+    public void setManualScreenOffsetY(float offsetY) {
+        manualScreenOffsetY = Mathf.clamp(offsetY, 0, xServer.screenInfo.height * 0.5f);
+        xServerView.requestRender();
+    }
+
+    public void setManualScreenOffsetYEnabled(boolean enabled) {
+        manualScreenOffsetYEnabled = enabled;
         xServerView.requestRender();
     }
 
