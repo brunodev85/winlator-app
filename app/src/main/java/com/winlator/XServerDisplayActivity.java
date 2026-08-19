@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -69,6 +70,7 @@ import com.winlator.renderer.GLRenderer;
 import com.winlator.widget.FrameRating;
 import com.winlator.widget.InputControlsView;
 import com.winlator.widget.MagnifierView;
+import com.winlator.widget.StylusConfig;
 import com.winlator.widget.TouchpadView;
 import com.winlator.widget.XServerView;
 import com.winlator.winhandler.TaskManagerDialog;
@@ -317,6 +319,9 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
 
     @Override
     public void onPause() {
+        if (touchpadView != null) {
+            touchpadView.cancelStylusInput();
+        }
         super.onPause();
         if (environment != null && !isInPictureInPictureMode()) {
             environment.onPause();
@@ -346,6 +351,10 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
         final GLRenderer renderer = xServerView.getRenderer();
         switch (item.getItemId()) {
             case R.id.menu_item_keyboard:
+                touchpadView.setFocusableInTouchMode(true);
+                touchpadView.requestFocus();
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.restartInput(touchpadView);
                 AppUtils.showKeyboard(this);
                 drawerLayout.closeDrawers();
                 break;
@@ -579,6 +588,12 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
         touchpadView = new TouchpadView(this, xServer, capturePointerOnExternalMouse);
         touchpadView.setSensitivity(globalCursorSpeed);
         touchpadView.setMoveCursorToTouchpoint(preferences.getBoolean("move_cursor_to_touchpoint", false));
+        if (!isGenerateWineprefix()) {
+            File userRegFile = new File(rootFS.getRootDir(),RootFS.WINEPREFIX + "/user.reg");
+            touchpadView.setStylusConfig(StylusConfig.load(userRegFile));
+        } else {
+            touchpadView.setStylusConfig(StylusConfig.disabled());
+        }
         touchpadView.setFourFingersTapCallback(() -> {
             if (!drawerLayout.isDrawerOpen(GravityCompat.START)) drawerLayout.openDrawer(GravityCompat.START);
         });
@@ -607,7 +622,7 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
         }
 
         if (MainActivity.DEBUG_MODE) rootView.addView(AppUtils.createDebugMsgTextView(this));
-        AppUtils.observeSoftKeyboardVisibility(drawerLayout, renderer::setScreenOffsetYRelativeToCursor);
+        AppUtils.observeSoftKeyboardVisibility(drawerLayout, touchpadView::setSoftKeyboardVisible);
     }
 
     private void showInputControlsDialog() {
@@ -776,6 +791,10 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
 
     @Override
     public boolean dispatchGenericMotionEvent(MotionEvent event) {
+        if (touchpadView != null && touchpadView.onStylusGenericMotionEvent(event)) {
+            return true;
+        }
+
         return !winHandler.onGenericMotionEvent(event) && !touchpadView.onExternalMouseEvent(event) && super.dispatchGenericMotionEvent(event);
     }
 
