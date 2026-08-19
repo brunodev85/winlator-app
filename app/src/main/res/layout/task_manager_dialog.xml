@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
+    <!-- LISTA DE PROCESSOS -->
     <LinearLayout
         android:layout_width="430dp"
         android:layout_height="match_parent"
@@ -24,28 +25,32 @@
                 android:paddingLeft="8dp"
                 android:text="@string/process_name" />
 
-            <View style="@style/TableHeadRightLine" />
+            <View
+                style="@style/TableHeadRightLine" />
 
             <TextView
                 style="@style/TableHead"
                 android:layout_width="60dp"
                 android:text="@string/pid" />
 
-            <View style="@style/TableHeadRightLine" />
+            <View
+                style="@style/TableHeadRightLine" />
 
             <TextView
                 style="@style/TableHead"
                 android:layout_width="110dp"
                 android:text="@string/memory" />
 
-            <View style="@style/TableHeadRightLine" />
+            <View
+                style="@style/TableHeadRightLine" />
 
             <View
                 style="@style/TableHead"
                 android:layout_width="40dp" />
         </LinearLayout>
 
-        <View style="@style/TableHeadBottomLine" />
+        <View
+            style="@style/TableHeadBottomLine" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -70,18 +75,26 @@
                 android:gravity="center"
                 android:text="@string/no_items_to_display"
                 android:visibility="gone" />
+
         </FrameLayout>
+
     </LinearLayout>
 
+    <!-- PAINÉIS LATERAIS -->
     <ScrollView
+        android:id="@+id/SVPanelList"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp">
+        android:layout_marginLeft="8dp"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/LLPanelList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
+
     </ScrollView>
+
 </LinearLayout>
