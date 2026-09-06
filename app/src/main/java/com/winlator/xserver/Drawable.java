@@ -192,10 +192,11 @@ public class Drawable extends XResource {
     }
 
     public void forceUpdate() {
-        if (!offscreenStorage || useSharedData) {
-            texture.setNeedsUpdate(true);
-            if (onDrawListener != null) onDrawListener.run();
-        }
+        // 被 XComposite redirect 的窗口（offscreenStorage=true）其纹理会被父窗口引用并绘制，
+        // 2D 绘制后同样必须置 needsUpdate 并触发重绘，否则 updateFromDrawable 永远不上传，
+        // 窗口内容黑屏（gladio 窗口化模式的 GDI/X11 2D present 正是这条路径）。
+        texture.setNeedsUpdate(true);
+        if (onDrawListener != null) onDrawListener.run();
     }
 
     public boolean isUseSharedData() {
