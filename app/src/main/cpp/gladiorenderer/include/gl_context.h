@@ -31,6 +31,8 @@ typedef struct GLContext {
 
     GLuint savedDSATarget;
     GLuint savedDSAId;
+
+    int currentWindowId;
 } GLContext;
 
 extern GLContext* createGLContext(JNIEnv* env, jobject obj, int clientFd);
@@ -41,6 +43,7 @@ extern void readCommandBuffer(GLContext* context);
 extern void readVertexArrayElement(GLContext* context, int arrayIdx, int elementIdx);
 extern bool readUnboundVertexArrays(GLContext* context, GLenum drawMode, int drawCount, void** outIndices, GLenum indexType);
 extern const char* getGLExtensions(int* numExtensions);
+extern void gd_presentIfFrontBufferBound(GLContext* context);
 
 extern pthread_mutex_t glx_context_mutex;
 
