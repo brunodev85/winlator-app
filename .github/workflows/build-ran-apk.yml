@@ -1,0 +1,45 @@
+name: Build RAN Online Mobile APK
+
+# Builds the debug APK in the cloud so you don't need a local Android toolchain.
+# Trigger it by pushing this branch to your own GitHub repo, or run it manually
+# from the Actions tab (Run workflow). The finished APK is attached to the run as
+# an artifact named "RAN-Online-Mobile-debug-apk".
+
+on:
+  push:
+    branches: [ ran-mobile-development ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install pinned NDK, CMake and platform
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platforms;android-35" "build-tools;34.0.0" "ndk;24.0.8215888" "cmake;3.22.1"
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --stacktrace --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: RAN-Online-Mobile-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error

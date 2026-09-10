@@ -2,7 +2,32 @@
 
 RAN Online Mobile is a standard Winlator (Android/Gradle/NDK) build. It **cannot be built on a
 plain Windows/x86 machine without the Android toolchain**, and it can only be *run* on an Android
-ARM64 device (Wine/Box64 are ARM64-only). Build on a machine with Android Studio + NDK.
+ARM64 device (Wine/Box64 are ARM64-only). Choose one of the two paths below.
+
+## Option A — Cloud build (recommended, no local toolchain) ⭐
+
+A GitHub Actions workflow (`.github/workflows/build-ran-apk.yml`) builds the debug APK for you in
+the cloud. You only need a free GitHub account.
+
+1. Create an empty repo on GitHub (e.g. `ran-online-mobile`). It can be private.
+2. From the app project folder (`winlator/app`), push this branch to it:
+
+   ```bash
+   cd winlator/app
+   git remote add ranmobile https://github.com/<your-user>/ran-online-mobile.git
+   git push -u ranmobile ran-mobile-development
+   ```
+
+3. On GitHub open the repo → **Actions**. The "Build RAN Online Mobile APK" workflow starts
+   automatically (or click **Run workflow**). It takes ~10–20 min.
+4. When it finishes (green check), open the run and download the artifact
+   **RAN-Online-Mobile-debug-apk** — it contains `app-debug.apk`. Copy it to your phone and install
+   (enable "Install unknown apps" for your file manager/browser).
+
+> Nothing secret is uploaded — the RAN game client is never committed; you copy it to the phone
+> separately (see §5). A private repo keeps the source private if you prefer.
+
+## Option B — Local build (Android Studio)
 
 ## 1. Prerequisites (exact versions)
 
