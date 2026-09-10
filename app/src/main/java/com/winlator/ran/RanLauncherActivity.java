@@ -7,9 +7,16 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import java.net.InetSocketAddress;
+import java.net.Socket;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -57,7 +64,7 @@ public class RanLauncherActivity extends AppCompatActivity {
         findViewById(R.id.BTPlay).setOnClickListener(v -> onPlay());
         findViewById(R.id.BTSettings).setOnClickListener(v -> openWinlator(R.id.menu_item_settings));
         findViewById(R.id.BTControls).setOnClickListener(v -> openWinlator(R.id.menu_item_input_controls));
-        findViewById(R.id.BTGraphics).setOnClickListener(v -> openWinlator(R.id.menu_item_containers));
+        findViewById(R.id.BTGraphics).setOnClickListener(v -> showGraphicsDialog());
         findViewById(R.id.BTServer).setOnClickListener(v -> showServerDialog());
         findViewById(R.id.BTDiagnostics).setOnClickListener(v -> showDiagnosticsDialog());
         findViewById(R.id.BTAdvanced).setOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
@@ -150,12 +157,14 @@ public class RanLauncherActivity extends AppCompatActivity {
         Container existing = RanContainerProfile.find(manager);
         if (existing != null) {
             RanContainerProfile.syncDrives(existing, config);
+            RanGraphics.apply(existing, config);
             RanContainerProfile.startClient(this, existing, config);
         }
         else {
             AppUtils.showToast(this, R.string.ran_creating_container);
             RanContainerProfile.createAsync(manager, config, container -> {
                 if (container != null) {
+                    RanGraphics.apply(container, config);
                     RanContainerProfile.startClient(this, container, config);
                 }
                 else {
@@ -203,6 +212,56 @@ public class RanLauncherActivity extends AppCompatActivity {
             .show();
     }
 
+    private void showGraphicsDialog() {
+        Context ctx = this;
+        LinearLayout layout = new LinearLayout(ctx);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        int pad = (int) (16 * getResources().getDisplayMetrics().density);
+        layout.setPadding(pad, pad, pad, pad);
+
+        TextView title = new TextView(ctx);
+        title.setText("Performance preset");
+        layout.addView(title);
+
+        final RadioGroup rg = new RadioGroup(ctx);
+        String[] labels = RanGraphics.presetLabels();
+        for (int i = 0; i < labels.length; i++) {
+            RadioButton rb = new RadioButton(ctx);
+            rb.setId(i + 1);
+            rb.setText(labels[i] + "  (" + RanGraphics.screenSizeFor(RanGraphics.presetByIndex(i)) + ")");
+            rg.addView(rb);
+        }
+        rg.check(RanGraphics.presetIndex(config.getGraphicsPreset()) + 1);
+        layout.addView(rg);
+
+        final CheckBox cbFps = new CheckBox(ctx);
+        cbFps.setText("Show FPS overlay");
+        cbFps.setChecked(config.isFpsHud());
+        layout.addView(cbFps);
+
+        final CheckBox cbDev = new CheckBox(ctx);
+        cbDev.setText("Developer HUD (CPU / RAM / GPU)");
+        cbDev.setChecked(config.isDevHud());
+        layout.addView(cbDev);
+
+        new AlertDialog.Builder(ctx)
+            .setTitle(R.string.ran_graphics)
+            .setView(layout)
+            .setPositiveButton(R.string.save, (d, w) -> {
+                int idx = rg.getCheckedRadioButtonId() - 1;
+                config.setGraphicsPreset(RanGraphics.presetByIndex(idx < 0 ? 1 : idx));
+                config.setFpsHud(cbFps.isChecked());
+                config.setDevHud(cbDev.isChecked());
+                config.save();
+                ContainerManager manager = new ContainerManager(this);
+                Container ran = RanContainerProfile.find(manager);
+                if (ran != null) RanGraphics.apply(ran, config);
+                AppUtils.showToast(this, R.string.save);
+            })
+            .setNegativeButton(android.R.string.cancel, null)
+            .show();
+    }
+
     private void showDiagnosticsDialog() {
         RootFS rootFS = RootFS.find(this);
         File exe = config.getGameExecutableFile();
@@ -212,6 +271,8 @@ public class RanLauncherActivity extends AppCompatActivity {
         sb.append("CPU ABIs: ").append(String.join(", ", Build.SUPPORTED_ABIS)).append('\n');
         sb.append("64-bit ABIs: ").append(String.join(", ", Build.SUPPORTED_64_BIT_ABIS)).append('\n');
         sb.append("Rootfs installed: ").append(rootFS.isValid() ? ("yes (v" + rootFS.getFormattedVersion() + ")") : "no").append('\n');
+        sb.append("Graphics preset: ").append(config.getGraphicsPreset())
+            .append(" (").append(RanGraphics.screenSizeFor(config.getGraphicsPreset())).append(")\n");
         sb.append('\n');
         sb.append("Server: ").append(config.getServerName()).append('\n');
         sb.append("Address: ").append(config.getServerIp()).append(':').append(config.getServerPort()).append('\n');
@@ -220,12 +281,41 @@ public class RanLauncherActivity extends AppCompatActivity {
         sb.append("Game exe: ").append(config.getGameExecutable()).append('\n');
         sb.append("Client present: ").append(config.isClientPresent() ? "yes" : "no").append('\n');
         if (exe != null) sb.append("Resolved path: ").append(exe.getAbsolutePath()).append('\n');
+        final String base = sb.toString();
+
+        final TextView tv = new TextView(this);
+        int pad = (int) (16 * getResources().getDisplayMetrics().density);
+        tv.setPadding(pad, pad, pad, pad);
+        tv.setTextIsSelectable(true);
+        tv.setText(base + "\nServer connection: testing…");
+        ScrollView scroll = new ScrollView(this);
+        scroll.addView(tv);
 
         new AlertDialog.Builder(this)
             .setTitle(R.string.ran_diagnostics)
-            .setMessage(sb.toString())
+            .setView(scroll)
             .setPositiveButton(android.R.string.ok, null)
             .show();
+
+        // Real connection test (needs INTERNET permission, already declared). Runs off the UI thread.
+        final String host = config.getServerIp();
+        final int port = config.getServerPort();
+        new Thread(() -> {
+            final String result = pingServer(host, port, 3000);
+            runOnUiThread(() -> tv.setText(base + "\nServer connection: " + result));
+        }).start();
+    }
+
+    private static String pingServer(String host, int port, int timeoutMs) {
+        if (host == null || host.trim().isEmpty()) return "no server set";
+        long start = System.currentTimeMillis();
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress(host, port), timeoutMs);
+            return "ONLINE (" + (System.currentTimeMillis() - start) + " ms)";
+        }
+        catch (Exception e) {
+            return "OFFLINE / unreachable";
+        }
     }
 
     // ---- small view helpers ----------------------------------------------------------------

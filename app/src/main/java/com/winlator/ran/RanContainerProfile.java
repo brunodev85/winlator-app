@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.winlator.XServerDisplayActivity;
-import com.winlator.box64.Box64Preset;
 import com.winlator.container.AudioDrivers;
 import com.winlator.container.Container;
 import com.winlator.container.ContainerManager;
@@ -33,7 +32,6 @@ public final class RanContainerProfile {
     public static final String MARKER_VALUE = "t";
     public static final String CONTAINER_NAME = "RAN Online Mobile";
     public static final String DRIVE_LETTER = "R";
-    public static final String DEFAULT_SCREEN_SIZE = "1280x720";
 
     private RanContainerProfile() {}
 
@@ -53,14 +51,13 @@ public final class RanContainerProfile {
     public static JSONObject buildCreateData(RanConfig config) throws JSONException {
         JSONObject data = new JSONObject();
         data.put("name", CONTAINER_NAME);
-        data.put("screenSize", DEFAULT_SCREEN_SIZE);
         // Direct3D 9 client → DXVK (d3d9 → Vulkan) is the recommended path.
         data.put("dxwrapper", DXWrappers.DXVK);
         data.put("wincomponents", Container.DEFAULT_WINCOMPONENTS);
         data.put("audioDriver", AudioDrivers.ALSA);
-        // Compatibility-first for an older engine + anti-cheat; switch to Performance later.
-        data.put("box64Preset", Box64Preset.STABILITY);
         data.put("drives", buildDrives(config));
+        // Resolution / Box64 preset / HUD are applied from the graphics preset via
+        // RanGraphics.apply(...) right after creation (see RanLauncherActivity).
 
         JSONObject extra = new JSONObject();
         extra.put(MARKER_KEY, MARKER_VALUE);

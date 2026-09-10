@@ -43,6 +43,9 @@ public class RanConfig {
     public static final String KEY_GAME_EXECUTABLE = "gameExecutable"; // GAME_EXE
     public static final String KEY_GAME_DIRECTORY = "gameDirectory";   // GAME_DIRECTORY (optional absolute override)
     public static final String KEY_GAME_ARGUMENTS = "gameArguments";   // GAME_ARGUMENTS
+    public static final String KEY_GRAPHICS_PRESET = "graphicsPreset"; // PERFORMANCE|BALANCED|QUALITY
+    public static final String KEY_FPS_HUD = "fpsHud";                 // show FPS overlay
+    public static final String KEY_DEV_HUD = "devHud";                 // developer HUD (CPU/RAM/GPU)
 
     // Sensible, non-sensitive defaults. NEVER hardcode private-server credentials here.
     public static final String DEFAULT_SERVER_NAME = "My RAN Server";
@@ -51,6 +54,7 @@ public class RanConfig {
     public static final String DEFAULT_PATCH_URL = "";
     public static final String DEFAULT_GAME_EXECUTABLE = "Update.exe";
     public static final String DEFAULT_GAME_ARGUMENTS = "";
+    public static final String DEFAULT_GRAPHICS_PRESET = "BALANCED";
 
     private final Context context;
     private final JSONObject data;
@@ -102,6 +106,9 @@ public class RanConfig {
     public int getServerPort() { return data.optInt(KEY_SERVER_PORT, DEFAULT_SERVER_PORT); }
     public String getPatchUrl() { return data.optString(KEY_PATCH_URL, DEFAULT_PATCH_URL); }
     public String getGameArguments() { return data.optString(KEY_GAME_ARGUMENTS, DEFAULT_GAME_ARGUMENTS); }
+    public String getGraphicsPreset() { return data.optString(KEY_GRAPHICS_PRESET, DEFAULT_GRAPHICS_PRESET); }
+    public boolean isFpsHud() { return data.optBoolean(KEY_FPS_HUD, false); }
+    public boolean isDevHud() { return data.optBoolean(KEY_DEV_HUD, false); }
 
     /**
      * Configured game executable name, sanitized to a bare filename (no path separators, no "..").
@@ -119,6 +126,9 @@ public class RanConfig {
     public void setGameExecutable(String v) { put(KEY_GAME_EXECUTABLE, sanitizeFilename(v, DEFAULT_GAME_EXECUTABLE)); }
     public void setGameDirectory(String v) { put(KEY_GAME_DIRECTORY, v); }
     public void setGameArguments(String v) { put(KEY_GAME_ARGUMENTS, v); }
+    public void setGraphicsPreset(String v) { put(KEY_GRAPHICS_PRESET, v); }
+    public void setFpsHud(boolean v) { put(KEY_FPS_HUD, v); }
+    public void setDevHud(boolean v) { put(KEY_DEV_HUD, v); }
 
     // ---- Derived ---------------------------------------------------------------------------
 
@@ -184,6 +194,9 @@ public class RanConfig {
             out.put(KEY_GAME_EXECUTABLE, getGameExecutable());
             out.put(KEY_GAME_DIRECTORY, data.optString(KEY_GAME_DIRECTORY, ""));
             out.put(KEY_GAME_ARGUMENTS, getGameArguments());
+            out.put(KEY_GRAPHICS_PRESET, getGraphicsPreset());
+            out.put(KEY_FPS_HUD, isFpsHud());
+            out.put(KEY_DEV_HUD, isDevHud());
             writeString(getConfigFile(), out.toString(4));
             return true;
         }

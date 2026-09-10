@@ -50,10 +50,11 @@ configuration, so there was no need to fork the runtime.
 
 | File | Role |
 |---|---|
-| `ran/RanLauncherActivity.java` | The dedicated home screen (LAUNCHER). Requests storage permission → installs the guest rootfs if needed → finds/creates the RAN container → launches the client. Also hosts the Server-config and Diagnostics dialogs and routes to Winlator's Settings/Controls/Containers and "Advanced (Winlator)". |
-| `ran/RanConfig.java` | Config model + persistence for `RANMobile/config/server_config.json`. Owns the on-device RAN directory layout and the `GAME_EXE` / `GAME_DIRECTORY` / `GAME_ARGUMENTS` / server fields. Includes filename sanitisation + path-traversal defense. |
-| `ran/RanContainerProfile.java` | Find-or-create the dedicated RAN Wine container (DXVK, ALSA, Box64 `STABILITY`, screen 1280×720), map the client folder as drive `R:`, and launch the configured exe via the `exec_path` intent (with the RAN controls profile). |
+| `ran/RanLauncherActivity.java` | The dedicated home screen (LAUNCHER). Requests storage permission → installs the guest rootfs if needed → finds/creates the RAN container → launches the client. Hosts the Server, Graphics/Performance, and Diagnostics dialogs (Diagnostics runs a real TCP connection test to the server) and routes to Winlator's Settings/Controls and "Advanced (Winlator)". |
+| `ran/RanConfig.java` | Config model + persistence for `RANMobile/config/server_config.json`. Owns the on-device RAN directory layout, the `GAME_EXE` / `GAME_DIRECTORY` / `GAME_ARGUMENTS` / server fields, and the graphics preset + HUD toggles. Includes filename sanitisation + path-traversal defense. |
+| `ran/RanContainerProfile.java` | Find-or-create the dedicated RAN Wine container (DXVK, ALSA), map the client folder as drive `R:`, and launch the configured exe via the `exec_path` intent (with the RAN controls profile). |
 | `ran/RanControls.java` | Imports and looks up the "RAN Online" touch-controls profile (Phase 5). |
+| `ran/RanGraphics.java` | Performance/Balanced/Quality presets → container resolution + Box64 preset + DXVK; FPS/dev HUD toggles (Phases 6–7). |
 | `res/layout/ran_launcher_activity.xml` | The launcher UI. |
 | `assets/ran/ran_controls_default.icp` | The default RAN touch-controls layout (Winlator `ControlsProfile` JSON). |
 | `config/server_config.json` | Sample developer config (checked in as a template; the live copy lives on-device). |
@@ -119,13 +120,36 @@ controls editor). Layout:
 > keys** in the Controls editor (RAN is heavily mouse-driven, so ATK/USE/TRACKPAD do most of the
 > work; the WASD d-pad and number hotbar assume those keys are enabled in the client).
 
+## 6b. Graphics / performance / HUD (Phases 6–7)
+
+The **Graphics** launcher dialog applies a single Performance / Balanced / Quality choice to the RAN
+container via `RanGraphics.apply()`:
+
+| Preset | Resolution | Box64 preset | DX wrapper |
+|---|---|---|---|
+| Performance | 854×480 | PERFORMANCE | DXVK |
+| Balanced (default) | 1280×720 | INTERMEDIATE | DXVK |
+| Quality | 1600×900 | STABILITY | DXVK |
+
+Same dialog toggles the **FPS overlay** (`FrameRating.Mode.SIMPLE`) and the **Developer HUD**
+(`FrameRating.Mode.FULL` — CPU/RAM/GPU, Phase 21). The choice is stored in `server_config.json`
+and re-applied to the container on every Play.
+
+**On the game HUD (HP/SP/EXP/mini-map):** RAN's client renders these itself; they cannot be read
+from outside the game, so RAN Mobile does not duplicate them. The "HUD/layout editor" the brief
+asks for is Winlator's **Controls editor** — every on-screen control is movable, resizable, and
+saved per profile — reached from the launcher's **Controls** button.
+
+**Gamepad / keyboard / mouse (brief §6–7):** already provided by Winlator unchanged — physical
+keyboards, mice and controllers are auto-detected, and a controller can be bound via the existing
+`ExternalControllerBindingsActivity`; virtual-gamepad control profiles are also supported.
+
 ## 7. Not yet implemented (tracked for later phases)
 
 - **GAME_ARGUMENTS** are stored but not yet forwarded (the `exec_path` path doesn't carry args).
   Planned via a generated `.desktop` shortcut, which supports `execArgs` (Phase 4/8).
-- Mobile HUD + HUD editor (Phase 6); explicit gamepad mapping UI (Phase 7).
-- Graphics/performance presets (Performance/Balanced/Quality), FPS limiter UI (Phase 7/9).
-- Patcher, network diagnostics screen, log export/crash UI (Phases 9, 14–17).
+- Patcher/update system (Phase 14); a full network-diagnostics screen beyond the current TCP test
+  (Phase 15); log export ZIP + crash-recovery UI (Phases 16–17); first-run wizard (Phase 19).
 
 ## 8. Security notes
 
