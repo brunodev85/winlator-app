@@ -20,7 +20,8 @@
         android:allowAudioPlaybackCapture="true"
         android:label="@string/app_name">
 
-        <activity android:name="com.winlator.MainActivity"
+        <!-- RAN Online Mobile dedicated launcher (home screen). This is the LAUNCHER entry. -->
+        <activity android:name="com.winlator.ran.RanLauncherActivity"
             android:theme="@style/AppThemeDark"
             android:exported="true"
             android:screenOrientation="sensor"
@@ -30,6 +31,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!-- Winlator's original home (containers/shortcuts/settings). Reachable from the RAN
+             launcher's "Advanced (Winlator)" entry; no longer the LAUNCHER activity. -->
+        <activity android:name="com.winlator.MainActivity"
+            android:theme="@style/AppThemeDark"
+            android:exported="true"
+            android:screenOrientation="sensor"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|density|navigation" />
 
         <activity android:name="com.winlator.XServerDisplayActivity"
             android:exported="false"
@@ -51,7 +60,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.winlator.FileProvider"
+            android:authorities="com.kyudo.ranmobile.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
 

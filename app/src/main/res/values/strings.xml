@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Winlator</string>
+    <string name="app_name">RAN Online Mobile</string>
+
+    <!-- RAN Online Mobile launcher / setup strings -->
+    <string name="ran_title">RAN ONLINE MOBILE</string>
+    <string name="ran_play">PLAY RAN ONLINE</string>
+    <string name="ran_settings">Settings</string>
+    <string name="ran_controls">Controls</string>
+    <string name="ran_graphics">Graphics</string>
+    <string name="ran_server">Server</string>
+    <string name="ran_diagnostics">Diagnostics</string>
+    <string name="ran_advanced_winlator">Advanced (Winlator)</string>
+    <string name="ran_status_checking">Checking…</string>
+    <string name="ran_preparing_runtime">Preparing runtime…</string>
+    <string name="ran_creating_container">Creating RAN container…</string>
+    <string name="ran_client_not_found">RAN client not found.\n\nCopy your RAN Online client into:\n%1$s\n\nThen set the executable in Server settings (default: %2$s).</string>
+    <string name="ran_client_ready">RAN client detected: %1$s</string>
+    <string name="ran_storage_permission_required">Storage permission is required to read your RAN Online client files.</string>
+    <string name="ran_version_label">Version %1$s</string>
+    <string name="save">Save</string>
+
     <string name="run">Run</string>
     <string name="edit">Edit</string>
     <string name="remove">Remove</string>
