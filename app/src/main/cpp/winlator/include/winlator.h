@@ -11,7 +11,8 @@
 #define BITMASK_UNSET(bits, flag) bits &= ~flag
 #define GETEXP(x) (31 - __builtin_clz(x))
 
-#define APP_CACHE_DIR "/data/data/com.winlator/cache"
+// RAN Online Mobile: must match applicationId in app/build.gradle (com.kyudo.ranmobile).
+#define APP_CACHE_DIR "/data/data/com.kyudo.ranmobile/cache"
 #define LIBVULKAN_PATH "/system/lib64/libvulkan.so"
 
 #define CLOSEFD(x) \

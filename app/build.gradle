@@ -1,11 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
+    // NOTE: the Java package / JNI namespace intentionally stays 'com.winlator' so that all
+    // native symbol bindings (Java_com_winlator_*), R references and layout view paths remain
+    // valid. Only the installed application identity below is rebranded to RAN Online Mobile.
     namespace 'com.winlator'
     compileSdk 35
 
     defaultConfig {
-        applicationId 'com.winlator'
+        // RAN Online Mobile installed package identity (see docs/RAN_MOBILE_ARCHITECTURE.md).
+        // Changing this REQUIRES the matching data-dir paths in AppUtils.INTERNAL_STORAGE and the
+        // native headers (cpp/*/include/*.h) to use the same id, and a native rebuild.
+        applicationId 'com.kyudo.ranmobile'
         minSdkVersion 26
         targetSdkVersion 28
         versionCode 32

@@ -44,7 +44,8 @@ import java.util.TimerTask;
 
 public abstract class AppUtils {
     public static final String DIRECTORY_DOWNLOADS = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
-    public static final String INTERNAL_STORAGE = "/data/data/com.winlator/storage";
+    // RAN Online Mobile: must match applicationId in app/build.gradle (com.kyudo.ranmobile).
+    public static final String INTERNAL_STORAGE = "/data/data/com.kyudo.ranmobile/storage";
     private static WeakReference<Toast> globalToastReference = null;
 
     public static class RestartApplicationOptions {

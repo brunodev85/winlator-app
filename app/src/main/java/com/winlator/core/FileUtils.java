@@ -410,7 +410,7 @@ public abstract class FileUtils {
         Intent intent;
         if (path.startsWith("file://")) {
             File file = new File(Uri.decode(path.replace("file://", "")));
-            intent = new Intent(Intent.ACTION_VIEW, FileProvider.getUriForFile(activity, "com.winlator.FileProvider", file));
+            intent = new Intent(Intent.ACTION_VIEW, FileProvider.getUriForFile(activity, "com.kyudo.ranmobile.FileProvider", file));
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         else intent = new Intent(Intent.ACTION_VIEW, Uri.parse(path));
