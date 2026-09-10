@@ -34,6 +34,7 @@ configuration, so there was no need to fork the runtime.
 | `cpp/vortekrenderer/include/vortek.h` | `VORTEK_SERVER_PATH` → `com.kyudo.ranmobile` | Native Vulkan socket path must match. |
 | `cpp/gladiorenderer/include/gladio.h` | `X11_SERVER_PATH` → `com.kyudo.ranmobile` | Native X11 socket path must match. |
 | `xenvironment/RootFSInstaller.java` | `install(...)` / `installIfNeeded(...)` param `MainActivity` → `AppCompatActivity` | Lets `RanLauncherActivity` bootstrap the rootfs; safe widening (only `Activity` APIs used). Existing callers still compile. |
+| `XServerDisplayActivity.java` | `setupUI()`: when there is no shortcut, apply an optional `controls_profile_id` intent extra | Auto-applies the RAN touch-controls profile on an `exec_path` launch (mirrors the existing shortcut→`controlsProfile` path). |
 | `res/values/strings.xml` | `app_name` → "RAN Online Mobile"; added `ran_*` and `save` strings | Branding + launcher strings. |
 
 > **Why the namespace stays `com.winlator`:** the native libraries bind JNI symbols by class path
@@ -51,8 +52,10 @@ configuration, so there was no need to fork the runtime.
 |---|---|
 | `ran/RanLauncherActivity.java` | The dedicated home screen (LAUNCHER). Requests storage permission → installs the guest rootfs if needed → finds/creates the RAN container → launches the client. Also hosts the Server-config and Diagnostics dialogs and routes to Winlator's Settings/Controls/Containers and "Advanced (Winlator)". |
 | `ran/RanConfig.java` | Config model + persistence for `RANMobile/config/server_config.json`. Owns the on-device RAN directory layout and the `GAME_EXE` / `GAME_DIRECTORY` / `GAME_ARGUMENTS` / server fields. Includes filename sanitisation + path-traversal defense. |
-| `ran/RanContainerProfile.java` | Find-or-create the dedicated RAN Wine container (DXVK, ALSA, Box64 `STABILITY`, screen 1280×720), map the client folder as drive `R:`, and launch the configured exe via the `exec_path` intent. |
+| `ran/RanContainerProfile.java` | Find-or-create the dedicated RAN Wine container (DXVK, ALSA, Box64 `STABILITY`, screen 1280×720), map the client folder as drive `R:`, and launch the configured exe via the `exec_path` intent (with the RAN controls profile). |
+| `ran/RanControls.java` | Imports and looks up the "RAN Online" touch-controls profile (Phase 5). |
 | `res/layout/ran_launcher_activity.xml` | The launcher UI. |
+| `assets/ran/ran_controls_default.icp` | The default RAN touch-controls layout (Winlator `ControlsProfile` JSON). |
 | `config/server_config.json` | Sample developer config (checked in as a template; the live copy lives on-device). |
 | `docs/*` | This document, the Winlator analysis, and the build guide. |
 
@@ -97,11 +100,30 @@ RanLauncherActivity.onPlay()
 | Screen | 1280×720 | Safe default; will become configurable (Graphics profiles phase). |
 | wincomponents | Winlator default (d3d/dsound/dmusic/xaudio/vcrun2010 native) | Matches a typical DX9 client. |
 
+## 6a. Mobile touch controls (Phase 5)
+
+The default **RAN Online** control profile ships as `assets/ran/ran_controls_default.icp` in
+Winlator's own `ControlsProfile` format and is imported once via `InputControlsManager.importProfile`
+(so app updates never overwrite the user's tuning). It is auto-applied when Play launches the
+client (via the `controls_profile_id` extra) and is fully editable in **Controls** (the Winlator
+controls editor). Layout:
+
+- **Left `D_PAD` → WASD** movement.
+- **Right `TRACKPAD` → `MOUSE_MOVE_*`** for camera / mouse-look by dragging.
+- **Buttons:** ATK (left mouse), USE (right mouse), TGT (Tab), PICK (Z), SIT (Insert), MENU (Esc),
+  CHAT (Enter).
+- **`RADIAL_MENU`** (left) → Inventory (I), Character (C), Skills (K), Map (M), Quest (Q).
+- **8-slot hotbar** across the bottom → keys 1–8.
+
+> Bindings are sensible defaults for a keyboard/mouse MMO; **tune them to your client's actual
+> keys** in the Controls editor (RAN is heavily mouse-driven, so ATK/USE/TRACKPAD do most of the
+> work; the WASD d-pad and number hotbar assume those keys are enabled in the client).
+
 ## 7. Not yet implemented (tracked for later phases)
 
 - **GAME_ARGUMENTS** are stored but not yet forwarded (the `exec_path` path doesn't carry args).
   Planned via a generated `.desktop` shortcut, which supports `execArgs` (Phase 4/8).
-- Mobile touch-control profile for RAN, HUD editor, gamepad mapping (Phases 5–7).
+- Mobile HUD + HUD editor (Phase 6); explicit gamepad mapping UI (Phase 7).
 - Graphics/performance presets (Performance/Balanced/Quality), FPS limiter UI (Phase 7/9).
 - Patcher, network diagnostics screen, log export/crash UI (Phases 9, 14–17).
 

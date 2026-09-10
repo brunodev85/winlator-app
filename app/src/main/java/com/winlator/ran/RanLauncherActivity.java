@@ -99,6 +99,8 @@ public class RanLauncherActivity extends AppCompatActivity {
 
     private void onStorageReady() {
         config.ensureDirectories();
+        // Create the RAN touch-controls profile so it's available in the Controls editor.
+        RanControls.ensureProfileId(this);
         // Install the guest Linux/Wine rootfs into app-private storage if missing/outdated.
         RootFSInstaller.installIfNeeded(this);
         refreshStatus();

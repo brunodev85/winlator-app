@@ -605,6 +605,14 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
                 if (profile != null) showInputControls(profile);
             }
         }
+        else {
+            // RAN Online Mobile: auto-apply a controls profile passed for an exec_path launch.
+            int controlsProfileId = getIntent().getIntExtra("controls_profile_id", 0);
+            if (controlsProfileId > 0) {
+                ControlsProfile profile = inputControlsManager.getProfile(controlsProfileId);
+                if (profile != null) showInputControls(profile);
+            }
+        }
 
         if (MainActivity.DEBUG_MODE) rootView.addView(AppUtils.createDebugMsgTextView(this));
         AppUtils.observeSoftKeyboardVisibility(drawerLayout, renderer::setScreenOffsetYRelativeToCursor);

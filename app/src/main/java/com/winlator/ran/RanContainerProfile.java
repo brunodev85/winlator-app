@@ -113,6 +113,9 @@ public final class RanContainerProfile {
         Intent intent = new Intent(activity, XServerDisplayActivity.class);
         intent.putExtra("container_id", container.id);
         intent.putExtra("exec_path", exe.getAbsolutePath());
+        // Auto-apply the RAN touch-controls profile (created on first use from the asset).
+        int controlsProfileId = RanControls.ensureProfileId(activity);
+        if (controlsProfileId > 0) intent.putExtra("controls_profile_id", controlsProfileId);
         activity.startActivity(intent);
     }
 }
