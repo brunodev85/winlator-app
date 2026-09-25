@@ -249,6 +249,7 @@ void gd_handle_glBlitFramebuffer(GLContext* context) {
     GLenum filter = ArrayBuffer_getInt(&context->inputBuffer);
 
     glBlitFramebuffer(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+    gd_presentIfFrontBufferBound(context);
 }
 
 void gd_handle_glBufferData(GLContext* context) {
@@ -1038,12 +1039,14 @@ void gd_handle_glFinish(GLContext* context) {
 #ifndef SKIP_GL_FINISH
     glFinish();
 #endif
+    gd_presentIfFrontBufferBound(context);
 
     gl_send(context->clientRing, REQUEST_CODE_GL_FINISH, NULL, 0);
 }
 
 void gd_handle_glFlush(GLContext* context) {
     glFlush();
+    gd_presentIfFrontBufferBound(context);
 }
 
 void gd_handle_glFlushMappedBufferRange(GLContext* context) {
