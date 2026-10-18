@@ -85,6 +85,9 @@ public abstract class Box64PresetManager {
             envVars.put("BOX64_DYNAREC_WAIT", "1");
             envVars.put("BOX64_DYNAREC_NATIVEFLAGS", "1");
             envVars.put("BOX64_DYNAREC_WEAKBARRIER", "1");
+            // Fix legacy DX9 rendering artifacts (objects popping out of the
+            // scene / textures flying): cap GL extensions to pre-2003 set.
+            envVars.put("MESA_EXTENSION_MAX_YEAR", "2003");
         }
         else if (id.startsWith(Box64Preset.CUSTOM)) {
             for (String[] preset : customPresetsIterator(context)) {
