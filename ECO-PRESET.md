@@ -112,7 +112,32 @@ WINEESYNC=1          # 减少内存爆满（Winlator 默认已含，可确认存
 
 ---
 
-## 八、日文显示修复
+## 八、黑屏组件级优化（Winlator 全组件）
+
+黑屏 = DX9 的 3D/2D 图层渲染失败。按组件逐个排查：
+
+| 组件 | 优化动作（容器内操作） | 针对黑屏的作用 |
+|---|---|---|
+| **CNC DDraw** | Wine 配置 → DDraw Wrapper 选「CNC DDraw」 | ⭐ 修复 2D 背景/天空盒/图层黑屏（ECO 2D 图层走 DDraw） |
+| **Wine** | Wine 版本逐个试：9.x → 8.x → 7.x | ⭐ 不同 Wine 对 DX9 shader 兼容不同 |
+| **DXVK / WineD3D** | 图形 API 互换测试 | ⭐ WineD3D 黑屏→切 DXVK；DXVK 弹物件→切回 WineD3D |
+| **Mesa (Turnip/Zink/VirGL)** | 图形驱动 Turnip ↔ Zink ↔ Vortek 互换 | ⭐ Zink（OpenGL-on-Vulkan）对老 GL 游戏兼容好 |
+| **Box64** | 已用 ECO 预设（含 MESA 修复） | 辅助，保持即可 |
+| VKD3D | — | 不适用（DX12 转换，ECO 是 DX9） |
+| GLIBC Patches | — | 系统层，无需调整 |
+
+**推荐先试组合（按序）**：
+1. 图形 API 切 **DXVK**（WineD3D 黑屏时）
+2. DDraw Wrapper 开 **CNC DDraw**（修 2D 图层）
+3. 图形驱动试 **Zink**
+4. Wine 版本 9.x ↔ 8.x 互换
+5. 仍黑 → 回 WineD3D + Turnip 交叉验证
+
+> 进阶：容器内编辑 `C:\ProgramData\cnc-ddraw\ddraw.ini` 可细调 CNC DDraw 渲染后端。
+
+---
+
+## 九、日文显示修复
 
 ### 1. 界面语言（Winlator 本体）
 设置 → 语言 → **日本語**，Winlator 界面即切换为日文（本版已内置 values-ja 日文语言包）。
