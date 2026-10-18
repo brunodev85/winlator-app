@@ -373,7 +373,25 @@ public abstract class WineUtils {
             {"Wingdings (TrueType)", "Z:\\opt\\wine\\share\\wine\\fonts\\wingding.ttf"}
         };
 
+        // CJK fonts bundled into the generated container (Chinese simplified/traditional + Japanese)
+        final String[][] cjkFonts = {
+            {"Microsoft YaHei (TrueType)", "Z:\\opt\\wine\\share\\wine\\fonts\\wqy-microhei.ttc"},
+            {"Microsoft YaHei UI (TrueType)", "Z:\\opt\\wine\\share\\wine\\fonts\\wqy-microhei.ttc"},
+            {"SimSun (TrueType)", "Z:\\opt\\wine\\share\\wine\\fonts\\wqy-microhei.ttc"},
+            {"SimHei (TrueType)", "Z:\\opt\\wine\\share\\wine\\fonts\\wqy-microhei.ttc"},
+            {"Noto Sans CJK SC (TrueType)", "Z:\\opt\\wine\\share\\wine\\fonts\\wqy-microhei.ttc"},
+            {"Noto Sans CJK TC (TrueType)", "Z:\\opt\\wine\\share\\wine\\fonts\\wqy-microhei.ttc"},
+            {"MS Gothic (TrueType)", "Z:\\opt\\wine\\share\\wine\\fonts\\NotoSansJP.ttf"},
+            {"MS UI Gothic (TrueType)", "Z:\\opt\\wine\\share\\wine\\fonts\\NotoSansJP.ttf"},
+            {"MS Mincho (TrueType)", "Z:\\opt\\wine\\share\\wine\\fonts\\NotoSansJP.ttf"},
+            {"Yu Gothic (TrueType)", "Z:\\opt\\wine\\share\\wine\\fonts\\NotoSansJP.ttf"},
+            {"Yu Mincho (TrueType)", "Z:\\opt\\wine\\share\\wine\\fonts\\NotoSansJP.ttf"},
+            {"Noto Sans JP (TrueType)", "Z:\\opt\\wine\\share\\wine\\fonts\\NotoSansJP.ttf"}
+        };
+
         registryEditor.setStringValues("Software\\Microsoft\\Windows\\CurrentVersion\\Fonts", wineFonts);
         registryEditor.setStringValues("Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts", wineFonts);
+        registryEditor.setStringValues("Software\\Microsoft\\Windows\\CurrentVersion\\Fonts", cjkFonts);
+        registryEditor.setStringValues("Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts", cjkFonts);
     }
 }
