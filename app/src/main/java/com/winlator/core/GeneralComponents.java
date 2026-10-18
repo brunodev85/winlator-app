@@ -25,7 +25,7 @@ import java.util.Locale;
 
 public abstract class GeneralComponents {
     public enum InstallMode {DOWNLOAD, FILE, BOTH}
-    private static final String INSTALLABLE_COMPONENTS_URL = "https://raw.githubusercontent.com/brunodev85/winlator/main/installable_components/%s";
+    private static final String INSTALLABLE_COMPONENTS_URL = "https://raw.githubusercontent.com/zooluis/winlator/main/installable_components/%s";
 
     public enum Type {
         BOX64, TURNIP, DXVK, VKD3D, WINED3D, SOUNDFONT, ADRENOTOOLS_DRIVER;
