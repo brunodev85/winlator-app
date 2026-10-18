@@ -70,6 +70,22 @@ public abstract class Box64PresetManager {
             envVars.put("BOX64_DYNAREC_NATIVEFLAGS", "1");
             envVars.put("BOX64_DYNAREC_WEAKBARRIER", "2");
         }
+        else if (id.equals(Box64Preset.ECO)) {
+            // ECO (Emil Chronicle Online): 2005-era DirectX 9 game.
+            // Balance stability for legacy x87/flag-sensitive code with
+            // native-flag acceleration on modern ARM chips (e.g. Snapdragon 8 Gen 3).
+            envVars.put("BOX64_DYNAREC_SAFEFLAGS", "2");
+            envVars.put("BOX64_DYNAREC_FASTNAN", "0");
+            envVars.put("BOX64_DYNAREC_FASTROUND", "0");
+            envVars.put("BOX64_DYNAREC_X87DOUBLE", "1");
+            envVars.put("BOX64_DYNAREC_BIGBLOCK", "1");
+            envVars.put("BOX64_DYNAREC_STRONGMEM", "1");
+            envVars.put("BOX64_DYNAREC_FORWARD", "128");
+            envVars.put("BOX64_DYNAREC_CALLRET", "0");
+            envVars.put("BOX64_DYNAREC_WAIT", "1");
+            envVars.put("BOX64_DYNAREC_NATIVEFLAGS", "1");
+            envVars.put("BOX64_DYNAREC_WEAKBARRIER", "1");
+        }
         else if (id.startsWith(Box64Preset.CUSTOM)) {
             for (String[] preset : customPresetsIterator(context)) {
                 if (preset[0].equals(id)) {
@@ -88,6 +104,7 @@ public abstract class Box64PresetManager {
         presets.add(new Box64Preset(Box64Preset.CONSERVATIVE, context.getString(R.string.conservative)));
         presets.add(new Box64Preset(Box64Preset.INTERMEDIATE, context.getString(R.string.intermediate)));
         presets.add(new Box64Preset(Box64Preset.PERFORMANCE, context.getString(R.string.performance)));
+        presets.add(new Box64Preset(Box64Preset.ECO, context.getString(R.string.eco)));
         for (String[] preset : customPresetsIterator(context)) presets.add(new Box64Preset(preset[0], preset[1]));
         return presets;
     }

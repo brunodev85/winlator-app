@@ -168,6 +168,7 @@
     <string name="conservative">保守</string>
     <string name="intermediate">中等</string>
     <string name="performance">性能</string>
+    <string name="eco">ECO（伊希歐之夢）</string>
     <string name="preset">预设</string>
     <string name="you_cannot_remove_this_preset">无法删除此预设</string>
     <string name="you_cannot_remove_this_component_version">无法删除此组件版本</string>
