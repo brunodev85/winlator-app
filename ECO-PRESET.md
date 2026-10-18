@@ -78,6 +78,37 @@
 
 ---
 
+## 六、日文版 ECO 运行环境配置（重要）
+
+日文版 ECO 客户端依赖日文系统区域与字体，否则会出现乱码或无法启动。本版已内置 **日文界面语言包（values-ja）**，以下为**容器内日文运行环境**配置：
+
+### 1. 界面语言（可选）
+设置 → 语言 → 日本語，即可把 Winlator 界面切换为日文。
+
+### 2. Wine 容器日文区域（必做，解决乱码）
+在容器的**环境变量**中添加：
+```
+LANG=ja_JP.UTF-8
+LC_ALL=ja_JP.UTF-8
+```
+（若客户端为 Shift-JIS 编码，可改为 `LANG=ja_JP.SJIS` 实测）
+
+### 3. 日文字体安装（必做，解决字体缺字）
+ECO 使用日文字体，需将 Windows 的日文字体复制进容器 C 盘：
+- 源文件（任选）：`C:\Windows\Fonts\msgothic.ttc`（MS Gothic）、`YuGothM.ttc`（Yu Gothic）
+- 目标：容器内 `C:\windows\Fonts\`（通过文件管理器粘贴）
+- 推荐同时放入：`msmincho.ttc`、`meiryo.ttc` 以覆盖更多 UI
+
+### 4. Wine 区域模拟（乱码仍存在时）
+容器 Wine 设置（winecfg）中：
+- 切换到「函数库/库」标签 → 添加 `*locale` → 设为「内置」
+- 或用环境变量强制：`WINEDLLOVERRIDES=*locale=n,b`（可加入容器环境变量）
+
+### 5. 日文输入（可选）
+需要输入日文时，在按键映射中把「文本输入」绑定到输入法按钮，通过 Android 日文 IME 输入（Winlator 会把 IME 文本送入 Wine）。
+
+---
+
 ## 源码位置
 
 - 汉化：`app/src/main/res/values-zh/strings.xml`（325 条全量翻译）
