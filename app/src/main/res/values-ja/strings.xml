@@ -358,4 +358,5 @@
     <string name="fgs_notification_content_else">Winlator はバックグラウンドで実行中です</string>
     <string name="save_mem_on_run_from_steam">Steam から実行時にメモリを節約</string>
     <string name="present_mode">プレゼンテーションモード</string>
+    <string name="native_resolution">ネイティブ</string>
 </resources>

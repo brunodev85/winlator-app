@@ -358,4 +358,5 @@
     <string name="fgs_notification_content_else">Winlator 正在后台运行</string>
     <string name="save_mem_on_run_from_steam">从 Steam 运行时节省内存</string>
     <string name="present_mode">呈现模式</string>
+    <string name="native_resolution">原生</string>
 </resources>

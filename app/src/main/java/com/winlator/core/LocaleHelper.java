@@ -10,13 +10,19 @@ import androidx.preference.PreferenceManager;
 import java.util.Locale;
 
 public class LocaleHelper {
-    private static final String[] supportedLocales = {"en_US", "pt_BR", "ru_RU"};
+    // Order must match res/values/arrays.xml -> language_entries
+    private static final String[] supportedLocales = {"en_US", "pt_BR", "ru_RU", "zh_CN", "zh_TW", "ja_JP"};
 
     public static int getLocaleIndex(Context context) {
         Configuration configuration = context.getResources().getConfiguration();
         LocaleList localeList = configuration.getLocales();
         String locale = !localeList.isEmpty() ? localeList.get(0).toString() : "";
 
+        // Exact language+region match first (zh_TW must not fall back to zh_CN)
+        for (int i = 0; i < supportedLocales.length; i++) {
+            if (locale.startsWith(supportedLocales[i])) return i;
+        }
+        // Fall back to language-only match
         for (int i = 0; i < supportedLocales.length; i++) {
             if (locale.startsWith(supportedLocales[i].substring(0, 2))) return i;
         }
@@ -28,7 +34,8 @@ public class LocaleHelper {
         int index = preferences.getInt("lc_index", -1);
 
         if (index < 0 || index >= supportedLocales.length) return context;
-        Locale locale = new Locale(supportedLocales[index].substring(0, 2));
+        String[] parts = supportedLocales[index].split("_");
+        Locale locale = new Locale(parts[0], parts.length > 1 ? parts[1] : "");
         Locale.setDefault(locale);
 
         Configuration configuration = context.getResources().getConfiguration();
