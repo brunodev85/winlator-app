@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.winlator">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.nmdcomputer">
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -64,7 +64,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.winlator.FileProvider"
+            android:authorities="com.nmdcomputer.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
 

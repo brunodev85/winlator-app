@@ -1,12 +1,12 @@
 <p align="center">
-	<img src="logo.png" width="376" height="128" alt="Winlator Logo" />
+	<img src="logo.png" width="376" height="128" alt="NMD COMPUTER Logo" />
 </p>
 
-# Winlator
+# NMD COMPUTER
 
-Winlator is an Android application that lets you to run Windows (x86_64) applications with Wine and Box86/Box64.<br>
-This repository stores the latest updates for the Winlator app source.<br>
-For more information and releases, please visit the main repository: https://github.com/brunodev85/winlator
+NMD COMPUTER is an Android application that lets you run Windows (x86_64) applications with Wine and Box86/Box64.<br>
+This repository stores the latest updates for the NMD COMPUTER app source.<br>
+For more information and releases, please visit the main repository: https://github.com/nima-axis/nmd-pc-app
 
 # Credits and Third-party apps
 

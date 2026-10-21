@@ -12,8 +12,8 @@ import com.winlator.MainActivity;
 import java.lang.ref.WeakReference;
 
 public class NotificationUtils {
-    private static final String CHANNEL_ID = "winlator_foreground_service";
-    private static final String CHANNEL_NAME = "Winlator Foreground Service";
+    private static final String CHANNEL_ID = "nmdcomputer_foreground_service";
+    private static final String CHANNEL_NAME = "NMD COMPUTER Foreground Service";
 
     private final Context context;
     private final NotificationManager notificationManager;
@@ -163,7 +163,7 @@ public class NotificationUtils {
                 CHANNEL_ID,
                 CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_LOW,
-                "Allows to display Winlator foreground notifications"
+                "Allows to display NMD COMPUTER foreground notifications"
         );
     }
 
@@ -181,8 +181,3 @@ public class NotificationUtils {
         return contextKey.hashCode() & 0x7FFFFFFF; // Avoid negative IDs
     }
 }
-
-
-
-
-

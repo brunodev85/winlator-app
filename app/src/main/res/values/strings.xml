@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Winlator</string>
+    <string name="app_name">NMD COMPUTER</string>
     <string name="run">Run</string>
     <string name="edit">Edit</string>
     <string name="remove">Remove</string>
@@ -188,22 +188,21 @@
         Generation of precise x86 rounding<br /><br />
         <b>0</b> : Generate float/double -> int rounding like on x86<br />
         <b>1</b> : Don\'t do anything special with edge case Rounding, to go as fast as possible (no INF/NAN/Overflow -> MIN_INT conversion)<br />
-        <b>2</b> : Everything from 1 plus also fast round of double -> float (not taking into account current rounding mode)
+        <b>2</b> : Everything from 1 plus also fast round of double -> float
     ]]></string>
     <string name="box64_env_var_help__dynarec_x87double" translatable="false">Use of Float/Double for x87 emulation</string>
     <string name="box64_env_var_help__dynarec_bigblock" translatable="false"><![CDATA[
         Dynarec building BigBlock<br /><br />
         <b>0</b> : Don\'t try to build block as big as possible<br />
         <b>1</b> : Build Dynarec block as big as possible<br />
-        <b>2</b> : Build Dynarec block bigger (continue when block overlaps, but only for blocks in elf memory)<br />
-        <b>3</b> : Build Dynarec block bigger (continue when block overlaps, for all types of memory)
+        <b>2</b> : Build Dynarec block bigger (command overlaps, but only for blocks in elf memory)<br />
+        <b>3</b> : Build Dynarec block bigger (command overlaps, for all types of memory)
     ]]></string>
     <string name="box64_env_var_help__dynarec_strongmem" translatable="false"><![CDATA[
         Simulation of Strong Memory model<br /><br />
         <b>0</b> : Don\'t try anything special<br />
         <b>1</b> : Enable some Memory Barrier when writing to memory (on some MOV opcode)<br />
-        <b>2</b> : All 1 plus a Memory Barrier on every write to memory using MOV<br />
-        <b>3</b> : All 2 plus Memory Barrier when reading from memory and on some SSE/SSE2 opcodes
+        <b>2</b> : All 1 plus a Memory Barrier on every write to memory using MOV
     ]]></string>
     <string name="box64_env_var_help__dynarec_weakbarrier" translatable="false"><![CDATA[
         Tweak the memory barriers to reduce the performance impact by strongmem<br /><br />
@@ -352,10 +351,10 @@
     <string name="ddraw_wrapper" translatable="false">DDraw Wrapper</string>
     <string name="renderer">Renderer</string>
     <string name="default_no_override">Default (No override)</string>
-    <string name="fgs_notification_channel_desc">Keeps Winlator running in the background so a wine session is not interrupted by Android\'s background process management.</string>
+    <string name="fgs_notification_channel_desc">Keeps NMD COMPUTER running in the background so a wine session is not interrupted by Android\'s background process management.</string>
     <string name="fgs_notification_content_container_background">A container session is running in the background</string>
     <string name="fgs_notification_content_container_foreground">There is a container session running</string>
-    <string name="fgs_notification_content_else">Winlator is running in the background</string>
+    <string name="fgs_notification_content_else">NMD COMPUTER is running in the background</string>
     <string name="save_mem_on_run_from_steam">Save memory on run from Steam</string>
     <string name="present_mode">Present Mode</string>
 </resources>

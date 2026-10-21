@@ -202,7 +202,7 @@ public class ForegroundService extends Service {
         if (pm != null) {
             wakeLock = pm.newWakeLock(
                     PowerManager.PARTIAL_WAKE_LOCK,
-                    "Winlator:ForegroundService"
+                    "NMD COMPUTER:ForegroundService"
             );
             wakeLock.setReferenceCounted(false);
         }
@@ -279,10 +279,10 @@ public class ForegroundService extends Service {
 
         Notification n = notificationUtils.createForegroundNotification(
                 getNotificationContent(),
-                "Winlator",
-                XServerDisplayActivity.class, // Service class for the 'Exit' action
-                null, // Exit action here, not used because might cause issues
-                targetActivity // Activity class for the 'Open' (notification tap) action
+                "NMD COMPUTER",
+                XServerDisplayActivity.class,
+                null,
+                targetActivity
         );
 
         // Generate a custom notification ID if it wasn't set
@@ -371,7 +371,7 @@ public class ForegroundService extends Service {
     @NonNull
     private static String getNotificationContent() {
         ForegroundService svc = instance;
-        if (svc == null) return "Winlator is running in the background";
+        if (svc == null) return "NMD COMPUTER is running in the background";
 
         if (sessionActive.get()) {
             return isSessionInBackground && (isDeviceLocked() || !isInPictureInPictureMode())
