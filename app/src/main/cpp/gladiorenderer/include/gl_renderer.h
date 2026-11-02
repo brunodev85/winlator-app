@@ -33,6 +33,7 @@ typedef struct GLMaterial {
     float diffuse[3];
     float specular[4];
     float emission[3];
+    float alpha; // alpha of the diffuse color, becomes the alpha of the lit color
 } GLMaterial;
 
 typedef struct Mesh {
@@ -116,6 +117,8 @@ typedef struct GLState {
 
     float color[4];
     float normal[3];
+    float lightModelAmbient[4];
+    bool lightModelTwoSide;
     float texCoords[MAX_TEXTURES][4];
     TexEnv texEnv[MAX_TEXTURES];
     uint8_t enabledTextures[MAX_TEXTURES];
@@ -171,6 +174,7 @@ extern void GLRenderer_addArrayElement(GLRenderer* renderer, int index);
 extern void GLRenderer_setCapabilityState(GLRenderer* renderer, GLenum cap, bool state, int index);
 extern void GLRenderer_setMaterialParams(GLRenderer* renderer, GLenum face, GLenum pname, void* params);
 extern void GLRenderer_setLightParams(GLRenderer* renderer, GLenum id, GLenum pname, void* params);
+extern void GLRenderer_setLightModelParams(GLRenderer* renderer, GLenum pname, GLfloat* params);
 extern void GLRenderer_setTexEnvParams(GLRenderer* renderer, GLenum target, GLenum pname, float* params);
 extern void GLRenderer_setFogParams(GLRenderer* renderer, GLenum pname, GLfloat* params);
 extern void GLRenderer_setPointParams(GLRenderer* renderer, GLenum pname, void* params);

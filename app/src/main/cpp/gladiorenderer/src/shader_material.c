@@ -73,8 +73,11 @@ static void setupMaterial(ShaderMaterial* material, MaterialOptions* options) {
             }
         }
         material->location.numLights = glGetUniformLocation(material->program, "numLights");
+        material->location.lightModelAmbient = glGetUniformLocation(material->program, "gd_LightModelAmbient");
+        material->location.colorMaterial = glGetUniformLocation(material->program, "gd_ColorMaterial");
+        material->location.twoSide = glGetUniformLocation(material->program, "gd_TwoSide");
 
-        const char* materialStructNames[] = {"ambient", "diffuse", "specular", "emission"};
+        const char* materialStructNames[] = {"ambient", "diffuse", "specular", "emission", "alpha"};
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < ARRAY_SIZE(materialStructNames); j++) {
                 sprintf(uniformName, "materials[%d].%s", i, materialStructNames[j]);
@@ -114,29 +117,35 @@ static const char* getVertexShaderHead() {
             "vec3 diffuse;\n"
             "vec4 specular;\n"
             "vec3 emission;\n"
+            "float alpha;\n"
         "};\n"
 
         "uniform Light lights[GD_MAX_LIGHTS];\n"
         "uniform int numLights;\n"
+        "uniform vec3 gd_LightModelAmbient;\n"
         "uniform Material materials[2];\n"
+        // GL_COLOR_MATERIAL per face: 1.0 = the vertex color replaces ambient/diffuse/specular/emission
+        "uniform vec4 gd_ColorMaterial[2];\n"
+        "uniform float gd_TwoSide;\n"
+        "out vec4 gd_BackColor;\n"
 
-        "out vec3 gd_TotalDiffuseLight;\n"
-        "out vec3 gd_TotalSpecularLight;\n"
-
+        // attenuation only applies to positional lights
         "float getLightAttenuation(Light light, vec3 viewPosition) {\n"
+            "if (light.position.w == 0.0) return 1.0;\n"
             "float distance = length(light.position.xyz - viewPosition);\n"
             "return 1.0 / (light.attenuation.x + light.attenuation.y * distance + light.attenuation.z * (distance * distance));\n"
         "}\n"
 
+        // a cutoff below 180 degrees makes a spot light, also with an exponent of 0
         "float computeSpotIntensity(Light light, vec3 lightDirection) {\n"
-            "if (light.spotCutoffExponent.y == 0.0) return 1.0;\n"
+            "if (light.position.w == 0.0 || light.spotCutoffExponent.x >= 3.14) return 1.0;\n"
             "float angleCos = dot(-light.spotDirection, lightDirection);\n"
             "float spotCutoff = cos(light.spotCutoffExponent.x);\n"
-            "return angleCos > spotCutoff ? pow(angleCos, light.spotCutoffExponent.y) : 0.0;\n"
+            "return angleCos >= spotCutoff ? pow(max(angleCos, 0.0), light.spotCutoffExponent.y) : 0.0;\n"
         "}\n"
 
         "vec3 getLightDirection(Light light, vec3 viewPosition) {\n"
-            "return light.position.w > 0.0 ? normalize(light.position.xyz - viewPosition) : light.position.xyz;\n"
+            "return light.position.w != 0.0 ? normalize(light.position.xyz - viewPosition) : light.position.xyz;\n"
         "}\n"
     "#endif\n"
 
@@ -167,6 +176,33 @@ static const char* getVertexShaderHead() {
 
 static const char* getVertexShaderBody() {
     return
+    "#if GD_MAX_LIGHTS > 0\n"
+        // per-vertex lighting of one face as in GL: the result replaces the vertex color, which only
+        // contributes through GL_COLOR_MATERIAL; the alpha is the one of the diffuse material color
+        "vec4 computeLighting(vec3 n, int face, vec3 viewPosition) {\n"
+            "vec4 cm = gd_ColorMaterial[face];\n"
+            "vec3 mAmbient = mix(materials[face].ambient, gd_Color.rgb, cm.x);\n"
+            "vec3 mDiffuse = mix(materials[face].diffuse, gd_Color.rgb, cm.y);\n"
+            "float mAlpha = mix(materials[face].alpha, gd_Color.a, cm.y);\n"
+            "vec3 mSpecular = mix(materials[face].specular.rgb, gd_Color.rgb, cm.z);\n"
+            "vec3 lit = mix(materials[face].emission, gd_Color.rgb, cm.w) + gd_LightModelAmbient * mAmbient;\n"
+            "vec3 viewDirection = normalize(-viewPosition);\n"
+            "float shininess = materials[face].specular.w;\n"
+            "for (int i = 0; i < numLights; i++) {\n"
+                "vec3 lightDirection = getLightDirection(lights[i], viewPosition);\n"
+                "float factor = computeSpotIntensity(lights[i], lightDirection) * getLightAttenuation(lights[i], viewPosition);\n"
+                "float NdotL = max(dot(n, lightDirection), 0.0);\n"
+                "vec3 contribution = lights[i].ambient * mAmbient + NdotL * lights[i].diffuse * mDiffuse;\n"
+                "if (NdotL > 0.0) {\n"
+                    "vec3 halfVector = normalize(lightDirection + viewDirection);\n"
+                    "contribution += pow(max(dot(n, halfVector), 0.0001), shininess) * lights[i].specular * mSpecular;\n"
+                "}\n"
+                "lit += factor * contribution;\n"
+            "}\n"
+            "return vec4(clamp(lit, 0.0, 1.0), mAlpha);\n"
+        "}\n"
+    "#endif\n"
+
         "void main() {\n"
             "gd_FrontColor = gd_Color;\n"
 
@@ -180,30 +216,12 @@ static const char* getVertexShaderBody() {
             "vec4 position = gd_Vertex;\n"
         "#endif\n"
 
+        // with GL_LIGHT_MODEL_TWO_SIDE the back face is lit as well, and the fragment shader picks
+        // the color by the orientation of the primitive like GL does
         "#if GD_MAX_LIGHTS > 0\n"
-            "vec3 mvNormal = vec3(gd_ModelViewMatrix * vec4(gd_Normal, 0.0));\n"
-            "int face = int(dot(mvNormal, position.xyz) >= 0.0);\n"
-            "gd_TotalDiffuseLight = vec3(step(float(numLights), 0.0));\n"
-            "gd_TotalSpecularLight = numLights > 0 ? materials[face].emission : vec3(0.0);\n"
-            "vec3 totalAmbientLight = vec3(0.0);\n"
-            "vec3 viewDirection = normalize(-position.xyz);\n"
-            "float shininess = materials[face].specular.w;\n"
-
-            "for (int i = 0; i < numLights; i++) {\n"
-                "totalAmbientLight += lights[i].ambient * materials[face].ambient;\n"
-                "vec3 lightDirection = getLightDirection(lights[i], position.xyz);\n"
-                "float spotIntensity = computeSpotIntensity(lights[i], lightDirection);\n"
-                "float attenuation = getLightAttenuation(lights[i], position.xyz);\n"
-
-                "float diffuse = clamp(dot(mvNormal, lightDirection), 0.0, 1.0);\n"
-                "gd_TotalDiffuseLight += diffuse * lights[i].diffuse * materials[face].diffuse * spotIntensity * attenuation;\n"
-
-                "vec3 lightVector = normalize(lightDirection + viewDirection);\n"
-                "float specular = pow(clamp(dot(mvNormal, lightVector), 0.0, 1.0), shininess);\n"
-                "gd_TotalSpecularLight += specular * lights[i].specular * materials[face].specular.rgb * spotIntensity * attenuation;\n"
-            "}\n"
-
-            "gd_TotalDiffuseLight += totalAmbientLight;\n"
+            "vec3 mvNormal = normalize(vec3(gd_ModelViewMatrix * vec4(gd_Normal, 0.0)));\n"
+            "gd_FrontColor = computeLighting(mvNormal, 0, position.xyz);\n"
+            "gd_BackColor = gd_TwoSide > 0.5 ? computeLighting(-mvNormal, 1, position.xyz) : gd_FrontColor;\n"
         "#endif\n"
 
         "#if GD_FOG\n"
@@ -235,12 +253,10 @@ static const char* getFragmentShaderHead() {
 
     SHADER_CHUNK_ALPHA_TEST
 
-    "#if GD_MAX_LIGHTS > 0\n"
-        "in vec3 gd_TotalDiffuseLight;\n"
-        "in vec3 gd_TotalSpecularLight;\n"
-    "#endif\n"
-
         "in vec4 gd_FrontColor;\n"
+    "#if GD_MAX_LIGHTS > 0\n"
+        "in vec4 gd_BackColor;\n"
+    "#endif\n"
 
     "#if GD_USE_TEXTURE\n"
         "struct gd_TexEnvParameters {\n"
@@ -374,7 +390,7 @@ static const char* getFragmentShaderBody() {
         "void main() {\n"
 
         "#if GD_MAX_LIGHTS > 0\n"
-            "vec4 finalColor = vec4(gd_FrontColor.rgb * gd_TotalDiffuseLight + gd_TotalSpecularLight, gd_FrontColor.a);\n"
+            "vec4 finalColor = gl_FrontFacing ? gd_FrontColor : gd_BackColor;\n"
         "#else\n"
             "vec4 finalColor = gd_FrontColor;\n"
         "#endif\n"
@@ -585,6 +601,23 @@ static void setLightUniforms(GLRenderer* renderer, ShaderMaterial* material) {
         }
     }
     glUniform1i(material->location.numLights, numLights);
+    glUniform3fv(material->location.lightModelAmbient, 1, renderer->state.lightModelAmbient);
+
+    // GL_COLOR_MATERIAL: which material colors of each face follow the vertex color
+    float colorMaterial[8] = {0};
+    if (renderer->state.colorMaterial.enabled) {
+        GLenum face = renderer->state.colorMaterial.face;
+        GLenum mode = renderer->state.colorMaterial.mode;
+        for (int i = 0; i < 2; i++) {
+            if ((i == 0 && face == GL_BACK) || (i == 1 && face == GL_FRONT)) continue;
+            colorMaterial[i * 4 + 0] = mode == GL_AMBIENT || mode == GL_AMBIENT_AND_DIFFUSE ? 1.0f : 0.0f;
+            colorMaterial[i * 4 + 1] = mode == GL_DIFFUSE || mode == GL_AMBIENT_AND_DIFFUSE ? 1.0f : 0.0f;
+            colorMaterial[i * 4 + 2] = mode == GL_SPECULAR ? 1.0f : 0.0f;
+            colorMaterial[i * 4 + 3] = mode == GL_EMISSION ? 1.0f : 0.0f;
+        }
+    }
+    glUniform4fv(material->location.colorMaterial, 2, colorMaterial);
+    glUniform1f(material->location.twoSide, renderer->state.lightModelTwoSide ? 1.0f : 0.0f);
 }
 
 static void setMaterialUniforms(GLRenderer* renderer, ShaderMaterial* material) {
@@ -596,6 +629,7 @@ static void setMaterialUniforms(GLRenderer* renderer, ShaderMaterial* material) 
         glUniform3fv(material->location.materials[i][1], 1, (const GLfloat*)materials[i].diffuse);
         glUniform4fv(material->location.materials[i][2], 1, (const GLfloat*)materials[i].specular);
         glUniform3fv(material->location.materials[i][3], 1, (const GLfloat*)materials[i].emission);
+        glUniform1f(material->location.materials[i][4], materials[i].alpha);
     }
 }
 

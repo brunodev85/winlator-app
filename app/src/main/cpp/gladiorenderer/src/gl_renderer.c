@@ -41,20 +41,23 @@ static void initMaterials(GLRenderer* renderer) {
     memcpy(materials[0].diffuse, diffuse, sizeof(diffuse));
     memcpy(materials[1].ambient, ambient, sizeof(ambient));
     memcpy(materials[1].diffuse, diffuse, sizeof(diffuse));
+    materials[0].alpha = materials[1].alpha = 1.0f;
 
     renderer->materials = materials;
 }
 
-static void initLight(GLLight* light) {
-    const float ambient[] = {0.2f, 0.2f, 0.2f};
+// GL defaults: ambient is 0 for every light, diffuse and specular are 1 only for GL_LIGHT0
+static void initLight(GLLight* light, int index) {
+    const float ambient[] = {0.0f, 0.0f, 0.0f};
     const float diffuse[] = {1.0f, 1.0f, 1.0f};
+    const float black[] = {0.0f, 0.0f, 0.0f};
     const float position[] = {0.0f, 0.0f, 1.0f, 0.0f};
     const float attenuation[] = {1.0f, 0.0f, 0.0f};
     const float spotDirection[] = {0.0f, 0.0f, -1.0f};
 
     memcpy(light->ambient, ambient, sizeof(ambient));
-    memcpy(light->diffuse, diffuse, sizeof(diffuse));
-    memcpy(light->specular, diffuse, sizeof(diffuse));
+    memcpy(light->diffuse, index == 0 ? diffuse : black, sizeof(diffuse));
+    memcpy(light->specular, index == 0 ? diffuse : black, sizeof(diffuse));
     memcpy(light->position, position, sizeof(position));
     memcpy(light->attenuation, attenuation, sizeof(position));
     memcpy(light->spotDirection, spotDirection, sizeof(spotDirection));
@@ -65,9 +68,11 @@ void GLRenderer_initOnEGLContext(GLRenderer* renderer) {
     const float color[] = {1.0f, 1.0f, 1.0f, 1.0f};
     const float normal[] = {0.0f, 0.0f, 1.0f};
     const float texCoord[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    const float lightModelAmbient[] = {0.2f, 0.2f, 0.2f, 1.0f};
 
     memcpy(renderer->state.color, color, sizeof(color));
     memcpy(renderer->state.normal, normal, sizeof(normal));
+    memcpy(renderer->state.lightModelAmbient, lightModelAmbient, sizeof(lightModelAmbient));
 
     for (int i = 0; i < MAX_TEXTURES; i++) {
         memcpy(renderer->state.texCoords[i], texCoord, sizeof(texCoord));
@@ -98,10 +103,15 @@ void GLRenderer_initOnEGLContext(GLRenderer* renderer) {
     renderer->state.alphaTest.func = GL_ALWAYS;
     renderer->state.alphaTest.ref = 0.0f;
 
+    renderer->state.colorMaterial.face = GL_FRONT_AND_BACK;
+    renderer->state.colorMaterial.mode = GL_AMBIENT_AND_DIFFUSE;
+
     renderer->state.shadeModel = GL_SMOOTH;
     renderer->state.clampReadColor = false;
 
-    for (int i = 0; i < MAX_LIGHTS; i++) initLight(&renderer->lights[i]);
+    for (int i = 0; i < MAX_LIGHTS; i++) initLight(&renderer->lights[i], i);
+    // the default material applies even if the program never calls glMaterial
+    initMaterials(renderer);
 
     glGenBuffers(ARRAY_SIZE(renderer->bufferIds), renderer->bufferIds);
 
@@ -532,6 +542,7 @@ void GLRenderer_setMaterialParams(GLRenderer* renderer, GLenum face, GLenum pnam
                     break;
                 case GL_DIFFUSE:
                     memcpy(material->diffuse, params, sizeof(material->diffuse));
+                    material->alpha = ((float*)params)[3];
                     break;
                 case GL_SPECULAR:
                     memcpy(material->specular, params, 3 * sizeof(float));
@@ -545,6 +556,7 @@ void GLRenderer_setMaterialParams(GLRenderer* renderer, GLenum face, GLenum pnam
                 case GL_AMBIENT_AND_DIFFUSE:
                     memcpy(material->ambient, params, sizeof(material->ambient));
                     memcpy(material->diffuse, params, sizeof(material->diffuse));
+                    material->alpha = ((float*)params)[3];
                     break;
             }
         }
@@ -560,14 +572,12 @@ void GLRenderer_setLightParams(GLRenderer* renderer, GLenum id, GLenum pname, vo
         case GL_POSITION: {
             memcpy(light->position, params, sizeof(light->position));
             float* modelViewMatrix = GLRenderer_getMatrixFromStack(renderer, MODEL_VIEW_MATRIX_INDEX);
-            if (light->position[3] > 0.0f) {
+            // GL transforms positions (w != 0) and directions (w == 0) into eye space with the
+            // current modelview matrix; directions use its upper 3x3 part, not the inverse
+            if (light->position[3] != 0.0f) {
                 vec3_apply_mat4(light->position, modelViewMatrix);
             }
-            else {
-                float inverseMatrix[16];
-                mat4_inverse(inverseMatrix, modelViewMatrix);
-                vec3_transform_direction(light->position, inverseMatrix);
-            }
+            else vec3_transform_direction(light->position, modelViewMatrix);
             break;
         }
         case GL_AMBIENT:
@@ -600,11 +610,26 @@ void GLRenderer_setLightParams(GLRenderer* renderer, GLenum id, GLenum pname, vo
         case GL_SPOT_DIRECTION: {
             memcpy(light->spotDirection, params, sizeof(light->spotDirection));
             float* modelViewMatrix = GLRenderer_getMatrixFromStack(renderer, MODEL_VIEW_MATRIX_INDEX);
-            float inverseMatrix[16];
-            mat4_inverse(inverseMatrix, modelViewMatrix);
-            vec3_transform_direction(light->spotDirection, inverseMatrix);
+            vec3_transform_direction(light->spotDirection, modelViewMatrix);
             break;
         }
+    }
+}
+
+void GLRenderer_setLightModelParams(GLRenderer* renderer, GLenum pname, GLfloat* params) {
+    switch (pname) {
+        case GL_LIGHT_MODEL_AMBIENT:
+            memcpy(renderer->state.lightModelAmbient, params, sizeof(renderer->state.lightModelAmbient));
+            break;
+        case GL_LIGHT_MODEL_TWO_SIDE:
+            renderer->state.lightModelTwoSide = params[0] != 0.0f;
+            break;
+        case GL_LIGHT_MODEL_LOCAL_VIEWER:
+        case GL_LIGHT_MODEL_COLOR_CONTROL:
+            break;
+        default:
+            println("gladio:setLightModelParams: unimplemented pname %x", pname);
+            break;
     }
 }
 
@@ -1125,6 +1150,10 @@ void GLRenderer_setTexParameter(GLRenderer* renderer, GLenum target, GLenum pnam
             glTexParameteri(target, pname, param);
             break;
         }
+        case GL_TEXTURE_SWIZZLE_RGBA:
+            // OpenGL ES has no GL_TEXTURE_SWIZZLE_RGBA, set the four components one by one
+            for (int i = 0; i < 4; i++) glTexParameteri(target, GL_TEXTURE_SWIZZLE_R + i, (GLint)params[i]);
+            break;
         case GL_DEPTH_STENCIL_TEXTURE_MODE:
         case GL_TEXTURE_BASE_LEVEL:
         case GL_TEXTURE_COMPARE_FUNC:

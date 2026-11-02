@@ -189,6 +189,7 @@ static inline int getGLCallParamsCount(GLenum pname, bool* isColor) {
             return 3;
         case GL_POSITION:
         case GL_PATCH_DEFAULT_OUTER_LEVEL:
+        case GL_TEXTURE_SWIZZLE_RGBA:
             return 4;
         case GL_AMBIENT:
         case GL_DIFFUSE:

@@ -64,8 +64,11 @@ typedef struct ShaderMaterial {
 
         int lights[MAX_LIGHTS][7];
         int numLights;
+        int lightModelAmbient;
+        int colorMaterial;
+        int twoSide;
 
-        int materials[2][4];
+        int materials[2][5];
     } location;
 } ShaderMaterial;
 
