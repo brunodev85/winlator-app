@@ -434,6 +434,8 @@ void readCommandBuffer(GLContext* context) {
     RingBuffer_read(context->serverRing, context->inputBuffer.buffer + context->inputBuffer.position, bufferSize);
     context->inputBuffer.size += bufferSize;
 
+    // 16-bit indices: at most one vertex per 6 bytes of commands (glArrayElement)
+    GLRenderer_reserveBatchVertices(currentRenderer, bufferSize / 6);
     GLRenderer_beginImmediate(currentRenderer, mode);
     while (ArrayBuffer_available(&context->inputBuffer) > 0) {
         short requestCode = ArrayBuffer_getShort(&context->inputBuffer);
@@ -481,6 +483,19 @@ bool readUnboundVertexArrays(GLContext* context, GLenum drawMode, int drawCount,
     bool meshCreated = false;
 
     GLClientState* clientState = &currentRenderer->clientState;
+
+    // fixed-function client arrays go into the batch, which has to stay aligned (see GLRenderer_prepareBatchArrays)
+    bool anyLegacy = false;
+    for (int i = 0; i < clientState->vao->maxEnabledAttribs; i++) {
+        if (clientState->vao->attribs[i].state == VERTEX_ATTRIB_LEGACY_ENABLED && !GLClientState_isLegacyEnabledWithProgram(clientState, i)) anyLegacy = true;
+    }
+    if (anyLegacy) {
+        // without a vertex array nothing is drawn, and the other arrays must not shift the batch
+        if (clientState->vao->attribs[POSITION_ARRAY_INDEX].state != VERTEX_ATTRIB_LEGACY_ENABLED) return true;
+        GLRenderer_reserveBatchVertices(currentRenderer, drawCount);
+        GLRenderer_prepareBatchArrays(currentRenderer, drawCount);
+    }
+
     for (int i = 0, j; i < clientState->vao->maxEnabledAttribs; i++) {
         bool legacyEnabledWithProgram = GLClientState_isLegacyEnabledWithProgram(clientState, i);
         if (clientState->vao->attribs[i].state == VERTEX_ATTRIB_ENABLED || legacyEnabledWithProgram) {

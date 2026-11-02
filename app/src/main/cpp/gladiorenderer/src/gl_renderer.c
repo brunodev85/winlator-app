@@ -160,8 +160,15 @@ static void updateVertexBuffers(GLRenderer* renderer, int* attribLocations) {
         }
     }
 
-    if (attribLocations[NORMAL_ARRAY_INDEX] != -1 && geometry->normals.size > 0) {
-        bindVertexBuffer(renderer, renderer->bufferIds[3], attribLocations[NORMAL_ARRAY_INDEX], 3, geometry->normals.size, geometry->normals.buffer);
+    if (attribLocations[NORMAL_ARRAY_INDEX] != -1) {
+        if (geometry->normals.size > 0) {
+            bindVertexBuffer(renderer, renderer->bufferIds[3], attribLocations[NORMAL_ARRAY_INDEX], 3, geometry->normals.size, geometry->normals.buffer);
+        }
+        else {
+            // current normal for the whole batch (glNormal without a normal array)
+            GLRenderer_disableVertexAttribute(renderer, attribLocations[NORMAL_ARRAY_INDEX]);
+            glVertexAttrib3fv(attribLocations[NORMAL_ARRAY_INDEX], renderer->state.normal);
+        }
     }
 
     for (int i = 0, j = TEXCOORD_ARRAY_INDEX, k, count; i < MAX_TEXTURES; i++, j++) {
@@ -169,6 +176,18 @@ static void updateVertexBuffers(GLRenderer* renderer, int* attribLocations) {
             GLTexture* texture = renderer->clientState.texture[i][indexOfGLTarget(GL_TEXTURE_2D)];
             if (texture && texture->normalizeCoords) normalizeTexCoords(texture, &geometry->texCoords[i]);
             bindVertexBuffer(renderer, renderer->bufferIds[j+1], attribLocations[j], 4, geometry->texCoords[i].size, geometry->texCoords[i].buffer);
+        }
+        else if (attribLocations[j] != -1) {
+            // current texture coordinate for the whole batch (glTexCoord/glMultiTexCoord without an array)
+            GLRenderer_disableVertexAttribute(renderer, attribLocations[j]);
+            float texCoord[4];
+            memcpy(texCoord, renderer->state.texCoords[i], sizeof(texCoord));
+            GLTexture* texture = renderer->clientState.texture[i][indexOfGLTarget(GL_TEXTURE_2D)];
+            if (texture && texture->normalizeCoords && texture->width > 0 && texture->height > 0) {
+                texCoord[0] /= texture->width;
+                texCoord[1] /= texture->height;
+            }
+            glVertexAttrib4fv(attribLocations[j], texCoord);
         }
         geometry->texCoords[i].size = 0;
     }
@@ -389,24 +408,105 @@ void GLRenderer_popMatrix(GLRenderer* renderer) {
     }
 }
 
+/*
+ * The batch attributes (color, normal and the texture coordinates of each unit) stay aligned with
+ * the batch vertices. Each one is either empty, and then the current value (glColor, glNormal,
+ * glTexCoord) applies to every vertex of the batch when it is drawn, or it has exactly one entry
+ * per vertex. When the current value changes in the middle of a batch, or a draw call brings a
+ * client array for the attribute, the vertices so far get the value that applied to them. Before,
+ * two batched draw calls with different current colors both got the last one, and arrays shifted
+ * against each other when only one of the draw calls had an array for them.
+ */
+static ArrayBuffer* getBatchAttrib(GLRenderer* renderer, int arrayIdx, int* outComps, float** outValue) {
+    if (arrayIdx == COLOR_ARRAY_INDEX) {
+        *outComps = 4;
+        *outValue = renderer->state.color;
+        return &renderer->geometry.colors;
+    }
+    if (arrayIdx == NORMAL_ARRAY_INDEX) {
+        *outComps = 3;
+        *outValue = renderer->state.normal;
+        return &renderer->geometry.normals;
+    }
+    int unit = arrayIdx - TEXCOORD_ARRAY_INDEX;
+    *outComps = 4;
+    *outValue = renderer->state.texCoords[unit];
+    return &renderer->geometry.texCoords[unit];
+}
+
+#define BATCH_ATTRIB_FIRST COLOR_ARRAY_INDEX
+#define BATCH_ATTRIB_END (TEXCOORD_ARRAY_INDEX + MAX_TEXTURES)
+
+static inline int getBatchVertexCount(GLRenderer* renderer) {
+    return renderer->geometry.vertices.size / (int)(4 * sizeof(float));
+}
+
+// fill the attribute with its current value up to vertexCount entries
+static void padBatchAttrib(GLRenderer* renderer, int arrayIdx, int vertexCount) {
+    int comps;
+    float* value;
+    ArrayBuffer* buffer = getBatchAttrib(renderer, arrayIdx, &comps, &value);
+    int elementSize = comps * (int)sizeof(float);
+    int targetSize = vertexCount * elementSize;
+    if (buffer->size >= targetSize) return;
+    ENSURE_ARRAY_CAPACITY(targetSize, buffer->capacity, buffer->buffer, 1);
+    for (int offset = buffer->size; offset < targetSize; offset += elementSize) memcpy(buffer->buffer + offset, value, elementSize);
+    buffer->size = targetSize;
+}
+
+// glColor/glNormal/glTexCoord/glMultiTexCoord
+void GLRenderer_setCurrentAttrib(GLRenderer* renderer, int arrayIdx, const float* newValue) {
+    int comps;
+    float* value;
+    ArrayBuffer* buffer = getBatchAttrib(renderer, arrayIdx, &comps, &value);
+    if (buffer->size == 0) {
+        int vertexCount = getBatchVertexCount(renderer);
+        if (vertexCount > 0 && memcmp(value, newValue, comps * sizeof(float)) != 0) padBatchAttrib(renderer, arrayIdx, vertexCount);
+    }
+    memcpy(value, newValue, comps * sizeof(float));
+    buffer->position++;
+}
+
+/*
+ * Before reading a draw call with client arrays (addedVertices new vertices): attributes with an
+ * array get the current value for the vertices so far, attributes without an array that the batch
+ * already keeps per vertex get it for the new vertices.
+ */
+void GLRenderer_prepareBatchArrays(GLRenderer* renderer, int addedVertices) {
+    GLVertexAttrib* attribs = renderer->clientState.vao->attribs;
+    int vertexCount = getBatchVertexCount(renderer);
+    for (int arrayIdx = BATCH_ATTRIB_FIRST; arrayIdx < BATCH_ATTRIB_END; arrayIdx++) {
+        if (attribs[arrayIdx].state == VERTEX_ATTRIB_LEGACY_ENABLED) {
+            padBatchAttrib(renderer, arrayIdx, vertexCount);
+            continue;
+        }
+        int comps;
+        float* value;
+        ArrayBuffer* buffer = getBatchAttrib(renderer, arrayIdx, &comps, &value);
+        if (buffer->size > 0) padBatchAttrib(renderer, arrayIdx, vertexCount + addedVertices);
+    }
+}
+
+// draw the pending batch first if addedVertices more vertices would not fit into 16-bit indices
+void GLRenderer_reserveBatchVertices(GLRenderer* renderer, int addedVertices) {
+    if (renderer->geometry.vertices.position + addedVertices > 65535 && !ArrayDeque_isEmpty(&renderer->meshes) && !renderer->activeMesh) {
+        GLRenderer_drawImmediate(renderer);
+    }
+}
+
 void GLRenderer_addVertex(GLRenderer* renderer, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
     if (!renderer->activeMesh) return;
+
+    // attributes that the batch keeps per vertex get the current value
+    int vertexCount = getBatchVertexCount(renderer);
+    for (int arrayIdx = BATCH_ATTRIB_FIRST; arrayIdx < BATCH_ATTRIB_END; arrayIdx++) {
+        int comps;
+        float* value;
+        ArrayBuffer* buffer = getBatchAttrib(renderer, arrayIdx, &comps, &value);
+        if (buffer->size > 0) padBatchAttrib(renderer, arrayIdx, vertexCount + 1);
+    }
+
     ArrayBuffer_putFloat4(&renderer->geometry.vertices, x, y, z, w);
-
-    if (renderer->geometry.colors.position > 0 || renderer->geometry.colors.size > 0) {
-        ArrayBuffer_putBytes(&renderer->geometry.colors, renderer->state.color, 4 * sizeof(float));
-    }
-
-    if (renderer->geometry.normals.position > 0) {
-        ArrayBuffer_putBytes(&renderer->geometry.normals, renderer->state.normal, 3 * sizeof(float));
-    }
-
-    for (int i = 0; i < MAX_TEXTURES; i++) {
-        if (renderer->geometry.texCoords[i].position > 0) {
-            ArrayBuffer_putBytes(&renderer->geometry.texCoords[i], renderer->state.texCoords[i], 4 * sizeof(float));
-        }
-    }
-
     int index = renderer->geometry.vertices.position++;
     GLRenderer_addArrayElement(renderer, index);
 }
@@ -797,6 +897,16 @@ int GLRenderer_getParamsv(GLRenderer* renderer, GLenum pname, GLenum type, void*
             if (params) memcpy(params, GLRenderer_getMatrixFromStack(renderer, TEXTURE_MATRIX_INDEX), MAT4_SIZE);
             paramSize = MAT4_SIZE;
             break;
+        case GL_MATRIX_MODE: {
+            // not part of OpenGL ES: the driver rejects the query and the reply would be uninitialized
+            GLenum mode = GL_MODELVIEW + renderer->matrixIndex;
+            if (params) {
+                if (type == GL_FLOAT) *(GLfloat*)params = (GLfloat)mode;
+                else if (type == GL_BOOL) *(GLboolean*)params = GL_TRUE;
+                else *(GLint*)params = (GLint)mode;
+            }
+            break;
+        }
         case GL_MAX_PROJECTION_STACK_DEPTH:
         case GL_MAX_TEXTURE_STACK_DEPTH:
             if (params) *(GLint*)params = 2;
