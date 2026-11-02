@@ -1354,7 +1354,7 @@ void GLRenderer_disableUnusedVertexAttributes(GLRenderer* renderer) {
 static void freePixelReadCache(GLRenderer* renderer) {
     if (renderer->pixelReadCache) {
         if (renderer->pixelReadCache->data) free(renderer->pixelReadCache->data);
-        renderer->pixelReadCache = NULL;
+        MEMFREE(renderer->pixelReadCache);
     }
 }
 
@@ -1366,34 +1366,28 @@ void GLRenderer_resetFrameCount(GLRenderer* renderer) {
 void GLRenderer_readPixels(GLRenderer* renderer, GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, void* pixels) {
     int srcDataSize = width * height * 4;
     GLuint framebuffer = renderer->clientState.framebuffer[indexOfGLTarget(GL_READ_FRAMEBUFFER)];
+    // with a pixel pack buffer bound, pixels is an offset into that buffer and not a pointer,
+    // so the read cache can neither be filled from it nor copied into it
+    GLBuffer* pixelPackBuffer = GLBuffer_getBound(GL_PIXEL_PACK_BUFFER);
     PixelReadCache* pixelReadCache = renderer->pixelReadCache;
-    if (pixelReadCache && x == 0 && y == 0 &&
+    if (pixelReadCache && !pixelPackBuffer && x == 0 && y == 0 &&
                           pixelReadCache->dataSize == srcDataSize &&
+                          pixelReadCache->format == format &&
+                          pixelReadCache->type == type &&
                           pixelReadCache->framebuffer == framebuffer &&
                          (renderer->frameCount-pixelReadCache->frameIndex) <= PIXEL_READ_CACHE_SKIP_FRAMES) {
         memcpy(pixels, pixelReadCache->data, srcDataSize);
         return;
     }
 
-    GLBuffer* pixelPackBuffer = GLBuffer_getBound(GL_PIXEL_PACK_BUFFER);
     bool convert = format != GL_RGBA && format != GL_BGRA;
     if (pixelPackBuffer && convert) glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
 
     char* srcData = convert ? malloc(srcDataSize) : pixels;
     glReadPixels(x, y, width, height, GL_RGBA, GL_UNSIGNED_BYTE, srcData);
 
-    if (x == 0 && y == 0 && width <= 256 && height <= 256 && !convert) {
-        if (!pixelReadCache) renderer->pixelReadCache = pixelReadCache = calloc(1, sizeof(PixelReadCache));
-        if (srcDataSize != pixelReadCache->dataSize) {
-            MEMFREE(pixelReadCache->data);
-            pixelReadCache->data = malloc(srcDataSize);
-            pixelReadCache->dataSize = srcDataSize;
-        }
-        pixelReadCache->framebuffer = framebuffer;
-        pixelReadCache->frameIndex = renderer->frameCount;
-        memcpy(pixelReadCache->data, srcData, srcDataSize);
-    }
-    else freePixelReadCache(renderer);
+    bool cacheResult = x == 0 && y == 0 && width <= 256 && height <= 256 && !convert && !pixelPackBuffer;
+    if (!cacheResult) freePixelReadCache(renderer);
 
     if (pixelPackBuffer) {
         if (!convert) {
@@ -1445,10 +1439,12 @@ void GLRenderer_readPixels(GLRenderer* renderer, GLint x, GLint y, GLsizei width
                 }
                 break;
             case GL_BGRA:
+                // dstData and srcData are the same buffer here, so keep red before overwriting it
                 for (int i = 0; i < srcDataSize; i += 4) {
+                    char red = srcData[i+0];
                     dstData[i+0] = srcData[i+2];
                     dstData[i+1] = srcData[i+1];
-                    dstData[i+2] = srcData[i+0];
+                    dstData[i+2] = red;
                     dstData[i+3] = srcData[i+3];
                 }
                 break;
@@ -1460,6 +1456,21 @@ void GLRenderer_readPixels(GLRenderer* renderer, GLint x, GLint y, GLsizei width
         }
     }
     else println("gladio:readPixels: unimplemented type %x", type);
+
+    // cache the pixels as the client got them, in the requested format
+    if (cacheResult) {
+        if (!pixelReadCache) renderer->pixelReadCache = pixelReadCache = calloc(1, sizeof(PixelReadCache));
+        if (srcDataSize != pixelReadCache->dataSize) {
+            MEMFREE(pixelReadCache->data);
+            pixelReadCache->data = malloc(srcDataSize);
+            pixelReadCache->dataSize = srcDataSize;
+        }
+        pixelReadCache->framebuffer = framebuffer;
+        pixelReadCache->format = format;
+        pixelReadCache->type = type;
+        pixelReadCache->frameIndex = renderer->frameCount;
+        memcpy(pixelReadCache->data, pixels, srcDataSize);
+    }
 
     if (convert) free(srcData);
 }

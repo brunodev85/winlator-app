@@ -74,6 +74,8 @@ typedef struct TexEnv {
 
 typedef struct PixelReadCache {
     GLuint framebuffer;
+    GLenum format;
+    GLenum type;
     int dataSize;
     void* data;
     GLuint frameIndex;
