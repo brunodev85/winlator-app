@@ -142,7 +142,6 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
 
         envVars.put("BOX64_NOBANNER", box64Logs >= 1 ? "0" : "1");
         envVars.put("BOX64_DYNAREC", "1");
-        envVars.put("BOX64_UNITYPLAYER", "0");
         envVars.put("BOX64_DYNACACHE", "0");
 
         if (box64Logs >= 1) {
