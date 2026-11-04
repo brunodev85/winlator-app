@@ -182,12 +182,15 @@ public class PresentExtension extends Extension implements WindowManager.OnWindo
             if (pixmap != null) {
                 Texture srcTexture = pixmap.drawable.getTexture();
                 if (srcTexture instanceof GPUImage) {
+                    GPUImage.createOrObtain(xServer, content, false, true);
                     if (eglContextPtr == 0) createCopyEGLContext(client);
-                    content.setData(null);
                     content.getTexture().copyFromSource(srcTexture);
                     content.forceUpdate();
                 }
-                else content.copyArea((short)0, (short)0, xOff, yOff, pixmap.drawable.width, pixmap.drawable.height, pixmap.drawable);
+                else {
+                    GPUImage.createOrObtain(xServer, content, true, true);
+                    content.copyArea((short)0, (short)0, xOff, yOff, pixmap.drawable.width, pixmap.drawable.height, pixmap.drawable);
+                }
 
                 if (targetMSC > 0) {
                     sendIdleNotifyScheduled(window, pixmap, serial, idleFence);
@@ -207,7 +210,6 @@ public class PresentExtension extends Extension implements WindowManager.OnWindo
         if (window == null) throw new BadWindow(windowId);
 
         window.removeTag("lastIdleTime");
-        GPUImage.createOrObtain(xServer, window.getContent(), true, true);
 
         if (eventId > 0) {
             synchronized (events) {
@@ -220,7 +222,7 @@ public class PresentExtension extends Extension implements WindowManager.OnWindo
                     }
                     else events.remove(eventId);
                 }
-                else {
+                else if (!mask.isEmpty()) {
                     event = new PresentEvent();
                     event.id = eventId;
                     event.window = window;
