@@ -178,6 +178,11 @@ void vt_handle_vkDestroyDevice(VkContext* context) {
     vt_unserialize_vkDestroyDevice((VkDevice)&deviceId, NULL, context->inputBuffer, &context->memoryPool);
     VkDevice device = VkObject_fromId(deviceId);
 
+    if (context->textureDecoder && context->textureDecoder->device == device) {
+        TextureDecoder_destroy(context->textureDecoder);
+        context->textureDecoder = NULL;
+    }
+
     vulkanWrapper.vkDestroyDevice(device, NULL);
 }
 
