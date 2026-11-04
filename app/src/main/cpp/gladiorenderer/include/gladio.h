@@ -232,7 +232,10 @@ static inline int getGLCallParamsCount(GLenum pname, bool* isColor) {
             dataSize = imageData && !pixelUnpackBuffer ? computeTexImageDataSize(format, type, width, height, depth) : 0; \
             ArrayBuffer_putInt(&outputBuffer, dataSize); \
         } \
-        else ArrayBuffer_putInt(&outputBuffer, compressedSize); \
+        else { \
+            if (!imageData && !pixelUnpackBuffer) dataSize = 0; \
+            ArrayBuffer_putInt(&outputBuffer, dataSize); \
+        } \
         if (pixelUnpackBuffer) ArrayBuffer_putInt(&outputBuffer, (uint64_t)imageData); \
         GL_SEND_CHECKED(requestCode, outputBuffer.buffer, outputBuffer.size); \
         if (pixelUnpackBuffer) { \
