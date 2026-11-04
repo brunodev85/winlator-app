@@ -324,10 +324,8 @@ public class GLRenderer implements GLSurfaceView.Renderer, WindowManager.OnWindo
             else renderableWindows.add(new RenderableWindow(window.getContent(), x, y, transparent, null));
         }
 
-        if (window.attributes.isRenderSubwindows()) {
-            for (Window child : window.getChildren()) {
-                collectRenderableWindows(child, child.getX() + x, child.getY() + y);
-            }
+        for (Window child : window.getChildren()) {
+            collectRenderableWindows(child, child.getX() + x, child.getY() + y);
         }
     }
 

@@ -41,15 +41,6 @@ public class XComposite extends Extension {
         return "Composite";
     }
 
-    private void setWindowsToOffscreenStorage(Window window, boolean offscreenStorage) {
-        if (!window.attributes.isMapped()) return;
-        window.getContent().setOffscreenStorage(offscreenStorage);
-
-        for (Window child : window.getChildren()) {
-            setWindowsToOffscreenStorage(child, offscreenStorage);
-        }
-    }
-
     private void queryVersion(XClient client, XInputStream inputStream, XOutputStream outputStream) throws IOException, XRequestError {
         inputStream.skip(8);
 
@@ -77,8 +68,7 @@ public class XComposite extends Extension {
 
         Window parent = window.getParent();
         window.setTag("compositeRedirectParent", parent);
-        setWindowsToOffscreenStorage(window, true);
-        parent.attributes.setRenderSubwindows(false);
+        window.getContent().setOffscreenStorage(true);
         xServer.windowManager.triggerOnChangeWindowZOrder(window);
 
         if (updateMode == UpdateMode.REDIRECT_AUTOMATIC.ordinal()) {
@@ -97,16 +87,11 @@ public class XComposite extends Extension {
         Window window = xServer.windowManager.getWindow(windowId);
         if (window == null) throw new BadWindow(windowId);
 
-        if (window == xServer.windowManager.rootWindow) throw new BadMatch();
         Window oldParent = (Window)window.getTag("compositeRedirectParent");
         if (oldParent == null) throw new BadValue(windowId);
 
-        boolean forceRedirectAutomatic = window.isSurface() && window.getWidth() == oldParent.getWidth() && window.getHeight() == oldParent.getHeight();
-        if (forceRedirectAutomatic) updateMode = (byte)UpdateMode.REDIRECT_AUTOMATIC.ordinal();
-
         window.removeTag("compositeRedirectParent");
-        setWindowsToOffscreenStorage(window, false);
-        oldParent.attributes.setRenderSubwindows(true);
+        window.getContent().setOffscreenStorage(false);
         xServer.windowManager.triggerOnChangeWindowZOrder(window);
 
         if (updateMode == UpdateMode.REDIRECT_AUTOMATIC.ordinal()) {

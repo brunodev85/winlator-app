@@ -22,8 +22,7 @@ public class WindowAttributes {
     public static final int FLAG_MAPPED = 1<<15;
     public static final int FLAG_ENABLED = 1<<16;
     public static final int FLAG_TRANSPARENT = 1<<17;
-    public static final int FLAG_RENDER_SUBWINDOWS = 1<<18;
-    public static final int FLAG_VIEWABLE = 1<<19;
+    public static final int FLAG_VIEWABLE = 1<<18;
     public enum BackingStore {NOT_USEFUL, WHEN_MAPPED, ALWAYS}
     public enum WindowClass {COPY_FROM_PARENT, INPUT_OUTPUT, INPUT_ONLY}
     public enum BitGravity {FORGET, NORTH_WEST, NORTH, NORTH_EAST, WEST, CENTER, EAST, SOUTH_WEST, SOUTH, SOUTH_EAST, STATIC}
@@ -37,7 +36,7 @@ public class WindowAttributes {
     private Bitmask eventMask = new Bitmask(0);
     private WinGravity winGravity = WinGravity.CENTER;
     private WindowClass windowClass = WindowClass.INPUT_OUTPUT;
-    private final Bitmask attributeFlags = new Bitmask(new int[]{FLAG_ENABLED, FLAG_RENDER_SUBWINDOWS, FLAG_VIEWABLE});
+    private final Bitmask attributeFlags = new Bitmask(new int[]{FLAG_ENABLED, FLAG_VIEWABLE});
     public final Window window;
 
     public WindowAttributes(Window window) {
@@ -111,14 +110,6 @@ public class WindowAttributes {
 
     public void setEnabled(boolean enabled) {
         attributeFlags.set(FLAG_ENABLED, enabled);
-    }
-
-    public boolean isRenderSubwindows() {
-        return attributeFlags.isSet(FLAG_RENDER_SUBWINDOWS);
-    }
-
-    public void setRenderSubwindows(boolean renderSubwindows) {
-        attributeFlags.set(FLAG_RENDER_SUBWINDOWS, renderSubwindows);
     }
 
     public boolean isViewable() {
