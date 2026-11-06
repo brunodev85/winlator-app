@@ -857,7 +857,7 @@ static inline void vt_unserialize_VkCommandBufferInheritanceRenderingInfo(VkComm
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        VkFormat* arrValues = vt_alloc(memoryPool, dataSize6 * 4);
+        VkFormat* arrValues = mp_alloc(memoryPool, dataSize6 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize6 * 4);
         bufferOffset += dataSize6 * 4;
         val->pColorAttachmentFormats = arrValues;
@@ -1028,7 +1028,7 @@ static inline void vt_unserialize_VkCommandBufferInheritanceInfo(VkCommandBuffer
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkCommandBufferInheritanceConditionalRenderingInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkCommandBufferInheritanceConditionalRenderingInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkCommandBufferInheritanceConditionalRenderingInfoEXT));
                     vt_unserialize_VkCommandBufferInheritanceConditionalRenderingInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -1044,7 +1044,7 @@ static inline void vt_unserialize_VkCommandBufferInheritanceInfo(VkCommandBuffer
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkCommandBufferInheritanceRenderingInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_COMMAND_BUFFER_INHERITANCE_RENDERING_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkCommandBufferInheritanceRenderingInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkCommandBufferInheritanceRenderingInfo));
                     vt_unserialize_VkCommandBufferInheritanceRenderingInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -1305,7 +1305,7 @@ static inline void vt_unserialize_VkSubpassDescription(VkSubpassDescription* val
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkAttachmentReference* arrValues = vt_alloc(memoryPool, dataSize4 * sizeof(VkAttachmentReference));
+        VkAttachmentReference* arrValues = mp_alloc(memoryPool, dataSize4 * sizeof(VkAttachmentReference));
         for (int i = 0; i < dataSize4; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -1323,7 +1323,7 @@ static inline void vt_unserialize_VkSubpassDescription(VkSubpassDescription* val
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        VkAttachmentReference* arrValues = vt_alloc(memoryPool, dataSize6 * sizeof(VkAttachmentReference));
+        VkAttachmentReference* arrValues = mp_alloc(memoryPool, dataSize6 * sizeof(VkAttachmentReference));
         for (int i = 0; i < dataSize6; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -1339,7 +1339,7 @@ static inline void vt_unserialize_VkSubpassDescription(VkSubpassDescription* val
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkAttachmentReference* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkAttachmentReference));
+        VkAttachmentReference* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkAttachmentReference));
         for (int i = 0; i < dataSize7; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -1355,7 +1355,7 @@ static inline void vt_unserialize_VkSubpassDescription(VkSubpassDescription* val
     int dataSize8 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize8 > 0) {
-        val->pDepthStencilAttachment = vt_alloc(memoryPool, sizeof(VkAttachmentReference));
+        val->pDepthStencilAttachment = mp_alloc(memoryPool, sizeof(VkAttachmentReference));
         vt_unserialize_VkAttachmentReference(val->pDepthStencilAttachment, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize8;
     }
@@ -1366,7 +1366,7 @@ static inline void vt_unserialize_VkSubpassDescription(VkSubpassDescription* val
     int dataSize10 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize10 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize10 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize10 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize10 * 4);
         bufferOffset += dataSize10 * 4;
         val->pPreserveAttachments = arrValues;
@@ -1612,7 +1612,7 @@ static inline void vt_unserialize_VkDescriptorSetLayoutBinding(VkDescriptorSetLa
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkSampler* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkSampler));
+        VkSampler* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkSampler));
         for (int i = 0; i < dataSize5; i++) {
             uint64_t immutableSamplersId;
             vt_unserialize_VkSampler((VkSampler)&immutableSamplersId, inputBuffer + bufferOffset, memoryPool);
@@ -1749,7 +1749,7 @@ static inline void vt_unserialize_VkSpecializationInfo(VkSpecializationInfo* val
     int dataSize2 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize2 > 0) {
-        VkSpecializationMapEntry* arrValues = vt_alloc(memoryPool, dataSize2 * sizeof(VkSpecializationMapEntry));
+        VkSpecializationMapEntry* arrValues = mp_alloc(memoryPool, dataSize2 * sizeof(VkSpecializationMapEntry));
         for (int i = 0; i < dataSize2; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -1767,7 +1767,7 @@ static inline void vt_unserialize_VkSpecializationInfo(VkSpecializationInfo* val
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        val->pData = vt_alloc(memoryPool, dataSize4);
+        val->pData = mp_alloc(memoryPool, dataSize4);
         memcpy(val->pData, inputBuffer + bufferOffset, dataSize4);
         bufferOffset += dataSize4;
     }
@@ -1816,7 +1816,7 @@ static inline void vt_unserialize_VkPipelineShaderStageModuleIdentifierCreateInf
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        uint8_t* arrValues = vt_alloc(memoryPool, dataSize4 * 1);
+        uint8_t* arrValues = mp_alloc(memoryPool, dataSize4 * 1);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize4 * 1);
         bufferOffset += dataSize4 * 1;
         val->pIdentifier = arrValues;
@@ -1888,7 +1888,7 @@ static inline void vt_unserialize_VkShaderModuleCreateInfo(VkShaderModuleCreateI
 
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
-    char* arrValues = vt_alloc(memoryPool, dataSize5);
+    char* arrValues = mp_alloc(memoryPool, dataSize5);
     memcpy(arrValues, inputBuffer + bufferOffset, dataSize5);
     val->pCode = (uint32_t*)arrValues;
     bufferOffset += dataSize5;
@@ -2031,7 +2031,7 @@ static inline void vt_unserialize_VkPipelineVertexInputDivisorStateCreateInfoKHR
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkVertexInputBindingDivisorDescriptionKHR* arrValues = vt_alloc(memoryPool, dataSize4 * sizeof(VkVertexInputBindingDivisorDescriptionKHR));
+        VkVertexInputBindingDivisorDescriptionKHR* arrValues = mp_alloc(memoryPool, dataSize4 * sizeof(VkVertexInputBindingDivisorDescriptionKHR));
         for (int i = 0; i < dataSize4; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -2383,7 +2383,7 @@ static inline void vt_unserialize_VkSampleLocationsInfoEXT(VkSampleLocationsInfo
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        VkSampleLocationEXT* arrValues = vt_alloc(memoryPool, dataSize6 * sizeof(VkSampleLocationEXT));
+        VkSampleLocationEXT* arrValues = mp_alloc(memoryPool, dataSize6 * sizeof(VkSampleLocationEXT));
         for (int i = 0; i < dataSize6; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -2607,7 +2607,7 @@ static inline void vt_unserialize_VkPipelineColorWriteCreateInfoEXT(VkPipelineCo
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkBool32* arrValues = vt_alloc(memoryPool, dataSize4 * 4);
+        VkBool32* arrValues = mp_alloc(memoryPool, dataSize4 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize4 * 4);
         bufferOffset += dataSize4 * 4;
         val->pColorWriteEnables = arrValues;
@@ -2662,7 +2662,7 @@ static inline void vt_unserialize_VkPipelineDynamicStateCreateInfo(VkPipelineDyn
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkDynamicState* arrValues = vt_alloc(memoryPool, dataSize5 * 4);
+        VkDynamicState* arrValues = mp_alloc(memoryPool, dataSize5 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize5 * 4);
         bufferOffset += dataSize5 * 4;
         val->pDynamicStates = arrValues;
@@ -2798,7 +2798,7 @@ static inline void vt_unserialize_VkPipelineColorBlendStateCreateInfo(VkPipeline
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineColorWriteCreateInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_COLOR_WRITE_CREATE_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineColorWriteCreateInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineColorWriteCreateInfoEXT));
                     vt_unserialize_VkPipelineColorWriteCreateInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -2831,7 +2831,7 @@ static inline void vt_unserialize_VkPipelineColorBlendStateCreateInfo(VkPipeline
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkPipelineColorBlendAttachmentState* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkPipelineColorBlendAttachmentState));
+        VkPipelineColorBlendAttachmentState* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkPipelineColorBlendAttachmentState));
         for (int i = 0; i < dataSize7; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -3024,7 +3024,7 @@ static inline void vt_unserialize_VkPipelineMultisampleStateCreateInfo(VkPipelin
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineSampleLocationsStateCreateInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineSampleLocationsStateCreateInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineSampleLocationsStateCreateInfoEXT));
                     vt_unserialize_VkPipelineSampleLocationsStateCreateInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -3220,7 +3220,7 @@ static inline void vt_unserialize_VkPipelineRasterizationStateCreateInfo(VkPipel
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineRasterizationConservativeStateCreateInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineRasterizationConservativeStateCreateInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineRasterizationConservativeStateCreateInfoEXT));
                     vt_unserialize_VkPipelineRasterizationConservativeStateCreateInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -3236,7 +3236,7 @@ static inline void vt_unserialize_VkPipelineRasterizationStateCreateInfo(VkPipel
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineRasterizationStateStreamCreateInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_STREAM_CREATE_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineRasterizationStateStreamCreateInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineRasterizationStateStreamCreateInfoEXT));
                     vt_unserialize_VkPipelineRasterizationStateStreamCreateInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -3252,7 +3252,7 @@ static inline void vt_unserialize_VkPipelineRasterizationStateCreateInfo(VkPipel
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineRasterizationDepthClipStateCreateInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_DEPTH_CLIP_STATE_CREATE_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineRasterizationDepthClipStateCreateInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineRasterizationDepthClipStateCreateInfoEXT));
                     vt_unserialize_VkPipelineRasterizationDepthClipStateCreateInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -3268,7 +3268,7 @@ static inline void vt_unserialize_VkPipelineRasterizationStateCreateInfo(VkPipel
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineRasterizationProvokingVertexStateCreateInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_PROVOKING_VERTEX_STATE_CREATE_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineRasterizationProvokingVertexStateCreateInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineRasterizationProvokingVertexStateCreateInfoEXT));
                     vt_unserialize_VkPipelineRasterizationProvokingVertexStateCreateInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -3460,7 +3460,7 @@ static inline void vt_unserialize_VkPipelineViewportStateCreateInfo(VkPipelineVi
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineViewportDepthClipControlCreateInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineViewportDepthClipControlCreateInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineViewportDepthClipControlCreateInfoEXT));
                     vt_unserialize_VkPipelineViewportDepthClipControlCreateInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -3489,7 +3489,7 @@ static inline void vt_unserialize_VkPipelineViewportStateCreateInfo(VkPipelineVi
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkViewport* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkViewport));
+        VkViewport* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkViewport));
         for (int i = 0; i < dataSize5; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -3507,7 +3507,7 @@ static inline void vt_unserialize_VkPipelineViewportStateCreateInfo(VkPipelineVi
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkRect2D* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkRect2D));
+        VkRect2D* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkRect2D));
         for (int i = 0; i < dataSize7; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -3615,7 +3615,7 @@ static inline void vt_unserialize_VkPipelineTessellationStateCreateInfo(VkPipeli
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineTessellationDomainOriginStateCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineTessellationDomainOriginStateCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineTessellationDomainOriginStateCreateInfo));
                     vt_unserialize_VkPipelineTessellationDomainOriginStateCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -3825,7 +3825,7 @@ static inline void vt_unserialize_VkPipelineVertexInputStateCreateInfo(VkPipelin
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineVertexInputDivisorStateCreateInfoKHR* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_KHR) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineVertexInputDivisorStateCreateInfoKHR));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineVertexInputDivisorStateCreateInfoKHR));
                     vt_unserialize_VkPipelineVertexInputDivisorStateCreateInfoKHR(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -3854,7 +3854,7 @@ static inline void vt_unserialize_VkPipelineVertexInputStateCreateInfo(VkPipelin
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkVertexInputBindingDescription* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkVertexInputBindingDescription));
+        VkVertexInputBindingDescription* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkVertexInputBindingDescription));
         for (int i = 0; i < dataSize5; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -3872,7 +3872,7 @@ static inline void vt_unserialize_VkPipelineVertexInputStateCreateInfo(VkPipelin
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkVertexInputAttributeDescription* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkVertexInputAttributeDescription));
+        VkVertexInputAttributeDescription* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkVertexInputAttributeDescription));
         for (int i = 0; i < dataSize7; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -4043,7 +4043,7 @@ static inline void vt_unserialize_VkPipelineShaderStageCreateInfo(VkPipelineShad
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkShaderModuleCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkShaderModuleCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkShaderModuleCreateInfo));
                     vt_unserialize_VkShaderModuleCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -4059,7 +4059,7 @@ static inline void vt_unserialize_VkPipelineShaderStageCreateInfo(VkPipelineShad
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineShaderStageRequiredSubgroupSizeCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineShaderStageRequiredSubgroupSizeCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineShaderStageRequiredSubgroupSizeCreateInfo));
                     vt_unserialize_VkPipelineShaderStageRequiredSubgroupSizeCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -4075,7 +4075,7 @@ static inline void vt_unserialize_VkPipelineShaderStageCreateInfo(VkPipelineShad
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineShaderStageModuleIdentifierCreateInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_MODULE_IDENTIFIER_CREATE_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineShaderStageModuleIdentifierCreateInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineShaderStageModuleIdentifierCreateInfoEXT));
                     vt_unserialize_VkPipelineShaderStageModuleIdentifierCreateInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -4114,7 +4114,7 @@ static inline void vt_unserialize_VkPipelineShaderStageCreateInfo(VkPipelineShad
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        char* arrValues = vt_alloc(memoryPool, dataSize6);
+        char* arrValues = mp_alloc(memoryPool, dataSize6);
         memcpy(arrValues, inputBuffer + bufferOffset, dataSize6);
         val->pName = arrValues;
         bufferOffset += dataSize6;
@@ -4123,7 +4123,7 @@ static inline void vt_unserialize_VkPipelineShaderStageCreateInfo(VkPipelineShad
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        val->pSpecializationInfo = vt_alloc(memoryPool, sizeof(VkSpecializationInfo));
+        val->pSpecializationInfo = mp_alloc(memoryPool, sizeof(VkSpecializationInfo));
         vt_unserialize_VkSpecializationInfo(val->pSpecializationInfo, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize7;
     }
@@ -4303,7 +4303,7 @@ static inline void vt_unserialize_VkSparseImageMemoryBindInfo(VkSparseImageMemor
     int dataSize3 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize3 > 0) {
-        VkSparseImageMemoryBind* arrValues = vt_alloc(memoryPool, dataSize3 * sizeof(VkSparseImageMemoryBind));
+        VkSparseImageMemoryBind* arrValues = mp_alloc(memoryPool, dataSize3 * sizeof(VkSparseImageMemoryBind));
         for (int i = 0; i < dataSize3; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -4381,7 +4381,7 @@ static inline void vt_unserialize_VkSparseImageOpaqueMemoryBindInfo(VkSparseImag
     int dataSize3 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize3 > 0) {
-        VkSparseMemoryBind* arrValues = vt_alloc(memoryPool, dataSize3 * sizeof(VkSparseMemoryBind));
+        VkSparseMemoryBind* arrValues = mp_alloc(memoryPool, dataSize3 * sizeof(VkSparseMemoryBind));
         for (int i = 0; i < dataSize3; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -4459,7 +4459,7 @@ static inline void vt_unserialize_VkSparseBufferMemoryBindInfo(VkSparseBufferMem
     int dataSize3 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize3 > 0) {
-        VkSparseMemoryBind* arrValues = vt_alloc(memoryPool, dataSize3 * sizeof(VkSparseMemoryBind));
+        VkSparseMemoryBind* arrValues = mp_alloc(memoryPool, dataSize3 * sizeof(VkSparseMemoryBind));
         for (int i = 0; i < dataSize3; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -4813,7 +4813,7 @@ static inline void vt_unserialize_VkDeviceQueueCreateInfo(VkDeviceQueueCreateInf
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        float* arrValues = vt_alloc(memoryPool, dataSize6 * 4);
+        float* arrValues = mp_alloc(memoryPool, dataSize6 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize6 * 4);
         bufferOffset += dataSize6 * 4;
         val->pQueuePriorities = arrValues;
@@ -4881,7 +4881,7 @@ static inline void vt_unserialize_VkApplicationInfo(VkApplicationInfo* val, char
     int dataSize3 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize3 > 0) {
-        char* arrValues = vt_alloc(memoryPool, dataSize3);
+        char* arrValues = mp_alloc(memoryPool, dataSize3);
         memcpy(arrValues, inputBuffer + bufferOffset, dataSize3);
         val->pApplicationName = arrValues;
         bufferOffset += dataSize3;
@@ -4892,7 +4892,7 @@ static inline void vt_unserialize_VkApplicationInfo(VkApplicationInfo* val, char
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        char* arrValues = vt_alloc(memoryPool, dataSize5);
+        char* arrValues = mp_alloc(memoryPool, dataSize5);
         memcpy(arrValues, inputBuffer + bufferOffset, dataSize5);
         val->pEngineName = arrValues;
         bufferOffset += dataSize5;
@@ -5468,7 +5468,7 @@ static inline void vt_unserialize_VkAttachmentReference2(VkAttachmentReference2*
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkAttachmentReferenceStencilLayout* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_STENCIL_LAYOUT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkAttachmentReferenceStencilLayout));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkAttachmentReferenceStencilLayout));
                     vt_unserialize_VkAttachmentReferenceStencilLayout(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -5544,7 +5544,7 @@ static inline void vt_unserialize_VkSubpassDescriptionDepthStencilResolve(VkSubp
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        val->pDepthStencilResolveAttachment = vt_alloc(memoryPool, sizeof(VkAttachmentReference2));
+        val->pDepthStencilResolveAttachment = mp_alloc(memoryPool, sizeof(VkAttachmentReference2));
         vt_unserialize_VkAttachmentReference2(val->pDepthStencilResolveAttachment, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize5;
     }
@@ -5663,7 +5663,7 @@ static inline void vt_unserialize_VkSubpassDependency2(VkSubpassDependency2* val
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkMemoryBarrier2* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_MEMORY_BARRIER_2) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkMemoryBarrier2));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkMemoryBarrier2));
                     vt_unserialize_VkMemoryBarrier2(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -5911,7 +5911,7 @@ static inline void vt_unserialize_VkSubpassDescription2(VkSubpassDescription2* v
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkSubpassDescriptionDepthStencilResolve* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkSubpassDescriptionDepthStencilResolve));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkSubpassDescriptionDepthStencilResolve));
                     vt_unserialize_VkSubpassDescriptionDepthStencilResolve(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -5944,7 +5944,7 @@ static inline void vt_unserialize_VkSubpassDescription2(VkSubpassDescription2* v
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkAttachmentReference2* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkAttachmentReference2));
+        VkAttachmentReference2* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkAttachmentReference2));
         for (int i = 0; i < dataSize7; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -5962,7 +5962,7 @@ static inline void vt_unserialize_VkSubpassDescription2(VkSubpassDescription2* v
     int dataSize9 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize9 > 0) {
-        VkAttachmentReference2* arrValues = vt_alloc(memoryPool, dataSize9 * sizeof(VkAttachmentReference2));
+        VkAttachmentReference2* arrValues = mp_alloc(memoryPool, dataSize9 * sizeof(VkAttachmentReference2));
         for (int i = 0; i < dataSize9; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -5978,7 +5978,7 @@ static inline void vt_unserialize_VkSubpassDescription2(VkSubpassDescription2* v
     int dataSize10 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize10 > 0) {
-        VkAttachmentReference2* arrValues = vt_alloc(memoryPool, dataSize10 * sizeof(VkAttachmentReference2));
+        VkAttachmentReference2* arrValues = mp_alloc(memoryPool, dataSize10 * sizeof(VkAttachmentReference2));
         for (int i = 0; i < dataSize10; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -5994,7 +5994,7 @@ static inline void vt_unserialize_VkSubpassDescription2(VkSubpassDescription2* v
     int dataSize11 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize11 > 0) {
-        val->pDepthStencilAttachment = vt_alloc(memoryPool, sizeof(VkAttachmentReference2));
+        val->pDepthStencilAttachment = mp_alloc(memoryPool, sizeof(VkAttachmentReference2));
         vt_unserialize_VkAttachmentReference2(val->pDepthStencilAttachment, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize11;
     }
@@ -6005,7 +6005,7 @@ static inline void vt_unserialize_VkSubpassDescription2(VkSubpassDescription2* v
     int dataSize13 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize13 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize13 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize13 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize13 * 4);
         bufferOffset += dataSize13 * 4;
         val->pPreserveAttachments = arrValues;
@@ -6128,7 +6128,7 @@ static inline void vt_unserialize_VkAttachmentDescription2(VkAttachmentDescripti
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkAttachmentDescriptionStencilLayout* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkAttachmentDescriptionStencilLayout));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkAttachmentDescriptionStencilLayout));
                     vt_unserialize_VkAttachmentDescriptionStencilLayout(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -6236,7 +6236,7 @@ static inline void vt_unserialize_VkFramebufferAttachmentImageInfo(VkFramebuffer
     int dataSize9 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize9 > 0) {
-        VkFormat* arrValues = vt_alloc(memoryPool, dataSize9 * 4);
+        VkFormat* arrValues = mp_alloc(memoryPool, dataSize9 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize9 * 4);
         bufferOffset += dataSize9 * 4;
         val->pViewFormats = arrValues;
@@ -11484,7 +11484,7 @@ static inline void vt_unserialize_VkDeviceGroupRenderPassBeginInfo(VkDeviceGroup
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkRect2D* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkRect2D));
+        VkRect2D* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkRect2D));
         for (int i = 0; i < dataSize5; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -11543,7 +11543,7 @@ static inline void vt_unserialize_VkDeviceGroupPresentInfoKHR(VkDeviceGroupPrese
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize4 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize4 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize4 * 4);
         bufferOffset += dataSize4 * 4;
         val->pDeviceMasks = arrValues;
@@ -11595,7 +11595,7 @@ static inline void vt_unserialize_VkImageFormatListCreateInfo(VkImageFormatListC
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkFormat* arrValues = vt_alloc(memoryPool, dataSize4 * 4);
+        VkFormat* arrValues = mp_alloc(memoryPool, dataSize4 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize4 * 4);
         bufferOffset += dataSize4 * 4;
         val->pViewFormats = arrValues;
@@ -11882,7 +11882,7 @@ static inline void vt_unserialize_VkSwapchainCreateInfoKHR(VkSwapchainCreateInfo
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkDeviceGroupSwapchainCreateInfoKHR* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkDeviceGroupSwapchainCreateInfoKHR));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkDeviceGroupSwapchainCreateInfoKHR));
                     vt_unserialize_VkDeviceGroupSwapchainCreateInfoKHR(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -11898,7 +11898,7 @@ static inline void vt_unserialize_VkSwapchainCreateInfoKHR(VkSwapchainCreateInfo
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkImageFormatListCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkImageFormatListCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkImageFormatListCreateInfo));
                     vt_unserialize_VkImageFormatListCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -11944,7 +11944,7 @@ static inline void vt_unserialize_VkSwapchainCreateInfoKHR(VkSwapchainCreateInfo
     int dataSize13 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize13 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize13 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize13 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize13 * 4);
         bufferOffset += dataSize13 * 4;
         val->pQueueFamilyIndices = arrValues;
@@ -12140,7 +12140,7 @@ static inline void vt_unserialize_VkPresentInfoKHR(VkPresentInfoKHR* val, char* 
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkDeviceGroupPresentInfoKHR* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_INFO_KHR) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkDeviceGroupPresentInfoKHR));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkDeviceGroupPresentInfoKHR));
                     vt_unserialize_VkDeviceGroupPresentInfoKHR(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -12167,7 +12167,7 @@ static inline void vt_unserialize_VkPresentInfoKHR(VkPresentInfoKHR* val, char* 
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkSemaphore* arrValues = vt_alloc(memoryPool, dataSize4 * sizeof(VkSemaphore));
+        VkSemaphore* arrValues = mp_alloc(memoryPool, dataSize4 * sizeof(VkSemaphore));
         for (int i = 0; i < dataSize4; i++) {
             uint64_t waitSemaphoresId;
             vt_unserialize_VkSemaphore((VkSemaphore)&waitSemaphoresId, inputBuffer + bufferOffset, memoryPool);
@@ -12191,7 +12191,7 @@ static inline void vt_unserialize_VkPresentInfoKHR(VkPresentInfoKHR* val, char* 
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        VkSwapchainKHR* arrValues = vt_alloc(memoryPool, dataSize6 * sizeof(VkSwapchainKHR));
+        VkSwapchainKHR* arrValues = mp_alloc(memoryPool, dataSize6 * sizeof(VkSwapchainKHR));
         for (int i = 0; i < dataSize6; i++) {
             uint64_t swapchainsId;
             vt_unserialize_VkSwapchainKHR((VkSwapchainKHR)&swapchainsId, inputBuffer + bufferOffset, memoryPool);
@@ -12213,7 +12213,7 @@ static inline void vt_unserialize_VkPresentInfoKHR(VkPresentInfoKHR* val, char* 
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize7 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize7 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize7 * 4);
         bufferOffset += dataSize7 * 4;
         val->pImageIndices = arrValues;
@@ -12223,7 +12223,7 @@ static inline void vt_unserialize_VkPresentInfoKHR(VkPresentInfoKHR* val, char* 
     int dataSize8 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize8 > 0) {
-        VkResult* arrValues = vt_alloc(memoryPool, dataSize8 * 4);
+        VkResult* arrValues = mp_alloc(memoryPool, dataSize8 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize8 * 4);
         bufferOffset += dataSize8 * 4;
         val->pResults = arrValues;
@@ -12693,7 +12693,7 @@ static inline void vt_unserialize_VkRenderingInfo(VkRenderingInfo* val, char* in
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkDeviceGroupRenderPassBeginInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_DEVICE_GROUP_RENDER_PASS_BEGIN_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkDeviceGroupRenderPassBeginInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkDeviceGroupRenderPassBeginInfo));
                     vt_unserialize_VkDeviceGroupRenderPassBeginInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -12728,7 +12728,7 @@ static inline void vt_unserialize_VkRenderingInfo(VkRenderingInfo* val, char* in
     int dataSize8 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize8 > 0) {
-        VkRenderingAttachmentInfo* arrValues = vt_alloc(memoryPool, dataSize8 * sizeof(VkRenderingAttachmentInfo));
+        VkRenderingAttachmentInfo* arrValues = mp_alloc(memoryPool, dataSize8 * sizeof(VkRenderingAttachmentInfo));
         for (int i = 0; i < dataSize8; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -12744,7 +12744,7 @@ static inline void vt_unserialize_VkRenderingInfo(VkRenderingInfo* val, char* in
     int dataSize9 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize9 > 0) {
-        val->pDepthAttachment = vt_alloc(memoryPool, sizeof(VkRenderingAttachmentInfo));
+        val->pDepthAttachment = mp_alloc(memoryPool, sizeof(VkRenderingAttachmentInfo));
         vt_unserialize_VkRenderingAttachmentInfo(val->pDepthAttachment, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize9;
     }
@@ -12753,7 +12753,7 @@ static inline void vt_unserialize_VkRenderingInfo(VkRenderingInfo* val, char* in
     int dataSize10 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize10 > 0) {
-        val->pStencilAttachment = vt_alloc(memoryPool, sizeof(VkRenderingAttachmentInfo));
+        val->pStencilAttachment = mp_alloc(memoryPool, sizeof(VkRenderingAttachmentInfo));
         vt_unserialize_VkRenderingAttachmentInfo(val->pStencilAttachment, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize10;
     }
@@ -12813,7 +12813,7 @@ static inline void vt_unserialize_VkPipelineRenderingCreateInfo(VkPipelineRender
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkFormat* arrValues = vt_alloc(memoryPool, dataSize5 * 4);
+        VkFormat* arrValues = mp_alloc(memoryPool, dataSize5 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize5 * 4);
         bufferOffset += dataSize5 * 4;
         val->pColorAttachmentFormats = arrValues;
@@ -13618,7 +13618,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDevicePrivateDataFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDevicePrivateDataFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDevicePrivateDataFeatures));
                     vt_unserialize_VkPhysicalDevicePrivateDataFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13634,7 +13634,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVariablePointersFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVariablePointersFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVariablePointersFeatures));
                     vt_unserialize_VkPhysicalDeviceVariablePointersFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13650,7 +13650,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceMultiviewFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceMultiviewFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceMultiviewFeatures));
                     vt_unserialize_VkPhysicalDeviceMultiviewFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13666,7 +13666,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDevice16BitStorageFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDevice16BitStorageFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDevice16BitStorageFeatures));
                     vt_unserialize_VkPhysicalDevice16BitStorageFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13682,7 +13682,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures));
                     vt_unserialize_VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13698,7 +13698,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceSamplerYcbcrConversionFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceSamplerYcbcrConversionFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceSamplerYcbcrConversionFeatures));
                     vt_unserialize_VkPhysicalDeviceSamplerYcbcrConversionFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13714,7 +13714,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceProtectedMemoryFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceProtectedMemoryFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceProtectedMemoryFeatures));
                     vt_unserialize_VkPhysicalDeviceProtectedMemoryFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13730,7 +13730,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceInlineUniformBlockFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceInlineUniformBlockFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceInlineUniformBlockFeatures));
                     vt_unserialize_VkPhysicalDeviceInlineUniformBlockFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13746,7 +13746,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceMaintenance4Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceMaintenance4Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceMaintenance4Features));
                     vt_unserialize_VkPhysicalDeviceMaintenance4Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13762,7 +13762,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderDrawParametersFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderDrawParametersFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderDrawParametersFeatures));
                     vt_unserialize_VkPhysicalDeviceShaderDrawParametersFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13778,7 +13778,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderFloat16Int8Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderFloat16Int8Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderFloat16Int8Features));
                     vt_unserialize_VkPhysicalDeviceShaderFloat16Int8Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13794,7 +13794,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceHostQueryResetFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceHostQueryResetFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceHostQueryResetFeatures));
                     vt_unserialize_VkPhysicalDeviceHostQueryResetFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13810,7 +13810,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceDescriptorIndexingFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceDescriptorIndexingFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceDescriptorIndexingFeatures));
                     vt_unserialize_VkPhysicalDeviceDescriptorIndexingFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13826,7 +13826,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceTimelineSemaphoreFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceTimelineSemaphoreFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceTimelineSemaphoreFeatures));
                     vt_unserialize_VkPhysicalDeviceTimelineSemaphoreFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13842,7 +13842,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDevice8BitStorageFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDevice8BitStorageFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDevice8BitStorageFeatures));
                     vt_unserialize_VkPhysicalDevice8BitStorageFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13858,7 +13858,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceConditionalRenderingFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceConditionalRenderingFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceConditionalRenderingFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceConditionalRenderingFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13874,7 +13874,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVulkanMemoryModelFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkanMemoryModelFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkanMemoryModelFeatures));
                     vt_unserialize_VkPhysicalDeviceVulkanMemoryModelFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13890,7 +13890,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderAtomicInt64Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderAtomicInt64Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderAtomicInt64Features));
                     vt_unserialize_VkPhysicalDeviceShaderAtomicInt64Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13906,7 +13906,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVertexAttributeDivisorFeaturesKHR* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVertexAttributeDivisorFeaturesKHR));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVertexAttributeDivisorFeaturesKHR));
                     vt_unserialize_VkPhysicalDeviceVertexAttributeDivisorFeaturesKHR(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13922,7 +13922,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceTransformFeedbackFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceTransformFeedbackFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceTransformFeedbackFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceTransformFeedbackFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13938,7 +13938,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceScalarBlockLayoutFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceScalarBlockLayoutFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceScalarBlockLayoutFeatures));
                     vt_unserialize_VkPhysicalDeviceScalarBlockLayoutFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13954,7 +13954,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceUniformBufferStandardLayoutFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceUniformBufferStandardLayoutFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceUniformBufferStandardLayoutFeatures));
                     vt_unserialize_VkPhysicalDeviceUniformBufferStandardLayoutFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13970,7 +13970,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceDepthClipEnableFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_CLIP_ENABLE_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceDepthClipEnableFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceDepthClipEnableFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceDepthClipEnableFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -13986,7 +13986,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceBufferDeviceAddressFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceBufferDeviceAddressFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceBufferDeviceAddressFeatures));
                     vt_unserialize_VkPhysicalDeviceBufferDeviceAddressFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14002,7 +14002,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceImagelessFramebufferFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceImagelessFramebufferFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceImagelessFramebufferFeatures));
                     vt_unserialize_VkPhysicalDeviceImagelessFramebufferFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14018,7 +14018,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceTextureCompressionASTCHDRFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceTextureCompressionASTCHDRFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceTextureCompressionASTCHDRFeatures));
                     vt_unserialize_VkPhysicalDeviceTextureCompressionASTCHDRFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14034,7 +14034,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADER_INTERLOCK_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14050,7 +14050,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures));
                     vt_unserialize_VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14066,7 +14066,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures));
                     vt_unserialize_VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14082,7 +14082,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14098,7 +14098,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceSubgroupSizeControlFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceSubgroupSizeControlFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceSubgroupSizeControlFeatures));
                     vt_unserialize_VkPhysicalDeviceSubgroupSizeControlFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14114,7 +14114,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDevicePipelineCreationCacheControlFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDevicePipelineCreationCacheControlFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDevicePipelineCreationCacheControlFeatures));
                     vt_unserialize_VkPhysicalDevicePipelineCreationCacheControlFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14130,7 +14130,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVulkan11Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_1_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan11Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan11Features));
                     vt_unserialize_VkPhysicalDeviceVulkan11Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14146,7 +14146,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVulkan12Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan12Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan12Features));
                     vt_unserialize_VkPhysicalDeviceVulkan12Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14162,7 +14162,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVulkan13Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_3_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan13Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan13Features));
                     vt_unserialize_VkPhysicalDeviceVulkan13Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14178,7 +14178,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceCustomBorderColorFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceCustomBorderColorFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceCustomBorderColorFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceCustomBorderColorFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14194,7 +14194,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceBorderColorSwizzleFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceBorderColorSwizzleFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceBorderColorSwizzleFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceBorderColorSwizzleFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14210,7 +14210,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceExtendedDynamicStateFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceExtendedDynamicStateFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceExtendedDynamicStateFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceExtendedDynamicStateFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14226,7 +14226,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceExtendedDynamicState3FeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceExtendedDynamicState3FeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceExtendedDynamicState3FeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceExtendedDynamicState3FeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14242,7 +14242,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures));
                     vt_unserialize_VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14258,7 +14258,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceRobustness2FeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceRobustness2FeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceRobustness2FeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceRobustness2FeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14274,7 +14274,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceImageRobustnessFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceImageRobustnessFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceImageRobustnessFeatures));
                     vt_unserialize_VkPhysicalDeviceImageRobustnessFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14290,7 +14290,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDevice4444FormatsFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDevice4444FormatsFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDevice4444FormatsFeaturesEXT));
                     vt_unserialize_VkPhysicalDevice4444FormatsFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14306,7 +14306,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderTerminateInvocationFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderTerminateInvocationFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderTerminateInvocationFeatures));
                     vt_unserialize_VkPhysicalDeviceShaderTerminateInvocationFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14322,7 +14322,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14338,7 +14338,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceDepthClipControlFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceDepthClipControlFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceDepthClipControlFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceDepthClipControlFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14354,7 +14354,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceColorWriteEnableFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COLOR_WRITE_ENABLE_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceColorWriteEnableFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceColorWriteEnableFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceColorWriteEnableFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14370,7 +14370,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceSynchronization2Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceSynchronization2Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceSynchronization2Features));
                     vt_unserialize_VkPhysicalDeviceSynchronization2Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14386,7 +14386,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceProvokingVertexFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROVOKING_VERTEX_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceProvokingVertexFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceProvokingVertexFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceProvokingVertexFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14402,7 +14402,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderIntegerDotProductFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderIntegerDotProductFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderIntegerDotProductFeatures));
                     vt_unserialize_VkPhysicalDeviceShaderIntegerDotProductFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14418,7 +14418,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceDynamicRenderingFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceDynamicRenderingFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceDynamicRenderingFeatures));
                     vt_unserialize_VkPhysicalDeviceDynamicRenderingFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14434,7 +14434,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14450,7 +14450,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceMapMemoryPlacedFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAP_MEMORY_PLACED_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceMapMemoryPlacedFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceMapMemoryPlacedFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceMapMemoryPlacedFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14969,7 +14969,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDevicePushDescriptorPropertiesKHR* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDevicePushDescriptorPropertiesKHR));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDevicePushDescriptorPropertiesKHR));
                     vt_unserialize_VkPhysicalDevicePushDescriptorPropertiesKHR(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -14985,7 +14985,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceDriverProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DRIVER_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceDriverProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceDriverProperties));
                     vt_unserialize_VkPhysicalDeviceDriverProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15001,7 +15001,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceIDProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceIDProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceIDProperties));
                     vt_unserialize_VkPhysicalDeviceIDProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15017,7 +15017,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceMultiviewProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceMultiviewProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceMultiviewProperties));
                     vt_unserialize_VkPhysicalDeviceMultiviewProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15033,7 +15033,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceSubgroupProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBGROUP_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceSubgroupProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceSubgroupProperties));
                     vt_unserialize_VkPhysicalDeviceSubgroupProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15049,7 +15049,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDevicePointClippingProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDevicePointClippingProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDevicePointClippingProperties));
                     vt_unserialize_VkPhysicalDevicePointClippingProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15065,7 +15065,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceProtectedMemoryProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceProtectedMemoryProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceProtectedMemoryProperties));
                     vt_unserialize_VkPhysicalDeviceProtectedMemoryProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15081,7 +15081,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceSamplerFilterMinmaxProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceSamplerFilterMinmaxProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceSamplerFilterMinmaxProperties));
                     vt_unserialize_VkPhysicalDeviceSamplerFilterMinmaxProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15097,7 +15097,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceSampleLocationsPropertiesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceSampleLocationsPropertiesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceSampleLocationsPropertiesEXT));
                     vt_unserialize_VkPhysicalDeviceSampleLocationsPropertiesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15113,7 +15113,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceInlineUniformBlockProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceInlineUniformBlockProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceInlineUniformBlockProperties));
                     vt_unserialize_VkPhysicalDeviceInlineUniformBlockProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15129,7 +15129,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceMaintenance3Properties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceMaintenance3Properties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceMaintenance3Properties));
                     vt_unserialize_VkPhysicalDeviceMaintenance3Properties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15145,7 +15145,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceMaintenance4Properties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceMaintenance4Properties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceMaintenance4Properties));
                     vt_unserialize_VkPhysicalDeviceMaintenance4Properties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15161,7 +15161,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceFloatControlsProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceFloatControlsProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceFloatControlsProperties));
                     vt_unserialize_VkPhysicalDeviceFloatControlsProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15177,7 +15177,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceConservativeRasterizationPropertiesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceConservativeRasterizationPropertiesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceConservativeRasterizationPropertiesEXT));
                     vt_unserialize_VkPhysicalDeviceConservativeRasterizationPropertiesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15193,7 +15193,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceDescriptorIndexingProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceDescriptorIndexingProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceDescriptorIndexingProperties));
                     vt_unserialize_VkPhysicalDeviceDescriptorIndexingProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15209,7 +15209,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceTimelineSemaphoreProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceTimelineSemaphoreProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceTimelineSemaphoreProperties));
                     vt_unserialize_VkPhysicalDeviceTimelineSemaphoreProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15225,7 +15225,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT));
                     vt_unserialize_VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15241,7 +15241,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVertexAttributeDivisorPropertiesKHR* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_KHR) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVertexAttributeDivisorPropertiesKHR));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVertexAttributeDivisorPropertiesKHR));
                     vt_unserialize_VkPhysicalDeviceVertexAttributeDivisorPropertiesKHR(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15257,7 +15257,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceDepthStencilResolveProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceDepthStencilResolveProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceDepthStencilResolveProperties));
                     vt_unserialize_VkPhysicalDeviceDepthStencilResolveProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15273,7 +15273,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceTransformFeedbackPropertiesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_PROPERTIES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceTransformFeedbackPropertiesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceTransformFeedbackPropertiesEXT));
                     vt_unserialize_VkPhysicalDeviceTransformFeedbackPropertiesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15289,7 +15289,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceTexelBufferAlignmentProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceTexelBufferAlignmentProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceTexelBufferAlignmentProperties));
                     vt_unserialize_VkPhysicalDeviceTexelBufferAlignmentProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15305,7 +15305,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceSubgroupSizeControlProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceSubgroupSizeControlProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceSubgroupSizeControlProperties));
                     vt_unserialize_VkPhysicalDeviceSubgroupSizeControlProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15321,7 +15321,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVulkan11Properties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan11Properties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan11Properties));
                     vt_unserialize_VkPhysicalDeviceVulkan11Properties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15337,7 +15337,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVulkan12Properties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan12Properties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan12Properties));
                     vt_unserialize_VkPhysicalDeviceVulkan12Properties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15353,7 +15353,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVulkan13Properties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_3_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan13Properties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan13Properties));
                     vt_unserialize_VkPhysicalDeviceVulkan13Properties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15369,7 +15369,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceCustomBorderColorPropertiesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_PROPERTIES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceCustomBorderColorPropertiesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceCustomBorderColorPropertiesEXT));
                     vt_unserialize_VkPhysicalDeviceCustomBorderColorPropertiesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15385,7 +15385,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceExtendedDynamicState3PropertiesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_PROPERTIES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceExtendedDynamicState3PropertiesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceExtendedDynamicState3PropertiesEXT));
                     vt_unserialize_VkPhysicalDeviceExtendedDynamicState3PropertiesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15401,7 +15401,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceRobustness2PropertiesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceRobustness2PropertiesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceRobustness2PropertiesEXT));
                     vt_unserialize_VkPhysicalDeviceRobustness2PropertiesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15417,7 +15417,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceProvokingVertexPropertiesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROVOKING_VERTEX_PROPERTIES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceProvokingVertexPropertiesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceProvokingVertexPropertiesEXT));
                     vt_unserialize_VkPhysicalDeviceProvokingVertexPropertiesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15433,7 +15433,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderIntegerDotProductProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderIntegerDotProductProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderIntegerDotProductProperties));
                     vt_unserialize_VkPhysicalDeviceShaderIntegerDotProductProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15449,7 +15449,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_PROPERTIES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT));
                     vt_unserialize_VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15465,7 +15465,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceMapMemoryPlacedPropertiesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAP_MEMORY_PLACED_PROPERTIES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceMapMemoryPlacedPropertiesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceMapMemoryPlacedPropertiesEXT));
                     vt_unserialize_VkPhysicalDeviceMapMemoryPlacedPropertiesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15581,7 +15581,7 @@ static inline void vt_unserialize_VkFormatProperties2(VkFormatProperties2* val, 
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkFormatProperties3* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_FORMAT_PROPERTIES_3) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkFormatProperties3));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkFormatProperties3));
                     vt_unserialize_VkFormatProperties3(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15710,7 +15710,7 @@ static inline void vt_unserialize_VkImageFormatProperties2(VkImageFormatProperti
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkExternalImageFormatProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_EXTERNAL_IMAGE_FORMAT_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkExternalImageFormatProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkExternalImageFormatProperties));
                     vt_unserialize_VkExternalImageFormatProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15726,7 +15726,7 @@ static inline void vt_unserialize_VkImageFormatProperties2(VkImageFormatProperti
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkSamplerYcbcrConversionImageFormatProperties* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkSamplerYcbcrConversionImageFormatProperties));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkSamplerYcbcrConversionImageFormatProperties));
                     vt_unserialize_VkSamplerYcbcrConversionImageFormatProperties(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15880,7 +15880,7 @@ static inline void vt_unserialize_VkPhysicalDeviceImageFormatInfo2(VkPhysicalDev
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceExternalImageFormatInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceExternalImageFormatInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceExternalImageFormatInfo));
                     vt_unserialize_VkPhysicalDeviceExternalImageFormatInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15896,7 +15896,7 @@ static inline void vt_unserialize_VkPhysicalDeviceImageFormatInfo2(VkPhysicalDev
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkImageFormatListCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkImageFormatListCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkImageFormatListCreateInfo));
                     vt_unserialize_VkImageFormatListCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -15912,7 +15912,7 @@ static inline void vt_unserialize_VkPhysicalDeviceImageFormatInfo2(VkPhysicalDev
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkImageStencilUsageCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_IMAGE_STENCIL_USAGE_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkImageStencilUsageCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkImageStencilUsageCreateInfo));
                     vt_unserialize_VkImageStencilUsageCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -16062,7 +16062,7 @@ static inline void vt_unserialize_VkPhysicalDeviceMemoryProperties2(VkPhysicalDe
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceMemoryBudgetPropertiesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceMemoryBudgetPropertiesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceMemoryBudgetPropertiesEXT));
                     vt_unserialize_VkPhysicalDeviceMemoryBudgetPropertiesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -16643,7 +16643,7 @@ static inline void vt_unserialize_VkDescriptorUpdateTemplateCreateInfo(VkDescrip
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkDescriptorUpdateTemplateEntry* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkDescriptorUpdateTemplateEntry));
+        VkDescriptorUpdateTemplateEntry* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkDescriptorUpdateTemplateEntry));
         for (int i = 0; i < dataSize5; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -16736,7 +16736,7 @@ static inline void vt_unserialize_VkFramebufferAttachmentsCreateInfo(VkFramebuff
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkFramebufferAttachmentImageInfo* arrValues = vt_alloc(memoryPool, dataSize4 * sizeof(VkFramebufferAttachmentImageInfo));
+        VkFramebufferAttachmentImageInfo* arrValues = mp_alloc(memoryPool, dataSize4 * sizeof(VkFramebufferAttachmentImageInfo));
         for (int i = 0; i < dataSize4; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -16802,7 +16802,7 @@ static inline void vt_unserialize_VkRenderPassAttachmentBeginInfo(VkRenderPassAt
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkImageView* arrValues = vt_alloc(memoryPool, dataSize4 * sizeof(VkImageView));
+        VkImageView* arrValues = mp_alloc(memoryPool, dataSize4 * sizeof(VkImageView));
         for (int i = 0; i < dataSize4; i++) {
             uint64_t attachmentsId;
             vt_unserialize_VkImageView((VkImageView)&attachmentsId, inputBuffer + bufferOffset, memoryPool);
@@ -16953,7 +16953,7 @@ static inline void vt_unserialize_VkRenderPassCreateInfo2(VkRenderPassCreateInfo
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkAttachmentDescription2* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkAttachmentDescription2));
+        VkAttachmentDescription2* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkAttachmentDescription2));
         for (int i = 0; i < dataSize5; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -16971,7 +16971,7 @@ static inline void vt_unserialize_VkRenderPassCreateInfo2(VkRenderPassCreateInfo
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkSubpassDescription2* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkSubpassDescription2));
+        VkSubpassDescription2* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkSubpassDescription2));
         for (int i = 0; i < dataSize7; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -16989,7 +16989,7 @@ static inline void vt_unserialize_VkRenderPassCreateInfo2(VkRenderPassCreateInfo
     int dataSize9 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize9 > 0) {
-        VkSubpassDependency2* arrValues = vt_alloc(memoryPool, dataSize9 * sizeof(VkSubpassDependency2));
+        VkSubpassDependency2* arrValues = mp_alloc(memoryPool, dataSize9 * sizeof(VkSubpassDependency2));
         for (int i = 0; i < dataSize9; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -17007,7 +17007,7 @@ static inline void vt_unserialize_VkRenderPassCreateInfo2(VkRenderPassCreateInfo
     int dataSize11 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize11 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize11 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize11 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize11 * 4);
         bufferOffset += dataSize11 * 4;
         val->pCorrelatedViewMasks = arrValues;
@@ -17241,7 +17241,7 @@ static inline void vt_unserialize_VkRenderPassInputAttachmentAspectCreateInfo(Vk
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkInputAttachmentAspectReference* arrValues = vt_alloc(memoryPool, dataSize4 * sizeof(VkInputAttachmentAspectReference));
+        VkInputAttachmentAspectReference* arrValues = mp_alloc(memoryPool, dataSize4 * sizeof(VkInputAttachmentAspectReference));
         for (int i = 0; i < dataSize4; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -17498,7 +17498,7 @@ static inline void vt_unserialize_VkRenderPassSampleLocationsBeginInfoEXT(VkRend
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkAttachmentSampleLocationsEXT* arrValues = vt_alloc(memoryPool, dataSize4 * sizeof(VkAttachmentSampleLocationsEXT));
+        VkAttachmentSampleLocationsEXT* arrValues = mp_alloc(memoryPool, dataSize4 * sizeof(VkAttachmentSampleLocationsEXT));
         for (int i = 0; i < dataSize4; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -17516,7 +17516,7 @@ static inline void vt_unserialize_VkRenderPassSampleLocationsBeginInfoEXT(VkRend
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        VkSubpassSampleLocationsEXT* arrValues = vt_alloc(memoryPool, dataSize6 * sizeof(VkSubpassSampleLocationsEXT));
+        VkSubpassSampleLocationsEXT* arrValues = mp_alloc(memoryPool, dataSize6 * sizeof(VkSubpassSampleLocationsEXT));
         for (int i = 0; i < dataSize6; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -17693,7 +17693,7 @@ static inline void vt_unserialize_VkImageMemoryRequirementsInfo2(VkImageMemoryRe
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkImagePlaneMemoryRequirementsInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkImagePlaneMemoryRequirementsInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkImagePlaneMemoryRequirementsInfo));
                     vt_unserialize_VkImagePlaneMemoryRequirementsInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -17857,7 +17857,7 @@ static inline void vt_unserialize_VkMemoryRequirements2(VkMemoryRequirements2* v
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkMemoryDedicatedRequirements* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkMemoryDedicatedRequirements));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkMemoryDedicatedRequirements));
                     vt_unserialize_VkMemoryDedicatedRequirements(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -18077,7 +18077,7 @@ static inline void vt_unserialize_VkDescriptorSetLayoutBindingFlagsCreateInfo(Vk
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkDescriptorBindingFlags* arrValues = vt_alloc(memoryPool, dataSize4 * 4);
+        VkDescriptorBindingFlags* arrValues = mp_alloc(memoryPool, dataSize4 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize4 * 4);
         bufferOffset += dataSize4 * 4;
         val->pBindingFlags = arrValues;
@@ -18127,7 +18127,7 @@ static inline void vt_unserialize_VkDescriptorSetVariableDescriptorCountAllocate
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize4 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize4 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize4 * 4);
         bufferOffset += dataSize4 * 4;
         val->pDescriptorCounts = arrValues;
@@ -18252,7 +18252,7 @@ static inline void vt_unserialize_VkDescriptorSetLayoutSupport(VkDescriptorSetLa
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkDescriptorSetVariableDescriptorCountLayoutSupport* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkDescriptorSetVariableDescriptorCountLayoutSupport));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkDescriptorSetVariableDescriptorCountLayoutSupport));
                     vt_unserialize_VkDescriptorSetVariableDescriptorCountLayoutSupport(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -18367,7 +18367,7 @@ static inline void vt_unserialize_VkTimelineSemaphoreSubmitInfo(VkTimelineSemaph
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        uint64_t* arrValues = vt_alloc(memoryPool, dataSize4 * 8);
+        uint64_t* arrValues = mp_alloc(memoryPool, dataSize4 * 8);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize4 * 8);
         bufferOffset += dataSize4 * 8;
         val->pWaitSemaphoreValues = arrValues;
@@ -18379,7 +18379,7 @@ static inline void vt_unserialize_VkTimelineSemaphoreSubmitInfo(VkTimelineSemaph
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        uint64_t* arrValues = vt_alloc(memoryPool, dataSize6 * 8);
+        uint64_t* arrValues = mp_alloc(memoryPool, dataSize6 * 8);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize6 * 8);
         bufferOffset += dataSize6 * 8;
         val->pSignalSemaphoreValues = arrValues;
@@ -18458,7 +18458,7 @@ static inline void vt_unserialize_VkSemaphoreWaitInfo(VkSemaphoreWaitInfo* val, 
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkSemaphore* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkSemaphore));
+        VkSemaphore* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkSemaphore));
         for (int i = 0; i < dataSize5; i++) {
             uint64_t semaphoresId;
             vt_unserialize_VkSemaphore((VkSemaphore)&semaphoresId, inputBuffer + bufferOffset, memoryPool);
@@ -18480,7 +18480,7 @@ static inline void vt_unserialize_VkSemaphoreWaitInfo(VkSemaphoreWaitInfo* val, 
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        uint64_t* arrValues = vt_alloc(memoryPool, dataSize6 * 8);
+        uint64_t* arrValues = mp_alloc(memoryPool, dataSize6 * 8);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize6 * 8);
         bufferOffset += dataSize6 * 8;
         val->pValues = arrValues;
@@ -18768,7 +18768,7 @@ static inline void vt_unserialize_VkImageMemoryBarrier2(VkImageMemoryBarrier2* v
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkSampleLocationsInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_SAMPLE_LOCATIONS_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkSampleLocationsInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkSampleLocationsInfoEXT));
                     vt_unserialize_VkSampleLocationsInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -18933,7 +18933,7 @@ static inline void vt_unserialize_VkDependencyInfo(VkDependencyInfo* val, char* 
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkMemoryBarrier2* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkMemoryBarrier2));
+        VkMemoryBarrier2* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkMemoryBarrier2));
         for (int i = 0; i < dataSize5; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -18951,7 +18951,7 @@ static inline void vt_unserialize_VkDependencyInfo(VkDependencyInfo* val, char* 
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkBufferMemoryBarrier2* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkBufferMemoryBarrier2));
+        VkBufferMemoryBarrier2* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkBufferMemoryBarrier2));
         for (int i = 0; i < dataSize7; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -18969,7 +18969,7 @@ static inline void vt_unserialize_VkDependencyInfo(VkDependencyInfo* val, char* 
     int dataSize9 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize9 > 0) {
-        VkImageMemoryBarrier2* arrValues = vt_alloc(memoryPool, dataSize9 * sizeof(VkImageMemoryBarrier2));
+        VkImageMemoryBarrier2* arrValues = mp_alloc(memoryPool, dataSize9 * sizeof(VkImageMemoryBarrier2));
         for (int i = 0; i < dataSize9; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -19097,7 +19097,7 @@ static inline void vt_unserialize_VkSubmitInfo2(VkSubmitInfo2* val, char* inputB
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkSemaphoreSubmitInfo* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkSemaphoreSubmitInfo));
+        VkSemaphoreSubmitInfo* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkSemaphoreSubmitInfo));
         for (int i = 0; i < dataSize5; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -19115,7 +19115,7 @@ static inline void vt_unserialize_VkSubmitInfo2(VkSubmitInfo2* val, char* inputB
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkCommandBufferSubmitInfo* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkCommandBufferSubmitInfo));
+        VkCommandBufferSubmitInfo* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkCommandBufferSubmitInfo));
         for (int i = 0; i < dataSize7; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -19133,7 +19133,7 @@ static inline void vt_unserialize_VkSubmitInfo2(VkSubmitInfo2* val, char* inputB
     int dataSize9 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize9 > 0) {
-        VkSemaphoreSubmitInfo* arrValues = vt_alloc(memoryPool, dataSize9 * sizeof(VkSemaphoreSubmitInfo));
+        VkSemaphoreSubmitInfo* arrValues = mp_alloc(memoryPool, dataSize9 * sizeof(VkSemaphoreSubmitInfo));
         for (int i = 0; i < dataSize9; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -19324,7 +19324,7 @@ static inline void vt_unserialize_VkMutableDescriptorTypeListEXT(VkMutableDescri
     int dataSize2 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize2 > 0) {
-        VkDescriptorType* arrValues = vt_alloc(memoryPool, dataSize2 * 4);
+        VkDescriptorType* arrValues = mp_alloc(memoryPool, dataSize2 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize2 * 4);
         bufferOffset += dataSize2 * 4;
         val->pDescriptorTypes = arrValues;
@@ -19385,7 +19385,7 @@ static inline void vt_unserialize_VkMutableDescriptorTypeCreateInfoEXT(VkMutable
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkMutableDescriptorTypeListEXT* arrValues = vt_alloc(memoryPool, dataSize4 * sizeof(VkMutableDescriptorTypeListEXT));
+        VkMutableDescriptorTypeListEXT* arrValues = mp_alloc(memoryPool, dataSize4 * sizeof(VkMutableDescriptorTypeListEXT));
         for (int i = 0; i < dataSize4; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -19484,7 +19484,7 @@ static inline void vt_unserialize_VkPipelineLayoutCreateInfo(VkPipelineLayoutCre
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkDescriptorSetLayout* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkDescriptorSetLayout));
+        VkDescriptorSetLayout* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkDescriptorSetLayout));
         for (int i = 0; i < dataSize5; i++) {
             uint64_t setLayoutsId;
             vt_unserialize_VkDescriptorSetLayout((VkDescriptorSetLayout)&setLayoutsId, inputBuffer + bufferOffset, memoryPool);
@@ -19508,7 +19508,7 @@ static inline void vt_unserialize_VkPipelineLayoutCreateInfo(VkPipelineLayoutCre
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkPushConstantRange* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkPushConstantRange));
+        VkPushConstantRange* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkPushConstantRange));
         for (int i = 0; i < dataSize7; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -19624,7 +19624,7 @@ static inline void vt_unserialize_VkRenderPassMultiviewCreateInfo(VkRenderPassMu
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize4 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize4 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize4 * 4);
         bufferOffset += dataSize4 * 4;
         val->pViewMasks = arrValues;
@@ -19636,7 +19636,7 @@ static inline void vt_unserialize_VkRenderPassMultiviewCreateInfo(VkRenderPassMu
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        int32_t* arrValues = vt_alloc(memoryPool, dataSize6 * 4);
+        int32_t* arrValues = mp_alloc(memoryPool, dataSize6 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize6 * 4);
         bufferOffset += dataSize6 * 4;
         val->pViewOffsets = arrValues;
@@ -19648,7 +19648,7 @@ static inline void vt_unserialize_VkRenderPassMultiviewCreateInfo(VkRenderPassMu
     int dataSize8 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize8 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize8 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize8 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize8 * 4);
         bufferOffset += dataSize8 * 4;
         val->pCorrelationMasks = arrValues;
@@ -19729,7 +19729,7 @@ static inline void vt_unserialize_VkBindBufferMemoryDeviceGroupInfo(VkBindBuffer
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize4 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize4 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize4 * 4);
         bufferOffset += dataSize4 * 4;
         val->pDeviceIndices = arrValues;
@@ -19807,7 +19807,7 @@ static inline void vt_unserialize_VkBindImageMemoryDeviceGroupInfo(VkBindImageMe
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize4 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize4 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize4 * 4);
         bufferOffset += dataSize4 * 4;
         val->pDeviceIndices = arrValues;
@@ -19819,7 +19819,7 @@ static inline void vt_unserialize_VkBindImageMemoryDeviceGroupInfo(VkBindImageMe
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        VkRect2D* arrValues = vt_alloc(memoryPool, dataSize6 * sizeof(VkRect2D));
+        VkRect2D* arrValues = mp_alloc(memoryPool, dataSize6 * sizeof(VkRect2D));
         for (int i = 0; i < dataSize6; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -19935,7 +19935,7 @@ static inline void vt_unserialize_VkDeviceGroupSubmitInfo(VkDeviceGroupSubmitInf
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize4 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize4 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize4 * 4);
         bufferOffset += dataSize4 * 4;
         val->pWaitSemaphoreDeviceIndices = arrValues;
@@ -19947,7 +19947,7 @@ static inline void vt_unserialize_VkDeviceGroupSubmitInfo(VkDeviceGroupSubmitInf
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize6 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize6 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize6 * 4);
         bufferOffset += dataSize6 * 4;
         val->pCommandBufferDeviceMasks = arrValues;
@@ -19959,7 +19959,7 @@ static inline void vt_unserialize_VkDeviceGroupSubmitInfo(VkDeviceGroupSubmitInf
     int dataSize8 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize8 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize8 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize8 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize8 * 4);
         bufferOffset += dataSize8 * 4;
         val->pSignalSemaphoreDeviceIndices = arrValues;
@@ -20050,7 +20050,7 @@ static inline void vt_unserialize_VkDeviceGroupDeviceCreateInfo(VkDeviceGroupDev
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkPhysicalDevice* arrValues = vt_alloc(memoryPool, dataSize4 * sizeof(VkPhysicalDevice));
+        VkPhysicalDevice* arrValues = mp_alloc(memoryPool, dataSize4 * sizeof(VkPhysicalDevice));
         for (int i = 0; i < dataSize4; i++) {
             uint64_t physicalDevicesId;
             vt_unserialize_VkPhysicalDevice((VkPhysicalDevice)&physicalDevicesId, inputBuffer + bufferOffset, memoryPool);
@@ -20163,7 +20163,7 @@ static inline void vt_unserialize_VkWriteDescriptorSetInlineUniformBlock(VkWrite
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        val->pData = vt_alloc(memoryPool, dataSize4);
+        val->pData = mp_alloc(memoryPool, dataSize4);
         memcpy(val->pData, inputBuffer + bufferOffset, dataSize4);
         bufferOffset += dataSize4;
     }
@@ -20287,7 +20287,7 @@ static inline void vt_unserialize_VkPipelineCreationFeedbackCreateInfo(VkPipelin
     int dataSize3 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize3 > 0) {
-        val->pPipelineCreationFeedback = vt_alloc(memoryPool, sizeof(VkPipelineCreationFeedback));
+        val->pPipelineCreationFeedback = mp_alloc(memoryPool, sizeof(VkPipelineCreationFeedback));
         vt_unserialize_VkPipelineCreationFeedback(val->pPipelineCreationFeedback, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize3;
     }
@@ -20298,7 +20298,7 @@ static inline void vt_unserialize_VkPipelineCreationFeedbackCreateInfo(VkPipelin
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkPipelineCreationFeedback* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkPipelineCreationFeedback));
+        VkPipelineCreationFeedback* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkPipelineCreationFeedback));
         for (int i = 0; i < dataSize5; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -20436,7 +20436,7 @@ static inline void vt_unserialize_VkInstanceCreateInfo(VkInstanceCreateInfo* val
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        val->pApplicationInfo = vt_alloc(memoryPool, sizeof(VkApplicationInfo));
+        val->pApplicationInfo = mp_alloc(memoryPool, sizeof(VkApplicationInfo));
         vt_unserialize_VkApplicationInfo(val->pApplicationInfo, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize4;
     }
@@ -20447,11 +20447,11 @@ static inline void vt_unserialize_VkInstanceCreateInfo(VkInstanceCreateInfo* val
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        char** arrValues = vt_alloc(memoryPool, dataSize6 * sizeof(char*));
+        char** arrValues = mp_alloc(memoryPool, dataSize6 * sizeof(char*));
         for (int i = 0; i < dataSize6; i++) {
             int strSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
-            arrValues[i] = vt_alloc(memoryPool, strSize);
+            arrValues[i] = mp_alloc(memoryPool, strSize);
             memcpy(arrValues[i], inputBuffer + bufferOffset, strSize);
             bufferOffset += strSize;
         }
@@ -20464,11 +20464,11 @@ static inline void vt_unserialize_VkInstanceCreateInfo(VkInstanceCreateInfo* val
     int dataSize8 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize8 > 0) {
-        char** arrValues = vt_alloc(memoryPool, dataSize8 * sizeof(char*));
+        char** arrValues = mp_alloc(memoryPool, dataSize8 * sizeof(char*));
         for (int i = 0; i < dataSize8; i++) {
             int strSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
-            arrValues[i] = vt_alloc(memoryPool, strSize);
+            arrValues[i] = mp_alloc(memoryPool, strSize);
             memcpy(arrValues[i], inputBuffer + bufferOffset, strSize);
             bufferOffset += strSize;
         }
@@ -21381,7 +21381,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkDevicePrivateDataCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_DEVICE_PRIVATE_DATA_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkDevicePrivateDataCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkDevicePrivateDataCreateInfo));
                     vt_unserialize_VkDevicePrivateDataCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21397,7 +21397,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDevicePrivateDataFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDevicePrivateDataFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDevicePrivateDataFeatures));
                     vt_unserialize_VkPhysicalDevicePrivateDataFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21413,7 +21413,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceFeatures2* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceFeatures2));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceFeatures2));
                     vt_unserialize_VkPhysicalDeviceFeatures2(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21429,7 +21429,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVariablePointersFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVariablePointersFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVariablePointersFeatures));
                     vt_unserialize_VkPhysicalDeviceVariablePointersFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21445,7 +21445,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceMultiviewFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceMultiviewFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceMultiviewFeatures));
                     vt_unserialize_VkPhysicalDeviceMultiviewFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21461,7 +21461,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkDeviceGroupDeviceCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkDeviceGroupDeviceCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkDeviceGroupDeviceCreateInfo));
                     vt_unserialize_VkDeviceGroupDeviceCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21477,7 +21477,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDevice16BitStorageFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDevice16BitStorageFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDevice16BitStorageFeatures));
                     vt_unserialize_VkPhysicalDevice16BitStorageFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21493,7 +21493,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures));
                     vt_unserialize_VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21509,7 +21509,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceSamplerYcbcrConversionFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceSamplerYcbcrConversionFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceSamplerYcbcrConversionFeatures));
                     vt_unserialize_VkPhysicalDeviceSamplerYcbcrConversionFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21525,7 +21525,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceProtectedMemoryFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceProtectedMemoryFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceProtectedMemoryFeatures));
                     vt_unserialize_VkPhysicalDeviceProtectedMemoryFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21541,7 +21541,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceInlineUniformBlockFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceInlineUniformBlockFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceInlineUniformBlockFeatures));
                     vt_unserialize_VkPhysicalDeviceInlineUniformBlockFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21557,7 +21557,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceMaintenance4Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceMaintenance4Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceMaintenance4Features));
                     vt_unserialize_VkPhysicalDeviceMaintenance4Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21573,7 +21573,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderDrawParametersFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderDrawParametersFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderDrawParametersFeatures));
                     vt_unserialize_VkPhysicalDeviceShaderDrawParametersFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21589,7 +21589,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderFloat16Int8Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderFloat16Int8Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderFloat16Int8Features));
                     vt_unserialize_VkPhysicalDeviceShaderFloat16Int8Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21605,7 +21605,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceHostQueryResetFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceHostQueryResetFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceHostQueryResetFeatures));
                     vt_unserialize_VkPhysicalDeviceHostQueryResetFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21621,7 +21621,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceDescriptorIndexingFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceDescriptorIndexingFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceDescriptorIndexingFeatures));
                     vt_unserialize_VkPhysicalDeviceDescriptorIndexingFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21637,7 +21637,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceTimelineSemaphoreFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceTimelineSemaphoreFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceTimelineSemaphoreFeatures));
                     vt_unserialize_VkPhysicalDeviceTimelineSemaphoreFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21653,7 +21653,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDevice8BitStorageFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDevice8BitStorageFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDevice8BitStorageFeatures));
                     vt_unserialize_VkPhysicalDevice8BitStorageFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21669,7 +21669,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceConditionalRenderingFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceConditionalRenderingFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceConditionalRenderingFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceConditionalRenderingFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21685,7 +21685,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVulkanMemoryModelFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkanMemoryModelFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkanMemoryModelFeatures));
                     vt_unserialize_VkPhysicalDeviceVulkanMemoryModelFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21701,7 +21701,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderAtomicInt64Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderAtomicInt64Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderAtomicInt64Features));
                     vt_unserialize_VkPhysicalDeviceShaderAtomicInt64Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21717,7 +21717,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVertexAttributeDivisorFeaturesKHR* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVertexAttributeDivisorFeaturesKHR));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVertexAttributeDivisorFeaturesKHR));
                     vt_unserialize_VkPhysicalDeviceVertexAttributeDivisorFeaturesKHR(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21733,7 +21733,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceTransformFeedbackFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceTransformFeedbackFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceTransformFeedbackFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceTransformFeedbackFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21749,7 +21749,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceScalarBlockLayoutFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceScalarBlockLayoutFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceScalarBlockLayoutFeatures));
                     vt_unserialize_VkPhysicalDeviceScalarBlockLayoutFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21765,7 +21765,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceUniformBufferStandardLayoutFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceUniformBufferStandardLayoutFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceUniformBufferStandardLayoutFeatures));
                     vt_unserialize_VkPhysicalDeviceUniformBufferStandardLayoutFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21781,7 +21781,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceDepthClipEnableFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_CLIP_ENABLE_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceDepthClipEnableFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceDepthClipEnableFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceDepthClipEnableFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21797,7 +21797,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceBufferDeviceAddressFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceBufferDeviceAddressFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceBufferDeviceAddressFeatures));
                     vt_unserialize_VkPhysicalDeviceBufferDeviceAddressFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21813,7 +21813,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceImagelessFramebufferFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceImagelessFramebufferFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceImagelessFramebufferFeatures));
                     vt_unserialize_VkPhysicalDeviceImagelessFramebufferFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21829,7 +21829,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceTextureCompressionASTCHDRFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceTextureCompressionASTCHDRFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceTextureCompressionASTCHDRFeatures));
                     vt_unserialize_VkPhysicalDeviceTextureCompressionASTCHDRFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21845,7 +21845,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADER_INTERLOCK_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21861,7 +21861,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures));
                     vt_unserialize_VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21877,7 +21877,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures));
                     vt_unserialize_VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21893,7 +21893,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21909,7 +21909,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceSubgroupSizeControlFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceSubgroupSizeControlFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceSubgroupSizeControlFeatures));
                     vt_unserialize_VkPhysicalDeviceSubgroupSizeControlFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21925,7 +21925,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDevicePipelineCreationCacheControlFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDevicePipelineCreationCacheControlFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDevicePipelineCreationCacheControlFeatures));
                     vt_unserialize_VkPhysicalDevicePipelineCreationCacheControlFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21941,7 +21941,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVulkan11Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_1_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan11Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan11Features));
                     vt_unserialize_VkPhysicalDeviceVulkan11Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21957,7 +21957,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVulkan12Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan12Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan12Features));
                     vt_unserialize_VkPhysicalDeviceVulkan12Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21973,7 +21973,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceVulkan13Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_3_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan13Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceVulkan13Features));
                     vt_unserialize_VkPhysicalDeviceVulkan13Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -21989,7 +21989,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceCustomBorderColorFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceCustomBorderColorFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceCustomBorderColorFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceCustomBorderColorFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22005,7 +22005,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceBorderColorSwizzleFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceBorderColorSwizzleFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceBorderColorSwizzleFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceBorderColorSwizzleFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22021,7 +22021,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceExtendedDynamicStateFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceExtendedDynamicStateFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceExtendedDynamicStateFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceExtendedDynamicStateFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22037,7 +22037,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceExtendedDynamicState3FeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceExtendedDynamicState3FeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceExtendedDynamicState3FeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceExtendedDynamicState3FeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22053,7 +22053,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures));
                     vt_unserialize_VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22069,7 +22069,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceRobustness2FeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceRobustness2FeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceRobustness2FeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceRobustness2FeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22085,7 +22085,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceImageRobustnessFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceImageRobustnessFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceImageRobustnessFeatures));
                     vt_unserialize_VkPhysicalDeviceImageRobustnessFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22101,7 +22101,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDevice4444FormatsFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDevice4444FormatsFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDevice4444FormatsFeaturesEXT));
                     vt_unserialize_VkPhysicalDevice4444FormatsFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22117,7 +22117,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderTerminateInvocationFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderTerminateInvocationFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderTerminateInvocationFeatures));
                     vt_unserialize_VkPhysicalDeviceShaderTerminateInvocationFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22133,7 +22133,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22149,7 +22149,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceDepthClipControlFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceDepthClipControlFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceDepthClipControlFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceDepthClipControlFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22165,7 +22165,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceColorWriteEnableFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COLOR_WRITE_ENABLE_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceColorWriteEnableFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceColorWriteEnableFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceColorWriteEnableFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22181,7 +22181,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceSynchronization2Features* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceSynchronization2Features));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceSynchronization2Features));
                     vt_unserialize_VkPhysicalDeviceSynchronization2Features(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22197,7 +22197,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceProvokingVertexFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROVOKING_VERTEX_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceProvokingVertexFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceProvokingVertexFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceProvokingVertexFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22213,7 +22213,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderIntegerDotProductFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderIntegerDotProductFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderIntegerDotProductFeatures));
                     vt_unserialize_VkPhysicalDeviceShaderIntegerDotProductFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22229,7 +22229,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceDynamicRenderingFeatures* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceDynamicRenderingFeatures));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceDynamicRenderingFeatures));
                     vt_unserialize_VkPhysicalDeviceDynamicRenderingFeatures(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22245,7 +22245,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22261,7 +22261,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPhysicalDeviceMapMemoryPlacedFeaturesEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAP_MEMORY_PLACED_FEATURES_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceMapMemoryPlacedFeaturesEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceMapMemoryPlacedFeaturesEXT));
                     vt_unserialize_VkPhysicalDeviceMapMemoryPlacedFeaturesEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22290,7 +22290,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkDeviceQueueCreateInfo* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkDeviceQueueCreateInfo));
+        VkDeviceQueueCreateInfo* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkDeviceQueueCreateInfo));
         for (int i = 0; i < dataSize5; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -22308,11 +22308,11 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        char** arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(char*));
+        char** arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(char*));
         for (int i = 0; i < dataSize7; i++) {
             int strSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
-            arrValues[i] = vt_alloc(memoryPool, strSize);
+            arrValues[i] = mp_alloc(memoryPool, strSize);
             memcpy(arrValues[i], inputBuffer + bufferOffset, strSize);
             bufferOffset += strSize;
         }
@@ -22325,11 +22325,11 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
     int dataSize9 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize9 > 0) {
-        char** arrValues = vt_alloc(memoryPool, dataSize9 * sizeof(char*));
+        char** arrValues = mp_alloc(memoryPool, dataSize9 * sizeof(char*));
         for (int i = 0; i < dataSize9; i++) {
             int strSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
-            arrValues[i] = vt_alloc(memoryPool, strSize);
+            arrValues[i] = mp_alloc(memoryPool, strSize);
             memcpy(arrValues[i], inputBuffer + bufferOffset, strSize);
             bufferOffset += strSize;
         }
@@ -22340,7 +22340,7 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
     int dataSize10 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize10 > 0) {
-        val->pEnabledFeatures = vt_alloc(memoryPool, sizeof(VkPhysicalDeviceFeatures));
+        val->pEnabledFeatures = mp_alloc(memoryPool, sizeof(VkPhysicalDeviceFeatures));
         vt_unserialize_VkPhysicalDeviceFeatures(val->pEnabledFeatures, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize10;
     }
@@ -22587,7 +22587,7 @@ static inline void vt_unserialize_VkSubmitInfo(VkSubmitInfo* val, char* inputBuf
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkDeviceGroupSubmitInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_DEVICE_GROUP_SUBMIT_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkDeviceGroupSubmitInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkDeviceGroupSubmitInfo));
                     vt_unserialize_VkDeviceGroupSubmitInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22603,7 +22603,7 @@ static inline void vt_unserialize_VkSubmitInfo(VkSubmitInfo* val, char* inputBuf
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkProtectedSubmitInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PROTECTED_SUBMIT_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkProtectedSubmitInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkProtectedSubmitInfo));
                     vt_unserialize_VkProtectedSubmitInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22619,7 +22619,7 @@ static inline void vt_unserialize_VkSubmitInfo(VkSubmitInfo* val, char* inputBuf
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkTimelineSemaphoreSubmitInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_TIMELINE_SEMAPHORE_SUBMIT_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkTimelineSemaphoreSubmitInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkTimelineSemaphoreSubmitInfo));
                     vt_unserialize_VkTimelineSemaphoreSubmitInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22646,7 +22646,7 @@ static inline void vt_unserialize_VkSubmitInfo(VkSubmitInfo* val, char* inputBuf
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkSemaphore* arrValues = vt_alloc(memoryPool, dataSize4 * sizeof(VkSemaphore));
+        VkSemaphore* arrValues = mp_alloc(memoryPool, dataSize4 * sizeof(VkSemaphore));
         for (int i = 0; i < dataSize4; i++) {
             uint64_t waitSemaphoresId;
             vt_unserialize_VkSemaphore((VkSemaphore)&waitSemaphoresId, inputBuffer + bufferOffset, memoryPool);
@@ -22668,7 +22668,7 @@ static inline void vt_unserialize_VkSubmitInfo(VkSubmitInfo* val, char* inputBuf
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkPipelineStageFlags* arrValues = vt_alloc(memoryPool, dataSize5 * 4);
+        VkPipelineStageFlags* arrValues = mp_alloc(memoryPool, dataSize5 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize5 * 4);
         bufferOffset += dataSize5 * 4;
         val->pWaitDstStageMask = arrValues;
@@ -22680,7 +22680,7 @@ static inline void vt_unserialize_VkSubmitInfo(VkSubmitInfo* val, char* inputBuf
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkCommandBuffer* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkCommandBuffer));
+        VkCommandBuffer* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkCommandBuffer));
         for (int i = 0; i < dataSize7; i++) {
             uint64_t commandBuffersId;
             vt_unserialize_VkCommandBuffer((VkCommandBuffer)&commandBuffersId, inputBuffer + bufferOffset, memoryPool);
@@ -22704,7 +22704,7 @@ static inline void vt_unserialize_VkSubmitInfo(VkSubmitInfo* val, char* inputBuf
     int dataSize9 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize9 > 0) {
-        VkSemaphore* arrValues = vt_alloc(memoryPool, dataSize9 * sizeof(VkSemaphore));
+        VkSemaphore* arrValues = mp_alloc(memoryPool, dataSize9 * sizeof(VkSemaphore));
         for (int i = 0; i < dataSize9; i++) {
             uint64_t signalSemaphoresId;
             vt_unserialize_VkSemaphore((VkSemaphore)&signalSemaphoresId, inputBuffer + bufferOffset, memoryPool);
@@ -22870,7 +22870,7 @@ static inline void vt_unserialize_VkMemoryAllocateInfo(VkMemoryAllocateInfo* val
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkExportMemoryAllocateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkExportMemoryAllocateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkExportMemoryAllocateInfo));
                     vt_unserialize_VkExportMemoryAllocateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22886,7 +22886,7 @@ static inline void vt_unserialize_VkMemoryAllocateInfo(VkMemoryAllocateInfo* val
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkImportMemoryFdInfoKHR* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_IMPORT_MEMORY_FD_INFO_KHR) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkImportMemoryFdInfoKHR));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkImportMemoryFdInfoKHR));
                     vt_unserialize_VkImportMemoryFdInfoKHR(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22902,7 +22902,7 @@ static inline void vt_unserialize_VkMemoryAllocateInfo(VkMemoryAllocateInfo* val
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkMemoryAllocateFlagsInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkMemoryAllocateFlagsInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkMemoryAllocateFlagsInfo));
                     vt_unserialize_VkMemoryAllocateFlagsInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22918,7 +22918,7 @@ static inline void vt_unserialize_VkMemoryAllocateInfo(VkMemoryAllocateInfo* val
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkMemoryDedicatedAllocateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkMemoryDedicatedAllocateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkMemoryDedicatedAllocateInfo));
                     vt_unserialize_VkMemoryDedicatedAllocateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -22934,7 +22934,7 @@ static inline void vt_unserialize_VkMemoryAllocateInfo(VkMemoryAllocateInfo* val
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkMemoryOpaqueCaptureAddressAllocateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkMemoryOpaqueCaptureAddressAllocateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkMemoryOpaqueCaptureAddressAllocateInfo));
                     vt_unserialize_VkMemoryOpaqueCaptureAddressAllocateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -23250,7 +23250,7 @@ static inline void vt_unserialize_VkBindSparseInfo(VkBindSparseInfo* val, char* 
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkDeviceGroupBindSparseInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_DEVICE_GROUP_BIND_SPARSE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkDeviceGroupBindSparseInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkDeviceGroupBindSparseInfo));
                     vt_unserialize_VkDeviceGroupBindSparseInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -23266,7 +23266,7 @@ static inline void vt_unserialize_VkBindSparseInfo(VkBindSparseInfo* val, char* 
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkTimelineSemaphoreSubmitInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_TIMELINE_SEMAPHORE_SUBMIT_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkTimelineSemaphoreSubmitInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkTimelineSemaphoreSubmitInfo));
                     vt_unserialize_VkTimelineSemaphoreSubmitInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -23293,7 +23293,7 @@ static inline void vt_unserialize_VkBindSparseInfo(VkBindSparseInfo* val, char* 
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        VkSemaphore* arrValues = vt_alloc(memoryPool, dataSize4 * sizeof(VkSemaphore));
+        VkSemaphore* arrValues = mp_alloc(memoryPool, dataSize4 * sizeof(VkSemaphore));
         for (int i = 0; i < dataSize4; i++) {
             uint64_t waitSemaphoresId;
             vt_unserialize_VkSemaphore((VkSemaphore)&waitSemaphoresId, inputBuffer + bufferOffset, memoryPool);
@@ -23317,7 +23317,7 @@ static inline void vt_unserialize_VkBindSparseInfo(VkBindSparseInfo* val, char* 
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        VkSparseBufferMemoryBindInfo* arrValues = vt_alloc(memoryPool, dataSize6 * sizeof(VkSparseBufferMemoryBindInfo));
+        VkSparseBufferMemoryBindInfo* arrValues = mp_alloc(memoryPool, dataSize6 * sizeof(VkSparseBufferMemoryBindInfo));
         for (int i = 0; i < dataSize6; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -23335,7 +23335,7 @@ static inline void vt_unserialize_VkBindSparseInfo(VkBindSparseInfo* val, char* 
     int dataSize8 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize8 > 0) {
-        VkSparseImageOpaqueMemoryBindInfo* arrValues = vt_alloc(memoryPool, dataSize8 * sizeof(VkSparseImageOpaqueMemoryBindInfo));
+        VkSparseImageOpaqueMemoryBindInfo* arrValues = mp_alloc(memoryPool, dataSize8 * sizeof(VkSparseImageOpaqueMemoryBindInfo));
         for (int i = 0; i < dataSize8; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -23353,7 +23353,7 @@ static inline void vt_unserialize_VkBindSparseInfo(VkBindSparseInfo* val, char* 
     int dataSize10 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize10 > 0) {
-        VkSparseImageMemoryBindInfo* arrValues = vt_alloc(memoryPool, dataSize10 * sizeof(VkSparseImageMemoryBindInfo));
+        VkSparseImageMemoryBindInfo* arrValues = mp_alloc(memoryPool, dataSize10 * sizeof(VkSparseImageMemoryBindInfo));
         for (int i = 0; i < dataSize10; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -23371,7 +23371,7 @@ static inline void vt_unserialize_VkBindSparseInfo(VkBindSparseInfo* val, char* 
     int dataSize12 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize12 > 0) {
-        VkSemaphore* arrValues = vt_alloc(memoryPool, dataSize12 * sizeof(VkSemaphore));
+        VkSemaphore* arrValues = mp_alloc(memoryPool, dataSize12 * sizeof(VkSemaphore));
         for (int i = 0; i < dataSize12; i++) {
             uint64_t signalSemaphoresId;
             vt_unserialize_VkSemaphore((VkSemaphore)&signalSemaphoresId, inputBuffer + bufferOffset, memoryPool);
@@ -23482,7 +23482,7 @@ static inline void vt_unserialize_VkFenceCreateInfo(VkFenceCreateInfo* val, char
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkExportFenceCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkExportFenceCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkExportFenceCreateInfo));
                     vt_unserialize_VkExportFenceCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -23611,7 +23611,7 @@ static inline void vt_unserialize_VkSemaphoreCreateInfo(VkSemaphoreCreateInfo* v
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkExportSemaphoreCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkExportSemaphoreCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkExportSemaphoreCreateInfo));
                     vt_unserialize_VkExportSemaphoreCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -23627,7 +23627,7 @@ static inline void vt_unserialize_VkSemaphoreCreateInfo(VkSemaphoreCreateInfo* v
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkSemaphoreTypeCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_SEMAPHORE_TYPE_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkSemaphoreTypeCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkSemaphoreTypeCreateInfo));
                     vt_unserialize_VkSemaphoreTypeCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -23849,7 +23849,7 @@ static inline void vt_unserialize_VkBufferCreateInfo(VkBufferCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkExternalMemoryBufferCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkExternalMemoryBufferCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkExternalMemoryBufferCreateInfo));
                     vt_unserialize_VkExternalMemoryBufferCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -23865,7 +23865,7 @@ static inline void vt_unserialize_VkBufferCreateInfo(VkBufferCreateInfo* val, ch
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkBufferOpaqueCaptureAddressCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_BUFFER_OPAQUE_CAPTURE_ADDRESS_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkBufferOpaqueCaptureAddressCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkBufferOpaqueCaptureAddressCreateInfo));
                     vt_unserialize_VkBufferOpaqueCaptureAddressCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -23900,7 +23900,7 @@ static inline void vt_unserialize_VkBufferCreateInfo(VkBufferCreateInfo* val, ch
     int dataSize8 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize8 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize8 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize8 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize8 * 4);
         bufferOffset += dataSize8 * 4;
         val->pQueueFamilyIndices = arrValues;
@@ -24145,7 +24145,7 @@ static inline void vt_unserialize_VkImageCreateInfo(VkImageCreateInfo* val, char
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkExternalMemoryImageCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkExternalMemoryImageCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkExternalMemoryImageCreateInfo));
                     vt_unserialize_VkExternalMemoryImageCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -24161,7 +24161,7 @@ static inline void vt_unserialize_VkImageCreateInfo(VkImageCreateInfo* val, char
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkImageSwapchainCreateInfoKHR* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHR) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkImageSwapchainCreateInfoKHR));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkImageSwapchainCreateInfoKHR));
                     vt_unserialize_VkImageSwapchainCreateInfoKHR(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -24177,7 +24177,7 @@ static inline void vt_unserialize_VkImageCreateInfo(VkImageCreateInfo* val, char
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkImageFormatListCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkImageFormatListCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkImageFormatListCreateInfo));
                     vt_unserialize_VkImageFormatListCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -24193,7 +24193,7 @@ static inline void vt_unserialize_VkImageCreateInfo(VkImageCreateInfo* val, char
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkImageStencilUsageCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_IMAGE_STENCIL_USAGE_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkImageStencilUsageCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkImageStencilUsageCreateInfo));
                     vt_unserialize_VkImageStencilUsageCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -24240,7 +24240,7 @@ static inline void vt_unserialize_VkImageCreateInfo(VkImageCreateInfo* val, char
     int dataSize14 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize14 > 0) {
-        uint32_t* arrValues = vt_alloc(memoryPool, dataSize14 * 4);
+        uint32_t* arrValues = mp_alloc(memoryPool, dataSize14 * 4);
         if (arrValues) memcpy(arrValues, inputBuffer + bufferOffset, dataSize14 * 4);
         bufferOffset += dataSize14 * 4;
         val->pQueueFamilyIndices = arrValues;
@@ -24413,7 +24413,7 @@ static inline void vt_unserialize_VkImageViewCreateInfo(VkImageViewCreateInfo* v
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkImageViewUsageCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_IMAGE_VIEW_USAGE_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkImageViewUsageCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkImageViewUsageCreateInfo));
                     vt_unserialize_VkImageViewUsageCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -24429,7 +24429,7 @@ static inline void vt_unserialize_VkImageViewCreateInfo(VkImageViewCreateInfo* v
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkSamplerYcbcrConversionInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkSamplerYcbcrConversionInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkSamplerYcbcrConversionInfo));
                     vt_unserialize_VkSamplerYcbcrConversionInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -24518,7 +24518,7 @@ static inline void vt_unserialize_VkPipelineCacheCreateInfo(VkPipelineCacheCreat
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        val->pInitialData = vt_alloc(memoryPool, dataSize5);
+        val->pInitialData = mp_alloc(memoryPool, dataSize5);
         memcpy(val->pInitialData, inputBuffer + bufferOffset, dataSize5);
         bufferOffset += dataSize5;
     }
@@ -24816,7 +24816,7 @@ static inline void vt_unserialize_VkGraphicsPipelineCreateInfo(VkGraphicsPipelin
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineCreationFeedbackCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_CREATION_FEEDBACK_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineCreationFeedbackCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineCreationFeedbackCreateInfo));
                     vt_unserialize_VkPipelineCreationFeedbackCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -24832,7 +24832,7 @@ static inline void vt_unserialize_VkGraphicsPipelineCreateInfo(VkGraphicsPipelin
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineRenderingCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_RENDERING_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineRenderingCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineRenderingCreateInfo));
                     vt_unserialize_VkPipelineRenderingCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -24861,7 +24861,7 @@ static inline void vt_unserialize_VkGraphicsPipelineCreateInfo(VkGraphicsPipelin
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkPipelineShaderStageCreateInfo* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkPipelineShaderStageCreateInfo));
+        VkPipelineShaderStageCreateInfo* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkPipelineShaderStageCreateInfo));
         for (int i = 0; i < dataSize5; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -24877,7 +24877,7 @@ static inline void vt_unserialize_VkGraphicsPipelineCreateInfo(VkGraphicsPipelin
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        val->pVertexInputState = vt_alloc(memoryPool, sizeof(VkPipelineVertexInputStateCreateInfo));
+        val->pVertexInputState = mp_alloc(memoryPool, sizeof(VkPipelineVertexInputStateCreateInfo));
         vt_unserialize_VkPipelineVertexInputStateCreateInfo(val->pVertexInputState, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize6;
     }
@@ -24886,7 +24886,7 @@ static inline void vt_unserialize_VkGraphicsPipelineCreateInfo(VkGraphicsPipelin
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        val->pInputAssemblyState = vt_alloc(memoryPool, sizeof(VkPipelineInputAssemblyStateCreateInfo));
+        val->pInputAssemblyState = mp_alloc(memoryPool, sizeof(VkPipelineInputAssemblyStateCreateInfo));
         vt_unserialize_VkPipelineInputAssemblyStateCreateInfo(val->pInputAssemblyState, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize7;
     }
@@ -24895,7 +24895,7 @@ static inline void vt_unserialize_VkGraphicsPipelineCreateInfo(VkGraphicsPipelin
     int dataSize8 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize8 > 0) {
-        val->pTessellationState = vt_alloc(memoryPool, sizeof(VkPipelineTessellationStateCreateInfo));
+        val->pTessellationState = mp_alloc(memoryPool, sizeof(VkPipelineTessellationStateCreateInfo));
         vt_unserialize_VkPipelineTessellationStateCreateInfo(val->pTessellationState, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize8;
     }
@@ -24904,7 +24904,7 @@ static inline void vt_unserialize_VkGraphicsPipelineCreateInfo(VkGraphicsPipelin
     int dataSize9 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize9 > 0) {
-        val->pViewportState = vt_alloc(memoryPool, sizeof(VkPipelineViewportStateCreateInfo));
+        val->pViewportState = mp_alloc(memoryPool, sizeof(VkPipelineViewportStateCreateInfo));
         vt_unserialize_VkPipelineViewportStateCreateInfo(val->pViewportState, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize9;
     }
@@ -24913,7 +24913,7 @@ static inline void vt_unserialize_VkGraphicsPipelineCreateInfo(VkGraphicsPipelin
     int dataSize10 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize10 > 0) {
-        val->pRasterizationState = vt_alloc(memoryPool, sizeof(VkPipelineRasterizationStateCreateInfo));
+        val->pRasterizationState = mp_alloc(memoryPool, sizeof(VkPipelineRasterizationStateCreateInfo));
         vt_unserialize_VkPipelineRasterizationStateCreateInfo(val->pRasterizationState, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize10;
     }
@@ -24922,7 +24922,7 @@ static inline void vt_unserialize_VkGraphicsPipelineCreateInfo(VkGraphicsPipelin
     int dataSize11 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize11 > 0) {
-        val->pMultisampleState = vt_alloc(memoryPool, sizeof(VkPipelineMultisampleStateCreateInfo));
+        val->pMultisampleState = mp_alloc(memoryPool, sizeof(VkPipelineMultisampleStateCreateInfo));
         vt_unserialize_VkPipelineMultisampleStateCreateInfo(val->pMultisampleState, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize11;
     }
@@ -24931,7 +24931,7 @@ static inline void vt_unserialize_VkGraphicsPipelineCreateInfo(VkGraphicsPipelin
     int dataSize12 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize12 > 0) {
-        val->pDepthStencilState = vt_alloc(memoryPool, sizeof(VkPipelineDepthStencilStateCreateInfo));
+        val->pDepthStencilState = mp_alloc(memoryPool, sizeof(VkPipelineDepthStencilStateCreateInfo));
         vt_unserialize_VkPipelineDepthStencilStateCreateInfo(val->pDepthStencilState, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize12;
     }
@@ -24940,7 +24940,7 @@ static inline void vt_unserialize_VkGraphicsPipelineCreateInfo(VkGraphicsPipelin
     int dataSize13 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize13 > 0) {
-        val->pColorBlendState = vt_alloc(memoryPool, sizeof(VkPipelineColorBlendStateCreateInfo));
+        val->pColorBlendState = mp_alloc(memoryPool, sizeof(VkPipelineColorBlendStateCreateInfo));
         vt_unserialize_VkPipelineColorBlendStateCreateInfo(val->pColorBlendState, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize13;
     }
@@ -24949,7 +24949,7 @@ static inline void vt_unserialize_VkGraphicsPipelineCreateInfo(VkGraphicsPipelin
     int dataSize14 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize14 > 0) {
-        val->pDynamicState = vt_alloc(memoryPool, sizeof(VkPipelineDynamicStateCreateInfo));
+        val->pDynamicState = mp_alloc(memoryPool, sizeof(VkPipelineDynamicStateCreateInfo));
         vt_unserialize_VkPipelineDynamicStateCreateInfo(val->pDynamicState, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize14;
     }
@@ -25105,7 +25105,7 @@ static inline void vt_unserialize_VkComputePipelineCreateInfo(VkComputePipelineC
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkPipelineCreationFeedbackCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_PIPELINE_CREATION_FEEDBACK_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkPipelineCreationFeedbackCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkPipelineCreationFeedbackCreateInfo));
                     vt_unserialize_VkPipelineCreationFeedbackCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -25329,7 +25329,7 @@ static inline void vt_unserialize_VkSamplerCreateInfo(VkSamplerCreateInfo* val, 
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkSamplerYcbcrConversionInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkSamplerYcbcrConversionInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkSamplerYcbcrConversionInfo));
                     vt_unserialize_VkSamplerYcbcrConversionInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -25345,7 +25345,7 @@ static inline void vt_unserialize_VkSamplerCreateInfo(VkSamplerCreateInfo* val, 
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkSamplerReductionModeCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_SAMPLER_REDUCTION_MODE_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkSamplerReductionModeCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkSamplerReductionModeCreateInfo));
                     vt_unserialize_VkSamplerReductionModeCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -25361,7 +25361,7 @@ static inline void vt_unserialize_VkSamplerCreateInfo(VkSamplerCreateInfo* val, 
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkSamplerCustomBorderColorCreateInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_SAMPLER_CUSTOM_BORDER_COLOR_CREATE_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkSamplerCustomBorderColorCreateInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkSamplerCustomBorderColorCreateInfoEXT));
                     vt_unserialize_VkSamplerCustomBorderColorCreateInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -25377,7 +25377,7 @@ static inline void vt_unserialize_VkSamplerCreateInfo(VkSamplerCreateInfo* val, 
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkSamplerBorderColorComponentMappingCreateInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_SAMPLER_BORDER_COLOR_COMPONENT_MAPPING_CREATE_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkSamplerBorderColorComponentMappingCreateInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkSamplerBorderColorComponentMappingCreateInfoEXT));
                     vt_unserialize_VkSamplerBorderColorComponentMappingCreateInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -25564,7 +25564,7 @@ static inline void vt_unserialize_VkDescriptorSetLayoutCreateInfo(VkDescriptorSe
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkDescriptorSetLayoutBindingFlagsCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkDescriptorSetLayoutBindingFlagsCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkDescriptorSetLayoutBindingFlagsCreateInfo));
                     vt_unserialize_VkDescriptorSetLayoutBindingFlagsCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -25580,7 +25580,7 @@ static inline void vt_unserialize_VkDescriptorSetLayoutCreateInfo(VkDescriptorSe
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkMutableDescriptorTypeCreateInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkMutableDescriptorTypeCreateInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkMutableDescriptorTypeCreateInfoEXT));
                     vt_unserialize_VkMutableDescriptorTypeCreateInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -25609,7 +25609,7 @@ static inline void vt_unserialize_VkDescriptorSetLayoutCreateInfo(VkDescriptorSe
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkDescriptorSetLayoutBinding* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkDescriptorSetLayoutBinding));
+        VkDescriptorSetLayoutBinding* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkDescriptorSetLayoutBinding));
         for (int i = 0; i < dataSize5; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -25758,7 +25758,7 @@ static inline void vt_unserialize_VkDescriptorPoolCreateInfo(VkDescriptorPoolCre
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkDescriptorPoolInlineUniformBlockCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkDescriptorPoolInlineUniformBlockCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkDescriptorPoolInlineUniformBlockCreateInfo));
                     vt_unserialize_VkDescriptorPoolInlineUniformBlockCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -25774,7 +25774,7 @@ static inline void vt_unserialize_VkDescriptorPoolCreateInfo(VkDescriptorPoolCre
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkMutableDescriptorTypeCreateInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkMutableDescriptorTypeCreateInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkMutableDescriptorTypeCreateInfoEXT));
                     vt_unserialize_VkMutableDescriptorTypeCreateInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -25805,7 +25805,7 @@ static inline void vt_unserialize_VkDescriptorPoolCreateInfo(VkDescriptorPoolCre
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        VkDescriptorPoolSize* arrValues = vt_alloc(memoryPool, dataSize6 * sizeof(VkDescriptorPoolSize));
+        VkDescriptorPoolSize* arrValues = mp_alloc(memoryPool, dataSize6 * sizeof(VkDescriptorPoolSize));
         for (int i = 0; i < dataSize6; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -25943,7 +25943,7 @@ static inline void vt_unserialize_VkDescriptorSetAllocateInfo(VkDescriptorSetAll
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkDescriptorSetVariableDescriptorCountAllocateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkDescriptorSetVariableDescriptorCountAllocateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkDescriptorSetVariableDescriptorCountAllocateInfo));
                     vt_unserialize_VkDescriptorSetVariableDescriptorCountAllocateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -25980,7 +25980,7 @@ static inline void vt_unserialize_VkDescriptorSetAllocateInfo(VkDescriptorSetAll
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkDescriptorSetLayout* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkDescriptorSetLayout));
+        VkDescriptorSetLayout* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkDescriptorSetLayout));
         for (int i = 0; i < dataSize5; i++) {
             uint64_t setLayoutsId;
             vt_unserialize_VkDescriptorSetLayout((VkDescriptorSetLayout)&setLayoutsId, inputBuffer + bufferOffset, memoryPool);
@@ -26183,7 +26183,7 @@ static inline void vt_unserialize_VkWriteDescriptorSet(VkWriteDescriptorSet* val
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkWriteDescriptorSetInlineUniformBlock* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkWriteDescriptorSetInlineUniformBlock));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkWriteDescriptorSetInlineUniformBlock));
                     vt_unserialize_VkWriteDescriptorSetInlineUniformBlock(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -26226,7 +26226,7 @@ static inline void vt_unserialize_VkWriteDescriptorSet(VkWriteDescriptorSet* val
     int dataSize8 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize8 > 0) {
-        VkDescriptorImageInfo* arrValues = vt_alloc(memoryPool, dataSize8 * sizeof(VkDescriptorImageInfo));
+        VkDescriptorImageInfo* arrValues = mp_alloc(memoryPool, dataSize8 * sizeof(VkDescriptorImageInfo));
         for (int i = 0; i < dataSize8; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -26242,7 +26242,7 @@ static inline void vt_unserialize_VkWriteDescriptorSet(VkWriteDescriptorSet* val
     int dataSize9 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize9 > 0) {
-        VkDescriptorBufferInfo* arrValues = vt_alloc(memoryPool, dataSize9 * sizeof(VkDescriptorBufferInfo));
+        VkDescriptorBufferInfo* arrValues = mp_alloc(memoryPool, dataSize9 * sizeof(VkDescriptorBufferInfo));
         for (int i = 0; i < dataSize9; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -26258,7 +26258,7 @@ static inline void vt_unserialize_VkWriteDescriptorSet(VkWriteDescriptorSet* val
     int dataSize10 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize10 > 0) {
-        VkBufferView* arrValues = vt_alloc(memoryPool, dataSize10 * sizeof(VkBufferView));
+        VkBufferView* arrValues = mp_alloc(memoryPool, dataSize10 * sizeof(VkBufferView));
         for (int i = 0; i < dataSize10; i++) {
             uint64_t texelBufferViewId;
             vt_unserialize_VkBufferView((VkBufferView)&texelBufferViewId, inputBuffer + bufferOffset, memoryPool);
@@ -26498,7 +26498,7 @@ static inline void vt_unserialize_VkFramebufferCreateInfo(VkFramebufferCreateInf
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkFramebufferAttachmentsCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_FRAMEBUFFER_ATTACHMENTS_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkFramebufferAttachmentsCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkFramebufferAttachmentsCreateInfo));
                     vt_unserialize_VkFramebufferAttachmentsCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -26537,7 +26537,7 @@ static inline void vt_unserialize_VkFramebufferCreateInfo(VkFramebufferCreateInf
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        VkImageView* arrValues = vt_alloc(memoryPool, dataSize6 * sizeof(VkImageView));
+        VkImageView* arrValues = mp_alloc(memoryPool, dataSize6 * sizeof(VkImageView));
         for (int i = 0; i < dataSize6; i++) {
             uint64_t attachmentsId;
             vt_unserialize_VkImageView((VkImageView)&attachmentsId, inputBuffer + bufferOffset, memoryPool);
@@ -26751,7 +26751,7 @@ static inline void vt_unserialize_VkRenderPassCreateInfo(VkRenderPassCreateInfo*
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkRenderPassMultiviewCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_RENDER_PASS_MULTIVIEW_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkRenderPassMultiviewCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkRenderPassMultiviewCreateInfo));
                     vt_unserialize_VkRenderPassMultiviewCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -26767,7 +26767,7 @@ static inline void vt_unserialize_VkRenderPassCreateInfo(VkRenderPassCreateInfo*
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkRenderPassInputAttachmentAspectCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkRenderPassInputAttachmentAspectCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkRenderPassInputAttachmentAspectCreateInfo));
                     vt_unserialize_VkRenderPassInputAttachmentAspectCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -26796,7 +26796,7 @@ static inline void vt_unserialize_VkRenderPassCreateInfo(VkRenderPassCreateInfo*
     int dataSize5 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize5 > 0) {
-        VkAttachmentDescription* arrValues = vt_alloc(memoryPool, dataSize5 * sizeof(VkAttachmentDescription));
+        VkAttachmentDescription* arrValues = mp_alloc(memoryPool, dataSize5 * sizeof(VkAttachmentDescription));
         for (int i = 0; i < dataSize5; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -26814,7 +26814,7 @@ static inline void vt_unserialize_VkRenderPassCreateInfo(VkRenderPassCreateInfo*
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkSubpassDescription* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkSubpassDescription));
+        VkSubpassDescription* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkSubpassDescription));
         for (int i = 0; i < dataSize7; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -26832,7 +26832,7 @@ static inline void vt_unserialize_VkRenderPassCreateInfo(VkRenderPassCreateInfo*
     int dataSize9 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize9 > 0) {
-        VkSubpassDependency* arrValues = vt_alloc(memoryPool, dataSize9 * sizeof(VkSubpassDependency));
+        VkSubpassDependency* arrValues = mp_alloc(memoryPool, dataSize9 * sizeof(VkSubpassDependency));
         for (int i = 0; i < dataSize9; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -27032,7 +27032,7 @@ static inline void vt_unserialize_VkCommandBufferBeginInfo(VkCommandBufferBeginI
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkDeviceGroupCommandBufferBeginInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkDeviceGroupCommandBufferBeginInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkDeviceGroupCommandBufferBeginInfo));
                     vt_unserialize_VkDeviceGroupCommandBufferBeginInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -27059,7 +27059,7 @@ static inline void vt_unserialize_VkCommandBufferBeginInfo(VkCommandBufferBeginI
     int dataSize4 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize4 > 0) {
-        val->pInheritanceInfo = vt_alloc(memoryPool, sizeof(VkCommandBufferInheritanceInfo));
+        val->pInheritanceInfo = mp_alloc(memoryPool, sizeof(VkCommandBufferInheritanceInfo));
         vt_unserialize_VkCommandBufferInheritanceInfo(val->pInheritanceInfo, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize4;
     }
@@ -27521,7 +27521,7 @@ static inline void vt_unserialize_VkImageMemoryBarrier(VkImageMemoryBarrier* val
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkSampleLocationsInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_SAMPLE_LOCATIONS_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkSampleLocationsInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkSampleLocationsInfoEXT));
                     vt_unserialize_VkSampleLocationsInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -27731,7 +27731,7 @@ static inline void vt_unserialize_VkRenderPassBeginInfo(VkRenderPassBeginInfo* v
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkDeviceGroupRenderPassBeginInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_DEVICE_GROUP_RENDER_PASS_BEGIN_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkDeviceGroupRenderPassBeginInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkDeviceGroupRenderPassBeginInfo));
                     vt_unserialize_VkDeviceGroupRenderPassBeginInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -27747,7 +27747,7 @@ static inline void vt_unserialize_VkRenderPassBeginInfo(VkRenderPassBeginInfo* v
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkRenderPassSampleLocationsBeginInfoEXT* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkRenderPassSampleLocationsBeginInfoEXT));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkRenderPassSampleLocationsBeginInfoEXT));
                     vt_unserialize_VkRenderPassSampleLocationsBeginInfoEXT(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -27763,7 +27763,7 @@ static inline void vt_unserialize_VkRenderPassBeginInfo(VkRenderPassBeginInfo* v
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkRenderPassAttachmentBeginInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_RENDER_PASS_ATTACHMENT_BEGIN_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkRenderPassAttachmentBeginInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkRenderPassAttachmentBeginInfo));
                     vt_unserialize_VkRenderPassAttachmentBeginInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -27812,7 +27812,7 @@ static inline void vt_unserialize_VkRenderPassBeginInfo(VkRenderPassBeginInfo* v
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkClearValue* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkClearValue));
+        VkClearValue* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkClearValue));
         for (int i = 0; i < dataSize7; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -27979,7 +27979,7 @@ static inline void vt_unserialize_VkPhysicalDeviceExternalSemaphoreInfo(VkPhysic
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkSemaphoreTypeCreateInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_SEMAPHORE_TYPE_CREATE_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkSemaphoreTypeCreateInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkSemaphoreTypeCreateInfo));
                     vt_unserialize_VkSemaphoreTypeCreateInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -28268,7 +28268,7 @@ static inline void vt_unserialize_VkBindBufferMemoryInfo(VkBindBufferMemoryInfo*
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkBindBufferMemoryDeviceGroupInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkBindBufferMemoryDeviceGroupInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkBindBufferMemoryDeviceGroupInfo));
                     vt_unserialize_VkBindBufferMemoryDeviceGroupInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -28448,7 +28448,7 @@ static inline void vt_unserialize_VkBindImageMemoryInfo(VkBindImageMemoryInfo* v
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkBindImageMemoryDeviceGroupInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkBindImageMemoryDeviceGroupInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkBindImageMemoryDeviceGroupInfo));
                     vt_unserialize_VkBindImageMemoryDeviceGroupInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -28464,7 +28464,7 @@ static inline void vt_unserialize_VkBindImageMemoryInfo(VkBindImageMemoryInfo* v
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkBindImageMemorySwapchainInfoKHR* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkBindImageMemorySwapchainInfoKHR));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkBindImageMemorySwapchainInfoKHR));
                     vt_unserialize_VkBindImageMemorySwapchainInfoKHR(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -28480,7 +28480,7 @@ static inline void vt_unserialize_VkBindImageMemoryInfo(VkBindImageMemoryInfo* v
                 bufferOffset += 4;
                 if (itemSize > 0) {
                     VkBindImagePlaneMemoryInfo* item = !pNextIsNULL ? findNextVkStructure(val->pNext, VK_STRUCTURE_TYPE_BIND_IMAGE_PLANE_MEMORY_INFO) : NULL;
-                    if (!item) item = vt_alloc(memoryPool, sizeof(VkBindImagePlaneMemoryInfo));
+                    if (!item) item = mp_alloc(memoryPool, sizeof(VkBindImagePlaneMemoryInfo));
                     vt_unserialize_VkBindImagePlaneMemoryInfo(item, inputBuffer + bufferOffset, memoryPool);
                     bufferOffset += itemSize;
 
@@ -28562,7 +28562,7 @@ static inline void vt_unserialize_VkDeviceBufferMemoryRequirements(VkDeviceBuffe
     int dataSize3 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize3 > 0) {
-        val->pCreateInfo = vt_alloc(memoryPool, sizeof(VkBufferCreateInfo));
+        val->pCreateInfo = mp_alloc(memoryPool, sizeof(VkBufferCreateInfo));
         vt_unserialize_VkBufferCreateInfo(val->pCreateInfo, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize3;
     }
@@ -28609,7 +28609,7 @@ static inline void vt_unserialize_VkDeviceImageMemoryRequirements(VkDeviceImageM
     int dataSize3 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize3 > 0) {
-        val->pCreateInfo = vt_alloc(memoryPool, sizeof(VkImageCreateInfo));
+        val->pCreateInfo = mp_alloc(memoryPool, sizeof(VkImageCreateInfo));
         vt_unserialize_VkImageCreateInfo(val->pCreateInfo, inputBuffer + bufferOffset, memoryPool);
         bufferOffset += dataSize3;
     }
@@ -28851,7 +28851,7 @@ static inline void vt_unserialize_VkCopyBufferInfo2(VkCopyBufferInfo2* val, char
     int dataSize6 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize6 > 0) {
-        VkBufferCopy2* arrValues = vt_alloc(memoryPool, dataSize6 * sizeof(VkBufferCopy2));
+        VkBufferCopy2* arrValues = mp_alloc(memoryPool, dataSize6 * sizeof(VkBufferCopy2));
         for (int i = 0; i < dataSize6; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -28966,7 +28966,7 @@ static inline void vt_unserialize_VkCopyImageInfo2(VkCopyImageInfo2* val, char* 
     int dataSize8 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize8 > 0) {
-        VkImageCopy2* arrValues = vt_alloc(memoryPool, dataSize8 * sizeof(VkImageCopy2));
+        VkImageCopy2* arrValues = mp_alloc(memoryPool, dataSize8 * sizeof(VkImageCopy2));
         for (int i = 0; i < dataSize8; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -29084,7 +29084,7 @@ static inline void vt_unserialize_VkBlitImageInfo2(VkBlitImageInfo2* val, char* 
     int dataSize8 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize8 > 0) {
-        VkImageBlit2* arrValues = vt_alloc(memoryPool, dataSize8 * sizeof(VkImageBlit2));
+        VkImageBlit2* arrValues = mp_alloc(memoryPool, dataSize8 * sizeof(VkImageBlit2));
         for (int i = 0; i < dataSize8; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -29196,7 +29196,7 @@ static inline void vt_unserialize_VkCopyBufferToImageInfo2(VkCopyBufferToImageIn
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkBufferImageCopy2* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkBufferImageCopy2));
+        VkBufferImageCopy2* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkBufferImageCopy2));
         for (int i = 0; i < dataSize7; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -29306,7 +29306,7 @@ static inline void vt_unserialize_VkCopyImageToBufferInfo2(VkCopyImageToBufferIn
     int dataSize7 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize7 > 0) {
-        VkBufferImageCopy2* arrValues = vt_alloc(memoryPool, dataSize7 * sizeof(VkBufferImageCopy2));
+        VkBufferImageCopy2* arrValues = mp_alloc(memoryPool, dataSize7 * sizeof(VkBufferImageCopy2));
         for (int i = 0; i < dataSize7; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -29421,7 +29421,7 @@ static inline void vt_unserialize_VkResolveImageInfo2(VkResolveImageInfo2* val, 
     int dataSize8 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize8 > 0) {
-        VkImageResolve2* arrValues = vt_alloc(memoryPool, dataSize8 * sizeof(VkImageResolve2));
+        VkImageResolve2* arrValues = mp_alloc(memoryPool, dataSize8 * sizeof(VkImageResolve2));
         for (int i = 0; i < dataSize8; i++) {
             int itemSize = *(int*)(inputBuffer + bufferOffset);
             bufferOffset += 4;
@@ -30198,7 +30198,7 @@ static inline void vt_unserialize_vkEnumerateInstanceExtensionProperties(char* p
     int dataSize1 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize1 > 0) {
-        char* arrValues = vt_alloc(memoryPool, dataSize1);
+        char* arrValues = mp_alloc(memoryPool, dataSize1);
         memcpy(arrValues, inputBuffer + bufferOffset, dataSize1);
         pLayerName = arrValues;
         bufferOffset += dataSize1;
@@ -30313,7 +30313,7 @@ static inline void vt_unserialize_vkEnumerateDeviceExtensionProperties(VkPhysica
     int dataSize2 = *(int*)(inputBuffer + bufferOffset);
     bufferOffset += 4;
     if (dataSize2 > 0) {
-        char* arrValues = vt_alloc(memoryPool, dataSize2);
+        char* arrValues = mp_alloc(memoryPool, dataSize2);
         memcpy(arrValues, inputBuffer + bufferOffset, dataSize2);
         pLayerName = arrValues;
         bufferOffset += dataSize2;
