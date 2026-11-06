@@ -19,7 +19,7 @@ add_library(vortekrenderer SHARED
             src/texture_decoder.c
             src/shader_inspector.c
             src/async_pipeline_creator.c
-            src/timeline_semaphore.c)
+            src/synchronization_object_manager.c)
 
 target_link_libraries(vortekrenderer
                       adrenotools

@@ -5,7 +5,7 @@
 #include "xwindow_swapchain.h"
 #include "texture_decoder.h"
 #include "async_pipeline_creator.h"
-#include "timeline_semaphore.h"
+#include "synchronization_object_manager.h"
 
 typedef struct VkContext {
     int clientFd;
@@ -38,6 +38,7 @@ typedef struct VkContext {
     TextureDecoder* textureDecoder;
     ShaderInspector* shaderInspector;
     ThreadPool* threadPool;
+    SynchronizationObjectManager synchronizationObjectManager;
 
     ArrayList extraDataRequests;
     pthread_mutex_t extraDataRequestsMutex;

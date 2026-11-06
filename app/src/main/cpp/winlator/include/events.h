@@ -11,8 +11,9 @@
 #define EVENT_RESULT_TIMEOUT 1
 #define EVENT_RESULT_ERROR 2
 
-#define BUSY_WAIT_MAX_ITER 500
-#define BUSY_WAIT_SLEEP_US 100
+#define BUSY_WAIT_MAX_CPU_PAUSE_ITER 50
+#define BUSY_WAIT_MAX_THRD_YIELD_ITER 200
+#define BUSY_WAIT_MAX_DELAY_US 500
 
 static inline int createEvent(bool initialState) {
     return eventfd(initialState ? 1 : 0, EFD_CLOEXEC | EFD_NONBLOCK);
@@ -86,11 +87,20 @@ static inline int waitForEvents(int* fds, int numFds, bool waitAll, int timeoutM
 }
 
 static inline void busyWait(uint32_t* iter) {
+#define CPU_PAUSE() __asm__ __volatile__("yield")
     (*iter)++;
-    if (*iter < BUSY_WAIT_MAX_ITER) {
+    if (*iter < BUSY_WAIT_MAX_CPU_PAUSE_ITER) {
+        CPU_PAUSE();
+    }
+    else if (*iter < BUSY_WAIT_MAX_THRD_YIELD_ITER) {
         thrd_yield();
     }
-    else usleep(BUSY_WAIT_SLEEP_US);
+    else {
+        uint32_t delay = (*iter - BUSY_WAIT_MAX_THRD_YIELD_ITER) * 10;
+        if (delay > BUSY_WAIT_MAX_DELAY_US) delay = BUSY_WAIT_MAX_DELAY_US;
+        usleep(delay);
+    }
+#undef CPU_PAUSE
 }
 
 #endif

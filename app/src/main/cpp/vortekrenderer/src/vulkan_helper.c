@@ -180,7 +180,7 @@ void injectExtensions(VkContext* context, char*** extensions, uint32_t* extensio
             if (!skipped[i]) newExtensionCount++;
         }
 
-        char** newExtensions = vt_alloc(&context->memoryPool, newExtensionCount * sizeof(char*));
+        char** newExtensions = mp_alloc(&context->memoryPool, newExtensionCount * sizeof(char*));
         for (int i = 0, j = 0; i < oldExtensionCount; i++) if (!skipped[i]) newExtensions[j++] = oldExtensions[i];
 
         *extensions = newExtensions;
@@ -203,10 +203,10 @@ void injectExtensions(VkContext* context, char*** extensions, uint32_t* extensio
 
     if (newExtensionCount == *extensionCount) return;
 
-    char** newExtensions = vt_alloc(&context->memoryPool, newExtensionCount * sizeof(char*));
+    char** newExtensions = mp_alloc(&context->memoryPool, newExtensionCount * sizeof(char*));
     for (int i = 0, j = 0; i < extraExtensionCount; i++) {
         if (!founds[i]) {
-            char* value = vt_alloc(&context->memoryPool, strlen(extraExtensions[i]) + 1);
+            char* value = mp_alloc(&context->memoryPool, strlen(extraExtensions[i]) + 1);
             strcpy(value, extraExtensions[i]);
             newExtensions[(*extensionCount) + j++] = value;
         }
@@ -237,7 +237,7 @@ void injectExtensions2(VkContext* context, VkExtensionProperties** extensions, u
             if (!skipped[i]) newExtensionCount++;
         }
 
-        VkExtensionProperties* newExtensions = vt_alloc(&context->memoryPool, newExtensionCount * sizeof(VkExtensionProperties));
+        VkExtensionProperties* newExtensions = mp_alloc(&context->memoryPool, newExtensionCount * sizeof(VkExtensionProperties));
         for (int i = 0, j = 0; i < oldExtensionCount; i++) {
             if (!skipped[i]) memcpy(&newExtensions[j++], &oldExtensions[i], sizeof(VkExtensionProperties));
         }
@@ -262,7 +262,7 @@ void injectExtensions2(VkContext* context, VkExtensionProperties** extensions, u
 
     if (newExtensionCount == *extensionCount) return;
 
-    VkExtensionProperties* newExtensions = vt_alloc(&context->memoryPool, newExtensionCount * sizeof(VkExtensionProperties));
+    VkExtensionProperties* newExtensions = mp_alloc(&context->memoryPool, newExtensionCount * sizeof(VkExtensionProperties));
     for (int i = 0, j = 0; i < extraExtensionCount; i++) {
         if (!founds[i]) {
             VkExtensionProperties* properties = &newExtensions[(*extensionCount) + j++];
@@ -330,7 +330,7 @@ VkExtensionProperties* getExposedDeviceExtensionProperties(VkContext* context, V
     if (result != VK_SUCCESS) return NULL;
 
     int dstPropertyCount = context->exposedDeviceExtensions ? context->exposedDeviceExtensions->size : srcPropertyCount;
-    VkExtensionProperties* dstProperties = vt_alloc(&context->memoryPool, dstPropertyCount * sizeof(VkExtensionProperties));
+    VkExtensionProperties* dstProperties = mp_alloc(&context->memoryPool, dstPropertyCount * sizeof(VkExtensionProperties));
     *propertyCount = 0;
 
     for (int i = 0, j; i < dstPropertyCount; i++) {

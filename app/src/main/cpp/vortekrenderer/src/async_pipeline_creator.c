@@ -37,7 +37,7 @@ static void pipelineCreateThread(void* param) {
         result = vulkanWrapper.vkCreateComputePipelines(pipelineCreateRequest->device, pipelineCreateRequest->pipelineCache, pipelineCreateRequest->pipelineCount, createInfos, NULL, pipelines);
     }
 
-    vt_free(&pipelineCreateRequest->memoryPool);
+    mp_free(&pipelineCreateRequest->memoryPool);
 
     int bufferSize = sizeof(VkResult) + pipelineCreateRequest->pipelineCount * VK_HANDLE_BYTE_COUNT;
     char outputBuffer[bufferSize];

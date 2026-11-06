@@ -66,7 +66,7 @@ static void* requestHandlerThread(void* param) {
         HandleRequestFunc handleRequestFunc = getHandleRequestFunc(requestCode);
         if (handleRequestFunc) handleRequestFunc(context);
 
-        vt_free(&context->memoryPool);
+        mp_free(&context->memoryPool);
 
         if (extraDataRequest) {
             MEMFREE(extraDataRequest->data);
@@ -78,24 +78,27 @@ static void* requestHandlerThread(void* param) {
     }
 
     (*context->jmethods.jvm)->DetachCurrentThread(context->jmethods.jvm);
-    vt_free(&context->memoryPool);
+    mp_free(&context->memoryPool);
     return NULL;
 }
 
 static bool setupRingBuffers(VkContext* context) {
-    int shmFds[2];
-    shmFds[0] = ashmemCreateRegion("vt-server-ring", RingBuffer_getSHMemSize(SERVER_RING_BUFFER_SIZE));
-    shmFds[1] = ashmemCreateRegion("vt-client-ring", RingBuffer_getSHMemSize(CLIENT_RING_BUFFER_SIZE));
+    int fds[2 + MAX_NOTIFY_FDS];
+    fds[0] = ashmemCreateRegion("vt-server-ring", RingBuffer_getSHMemSize(SERVER_RING_BUFFER_SIZE));
+    fds[1] = ashmemCreateRegion("vt-client-ring", RingBuffer_getSHMemSize(CLIENT_RING_BUFFER_SIZE));
 
-    context->serverRing = RingBuffer_create(shmFds[0], SERVER_RING_BUFFER_SIZE);
+    context->serverRing = RingBuffer_create(fds[0], SERVER_RING_BUFFER_SIZE);
     if (!context->serverRing) return false;
 
-    context->clientRing = RingBuffer_create(shmFds[1], CLIENT_RING_BUFFER_SIZE);
+    context->clientRing = RingBuffer_create(fds[1], CLIENT_RING_BUFFER_SIZE);
     if (!context->clientRing) return false;
 
-    int result = send_fds(context->clientFd, shmFds, 2, NULL, 0);
-    close(shmFds[0]);
-    close(shmFds[1]);
+    memcpy(fds + 2, context->synchronizationObjectManager.notifyFdPool.fds, MAX_NOTIFY_FDS * sizeof(int));
+
+    int result = send_fds(context->clientFd, fds, ARRAY_SIZE(fds), NULL, 0);
+
+    close(fds[0]);
+    close(fds[1]);
 
     if (result < 0) return false;
 
@@ -116,7 +119,9 @@ VkContext* createVkContext(JNIEnv* env, jobject obj, int clientFd, jobject optio
 
     pthread_mutex_init(&context->extraDataRequestsMutex, NULL);
 
-    context->memoryPool.data = calloc(MEMORY_POOL_MAX_SIZE, 1);
+    mp_init(&context->memoryPool, MEMORY_POOL_MAX_SIZE);
+    SynchronizationObjectManager_init(&context->synchronizationObjectManager);
+
     context->threadPool = ThreadPool_init(THREAD_POOL_NUM_THREADS);
 
     (*env)->GetJavaVM(env, &context->jmethods.jvm);
@@ -145,6 +150,8 @@ void destroyVkContext(JNIEnv* env, VkContext* context) {
         RingBuffer_free(context->serverRing);
         RingBuffer_free(context->clientRing);
     }
+
+    SynchronizationObjectManager_destroy(&context->synchronizationObjectManager);
 
     if (context->jmethods.obj) {
         (*env)->DeleteGlobalRef(env, context->jmethods.obj);

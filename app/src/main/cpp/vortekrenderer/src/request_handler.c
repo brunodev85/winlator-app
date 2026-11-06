@@ -198,7 +198,7 @@ void vt_handle_vkEnumerateInstanceExtensionProperties(VkContext* context) {
     uint32_t exposedExtensionCount;
     result = vulkanWrapper.vkEnumerateInstanceExtensionProperties(NULL, &exposedExtensionCount, NULL);
 
-    VkExtensionProperties* exposedExtensions = vt_alloc(&context->memoryPool, propertyCount * sizeof(VkExtensionProperties));
+    VkExtensionProperties* exposedExtensions = mp_alloc(&context->memoryPool, propertyCount * sizeof(VkExtensionProperties));
     result = vulkanWrapper.vkEnumerateInstanceExtensionProperties(NULL, &exposedExtensionCount, exposedExtensions);
 
     const char* extraExtensions[] = {"VK_KHR_surface", "VK_KHR_xlib_surface"};
@@ -496,12 +496,6 @@ void vt_handle_vkCreateFence(VkContext* context) {
     vt_unserialize_vkCreateFence((VkDevice)&deviceId, &createInfo, NULL, NULL, context->inputBuffer, &context->memoryPool);
     VkDevice device = VkObject_fromId(deviceId);
 
-    VkExportFenceCreateInfo exportFenceInfo = {0};
-    exportFenceInfo.sType = VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO;
-    exportFenceInfo.handleTypes = VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT;
-    exportFenceInfo.pNext = createInfo.pNext;
-    createInfo.pNext = &exportFenceInfo;
-
     VkFence fence;
     VkResult result = vulkanWrapper.vkCreateFence(device, &createInfo, NULL, &fence);
 
@@ -546,37 +540,7 @@ void vt_handle_vkGetFenceStatus(VkContext* context) {
 }
 
 void vt_handle_vkWaitForFences(VkContext* context) {
-    uint64_t deviceId;
-    uint32_t fenceCount;
-    VkBool32 waitAll;
-    uint64_t timeout;
-
-    vt_unserialize_vkWaitForFences((VkDevice)&deviceId, &fenceCount, NULL, &waitAll, &timeout, context->inputBuffer, &context->memoryPool);
-    VkDevice device = VkObject_fromId(deviceId);
-
-    VkFence fences[fenceCount];
-    vt_unserialize_vkWaitForFences(VK_NULL_HANDLE, NULL, fences, NULL, NULL, context->inputBuffer, &context->memoryPool);
-
-    if (timeout != 0) {
-        VkResult result = VK_SUCCESS;
-        int fds[fenceCount];
-        for (int i = 0; i < fenceCount; i++) {
-            VkFenceGetFdInfoKHR getFdInfo = {0};
-            getFdInfo.sType = VK_STRUCTURE_TYPE_FENCE_GET_FD_INFO_KHR;
-            getFdInfo.fence = fences[i];
-            getFdInfo.handleType = VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT;
-
-            result = vulkanWrapper.vkGetFenceFd(device, &getFdInfo, &fds[i]);
-            if (result != VK_SUCCESS) break;
-        }
-
-        send_fds(context->clientFd, fds, fenceCount, &result, sizeof(VkResult));
-        for (int i = 0; i < fenceCount; i++) CLOSEFD(fds[i]);
-    }
-    else {
-        VkResult result = vulkanWrapper.vkWaitForFences(device, fenceCount, fences, waitAll, timeout);
-        vt_send(context->clientRing, result, NULL, 0);
-    }
+    SynchronizationObjectManager_waitForFences(&context->synchronizationObjectManager, context->threadPool, context->inputBuffer);
 }
 
 void vt_handle_vkCreateSemaphore(VkContext* context) {
@@ -703,7 +667,7 @@ void vt_handle_vkGetQueryPoolResults(VkContext* context) {
     VkDevice device = VkObject_fromId(deviceId);
     VkQueryPool queryPool = VkObject_fromId(queryPoolId);
 
-    void* data = vt_alloc(&context->memoryPool, dataSize);
+    void* data = mp_alloc(&context->memoryPool, dataSize);
     VkResult result = vulkanWrapper.vkGetQueryPoolResults(device, queryPool, firstQuery, queryCount, dataSize, data, stride, flags);
     VT_SERIALIZE_CMD(vkGetQueryPoolResults, VK_NULL_HANDLE, VK_NULL_HANDLE, firstQuery, queryCount, dataSize, data, stride, flags);
 
@@ -911,7 +875,7 @@ void vt_handle_vkGetPipelineCacheData(VkContext* context) {
     VkDevice device = VkObject_fromId(deviceId);
     VkPipelineCache pipelineCache = VkObject_fromId(pipelineCacheId);
 
-    void* data = dataSize > 0 ? vt_alloc(&context->memoryPool, dataSize) : NULL;
+    void* data = dataSize > 0 ? mp_alloc(&context->memoryPool, dataSize) : NULL;
     VkResult result = vulkanWrapper.vkGetPipelineCacheData(device, pipelineCache, &dataSize, data);
 
     VT_SERIALIZE_CMD(vkGetPipelineCacheData, VK_NULL_HANDLE, VK_NULL_HANDLE, &dataSize, data);
@@ -1083,7 +1047,7 @@ void vt_handle_vkAllocateDescriptorSets(VkContext* context) {
     VkResult result = vulkanWrapper.vkAllocateDescriptorSets(device, &allocateInfo, descriptorSets);
 
     int bufferSize = allocateInfo.descriptorSetCount * VK_HANDLE_BYTE_COUNT;
-    char* outputBuffer = vt_alloc(&context->memoryPool, bufferSize);
+    char* outputBuffer = mp_alloc(&context->memoryPool, bufferSize);
     for (int i = 0, j = 0; i < allocateInfo.descriptorSetCount; i++, j += VK_HANDLE_BYTE_COUNT) {
         vt_serialize_VkDescriptorSet(descriptorSets[i], outputBuffer + j);
     }
@@ -2711,7 +2675,7 @@ void vt_handle_vkGetSemaphoreCounterValue(VkContext* context) {
 }
 
 void vt_handle_vkWaitSemaphores(VkContext* context) {
-    TimelineSemaphore_asyncWait(context->clientFd, context->threadPool, context->inputBuffer, context->inputBufferSize);
+    SynchronizationObjectManager_waitSemaphores(&context->synchronizationObjectManager, context->threadPool, context->inputBuffer);
 }
 
 void vt_handle_vkSignalSemaphore(VkContext* context) {
