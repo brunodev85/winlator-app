@@ -202,6 +202,7 @@ public class GothicLauncherFragment extends Fragment {
             return;
         }
 
+        // Tworzymy poprawny plik .desktop w folderze containers/{id}/desktop/
         createDesktopShortcut(context, containerId, path);
 
         preferences.edit().putString(PREF_EXE_PATH, path).apply();
@@ -247,19 +248,19 @@ public class GothicLauncherFragment extends Fragment {
 
             File exeFile = new File(exePath);
             File parentDir = exeFile.getParentFile();
+            String parentDirPath = parentDir != null ? parentDir.getAbsolutePath() : "";
 
-            // Ścieżka w formacie Wine przez dysk Z:
-            String wineExecPath = "z:/" + exePath.replaceFirst("^/+", "").replace('/', '\\');
-            String dosDevicesPath = context.getFilesDir() + "/rootfs/home/xuser/.wine/dosdevices/z:/" + 
-                    (parentDir != null ? parentDir.getAbsolutePath().replaceFirst("^/+", "").replace('/', '\\') : "");
+            // Używamy dysku Z: w Wine, który bezpośrednio wskazuje root (/) Androida
+            String wineExecPath = "z:" + exePath;
+            String winePath = "z:" + parentDirPath;
 
             StringBuilder sb = new StringBuilder();
             sb.append("[Desktop Entry]\n");
             sb.append("Name=Gothic2\n");
-            sb.append("Exec=env WINEPREFIX=\"").append(context.getFilesDir()).append("/rootfs/home/xuser/.wine\" wine ").append(wineExecPath).append("\n");
+            sb.append("Exec=env WINEPREFIX=\"").append(context.getFilesDir()).append("/rootfs/home/xuser/.wine\" wine \"").append(wineExecPath).append("\"\n");
             sb.append("Type=Application\n");
             sb.append("StartupNotify=true\n");
-            sb.append("Path=").append(dosDevicesPath).append("\n");
+            sb.append("Path=").append(winePath).append("\n");
             sb.append("Icon=4904_Gothic2.0\n");
             sb.append("StartupWMClass=gothic2.exe\n");
 
