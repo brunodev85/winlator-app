@@ -1,77 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#0F1115"
-    android:padding="16dp">
+    android:background="#0D0E12"
+    android:padding="20dp">
 
+    <!-- Nagłówek -->
     <LinearLayout
+        android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="24dp">
+        android:orientation="horizontal"
+        android:paddingBottom="16dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Gothic Launcher"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            android:textStyle="bold"/>
-
-        <Button
-            android:id="@+id/btnConfigure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Konfiguruj ➔"
-            android:textColor="#FFFFFF"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="280dp"
-            android:layout_height="380dp"
-            android:background="#1A1E24"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:gravity="center_horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gothic II - New Balance"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:text="GOTHIC II"
+                android:textColor="#E0E6ED"
+                android:textSize="24sp"
                 android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginBottom="8dp"/>
+                android:letterSpacing="0.05"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Balance Launcher"
+                android:textColor="#6C757D"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnConfigure"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Konfiguruj"
+            android:textColor="#8AB4F8"
+            android:textSize="13sp"
+            app:strokeColor="#3C4043"
+            app:strokeWidth="1dp"
+            app:cornerRadius="12dp" />
+    </LinearLayout>
+
+    <!-- Główna Karta Gry -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="12dp"
+        app:cardBackgroundColor="#161920"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center_horizontal">
+
+            <!-- Ikona / Badge statusu -->
+            <TextView
+                android:id="@+id/tvBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MODIFICATION"
+                android:textColor="#FFB74D"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:background="#2A2415"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gothic II: New Balance"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/tvGameStatus"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Niewybrany folder"
-                android:textColor="#8C929D"
-                android:textSize="14sp"
-                android:gravity="center"
-                android:layout_weight="1"/>
+                android:text="Status: Nie gotowe"
+                android:textColor="#9AA0A6"
+                android:textSize="13sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"/>
 
-            <Button
+            <!-- Główny Przycisk Akcji -->
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAction"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Wybierz folder z grą"
-                android:enabled="false"
-                android:textColor="#FFFFFF"/>
+                android:layout_height="56dp"
+                android:text="Wybierz plik .exe gry"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:backgroundTint="#2C3038"
+                app:cornerRadius="14dp"
+                app:elevation="4dp"/>
         </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-    </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
