@@ -1,13 +1,14 @@
 package com.winlator;
 
 import android.widget.Toast;
+
 import java.io.File;
 import java.io.FileOutputStream;
 
 public class GothicContainerFileManagerFragment extends ContainerFileManagerFragment {
 
     public GothicContainerFileManagerFragment() {
-        super();
+        super(0, null);
     }
 
     public GothicContainerFileManagerFragment(int containerId) {
@@ -18,12 +19,16 @@ public class GothicContainerFileManagerFragment extends ContainerFileManagerFrag
         super(containerId, startPath);
     }
 
-    // Metoda pomocnicza do tworzenia pliku .desktop dla Gothica w kontenerze
     public void createGothicShortcut(File exeFile) {
         try {
             int containerId = getContainerId();
             if (containerId <= 0) {
                 Toast.makeText(requireContext(), "Błąd: Nieznane ID kontenera", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (exeFile == null || !exeFile.exists() || !exeFile.getName().toLowerCase().endsWith(".exe")) {
+                Toast.makeText(requireContext(), "Błąd: Brak poprawnego pliku .exe", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -34,14 +39,16 @@ public class GothicContainerFileManagerFragment extends ContainerFileManagerFrag
             }
 
             String filePath = exeFile.getAbsolutePath();
-            File parentDir = exeFile.getParentFile();
-            String parentDirPath = parentDir != null ? parentDir.getAbsolutePath() : "";
+            String parentDirPath = exeFile.getParentFile() != null ? exeFile.getParentFile().getAbsolutePath() : "";
 
-            // Generowanie pliku .desktop dokładnie w takim formacie, jaki obsługuje Wine w Winlatorze
+            File winePrefix = new File(requireContext().getFilesDir(), "rootfs/home/xuser/.wine");
+            String escapedPath = filePath.replace("\\", "\\\\").replace("\"", "\\\"");
+            String execCommand = "env WINEPREFIX=\"" + winePrefix.getAbsolutePath() + "\" wine \"" + escapedPath + "\"";
+
             StringBuilder sb = new StringBuilder();
             sb.append("[Desktop Entry]\n");
             sb.append("Name=Gothic2\n");
-            sb.append("Exec=env WINEPREFIX=\"").append(requireContext().getFilesDir()).append("/rootfs/home/xuser/.wine\" wine ").append(filePath.replace("/", "\\\\")).append("\n");
+            sb.append("Exec=").append(execCommand).append("\n");
             sb.append("Type=Application\n");
             sb.append("StartupNotify=true\n");
             sb.append("Path=").append(parentDirPath).append("\n");
