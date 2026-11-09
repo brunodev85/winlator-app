@@ -1,0 +1,33 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch: # Pozwala na ręczne uruchomienie budowania z poziomu przeglądarki
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Pobranie kodu źródłowego
+      uses: actions/checkout@v4
+
+    - name: Konfiguracja środowiska Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17' # Zmień na '11' lub '8', jeśli modyfikujesz starszy projekt
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Nadanie uprawnień do uruchamiania Gradle
+      run: chmod +x ./gradlew
+
+    - name: Budowanie pliku APK (Debug)
+      run: ./gradlew assembleDebug
+
+    - name: Zapisanie pliku APK jako gotowego do pobrania
+      uses: actions/upload-artifact@v4
+      with:
+        name: gotowa-aplikacja-apk
+        path: app/build/outputs/apk/debug/*.apk
