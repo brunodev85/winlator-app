@@ -1,9 +1,7 @@
 name: Build Android APK
 
 on:
-  push:
-    branches: [ "main", "master" ]
-  workflow_dispatch: # Pozwala na ręczne uruchomienie budowania z poziomu przeglądarki
+  workflow_dispatch: # Tylko ręczne uruchomienie z poziomu GitHub Actions
 
 jobs:
   build:
@@ -16,7 +14,7 @@ jobs:
     - name: Konfiguracja środowiska Java
       uses: actions/setup-java@v4
       with:
-        java-version: '17' # Zmień na '11' lub '8', jeśli modyfikujesz starszy projekt
+        java-version: '17'
         distribution: 'temurin'
         cache: gradle
 
