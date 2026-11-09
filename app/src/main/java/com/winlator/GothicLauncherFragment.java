@@ -1,13 +1,9 @@
 package com.winlator;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.DocumentsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +18,10 @@ import androidx.preference.PreferenceManager;
 
 import com.winlator.container.Container;
 import com.winlator.container.ContainerManager;
-import com.winlator.core.Callback;
 
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 public class GothicLauncherFragment extends Fragment {
     private SharedPreferences preferences;
@@ -35,7 +29,6 @@ public class GothicLauncherFragment extends Fragment {
     private Button btnAction;
     private TextView tvGameStatus;
 
-    private static final String PREF_EXE_PATH = "gothic_exe_path";
     private static final String PREF_CONTAINER_ID = "gothic_container_id";
 
     @Nullable
@@ -58,16 +51,22 @@ public class GothicLauncherFragment extends Fragment {
 
         if (btnAction != null) {
             btnAction.setOnClickListener(v -> {
-                String savedPath = preferences.getString(PREF_EXE_PATH, "");
-                if (savedPath.isEmpty()) {
-                    openFileSelector();
+                int containerId = preferences.getInt(PREF_CONTAINER_ID, -1);
+                if (containerId == -1) {
+                    createGothicContainer();
                 } else {
-                    launchGame();
+                    openContainerFileManager(containerId);
                 }
             });
         }
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUIStates();
     }
 
     private void updateUIStates() {
@@ -77,7 +76,11 @@ public class GothicLauncherFragment extends Fragment {
         ContainerManager manager = new ContainerManager(context);
         int containerId = preferences.getInt(PREF_CONTAINER_ID, -1);
         Container container = manager.getContainerById(containerId);
-        String savedPath = preferences.getString(PREF_EXE_PATH, "");
+
+        // Sprawdzamy czy plik Gothic2.desktop już istnieje w kontenerze
+        File containerDir = new File(context.getFilesDir(), "containers/" + containerId);
+        File desktopFile = new File(containerDir, "desktop/Gothic2.desktop");
+        boolean hasShortcut = desktopFile.exists();
 
         if (container == null) {
             btnConfigure.setText("Konfiguruj");
@@ -85,19 +88,19 @@ public class GothicLauncherFragment extends Fragment {
             btnConfigure.setTextColor(Color.parseColor("#8AB4F8"));
 
             btnAction.setEnabled(false);
-            btnAction.setText("Wybierz plik .exe gry");
+            btnAction.setText("Utwórz kontener gry");
             btnAction.setBackgroundColor(Color.parseColor("#252A34"));
             tvGameStatus.setText("Wymagana wstępna konfiguracja");
             tvGameStatus.setTextColor(Color.parseColor("#E57373"));
-        } else if (savedPath.isEmpty()) {
+        } else if (!hasShortcut) {
             btnConfigure.setText("✔ Gotowy");
             btnConfigure.setEnabled(false);
             btnConfigure.setTextColor(Color.parseColor("#4CAF50"));
 
             btnAction.setEnabled(true);
-            btnAction.setText("Wskaż plik Gothic2.exe");
+            btnAction.setText("Otwórz Menedżer Plików (Wskaż EXE)");
             btnAction.setBackgroundColor(Color.parseColor("#1565C0"));
-            tvGameStatus.setText("Kontener utworzony – wybierz plik gry");
+            tvGameStatus.setText("Wejdź w menedżer, znajdź Gothic2.exe i stwórz skrót");
             tvGameStatus.setTextColor(Color.parseColor("#FFB74D"));
         } else {
             btnConfigure.setText("✔ Gotowy");
@@ -144,11 +147,13 @@ public class GothicLauncherFragment extends Fragment {
 
                 preferences.edit()
                         .putInt(PREF_CONTAINER_ID, container.id)
-                        .remove(PREF_EXE_PATH)
                         .apply();
 
                 Toast.makeText(context, "Kontener utworzony pomyślnie!", Toast.LENGTH_LONG).show();
                 updateUIStates();
+
+                // Od razu otwieramy menedżer plików kontenera
+                openContainerFileManager(container.id);
             });
 
         } catch (Exception e) {
@@ -160,155 +165,10 @@ public class GothicLauncherFragment extends Fragment {
         }
     }
 
-    private void openFileSelector() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*");
-
+    private void openContainerFileManager(int containerId) {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
-            activity.setOpenFileCallback(new Callback<Uri>() {
-                @Override
-                public void call(Uri uri) {
-                    handleSelectedUri(uri);
-                }
-            });
-            activity.startActivityForResult(intent, MainActivity.OPEN_FILE_REQUEST_CODE);
-        }
-    }
-
-    private void handleSelectedUri(Uri uri) {
-        Context context = getContext();
-        if (uri == null || context == null) return;
-
-        try {
-            final int flags = Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
-            context.getContentResolver().takePersistableUriPermission(uri, flags);
-        } catch (Exception ignored) {}
-
-        String path = getRealPathFromURI(context, uri);
-
-        if (path == null || path.isEmpty() || !new File(path).exists()) {
-            Toast.makeText(context, "Nie można odczytać fizycznej ścieżki pliku! Wybierz Gothic2.exe bezpośrednio z pamięci.", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        int containerId = preferences.getInt(PREF_CONTAINER_ID, -1);
-        ContainerManager manager = new ContainerManager(context);
-        Container container = manager.getContainerById(containerId);
-
-        if (container == null) {
-            Toast.makeText(context, "Najpierw utwórz kontener!", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        // Tworzymy poprawny plik .desktop w folderze containers/{id}/desktop/
-        createDesktopShortcut(context, containerId, path);
-
-        preferences.edit().putString(PREF_EXE_PATH, path).apply();
-        updateUIStates();
-
-        Toast.makeText(context, "Wybrano plik i utworzono skrót Gothica!", Toast.LENGTH_SHORT).show();
-    }
-
-    private String getRealPathFromURI(Context context, Uri uri) {
-        if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-
-        try {
-            if (DocumentsContract.isDocumentUri(context, uri)) {
-                String docId = DocumentsContract.getDocumentId(uri);
-                String[] split = docId.split(":");
-                if (split.length >= 2 && "primary".equalsIgnoreCase(split[0])) {
-                    return Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + split[1];
-                }
-            }
-        } catch (Exception ignored) {}
-
-        String uriStr = uri.toString();
-        try {
-            if (uriStr.contains("primary:")) {
-                String split = uriStr.split("primary:")[1];
-                String decoded = Uri.decode(split);
-                return Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + decoded;
-            }
-        } catch (Exception ignored) {}
-
-        return uri.getPath();
-    }
-
-    private void createDesktopShortcut(Context context, int containerId, String exePath) {
-        try {
-            File containerDir = new File(context.getFilesDir(), "containers/" + containerId);
-            File desktopDir = new File(containerDir, "desktop");
-            if (!desktopDir.exists()) {
-                desktopDir.mkdirs();
-            }
-
-            File exeFile = new File(exePath);
-            File parentDir = exeFile.getParentFile();
-            String parentDirPath = parentDir != null ? parentDir.getAbsolutePath() : "";
-
-            // Używamy dysku Z: w Wine, który bezpośrednio wskazuje root (/) Androida
-            String wineExecPath = "z:" + exePath;
-            String winePath = "z:" + parentDirPath;
-
-            StringBuilder sb = new StringBuilder();
-            sb.append("[Desktop Entry]\n");
-            sb.append("Name=Gothic2\n");
-            sb.append("Exec=env WINEPREFIX=\"").append(context.getFilesDir()).append("/rootfs/home/xuser/.wine\" wine \"").append(wineExecPath).append("\"\n");
-            sb.append("Type=Application\n");
-            sb.append("StartupNotify=true\n");
-            sb.append("Path=").append(winePath).append("\n");
-            sb.append("Icon=4904_Gothic2.0\n");
-            sb.append("StartupWMClass=gothic2.exe\n");
-
-            File desktopFile = new File(desktopDir, "Gothic2.desktop");
-            try (FileOutputStream fos = new FileOutputStream(desktopFile)) {
-                fos.write(sb.toString().getBytes("UTF-8"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void launchGame() {
-        Context context = getContext();
-        if (context == null) return;
-
-        int containerId = preferences.getInt(PREF_CONTAINER_ID, -1);
-        String exePath = preferences.getString(PREF_EXE_PATH, "");
-
-        if (containerId <= 0 || exePath.isEmpty()) {
-            Toast.makeText(context, "Nie znaleziono kontenera lub pliku EXE!", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        ContainerManager containerManager = new ContainerManager(context);
-        Container container = containerManager.getContainerById(containerId);
-
-        if (container == null) {
-            Toast.makeText(context, "Kontener nie istnieje. Skonfiguruj go ponownie!", Toast.LENGTH_SHORT).show();
-            preferences.edit().remove(PREF_CONTAINER_ID).remove(PREF_EXE_PATH).apply();
-            updateUIStates();
-            return;
-        }
-
-        File containerDir = new File(context.getFilesDir(), "containers/" + containerId);
-        File desktopFile = new File(containerDir, "desktop/Gothic2.desktop");
-
-        if (!desktopFile.exists()) {
-            createDesktopShortcut(context, containerId, exePath);
-        }
-
-        try {
-            Intent intent = new Intent(context, XServerDisplayActivity.class);
-            intent.putExtra("container_id", containerId);
-            intent.putExtra("shortcut_path", desktopFile.getAbsolutePath());
-            startActivity(intent);
-        } catch (Exception e) {
-            Toast.makeText(context, "Nie można uruchomić Gothica: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            activity.showFragment(new ContainerFileManagerFragment(containerId));
         }
     }
 }
