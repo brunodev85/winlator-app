@@ -1,12 +1,13 @@
 package com.winlator;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +28,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public class GothicLauncherFragment extends Fragment {
     private SharedPreferences preferences;
@@ -189,8 +188,8 @@ public class GothicLauncherFragment extends Fragment {
 
         String path = getRealPathFromURI(context, uri);
 
-        if (path == null || path.isEmpty()) {
-            Toast.makeText(context, "Nie można odczytać ścieżki pliku!", Toast.LENGTH_LONG).show();
+        if (path == null || path.isEmpty() || !new File(path).exists()) {
+            Toast.makeText(context, "Nie można odczytać fizycznej ścieżki pliku! Wybierz Gothic2.exe bezpośrednio z pamięci.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -211,6 +210,33 @@ public class GothicLauncherFragment extends Fragment {
         Toast.makeText(context, "Wybrano plik i utworzono skrót Gothica!", Toast.LENGTH_SHORT).show();
     }
 
+    private String getRealPathFromURI(Context context, Uri uri) {
+        if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+
+        try {
+            if (DocumentsContract.isDocumentUri(context, uri)) {
+                String docId = DocumentsContract.getDocumentId(uri);
+                String[] split = docId.split(":");
+                if (split.length >= 2 && "primary".equalsIgnoreCase(split[0])) {
+                    return Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + split[1];
+                }
+            }
+        } catch (Exception ignored) {}
+
+        String uriStr = uri.toString();
+        try {
+            if (uriStr.contains("primary:")) {
+                String split = uriStr.split("primary:")[1];
+                String decoded = Uri.decode(split);
+                return Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + decoded;
+            }
+        } catch (Exception ignored) {}
+
+        return uri.getPath();
+    }
+
     private void createDesktopShortcut(Context context, int containerId, String exePath) {
         try {
             File containerDir = new File(context.getFilesDir(), "containers/" + containerId);
@@ -222,6 +248,7 @@ public class GothicLauncherFragment extends Fragment {
             File exeFile = new File(exePath);
             File parentDir = exeFile.getParentFile();
 
+            // Ścieżka w formacie Wine przez dysk Z:
             String wineExecPath = "z:/" + exePath.replaceFirst("^/+", "").replace('/', '\\');
             String dosDevicesPath = context.getFilesDir() + "/rootfs/home/xuser/.wine/dosdevices/z:/" + 
                     (parentDir != null ? parentDir.getAbsolutePath().replaceFirst("^/+", "").replace('/', '\\') : "");
@@ -245,45 +272,6 @@ public class GothicLauncherFragment extends Fragment {
         }
     }
 
-    private String getRealPathFromURI(Context context, Uri uri) {
-        if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-
-        try {
-            String uriString = uri.toString();
-            if (uriString.contains("raw%3A")) {
-                String decoded = Uri.decode(uriString);
-                int idx = decoded.indexOf("raw:");
-                if (idx != -1) {
-                    return decoded.substring(idx + 4);
-                }
-            }
-            if (uriString.contains("primary:")) {
-                String split = uriString.split("primary:")[1];
-                String decoded = Uri.decode(split);
-                return android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + decoded;
-            }
-        } catch (Exception ignored) {}
-
-        try {
-            File cacheFile = new File(context.getCacheDir(), "gothic_launch.exe");
-            try (InputStream in = context.getContentResolver().openInputStream(uri);
-                 OutputStream out = new FileOutputStream(cacheFile)) {
-                byte[] buffer = new byte[16384];
-                int read;
-                while ((read = in.read(buffer)) != -1) {
-                    out.write(buffer, 0, read);
-                }
-            }
-            return cacheFile.getAbsolutePath();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return uri.toString();
-    }
-
     private void launchGame() {
         Context context = getContext();
         if (context == null) return;
@@ -296,8 +284,8 @@ public class GothicLauncherFragment extends Fragment {
             return;
         }
 
-        ContainerManager manager = new ContainerManager(context);
-        Container container = manager.getContainerById(containerId);
+        ContainerManager containerManager = new ContainerManager(context);
+        Container container = containerManager.getContainerById(containerId);
 
         if (container == null) {
             Toast.makeText(context, "Kontener nie istnieje. Skonfiguruj go ponownie!", Toast.LENGTH_SHORT).show();
@@ -306,9 +294,12 @@ public class GothicLauncherFragment extends Fragment {
             return;
         }
 
-        // Wskazujemy bezpośrednio ścieżkę do wygenerowanego pliku .desktop
         File containerDir = new File(context.getFilesDir(), "containers/" + containerId);
         File desktopFile = new File(containerDir, "desktop/Gothic2.desktop");
+
+        if (!desktopFile.exists()) {
+            createDesktopShortcut(context, containerId, exePath);
+        }
 
         try {
             Intent intent = new Intent(context, XServerDisplayActivity.class);
