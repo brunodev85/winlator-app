@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0F1115"
+    android:padding="16dp">
+
+    <!-- Górny pasek z nagłówkiem i statusem konfiguracji -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="24dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Gothic Launcher"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"/>
+
+        <!-- Przycisk / Wskaźnik Konfiguracji -->
+        <Button
+            android:id="@+id/btnConfigure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Konfiguruj ➔"
+            android:backgroundTint="#2C3038"
+            android:textColor="#FFFFFF"/>
+    </LinearLayout>
+
+    <!-- Kafelki gier (np. Gothic II / New Balance) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="280dp"
+            android:layout_height="380dp"
+            android:background="#1A1E24"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:elevation="4dp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gothic II"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/tvGameStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Niewybrany folder"
+                android:textColor="#8C929D"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:layout_marginBottom="140dp"/>
+
+            <!-- Przycisk akcji (Wybierz folder -> Graj) -->
+            <Button
+                android:id="@+id/btnAction"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Wybierz folder z grą"
+                android:enabled="false"
+                android:backgroundTint="#3B4252"
+                android:textColor="#FFFFFF"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
