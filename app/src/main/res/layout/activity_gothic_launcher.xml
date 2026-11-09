@@ -6,7 +6,6 @@
     android:background="#0F1115"
     android:padding="16dp">
 
-    <!-- Górny pasek z nagłówkiem i statusem konfiguracji -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,17 +22,14 @@
             android:textSize="22sp"
             android:textStyle="bold"/>
 
-        <!-- Przycisk / Wskaźnik Konfiguracji -->
         <Button
             android:id="@+id/btnConfigure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Konfiguruj ➔"
-            android:backgroundTint="#2C3038"
             android:textColor="#FFFFFF"/>
     </LinearLayout>
 
-    <!-- Kafelki gier (np. Gothic II / New Balance) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,13 +42,12 @@
             android:background="#1A1E24"
             android:orientation="vertical"
             android:padding="16dp"
-            android:elevation="4dp"
             android:gravity="center_horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Gothic II"
+                android:text="Gothic II - New Balance"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -67,16 +62,14 @@
                 android:textColor="#8C929D"
                 android:textSize="14sp"
                 android:gravity="center"
-                android:layout_marginBottom="140dp"/>
+                android:layout_weight="1"/>
 
-            <!-- Przycisk akcji (Wybierz folder -> Graj) -->
             <Button
                 android:id="@+id/btnAction"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="Wybierz folder z grą"
                 android:enabled="false"
-                android:backgroundTint="#3B4252"
                 android:textColor="#FFFFFF"/>
         </LinearLayout>
 
