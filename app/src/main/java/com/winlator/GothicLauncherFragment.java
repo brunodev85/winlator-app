@@ -22,9 +22,6 @@ import androidx.preference.PreferenceManager;
 import com.winlator.container.Container;
 import com.winlator.container.ContainerManager;
 import com.winlator.core.FileUtils;
-import com.winlator.core.PreloaderDialog;
-import com.winlator.shortcut.Shortcut;
-import com.winlator.shortcut.ShortcutManager;
 
 public class GothicLauncherFragment extends Fragment {
     private SharedPreferences preferences;
@@ -49,7 +46,13 @@ public class GothicLauncherFragment extends Fragment {
 
         updateUIStates();
 
-        btnConfigure.setOnClickListener(v -> createGothicContainer());
+        // Przycisk konfiguracji otwiera standardową listę kontenerów Winlatora, 
+        // gdzie użytkownik może jednym kliknięciem dodać kontener pod Gothica
+        btnConfigure.setOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).showFragment(new ContainersFragment());
+            }
+        });
 
         btnAction.setOnClickListener(v -> {
             String savedPath = preferences.getString(PREF_EXE_PATH, "");
@@ -68,56 +71,31 @@ public class GothicLauncherFragment extends Fragment {
         if (context == null) return;
 
         ContainerManager manager = new ContainerManager(context);
-        Container container = manager.getContainerById(1);
+        Container container = manager.getContainerById(preferences.getInt(PREF_CONTAINER_ID, 1));
         String savedPath = preferences.getString(PREF_EXE_PATH, "");
 
         if (container == null) {
-            btnConfigure.setText("Konfiguruj ➔");
+            btnConfigure.setText("Konfiguruj Kontener ➔");
             btnConfigure.setEnabled(true);
             btnConfigure.setBackgroundColor(Color.parseColor("#2C3038"));
             btnAction.setEnabled(false);
-            btnAction.setText("Wybierz folder z grą");
-            tvGameStatus.setText("Najpierw skonfiguruj środowisko");
+            btnAction.setText("Wybierz plik .exe gry");
+            tvGameStatus.setText("Najpierw utwórz kontener w Winlatorze");
         } else if (savedPath.isEmpty()) {
-            btnConfigure.setText("✔ Skonfigurowano");
+            btnConfigure.setText("✔ Kontener Gotowy");
             btnConfigure.setEnabled(false);
             btnConfigure.setBackgroundColor(Color.parseColor("#2E7D32"));
             btnAction.setEnabled(true);
-            btnAction.setText("Wybierz folder z grą");
-            tvGameStatus.setText("Niewybrany folder");
+            btnAction.setText("Wybierz plik .exe gry");
+            tvGameStatus.setText("Wskaż plik Gothic2.exe");
         } else {
             btnConfigure.setText("✔ Gotowe");
             btnConfigure.setEnabled(false);
             btnConfigure.setBackgroundColor(Color.parseColor("#2E7D32"));
             btnAction.setEnabled(true);
-            btnAction.setText("▶ Graj");
+            btnAction.setText("▶ Graj w Gothica");
             tvGameStatus.setText("Zainstalowane (GOTOWE)");
         }
-    }
-
-    private void createGothicContainer() {
-        Activity activity = getActivity();
-        if (activity == null) return;
-
-        PreloaderDialog preloaderDialog = new PreloaderDialog(activity);
-        preloaderDialog.show("Tworzenie kontenera dla Gothica...");
-
-        new Thread(() -> {
-            ContainerManager manager = new ContainerManager(activity);
-            Container container = new Container(manager);
-            container.setName("Gothic Container");
-            container.setScreenSize("1280x720");
-            container.setEnvVars("BOX64_DYNAREC_BIGBLOCK=2,BOX64_DYNAREC_STRONG_MEM=0");
-            container.save();
-
-            preferences.edit().putInt(PREF_CONTAINER_ID, container.id).apply();
-
-            activity.runOnUiThread(() -> {
-                preloaderDialog.dismiss();
-                Toast.makeText(activity, "Kontener utworzony!", Toast.LENGTH_SHORT).show();
-                updateUIStates();
-            });
-        }).start();
     }
 
     private void openFileSelector() {
@@ -138,42 +116,26 @@ public class GothicLauncherFragment extends Fragment {
                 if (path == null) path = uri.getPath();
 
                 preferences.edit().putString(PREF_EXE_PATH, path).apply();
-                registerShortcut(path);
-
                 updateUIStates();
-                Toast.makeText(context, "Utworzono skrót!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Zapisano ścieżkę do gry!", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private void registerShortcut(String exePath) {
-        Context context = getContext();
-        if (context == null) return;
-
-        int containerId = preferences.getInt(PREF_CONTAINER_ID, 1);
-        ShortcutManager shortcutManager = new ShortcutManager(context);
-
-        Shortcut shortcut = new Shortcut();
-        shortcut.name = "Gothic II - New Balance";
-        shortcut.containerId = containerId;
-        shortcut.path = exePath;
-        shortcut.screenSize = "1280x720";
-        shortcutManager.add(shortcut);
     }
 
     private void launchGame() {
         Context context = getContext();
         if (context == null) return;
 
-        ShortcutManager shortcutManager = new ShortcutManager(context);
-        Shortcut shortcut = shortcutManager.getShortcutByPath(preferences.getString(PREF_EXE_PATH, ""));
+        int containerId = preferences.getInt(PREF_CONTAINER_ID, 1);
+        String exePath = preferences.getString(PREF_EXE_PATH, "");
 
-        if (shortcut != null) {
+        if (!exePath.isEmpty()) {
             Intent intent = new Intent(context, XServerDisplayActivity.class);
-            intent.putExtra("shortcut_id", shortcut.id);
+            intent.putExtra("container_id", containerId);
+            intent.putExtra("shortcut_path", exePath);
             startActivity(intent);
         } else {
-            Toast.makeText(context, "Nie znaleziono skrótu!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Najpierw wybierz plik .exe!", Toast.LENGTH_SHORT).show();
         }
     }
 }
