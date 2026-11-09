@@ -206,8 +206,9 @@ public abstract class WineUtils {
     public static boolean isWineprefixWasUpdated(Container container) {
         File file = new File(container.getRootDir(), "/.wine/.update-timestamp");
         String content = FileUtils.readString(file);
-        
-        if (!content.startsWith("disable")) {
+        // GalgameShell：content 可能为 null（文件缺失/读取失败）；仅当非 null 且非 "disable" 才继续解析，
+        // 否则（含 null）直接视为「无需更新」返回 false，避免 content.startsWith/replaceAll 触发 NPE 致启动崩溃
+        if (content != null && !content.startsWith("disable")) {
             content = content.replaceAll("[\r\n]+", "");
             try {
                 int updateTimestamp = Integer.parseInt(content);
