@@ -18,6 +18,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
 import com.winlator.container.Container;
@@ -34,8 +37,12 @@ import java.util.function.Consumer;
 public class MainActivity extends AppCompatActivity {
 
     public static final boolean DEBUG_MODE = false;
+    public static final int CONTAINER_PATTERN_COMPRESSION_LEVEL = 3;
+
     public static final int PERMISSION_WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1;
     public static final int OPEN_FILE_REQUEST_CODE = 2;
+    public static final int OPEN_DIRECTORY_REQUEST_CODE = 3;
+    public static final int EDIT_INPUT_CONTROLS_REQUEST_CODE = 4;
 
     private static final String PREF_EXE_PATH = "gothic_exe_path";
     private static final String PREF_CONTAINER_ID = "gothic_container_id";
@@ -68,17 +75,36 @@ public class MainActivity extends AppCompatActivity {
 
         updateUIStates();
 
-        btnConfigure.setOnClickListener(v -> createGothicContainer());
+        if (btnConfigure != null) {
+            btnConfigure.setOnClickListener(v -> createGothicContainer());
+        }
 
-        btnAction.setOnClickListener(v -> {
-            String savedPath = preferences.getString(PREF_EXE_PATH, "");
+        if (btnAction != null) {
+            btnAction.setOnClickListener(v -> {
+                String savedPath = preferences.getString(PREF_EXE_PATH, "");
 
-            if (savedPath.isEmpty()) {
-                openFileSelector();
-            } else {
-                launchGame();
-            }
-        });
+                if (savedPath.isEmpty()) {
+                    openFileSelector();
+                } else {
+                    launchGame();
+                }
+            });
+        }
+    }
+
+    public void setOpenFileCallback(Consumer<Uri> callback) {
+        openFileCallback = callback;
+    }
+
+    public void showFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        try {
+            transaction.replace(android.R.id.content, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } catch (Exception ignored) {
+        }
     }
 
     private void updateUIStates() {
@@ -119,8 +145,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createGothicContainer() {
-        btnConfigure.setEnabled(false);
-        preloaderDialog.show();
+        if (btnConfigure != null) {
+            btnConfigure.setEnabled(false);
+        }
+        
+        try {
+            preloaderDialog.show(R.string.starting_up);
+        } catch (Exception e) {
+            // Zabezpieczenie przed różnicami w wersjach PreloaderDialog w konstruktorach
+        }
 
         try {
             ContainerManager manager = new ContainerManager(this);
@@ -130,11 +163,11 @@ public class MainActivity extends AppCompatActivity {
             data.put("envVars", "BOX64_DYNAREC_BIGBLOCK=2 BOX64_DYNAREC_STRONG_MEM=0");
 
             manager.createContainerAsync(data, container -> {
-                preloaderDialog.dismiss();
+                try { preloaderDialog.close(); } catch (Exception ignored) {}
 
                 if (container == null) {
                     Toast.makeText(MainActivity.this, "Nie udało się utworzyć kontenera!", Toast.LENGTH_LONG).show();
-                    btnConfigure.setEnabled(true);
+                    if (btnConfigure != null) btnConfigure.setEnabled(true);
                     updateUIStates();
                     return;
                 }
@@ -149,8 +182,8 @@ public class MainActivity extends AppCompatActivity {
             });
 
         } catch (Exception e) {
-            preloaderDialog.dismiss();
-            btnConfigure.setEnabled(true);
+            try { preloaderDialog.close(); } catch (Exception ignored) {}
+            if (btnConfigure != null) btnConfigure.setEnabled(true);
             Toast.makeText(this, "Błąd tworzenia kontenera: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
@@ -173,12 +206,17 @@ public class MainActivity extends AppCompatActivity {
         Uri uri = data.getData();
         if (uri == null) return;
 
+        if (openFileCallback != null) {
+            openFileCallback.accept(uri);
+            openFileCallback = null;
+            return;
+        }
+
         try {
             final int flags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             getContentResolver().takePersistableUriPermission(uri, flags);
         } catch (Exception ignored) {}
 
-        // Zapisujemy URI jako String, aby uniknąć problemów z metodami FileUtils
         String path = uri.toString();
 
         int containerId = preferences.getInt(PREF_CONTAINER_ID, -1);
