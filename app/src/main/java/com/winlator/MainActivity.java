@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
 import com.winlator.container.Container;
@@ -26,13 +27,19 @@ import com.winlator.core.AppUtils;
 import com.winlator.core.FileUtils;
 import com.winlator.core.LocaleHelper;
 import com.winlator.core.PreloaderDialog;
-import com.winlator.shortcut.Shortcut;
-import com.winlator.shortcut.ShortcutManager;
 import com.winlator.xenvironment.RootFSInstaller;
 
+import java.util.function.Consumer;
+
 public class MainActivity extends AppCompatActivity {
-    public static final byte PERMISSION_WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1;
-    public static final byte OPEN_FILE_REQUEST_CODE = 2;
+    // Kluczowe stałe wymagane przez inne komponenty Winlatora
+    public static final boolean DEBUG_MODE = false;
+    public static final int CONTAINER_PATTERN_COMPRESSION_LEVEL = 3;
+    
+    public static final int PERMISSION_WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1;
+    public static final int OPEN_FILE_REQUEST_CODE = 2;
+    public static final int OPEN_DIRECTORY_REQUEST_CODE = 3;
+    public static final int EDIT_INPUT_CONTROLS_REQUEST_CODE = 4;
 
     public final PreloaderDialog preloaderDialog = new PreloaderDialog(this);
     private SharedPreferences preferences;
@@ -43,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String PREF_EXE_PATH = "gothic_exe_path";
     private static final String PREF_CONTAINER_ID = "gothic_container_id";
-    private static final String PREF_SHORTCUT_ID = "gothic_shortcut_id"; // Klucz na bezpośrednie ID skrótu
+    private static final String PREF_SHORTCUT_ID = "gothic_shortcut_id";
+
+    private Consumer<Uri> openFileCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,19 +73,37 @@ public class MainActivity extends AppCompatActivity {
 
         updateUIStates();
 
-        btnConfigure.setOnClickListener(v -> createGothicContainer());
+        if (btnConfigure != null) {
+            btnConfigure.setOnClickListener(v -> createGothicContainer());
+        }
 
-        btnAction.setOnClickListener(v -> {
-            String savedPath = preferences.getString(PREF_EXE_PATH, "");
-            if (savedPath.isEmpty()) {
-                openFileSelector();
-            } else {
-                launchGame();
-            }
-        });
+        if (btnAction != null) {
+            btnAction.setOnClickListener(v -> {
+                String savedPath = preferences.getString(PREF_EXE_PATH, "");
+                if (savedPath.isEmpty()) {
+                    openFileSelector();
+                } else {
+                    launchGame();
+                }
+            });
+        }
+    }
+
+    // Metody nawigacyjne wymagane przez fragmenty Winlatora
+    public void showFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit();
+    }
+
+    public void setOpenFileCallback(Consumer<Uri> callback) {
+        this.openFileCallback = callback;
     }
 
     private void updateUIStates() {
+        if (btnConfigure == null || btnAction == null || tvGameStatus == null) return;
+        
         ContainerManager manager = new ContainerManager(this);
         Container container = manager.getContainerById(preferences.getInt(PREF_CONTAINER_ID, 1));
         String savedPath = preferences.getString(PREF_EXE_PATH, "");
@@ -106,17 +133,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createGothicContainer() {
-        preloaderDialog.show("Tworzenie kontenera dla Gothica...");
+        preloaderDialog.show();
         
         new Thread(() -> {
             ContainerManager manager = new ContainerManager(this);
-            Container container = new Container(manager);
-            container.name = "Gothic Container";
-            container.setResolution("1280x720");
-            container.setEnvVars("BOX64_DYNAREC_BIGBLOCK=2,BOX64_DYNAREC_STRONG_MEM=0");
-            container.save();
-
-            preferences.edit().putInt(PREF_CONTAINER_ID, container.id).apply();
+            Container container = manager.createContainer("Gothic Container");
+            if (container != null) {
+                container.setScreenSize("1280x720");
+                container.setEnvVars("BOX64_DYNAREC_BIGBLOCK=2,BOX64_DYNAREC_STRONG_MEM=0");
+                container.save();
+                preferences.edit().putInt(PREF_CONTAINER_ID, container.id).apply();
+            }
 
             runOnUiThread(() -> {
                 preloaderDialog.dismiss();
@@ -129,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     private void openFileSelector() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*"); // Możesz zmienić na "application/x-msdownload" lub zostawić ogólne
+        intent.setType("*/*");
         startActivityForResult(intent, OPEN_FILE_REQUEST_CODE);
     }
 
@@ -139,15 +166,19 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == OPEN_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             Uri uri = data.getData();
             if (uri != null) {
-                String path = FileUtils.getPath(this, uri);
-                
-                // Zabezpieczenie przed błędną/wirtualną ścieżką systemową SAF
-                if (path == null || path.startsWith("/document/")) {
-                    path = FileUtils.getRealPathFromURI(this, uri); // Alternatywna próba wyciągnięcia ścieżki
+                if (openFileCallback != null) {
+                    openFileCallback.accept(uri);
+                    openFileCallback = null;
+                    return;
                 }
-                
+
+                String path = FileUtils.getPath(this, uri);
                 if (path == null || path.startsWith("/document/")) {
-                    Toast.makeText(this, "Wybierz plik bezpośrednio z pamięci urządzenia (nie z dysku wirtualnego)!", Toast.LENGTH_LONG).show();
+                    path = FileUtils.getRealPathFromURI(this, uri);
+                }
+
+                if (path == null || path.startsWith("/document/")) {
+                    Toast.makeText(this, "Wybierz plik bezpośrednio z pamięci urządzenia!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -162,18 +193,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void registerShortcut(String exePath) {
         int containerId = preferences.getInt(PREF_CONTAINER_ID, 1);
-        ShortcutManager shortcutManager = new ShortcutManager(this);
-        
-        Shortcut shortcut = new Shortcut();
-        shortcut.name = "Gothic II - New Balance";
-        shortcut.containerId = containerId;
-        shortcut.path = exePath;
-        shortcut.screenSize = "1280x720";
-        shortcutManager.add(shortcut);
+        ContainerManager manager = new ContainerManager(this);
+        Container container = manager.getContainerById(containerId);
 
-        // Kluczowa zmiana: Zapisujemy ID bezpośrednio, omijając późniejsze szukanie po ścieżce
-        if (shortcut.id > 0) {
-            preferences.edit().putInt(PREF_SHORTCUT_ID, shortcut.id).apply();
+        if (container != null) {
+            // Rejestracja skrótu przy użyciu standardowego menedżera kontenera Winlator
+            int shortcutId = manager.addShortcut(container, "Gothic II - New Balance", exePath, "1280x720", "");
+            if (shortcutId > 0) {
+                preferences.edit().putInt(PREF_SHORTCUT_ID, shortcutId).apply();
+            }
         }
     }
 
@@ -181,24 +209,13 @@ public class MainActivity extends AppCompatActivity {
         int shortcutId = preferences.getInt(PREF_SHORTCUT_ID, -1);
 
         if (shortcutId != -1) {
-            // Uruchomienie bezpośrednio po zapisanym ID skrótu
             Intent intent = new Intent(this, XServerDisplayActivity.class);
             intent.putExtra("shortcut_id", shortcutId);
             startActivity(intent);
         } else {
-            // Fallback w razie braku zapisanego ID
-            ShortcutManager shortcutManager = new ShortcutManager(this);
-            Shortcut shortcut = shortcutManager.getShortcutByPath(preferences.getString(PREF_EXE_PATH, ""));
-
-            if (shortcut != null) {
-                Intent intent = new Intent(this, XServerDisplayActivity.class);
-                intent.putExtra("shortcut_id", shortcut.id);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "Błąd skrótu! Wskaż plik .exe ponownie.", Toast.LENGTH_SHORT).show();
-                preferences.edit().remove(PREF_EXE_PATH).remove(PREF_SHORTCUT_ID).apply();
-                updateUIStates();
-            }
+            Toast.makeText(this, "Błąd skrótu! Wskaż plik .exe ponownie.", Toast.LENGTH_SHORT).show();
+            preferences.edit().remove(PREF_EXE_PATH).remove(PREF_SHORTCUT_ID).apply();
+            updateUIStates();
         }
     }
 
