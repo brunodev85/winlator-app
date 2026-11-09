@@ -47,6 +47,10 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
     private String startPath;
     private Container container;
 
+    public ContainerFileManagerFragment() {
+        this(0, null);
+    }
+
     public ContainerFileManagerFragment(int containerId) {
         this(containerId, null);
     }
@@ -56,13 +60,21 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
         this.startPath = startPath;
     }
 
+    public int getContainerId() {
+        return containerId;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        container = manager.getContainerById(containerId);
+        container = manager != null ? manager.getContainerById(containerId) : null;
+        if (container == null) {
+            return;
+        }
+
         viewStyle = ViewStyle.valueOf(preferences.getString("container_file_manager_view_style", "GRID"));
-        
+
         if (startPath != null) {
             setCurrentWorkingPath(WineUtils.unixToDOSPath(startPath, container));
             startPath = null;
@@ -72,6 +84,10 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
     @Override
     public void refreshContent() {
         super.refreshContent();
+
+        if (container == null) {
+            return;
+        }
 
         FileInfo parent = !folderStack.isEmpty() ? folderStack.peek() : null;
         ArrayList<FileInfo> files = manager.loadFiles(container, parent);
@@ -94,8 +110,7 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
             File file = new File(folderStack.peek().toFile(), name);
             if (file.isDirectory()) {
                 AppUtils.showToast(getContext(), R.string.there_already_file_with_that_name);
-            }
-            else {
+            } else {
                 file.mkdir();
                 refreshContent();
             }
@@ -111,7 +126,7 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
     private void addFavorite(FileInfo file) {
         Context context = getContext();
         File favoritesDir = new File(container.getUserDir(), context.getString(R.string.favorites));
-        File targetFile = new File(favoritesDir, FileUtils.getBasename(file.name)+".lnk");
+        File targetFile = new File(favoritesDir, FileUtils.getBasename(file.name) + ".lnk");
 
         if (!targetFile.exists()) {
             MSLink.LinkInfo linkInfo = new MSLink.LinkInfo();
@@ -163,12 +178,13 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
         folderStack.clear();
         for (String name : names) {
             if (!name.isEmpty()) {
-                dosPath = WineUtils.dosToUnixPath(basePath+name, container);
+                dosPath = WineUtils.dosToUnixPath(basePath + name, container);
                 if (basePath.isEmpty() && name.matches("[A-Za-z]:")) {
                     folderStack.push(new FileInfo(container, name, dosPath, FileInfo.Type.DRIVE));
+                } else {
+                    folderStack.push(new FileInfo(container, dosPath, FileInfo.Type.DIRECTORY));
                 }
-                else folderStack.push(new FileInfo(container, dosPath, FileInfo.Type.DIRECTORY));
-                basePath += name+"\\";
+                basePath += name + "\\";
             }
         }
 
@@ -185,19 +201,23 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
 
             if (folderStack.size() == 1) sb.append("\\");
             return sb.toString();
+        } else {
+            return "";
         }
-        else return "";
     }
 
     private void updateActionBarTitle() {
-        AppCompatActivity activity = (AppCompatActivity)getActivity();
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity == null || activity.getSupportActionBar() == null) {
+            return;
+        }
+
         ActionBar actionBar = activity.getSupportActionBar();
 
         if (!folderStack.isEmpty()) {
             actionBar.setHomeAsUpIndicator(R.drawable.icon_action_bar_back);
             actionBar.setTitle(getCurrentWorkingPath());
-        }
-        else {
+        } else {
             actionBar.setHomeAsUpIndicator(R.drawable.icon_action_bar_menu);
             actionBar.setTitle(getHomeTitle());
         }
@@ -205,7 +225,7 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
 
     @Override
     protected String getHomeTitle() {
-        return container.getName();
+        return container != null ? container.getName() : "";
     }
 
     private static class LoadIconTask {
@@ -227,9 +247,10 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
                     imageView.post(() -> {
                         if (canceled) return;
                         if (icon instanceof Bitmap) {
-                            imageView.setImageBitmap((Bitmap)icon);
+                            imageView.setImageBitmap((Bitmap) icon);
+                        } else {
+                            imageView.setImageResource((Integer) icon);
                         }
-                        else imageView.setImageResource((Integer)icon);
                     });
                 }
             });
@@ -279,9 +300,8 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
             FileInfo.Type type = item.type;
             if (item.type == FileInfo.Type.DRIVE) {
                 String driveText = getContext().getString(R.string.drive);
-                holder.title.setText(driveText+" ("+item.name+")");
-            }
-            else {
+                holder.title.setText(driveText + " (" + item.name + ")");
+            } else {
                 MSLink.LinkInfo linkInfo = item.getLinkinfo();
                 if (linkInfo != null && linkInfo.isDirectory) type = FileInfo.Type.DIRECTORY;
                 holder.title.setText(item.getDisplayName());
@@ -291,10 +311,9 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
             holder.runButton.setImageResource(R.drawable.icon_open);
 
             if (type == FileInfo.Type.DIRECTORY && !folderStack.isEmpty()) {
-                holder.subtitle.setText(item.getItemCount()+" "+context.getString(R.string.items));
+                holder.subtitle.setText(item.getItemCount() + " " + context.getString(R.string.items));
                 holder.subtitle.setVisibility(View.VISIBLE);
-            }
-            else if (type == FileInfo.Type.FILE) {
+            } else if (type == FileInfo.Type.FILE) {
                 holder.runButton.setImageResource(R.drawable.icon_run);
                 holder.subtitle.setText(StringUtils.formatBytes(item.getSize()));
                 holder.subtitle.setVisibility(View.VISIBLE);
@@ -302,14 +321,15 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
 
             if (type == FileInfo.Type.FILE) {
                 holder.imageView.setImageResource(R.drawable.container_file);
-                LoadIconTask loadIconTask = (LoadIconTask)holder.imageView.getTag();
+                LoadIconTask loadIconTask = (LoadIconTask) holder.imageView.getTag();
                 if (loadIconTask != null) loadIconTask.cancel();
 
                 loadIconTask = new LoadIconTask(ContainerFileManagerFragment.this, holder.imageView);
                 loadIconTask.loadAsync(item);
                 holder.imageView.setTag(loadIconTask);
+            } else {
+                holder.imageView.setImageResource((Integer) getIconForFile(item));
             }
-            else holder.imageView.setImageResource((Integer)getIconForFile(item));
 
             holder.imageView.setOnClickListener((v) -> openFile(item));
             holder.runButton.setOnClickListener((v) -> openFile(item));
@@ -336,8 +356,7 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
                 menu.findItem(R.id.menu_item_remove).setVisible(false);
                 menu.findItem(R.id.menu_item_rename).setVisible(false);
                 menu.findItem(R.id.menu_item_add_favorite).setVisible(false);
-            }
-            else if (folderStack.peek().name.equals("Favorites")) {
+            } else if (folderStack.peek().name.equals("Favorites")) {
                 menu.findItem(R.id.menu_item_add_favorite).setVisible(false);
             }
 
@@ -373,6 +392,8 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
 
         private void openFile(FileInfo file) {
             Activity activity = getActivity();
+            if (activity == null) return;
+
             MSLink.LinkInfo linkInfo = file.getLinkinfo();
             boolean isFile = linkInfo != null ? !linkInfo.isDirectory : file.type == FileInfo.Type.FILE;
 
@@ -381,8 +402,7 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
                 intent.putExtra("container_id", container.id);
                 intent.putExtra("exec_path", file.path);
                 activity.startActivity(intent);
-            }
-            else {
+            } else {
                 folderStack.push(file);
                 refreshContent();
             }
@@ -392,18 +412,20 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
     public Object getIconForFile(FileInfo file) {
         if (file.type == FileInfo.Type.DIRECTORY) {
             Context context = getContext();
-            if (file.path.endsWith(RootFS.USER+"/"+context.getString(R.string.documents))) {
+            if (context == null) {
+                return R.drawable.container_folder;
+            }
+
+            if (file.path.endsWith(RootFS.USER + "/" + context.getString(R.string.documents))) {
                 return R.drawable.container_folder_documents;
-            }
-            else if (file.path.endsWith(RootFS.USER+"/"+context.getString(R.string.favorites))) {
+            } else if (file.path.endsWith(RootFS.USER + "/" + context.getString(R.string.favorites))) {
                 return R.drawable.container_folder_favorites;
+            } else {
+                return R.drawable.container_folder;
             }
-            else return R.drawable.container_folder;
-        }
-        else if (file.type == FileInfo.Type.DRIVE) {
+        } else if (file.type == FileInfo.Type.DRIVE) {
             return R.drawable.container_drive;
-        }
-        else {
+        } else {
             String extension = FileUtils.getExtension(file.path);
 
             switch (extension) {
@@ -411,9 +433,8 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
                     Bitmap bitmap = PEParser.extractIcon(file.toFile());
                     return bitmap != null ? bitmap : R.drawable.container_file_window;
                 }
-                case "bat": {
+                case "bat":
                     return R.drawable.container_file_window;
-                }
                 case "ico": {
                     Bitmap bitmap = MSIcon.decodeFile(file.toFile());
                     if (bitmap != null) return bitmap;
@@ -426,16 +447,16 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
                     if (linkInfo != null) {
                         if (linkInfo.isDirectory) {
                             return R.drawable.container_folder;
-                        }
-                        else {
+                        } else {
                             String targetPath = linkInfo.iconLocation != null ? linkInfo.iconLocation : linkInfo.targetPath;
                             targetPath = WineUtils.dosToUnixPath(targetPath, container);
 
                             Bitmap bitmap;
                             if (targetPath.endsWith(".ico")) {
                                 bitmap = MSIcon.decodeFile(new File(targetPath));
+                            } else {
+                                bitmap = PEParser.extractIcon(new File(targetPath), linkInfo.iconIndex);
                             }
-                            else bitmap = PEParser.extractIcon(new File(targetPath), linkInfo.iconIndex);
                             if (bitmap != null) return bitmap;
                         }
                     }
