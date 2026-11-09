@@ -21,7 +21,6 @@ import androidx.preference.PreferenceManager;
 
 import com.winlator.container.Container;
 import com.winlator.container.ContainerManager;
-import com.winlator.container.Shortcut;
 import com.winlator.core.Callback;
 
 import org.json.JSONObject;
@@ -128,7 +127,7 @@ public class GothicLauncherFragment extends Fragment {
             Context context = requireContext();
             ContainerManager manager = new ContainerManager(context);
             JSONObject data = new JSONObject();
-            data.put("name", "Gothic");
+            data.put("name", "Gothic II - New Balance");
             data.put("screenSize", "1280x720");
             data.put("envVars", "BOX64_DYNAREC_BIGBLOCK=2 BOX64_DYNAREC_STRONG_MEM=0");
 
@@ -204,7 +203,6 @@ public class GothicLauncherFragment extends Fragment {
             return;
         }
 
-        // Automatycznie tworzymy plik .desktop w folderze kontenera
         createDesktopShortcut(context, containerId, path);
 
         preferences.edit().putString(PREF_EXE_PATH, path).apply();
@@ -224,7 +222,6 @@ public class GothicLauncherFragment extends Fragment {
             File exeFile = new File(exePath);
             File parentDir = exeFile.getParentFile();
 
-            // Konwersja ścieżki Androida na format Wine z dyskiem Z:
             String wineExecPath = "z:/" + exePath.replaceFirst("^/+", "").replace('/', '\\');
             String dosDevicesPath = context.getFilesDir() + "/rootfs/home/xuser/.wine/dosdevices/z:/" + 
                     (parentDir != null ? parentDir.getAbsolutePath().replaceFirst("^/+", "").replace('/', '\\') : "");
@@ -309,23 +306,14 @@ public class GothicLauncherFragment extends Fragment {
             return;
         }
 
-        // Szukamy ID nowo utworzonego skrótu `.desktop` w menedżerze kontenera
-        int shortcutId = -1;
-        for (Shortcut shortcut : manager.getShortcuts(container)) {
-            if (shortcut.name != null && shortcut.name.equalsIgnoreCase("Gothic2")) {
-                shortcutId = shortcut.id;
-                break;
-            }
-        }
+        // Wskazujemy bezpośrednio ścieżkę do wygenerowanego pliku .desktop
+        File containerDir = new File(context.getFilesDir(), "containers/" + containerId);
+        File desktopFile = new File(containerDir, "desktop/Gothic2.desktop");
 
         try {
             Intent intent = new Intent(context, XServerDisplayActivity.class);
             intent.putExtra("container_id", containerId);
-            if (shortcutId != -1) {
-                intent.putExtra("shortcut_id", shortcutId);
-            } else {
-                intent.putExtra("shortcut_path", exePath);
-            }
+            intent.putExtra("shortcut_path", desktopFile.getAbsolutePath());
             startActivity(intent);
         } catch (Exception e) {
             Toast.makeText(context, "Nie można uruchomić Gothica: " + e.getMessage(), Toast.LENGTH_LONG).show();
