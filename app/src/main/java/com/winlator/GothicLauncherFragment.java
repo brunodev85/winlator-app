@@ -168,7 +168,8 @@ public class GothicLauncherFragment extends Fragment {
     private void openContainerFileManager(int containerId) {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
-            activity.showFragment(new ContainerFileManagerFragment(containerId));
+            // Używamy naszej klasy GothicContainerFileManagerFragment
+            activity.showFragment(new GothicContainerFileManagerFragment(containerId));
         }
     }
 }
