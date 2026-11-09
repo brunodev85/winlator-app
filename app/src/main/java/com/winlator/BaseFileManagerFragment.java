@@ -2,203 +2,229 @@ package com.winlator;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.winlator.container.ContainerManager;
-import com.winlator.core.AppUtils;
+import com.winlator.container.Container;
 import com.winlator.core.FileUtils;
-import com.winlator.core.PreloaderDialog;
-import com.winlator.core.UnitUtils;
 
 import java.io.File;
-import java.util.Stack;
-import java.util.concurrent.Executors;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-public abstract class BaseFileManagerFragment<T> extends Fragment {
-    protected enum ViewStyle {LIST, GRID};
-    protected PreloaderDialog preloaderDialog;
-    protected RecyclerView recyclerView;
-    protected TextView emptyTextView;
-    protected FloatingActionButton pasteButton;
-    protected ViewStyle viewStyle = ViewStyle.GRID;
-    protected boolean viewStyleNeedsUpdate = true;
-    protected DividerItemDecoration itemDecoration;
-    protected SharedPreferences preferences;
-    protected Clipboard clipboard;
-    protected ContainerManager manager;
-    protected final Stack<T> folderStack = new Stack<>();
+public class ContainerFileManagerFragment extends BaseFileManagerFragment<File> {
+    private int containerId;
+    private File currentDir;
 
-    static class Clipboard {
-        File targetDir;
-        final File[] files;
-        final boolean cutMode;
+    public ContainerFileManagerFragment() {}
 
-        Clipboard(File[] files, boolean cutMode) {
-            this.files = files;
-            this.cutMode = cutMode;
+    public ContainerFileManagerFragment(int containerId) {
+        this.containerId = containerId;
+    }
+
+    public ContainerFileManagerFragment(int containerId, String startPath) {
+        this.containerId = containerId;
+        if (startPath != null) {
+            this.currentDir = new File(startPath);
         }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-
-        Activity activity = getActivity();
-        preloaderDialog = new PreloaderDialog(activity);
-        preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        manager = new ContainerManager(activity);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.base_file_manager_fragment, container, false);
-        recyclerView = rootView.findViewById(R.id.RecyclerView);
-        emptyTextView = rootView.findViewById(R.id.TVEmptyText);
-
-        pasteButton = rootView.findViewById(R.id.BTPaste);
-        pasteButton.setOnClickListener((v) -> pasteFiles());
-
-        if (itemDecoration == null) {
-            Context context = getContext();
-            itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
-            itemDecoration.setDrawable(ContextCompat.getDrawable(context, R.drawable.list_item_divider));
+        if (savedInstanceState != null && containerId == 0) {
+            containerId = savedInstanceState.getInt("container_id", 0);
         }
-        return rootView;
+        
+        Container container = manager.getContainerById(containerId);
+        if (container != null && currentDir == null) {
+            // Domyślny katalog początkowy kontenera (np. dyski Wine / dosdevices)
+            currentDir = new File(requireContext().getFilesDir(), "rootfs/home/xuser/.wine/dosdevices");
+        }
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getHomeTitle());
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("container_id", containerId);
+    }
+
+    @Override
+    protected String getHomeTitle() {
+        return "Menedżer Plików Kontenera";
+    }
+
+    public int getContainerId() {
+        return containerId;
+    }
+
+    @Override
+    public void refreshContent() {
+        super.refreshContent();
+        if (currentDir == null || !currentDir.exists()) {
+            currentDir = new File(requireContext().getFilesDir(), "rootfs/home/xuser/.wine/dosdevices");
+        }
+
+        File[] filesList = currentDir.listFiles();
+        List<File> files = filesList != null ? new ArrayList<>(Arrays.asList(filesList)) : new ArrayList<>();
+        Collections.sort(files, (f1, f2) -> {
+            if (f1.isDirectory() && !f2.isDirectory()) return -1;
+            if (!f1.isDirectory() && f2.isDirectory()) return 1;
+            return f1.getName().compareToIgnoreCase(f2.getName());
+        });
+
+        // Ustawienie adaptera widoku listy/siatki plików w menedżerze
+        FileManagerAdapter adapter = new FileManagerAdapter(files);
+        recyclerView.setAdapter(adapter);
+
+        if (emptyTextView != null) {
+            emptyTextView.setVisibility(files.isEmpty() ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    private void openFolder(File folder) {
+        folderStack.push(currentDir);
+        currentDir = folder;
         refreshContent();
     }
 
-    public void setViewStyle(ViewStyle viewStyle) {
-        this.viewStyle = viewStyle;
-        viewStyleNeedsUpdate = true;
-        refreshContent();
-    }
-
-    public boolean onBackPressed() {
-        clearClipboard();
-        return onOptionsMenuClicked();
-    }
-
+    @Override
     public boolean onOptionsMenuClicked() {
         if (!folderStack.isEmpty()) {
-            folderStack.pop();
+            currentDir = folderStack.pop();
             refreshContent();
-
-            if (folderStack.isEmpty()) {
-                ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-                actionBar.setHomeAsUpIndicator(R.drawable.icon_action_bar_menu);
-                actionBar.setTitle(getHomeTitle());
-            }
             return true;
         }
-        else return false;
+        return super.onOptionsMenuClicked();
     }
 
-    public void onOrientationChanged() {
-        viewStyleNeedsUpdate = true;
-        refreshContent();
-    }
-
-    public void refreshViewStyleMenuItem(MenuItem menuItem) {
-        if (viewStyle == ViewStyle.LIST) {
-            menuItem.setIcon(R.drawable.icon_action_bar_grid);
+    private void showFilePopupMenu(View view, File file) {
+        PopupMenu popupMenu = new PopupMenu(requireContext(), view);
+        popupMenu.getMenu().add("Otwórz");
+        
+        // Dodajemy opcję tworzenia skrótu Gothic dla plików .exe
+        if (file.getName().toLowerCase().endsWith(".exe")) {
+            popupMenu.getMenu().add("Stwórz skrót Gothic");
         }
-        else if (viewStyle == ViewStyle.GRID) {
-            menuItem.setIcon(R.drawable.icon_action_bar_list);
-        }
-    }
+        
+        popupMenu.getMenu().add("Usuń");
 
-    public void refreshContent() {
-        if (viewStyleNeedsUpdate) {
-            Context context = getContext();
-            recyclerView.removeItemDecoration(itemDecoration);
-            if (viewStyle == ViewStyle.LIST) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                recyclerView.addItemDecoration(itemDecoration);
-            }
-            else if (viewStyle == ViewStyle.GRID) {
-                int spanCount = Math.max(2, (int)(AppUtils.getScreenWidth() / UnitUtils.dpToPx(200)));
-                recyclerView.setLayoutManager(new GridLayoutManager(context, spanCount));
-            }
-            viewStyleNeedsUpdate = false;
-        }
-    }
-
-    protected void pasteFiles() {
-        if (clipboard == null) return;
-        FragmentActivity activity = getActivity();
-
-        for (File file : clipboard.files) {
-            File targetFile = new File(clipboard.targetDir, file.getName());
-            if (targetFile.exists()) {
-                AppUtils.showToast(activity, R.string.there_already_file_with_that_name);
-                return;
-            }
-        }
-
-        preloaderDialog.show(R.string.copying_files);
-        Executors.newSingleThreadExecutor().execute(() -> {
-            for (File originFile : clipboard.files) {
-                if (originFile.exists()) {
-                    File targetFile = new File(clipboard.targetDir, originFile.getName());
-                    if (FileUtils.copy(originFile, targetFile) && clipboard.cutMode) FileUtils.delete(originFile);
+        popupMenu.setOnMenuItemClickListener(item -> {
+            String title = item.getTitle().toString();
+            if (title.equals("Otwórz")) {
+                if (file.isDirectory()) {
+                    openFolder(file);
+                } else {
+                    FileUtils.openFile(requireActivity(), file);
                 }
+            } else if (title.equals("Stwórz skrót Gothic")) {
+                createGothicShortcut(file);
+            } else if (title.equals("Usuń")) {
+                removeFile(file);
+            }
+            return true;
+        });
+        popupMenu.show();
+    }
+
+    private void createGothicShortcut(File exeFile) {
+        try {
+            String filePath = exeFile.getAbsolutePath();
+            File containerDir = new File(requireContext().getFilesDir(), "containers/" + containerId);
+            File desktopDir = new File(containerDir, "desktop");
+            if (!desktopDir.exists()) {
+                desktopDir.mkdirs();
             }
 
-            activity.runOnUiThread(() -> {
-                clearClipboard();
-                refreshContent();
-                preloaderDialog.close();
-            });
-        });
-    }
+            File parentDir = exeFile.getParentFile();
+            String parentDirPath = parentDir != null ? parentDir.getAbsolutePath() : "";
 
-    protected void removeFile(final File file) {
-        preloaderDialog.show(R.string.removing_files);
-        Executors.newSingleThreadExecutor().execute(() -> {
-            FileUtils.delete(file);
+            // Generowanie pliku .desktop zgodnego ze strukturą Wine w Winlatorze
+            StringBuilder sb = new StringBuilder();
+            sb.append("[Desktop Entry]\n");
+            sb.append("Name=Gothic2\n");
+            sb.append("Exec=env WINEPREFIX=\"").append(requireContext().getFilesDir()).append("/rootfs/home/xuser/.wine\" wine ").append(filePath.replace("/", "\\\\")).append("\n");
+            sb.append("Type=Application\n");
+            sb.append("StartupNotify=true\n");
+            sb.append("Path=").append(parentDirPath).append("\n");
+            sb.append("Icon=4904_Gothic2.0\n");
+            sb.append("StartupWMClass=gothic2.exe\n");
 
-            getActivity().runOnUiThread(() -> {
-                clearClipboard();
-                refreshContent();
-                preloaderDialog.close();
-            });
-        });
-    }
+            File desktopFile = new File(desktopDir, "Gothic2.desktop");
+            try (FileOutputStream fos = new FileOutputStream(desktopFile)) {
+                fos.write(sb.toString().getBytes("UTF-8"));
+            }
 
-    public void clearClipboard() {
-        if (clipboard != null) {
-            clipboard = null;
-            pasteButton.setVisibility(View.GONE);
+            Toast.makeText(requireContext(), "Utworzono skrót Gothic2.desktop!", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), "Błąd tworzenia skrótu: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
-    protected abstract String getHomeTitle();
+    // Wewnętrzny adapter listy plików
+    private class FileManagerAdapter extends RecyclerView.Adapter<FileManagerAdapter.ViewHolder> {
+        private final List<File> files;
+
+        public FileManagerAdapter(List<File> files) {
+            this.files = files;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.file_manager_item, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            File file = files.get(position);
+            holder.nameTextView.setText(file.getName());
+            
+            if (file.isDirectory()) {
+                holder.iconView.setImageResource(R.drawable.icon_folder);
+            } else if (file.getName().toLowerCase().endsWith(".exe")) {
+                holder.iconView.setImageResource(R.drawable.icon_exe);
+            } else {
+                holder.iconView.setImageResource(R.drawable.icon_file);
+            }
+
+            holder.itemView.setOnClickListener(v -> {
+                if (file.isDirectory()) {
+                    openFolder(file);
+                } else {
+                    showFilePopupMenu(v, file);
+                }
+            });
+
+            holder.menuButton.setOnClickListener(v -> showFilePopupMenu(v, file));
+        }
+
+        @Override
+        public int getItemCount() {
+            return files.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public final android.widget.ImageView iconView;
+            public final TextView nameTextView;
+            public final View menuButton;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+                iconView = itemView.findViewById(R.id.IVFileIcon);
+                nameTextView = itemView.findViewById(R.id.TVFileName);
+                menuButton = itemView.findViewById(R.id.BTItemMenu);
+            }
+        }
+    }
 }
