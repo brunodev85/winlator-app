@@ -1,3 +1,4 @@
+
 package com.winlator;
 
 import android.Manifest;
@@ -29,28 +30,29 @@ import com.winlator.core.LocaleHelper;
 import com.winlator.core.PreloaderDialog;
 import com.winlator.xenvironment.RootFSInstaller;
 
+import org.json.JSONObject;
+
 import java.util.function.Consumer;
 
 public class MainActivity extends AppCompatActivity {
-    // Kluczowe stałe wymagane przez inne komponenty Winlatora
+
     public static final boolean DEBUG_MODE = false;
     public static final int CONTAINER_PATTERN_COMPRESSION_LEVEL = 3;
-    
+
     public static final int PERMISSION_WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1;
     public static final int OPEN_FILE_REQUEST_CODE = 2;
     public static final int OPEN_DIRECTORY_REQUEST_CODE = 3;
     public static final int EDIT_INPUT_CONTROLS_REQUEST_CODE = 4;
 
-    public final PreloaderDialog preloaderDialog = new PreloaderDialog(this);
-    private SharedPreferences preferences;
+    private static final String PREF_EXE_PATH = "gothic_exe_path";
+    private static final String PREF_CONTAINER_ID = "gothic_container_id";
 
+    public final PreloaderDialog preloaderDialog = new PreloaderDialog(this);
+
+    private SharedPreferences preferences;
     private Button btnConfigure;
     private Button btnAction;
     private TextView tvGameStatus;
-
-    private static final String PREF_EXE_PATH = "gothic_exe_path";
-    private static final String PREF_CONTAINER_ID = "gothic_container_id";
-    private static final String PREF_SHORTCUT_ID = "gothic_shortcut_id";
 
     private Consumer<Uri> openFileCallback;
 
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         AppUtils.setActivityTheme(this);
         super.onCreate(savedInstanceState);
-        
+
         setContentView(R.layout.activity_gothic_launcher);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -73,173 +75,326 @@ public class MainActivity extends AppCompatActivity {
 
         updateUIStates();
 
-        if (btnConfigure != null) {
-            btnConfigure.setOnClickListener(v -> createGothicContainer());
-        }
+        btnConfigure.setOnClickListener(v -> createGothicContainer());
 
-        if (btnAction != null) {
-            btnAction.setOnClickListener(v -> {
-                String savedPath = preferences.getString(PREF_EXE_PATH, "");
-                if (savedPath.isEmpty()) {
-                    openFileSelector();
-                } else {
-                    launchGame();
-                }
-            });
-        }
+        btnAction.setOnClickListener(v -> {
+            String savedPath = preferences.getString(PREF_EXE_PATH, "");
+
+            if (savedPath.isEmpty()) {
+                openFileSelector();
+            } else {
+                launchGame();
+            }
+        });
     }
 
-    // Metody nawigacyjne wymagane przez fragmenty Winlatora
     public void showFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     public void setOpenFileCallback(Consumer<Uri> callback) {
-        this.openFileCallback = callback;
+        openFileCallback = callback;
     }
 
     private void updateUIStates() {
-        if (btnConfigure == null || btnAction == null || tvGameStatus == null) return;
-        
+        if (btnConfigure == null || btnAction == null || tvGameStatus == null) {
+            return;
+        }
+
         ContainerManager manager = new ContainerManager(this);
-        Container container = manager.getContainerById(preferences.getInt(PREF_CONTAINER_ID, 1));
+
+        int containerId = preferences.getInt(PREF_CONTAINER_ID, -1);
+        Container container = manager.getContainerById(containerId);
+
         String savedPath = preferences.getString(PREF_EXE_PATH, "");
 
         if (container == null) {
             btnConfigure.setText("Konfiguruj ➔");
             btnConfigure.setEnabled(true);
             btnConfigure.setBackgroundColor(Color.parseColor("#2C3038"));
+
             btnAction.setEnabled(false);
             btnAction.setText("Wybierz plik .exe gry");
+
             tvGameStatus.setText("Najpierw skonfiguruj środowisko");
+
         } else if (savedPath.isEmpty()) {
             btnConfigure.setText("✔ Skonfigurowano");
             btnConfigure.setEnabled(false);
             btnConfigure.setBackgroundColor(Color.parseColor("#2E7D32"));
+
             btnAction.setEnabled(true);
             btnAction.setText("Wybierz plik .exe gry");
+
             tvGameStatus.setText("Niewybrany plik .exe");
+
         } else {
             btnConfigure.setText("✔ Gotowe");
             btnConfigure.setEnabled(false);
             btnConfigure.setBackgroundColor(Color.parseColor("#2E7D32"));
+
             btnAction.setEnabled(true);
-            btnAction.setText("▶ Graj");
+            btnAction.setText("▶ Graj w Gothica");
+
             tvGameStatus.setText("Zainstalowane (GOTOWE)");
         }
     }
 
     private void createGothicContainer() {
-        preloaderDialog.show();
-        
-        new Thread(() -> {
-            ContainerManager manager = new ContainerManager(this);
-            Container container = manager.createContainer("Gothic Container");
-            if (container != null) {
-                container.setScreenSize("1280x720");
-                container.setEnvVars("BOX64_DYNAREC_BIGBLOCK=2,BOX64_DYNAREC_STRONG_MEM=0");
-                container.save();
-                preferences.edit().putInt(PREF_CONTAINER_ID, container.id).apply();
-            }
+        btnConfigure.setEnabled(false);
 
-            runOnUiThread(() -> {
-                preloaderDialog.dismiss();
-                Toast.makeText(this, "Kontener utworzony pomyślnie!", Toast.LENGTH_SHORT).show();
+        preloaderDialog.show(R.string.starting_up);
+
+        try {
+            ContainerManager manager = new ContainerManager(this);
+
+            JSONObject data = new JSONObject();
+            data.put("name", "Gothic II - New Balance");
+            data.put("screenSize", "1280x720");
+            data.put("envVars",
+                    "BOX64_DYNAREC_BIGBLOCK=2 BOX64_DYNAREC_STRONG_MEM=0");
+
+            manager.createContainerAsync(data, container -> {
+                preloaderDialog.close();
+
+                if (container == null) {
+                    Toast.makeText(
+                            MainActivity.this,
+                            "Nie udało się utworzyć kontenera!",
+                            Toast.LENGTH_LONG
+                    ).show();
+
+                    btnConfigure.setEnabled(true);
+                    updateUIStates();
+                    return;
+                }
+
+                container.setName("Gothic II - New Balance");
+                container.setScreenSize("1280x720");
+                container.setEnvVars(
+                        "BOX64_DYNAREC_BIGBLOCK=2 BOX64_DYNAREC_STRONG_MEM=0"
+                );
+                container.saveData();
+
+                preferences.edit()
+                        .putInt(PREF_CONTAINER_ID, container.id)
+                        .remove(PREF_EXE_PATH)
+                        .apply();
+
+                Toast.makeText(
+                        MainActivity.this,
+                        "Kontener utworzony pomyślnie!",
+                        Toast.LENGTH_LONG
+                ).show();
+
                 updateUIStates();
             });
-        }).start();
+
+        } catch (Exception e) {
+            preloaderDialog.close();
+            btnConfigure.setEnabled(true);
+
+            Toast.makeText(
+                    this,
+                    "Błąd tworzenia kontenera: " + e.getMessage(),
+                    Toast.LENGTH_LONG
+            ).show();
+        }
     }
 
     private void openFileSelector() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*");
+
         startActivityForResult(intent, OPEN_FILE_REQUEST_CODE);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(
+            int requestCode,
+            int resultCode,
+            @Nullable Intent data
+    ) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == OPEN_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            Uri uri = data.getData();
-            if (uri != null) {
-                if (openFileCallback != null) {
-                    openFileCallback.accept(uri);
-                    openFileCallback = null;
-                    return;
-                }
 
-                String path = FileUtils.getPath(this, uri);
-                if (path == null || path.startsWith("/document/")) {
-                    path = FileUtils.getRealPathFromURI(this, uri);
-                }
-
-                if (path == null || path.startsWith("/document/")) {
-                    Toast.makeText(this, "Wybierz plik bezpośrednio z pamięci urządzenia!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                preferences.edit().putString(PREF_EXE_PATH, path).apply();
-                registerShortcut(path);
-
-                updateUIStates();
-                Toast.makeText(this, "Utworzono skrót do gry!", Toast.LENGTH_SHORT).show();
-            }
+        if (requestCode != OPEN_FILE_REQUEST_CODE
+                || resultCode != Activity.RESULT_OK
+                || data == null) {
+            return;
         }
-    }
 
-    private void registerShortcut(String exePath) {
-        int containerId = preferences.getInt(PREF_CONTAINER_ID, 1);
+        Uri uri = data.getData();
+
+        if (uri == null) {
+            return;
+        }
+
+        if (openFileCallback != null) {
+            openFileCallback.accept(uri);
+            openFileCallback = null;
+            return;
+        }
+
+        try {
+            final int flags = data.getFlags()
+                    & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            getContentResolver().takePersistableUriPermission(uri, flags);
+        } catch (Exception ignored) {
+        }
+
+        String path = FileUtils.getFilePathFromUri(uri);
+
+        if (path == null || path.isEmpty()) {
+            Toast.makeText(
+                    this,
+                    "Nie można odczytać ścieżki pliku. Wybierz EXE z pamięci wewnętrznej telefonu.",
+                    Toast.LENGTH_LONG
+            ).show();
+            return;
+        }
+
+        if (!path.toLowerCase().endsWith(".exe")) {
+            Toast.makeText(
+                    this,
+                    "Wybierz plik wykonywalny EXE gry!",
+                    Toast.LENGTH_LONG
+            ).show();
+            return;
+        }
+
+        int containerId = preferences.getInt(PREF_CONTAINER_ID, -1);
         ContainerManager manager = new ContainerManager(this);
-        Container container = manager.getContainerById(containerId);
 
-        if (container != null) {
-            // Rejestracja skrótu przy użyciu standardowego menedżera kontenera Winlator
-            int shortcutId = manager.addShortcut(container, "Gothic II - New Balance", exePath, "1280x720", "");
-            if (shortcutId > 0) {
-                preferences.edit().putInt(PREF_SHORTCUT_ID, shortcutId).apply();
-            }
+        if (manager.getContainerById(containerId) == null) {
+            Toast.makeText(
+                    this,
+                    "Najpierw utwórz kontener!",
+                    Toast.LENGTH_LONG
+            ).show();
+            return;
         }
+
+        preferences.edit()
+                .putString(PREF_EXE_PATH, path)
+                .apply();
+
+        updateUIStates();
+
+        Toast.makeText(
+                this,
+                "Wybrano plik Gothic EXE!",
+                Toast.LENGTH_SHORT
+        ).show();
     }
 
     private void launchGame() {
-        int shortcutId = preferences.getInt(PREF_SHORTCUT_ID, -1);
+        int containerId = preferences.getInt(PREF_CONTAINER_ID, -1);
+        String exePath = preferences.getString(PREF_EXE_PATH, "");
 
-        if (shortcutId != -1) {
-            Intent intent = new Intent(this, XServerDisplayActivity.class);
-            intent.putExtra("shortcut_id", shortcutId);
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, "Błąd skrótu! Wskaż plik .exe ponownie.", Toast.LENGTH_SHORT).show();
-            preferences.edit().remove(PREF_EXE_PATH).remove(PREF_SHORTCUT_ID).apply();
+        if (containerId <= 0 || exePath.isEmpty()) {
+            Toast.makeText(
+                    this,
+                    "Nie znaleziono kontenera lub pliku EXE!",
+                    Toast.LENGTH_LONG
+            ).show();
+            return;
+        }
+
+        ContainerManager manager = new ContainerManager(this);
+        Container container = manager.getContainerById(containerId);
+
+        if (container == null) {
+            Toast.makeText(
+                    this,
+                    "Kontener nie istnieje. Skonfiguruj go ponownie!",
+                    Toast.LENGTH_LONG
+            ).show();
+
+            preferences.edit()
+                    .remove(PREF_CONTAINER_ID)
+                    .remove(PREF_EXE_PATH)
+                    .apply();
+
             updateUIStates();
+            return;
+        }
+
+        Intent intent = new Intent(
+                MainActivity.this,
+                XServerDisplayActivity.class
+        );
+
+        intent.putExtra("container_id", containerId);
+        intent.putExtra("exec_path", exePath);
+
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(
+                    this,
+                    "Nie można uruchomić Gothica: " + e.getMessage(),
+                    Toast.LENGTH_LONG
+            ).show();
         }
     }
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(LocaleHelper.setSystemLocale(newBase));
+        super.attachBaseContext(
+                LocaleHelper.setSystemLocale(newBase)
+        );
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    public void onRequestPermissionsResult(
+            int requestCode,
+            @NonNull String[] permissions,
+            @NonNull int[] grantResults
+    ) {
+        super.onRequestPermissionsResult(
+                requestCode,
+                permissions,
+                grantResults
+        );
+
         if (requestCode == PERMISSION_WRITE_EXTERNAL_STORAGE_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 RootFSInstaller.installIfNeeded(this);
+            } else {
+                finish();
             }
-            else finish();
         }
     }
 
     private boolean requestAppPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) return false;
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED) {
+            return false;
+        }
 
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                },
+                PERMISSION_WRITE_EXTERNAL_STORAGE_REQUEST_CODE
+        );
+
         return true;
     }
 }
