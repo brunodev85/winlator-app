@@ -21,7 +21,6 @@ import androidx.preference.PreferenceManager;
 
 import com.winlator.container.Container;
 import com.winlator.container.ContainerManager;
-import com.winlator.core.FileUtils;
 
 public class GothicLauncherFragment extends Fragment {
     private SharedPreferences preferences;
@@ -46,8 +45,6 @@ public class GothicLauncherFragment extends Fragment {
 
         updateUIStates();
 
-        // Przycisk konfiguracji otwiera standardową listę kontenerów Winlatora, 
-        // gdzie użytkownik może jednym kliknięciem dodać kontener pod Gothica
         btnConfigure.setOnClickListener(v -> {
             if (getActivity() instanceof MainActivity) {
                 ((MainActivity) getActivity()).showFragment(new ContainersFragment());
@@ -112,8 +109,8 @@ public class GothicLauncherFragment extends Fragment {
             Uri uri = data.getData();
             Context context = getContext();
             if (uri != null && context != null) {
-                String path = FileUtils.getPath(context, uri);
-                if (path == null) path = uri.getPath();
+                // Używamy uri.toString() zamiast nieistniejącej metody FileUtils
+                String path = uri.toString();
 
                 preferences.edit().putString(PREF_EXE_PATH, path).apply();
                 updateUIStates();
