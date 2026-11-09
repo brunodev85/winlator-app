@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0D0E12"
@@ -27,95 +26,82 @@
                 android:text="GOTHIC II"
                 android:textColor="#E0E6ED"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.05"/>
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gothic Launcher"
+                android:text="New Balance Launcher"
                 android:textColor="#6C757D"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/btnConfigure"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="38dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingHorizontal="14dp"
             android:text="Konfiguruj"
             android:textColor="#8AB4F8"
-            android:textSize="13sp"
-            app:strokeColor="#3C4043"
-            app:strokeWidth="1dp"
-            app:cornerRadius="12dp" />
+            android:textSize="12sp"
+            android:background="#1E222B" />
     </LinearLayout>
 
-    <!-- Główna Karta Gry -->
-    <androidx.cardview.widget.CardView
+    <!-- Karta Gry -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginHorizontal="12dp"
-        app:cardBackgroundColor="#161920"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="8dp">
+        android:background="#161920"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp"
-            android:gravity="center_horizontal">
+            android:text="MODIFICATION"
+            android:textColor="#FFB74D"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:background="#2A2415"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:layout_marginBottom="16dp"/>
 
-            <!-- Ikona / Badge statusu -->
-            <TextView
-                android:id="@+id/tvBadge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MODIFICATION"
-                android:textColor="#FFB74D"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:background="#2A2415"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
-                android:layout_marginBottom="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gothic II: New Balance"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gothic II: New Balance"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:gravity="center"/>
+        <TextView
+            android:id="@+id/tvGameStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: Nie gotowe"
+            android:textColor="#9AA0A6"
+            android:textSize="13sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"/>
 
-            <TextView
-                android:id="@+id/tvGameStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Status: Nie gotowe"
-                android:textColor="#9AA0A6"
-                android:textSize="13sp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"
-                android:gravity="center"/>
-
-            <!-- Główny Przycisk Akcji -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAction"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="Wybierz plik .exe gry"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:backgroundTint="#2C3038"
-                app:cornerRadius="14dp"
-                app:elevation="4dp"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/btnAction"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Wybierz plik .exe gry"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:background="#2C3038"/>
+    </LinearLayout>
 
 </RelativeLayout>
