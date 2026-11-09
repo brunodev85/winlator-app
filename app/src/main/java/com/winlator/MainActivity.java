@@ -6,182 +6,83 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.MenuItem;
 
+import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
-import com.winlator.container.Container;
-import com.winlator.container.ContainerManager;
+import com.google.android.material.navigation.NavigationView;
+import com.winlator.contentdialog.AboutDialog;
 import com.winlator.core.AppUtils;
-import com.winlator.core.FileUtils;
+import com.winlator.core.Callback;
 import com.winlator.core.LocaleHelper;
 import com.winlator.core.PreloaderDialog;
-import com.winlator.shortcut.Shortcut;
-import com.winlator.shortcut.ShortcutManager;
 import com.winlator.xenvironment.RootFSInstaller;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    public static final boolean DEBUG_MODE = false;
+    public static final @IntRange(from = 1, to = 19) byte CONTAINER_PATTERN_COMPRESSION_LEVEL = 9;
     public static final byte PERMISSION_WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1;
     public static final byte OPEN_FILE_REQUEST_CODE = 2;
+    public static final byte EDIT_INPUT_CONTROLS_REQUEST_CODE = 3;
+    public static final byte OPEN_DIRECTORY_REQUEST_CODE = 4;
 
+    private DrawerLayout drawerLayout;
     public final PreloaderDialog preloaderDialog = new PreloaderDialog(this);
+    private boolean editInputControls = false;
+    private int selectedProfileId;
+    private Callback<Uri> openFileCallback;
     private SharedPreferences preferences;
-
-    private Button btnConfigure;
-    private Button btnAction;
-    private TextView tvGameStatus;
-
-    private static final String PREF_EXE_PATH = "gothic_exe_path";
-    private static final String PREF_CONTAINER_ID = "gothic_container_id";
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppUtils.setActivityTheme(this);
         super.onCreate(savedInstanceState);
-        
-        // Używamy nowego, kafelkowego layoutu launchera zamiast starego menu Winlatora
-        setContentView(R.layout.activity_gothic_launcher);
+        setContentView(R.layout.main_activity);
+
+        drawerLayout = findViewById(R.id.DrawerLayout);
+        NavigationView navigationView = findViewById(R.id.NavigationView);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        setSupportActionBar(findViewById(R.id.Toolbar));
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.icon_action_bar_menu);
+        }
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        btnConfigure = findViewById(R.id.btnConfigure);
-        btnAction = findViewById(R.id.btnAction);
-        tvGameStatus = findViewById(R.id.tvGameStatus);
-
-        // Sprawdzamy uprawnienia i instalujemy rootfs (kluczowe dla działania emulatora pod spodem!)
-        if (!requestAppPermissions()) {
-            RootFSInstaller.installIfNeeded(this);
+        Intent intent = getIntent();
+        editInputControls = intent.getBooleanExtra("edit_input_controls", false);
+        if (editInputControls) {
+            selectedProfileId = intent.getIntExtra("selected_profile_id", 0);
+            if (actionBar != null) actionBar.setHomeAsUpIndicator(R.drawable.icon_action_bar_back);
+            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.menu_item_input_controls));
+            navigationView.setCheckedItem(R.id.menu_item_input_controls);
         }
-
-        // Odświeżamy stany interfejsu (Konfiguracja -> Zielony plus -> Graj)
-        updateUIStates();
-
-        // KROK 1: Kliknięcie przycisku "Konfiguruj" - tworzy kontener w tle z optymalizacjami
-        btnConfigure.setOnClickListener(v -> createGothicContainer());
-
-        // KROK 2: Kliknięcie przycisku akcji (Wybór folderu .exe lub uruchomienie gry)
-        btnAction.setOnClickListener(v -> {
-            String savedPath = preferences.getString(PREF_EXE_PATH, "");
-            if (savedPath.isEmpty()) {
-                openFileSelector();
-            } else {
-                launchGame();
+        else {
+            if (!requestAppPermissions()) {
+                RootFSInstaller.installIfNeeded(this);
             }
-        });
-    }
 
-    private void updateUIStates() {
-        ContainerManager manager = new ContainerManager(this);
-        Container container = manager.getContainerById(1); // Sprawdzamy czy kontener Gothic (ID: 1) istnieje
-        String savedPath = preferences.getString(PREF_EXE_PATH, "");
-
-        if (container == null) {
-            // Stan 1: Wymagana konfiguracja kontenera
-            btnConfigure.setText("Konfiguruj ➔");
-            btnConfigure.setEnabled(true);
-            btnConfigure.setBackgroundColor(Color.parseColor("#2C3038"));
-            btnAction.setEnabled(false);
-            btnAction.setText("Wybierz folder z grą");
-            tvGameStatus.setText("Najpierw skonfiguruj środowisko");
-        } else if (savedPath.isEmpty()) {
-            // Stan 2: Kontener gotowy (zielony plus), ale brak wybranej ścieżki do gry
-            btnConfigure.setText("✔ Skonfigurowano");
-            btnConfigure.setEnabled(false);
-            btnConfigure.setBackgroundColor(Color.parseColor("#2E7D32")); // Zielony akcent
-            btnAction.setEnabled(true);
-            btnAction.setText("Wybierz folder z grą");
-            tvGameStatus.setText("Niewybrany folder");
-        } else {
-            // Stan 3: Wszystko gotowe, można grać
-            btnConfigure.setText("✔ Gotowe");
-            btnConfigure.setEnabled(false);
-            btnConfigure.setBackgroundColor(Color.parseColor("#2E7D32"));
-            btnAction.setEnabled(true);
-            btnAction.setText("▶ Graj");
-            tvGameStatus.setText("Zainstalowane (GOTOWE)");
-        }
-    }
-
-    private void createGothicContainer() {
-        preloaderDialog.show("Tworzenie kontenera dla Gothica...");
-        
-        new Thread(() -> {
-            ContainerManager manager = new ContainerManager(this);
-            Container container = new Container(manager);
-            container.name = "Gothic Container";
-            container.setResolution("1280x720");
-            // Wprowadzamy optymalizacje Box64 pod oszczędność baterii i płynność w New Balance
-            container.setEnvVars("BOX64_DYNAREC_BIGBLOCK=2,BOX64_DYNAREC_STRONG_MEM=0");
-            container.save();
-
-            preferences.edit().putInt(PREF_CONTAINER_ID, container.id).apply();
-
-            runOnUiThread(() -> {
-                preloaderDialog.dismiss();
-                Toast.makeText(this, "Kontener utworzony pomyślnie!", Toast.LENGTH_SHORT).show();
-                updateUIStates(); // Odświeża widok na zielony znacznik
-            });
-        }).start();
-    }
-
-    private void openFileSelector() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*");
-        startActivityForResult(intent, OPEN_FILE_REQUEST_CODE);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == OPEN_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            Uri uri = data.getData();
-            if (uri != null) {
-                String path = FileUtils.getPath(this, uri);
-                if (path == null) path = uri.getPath();
-
-                preferences.edit().putString(PREF_EXE_PATH, path).apply();
-                registerShortcut(path);
-
-                updateUIStates();
-                Toast.makeText(this, "Utworzono skrót do gry!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private void registerShortcut(String exePath) {
-        int containerId = preferences.getInt(PREF_CONTAINER_ID, 1);
-        ShortcutManager shortcutManager = new ShortcutManager(this);
-        
-        Shortcut shortcut = new Shortcut();
-        shortcut.name = "Gothic II - New Balance";
-        shortcut.containerId = containerId;
-        shortcut.path = exePath;
-        shortcut.screenSize = "1280x720";
-        shortcutManager.add(shortcut);
-    }
-
-    private void launchGame() {
-        ShortcutManager shortcutManager = new ShortcutManager(this);
-        Shortcut shortcut = shortcutManager.getShortcutByPath(preferences.getString(PREF_EXE_PATH, ""));
-
-        if (shortcut != null) {
-            // Wywołujemy standardowe środowisko graficzne Winlatora przez ID skrótu
-            Intent intent = new Intent(this, XServerDisplayActivity.class);
-            intent.putExtra("shortcut_id", shortcut.id);
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, "Nie znaleziono skrótu w bazie!", Toast.LENGTH_SHORT).show();
+            // TUTAJ MOŻESZ DOMYŚLNIE URUCHOMIĆ SWÓJ NOWY LAUNCHER GOTHICA JAKO PIERWSZY FRAGMENT!
+            // Zamiast domyślnego menu, ładujemy nasz widok startowy:
+            showFragment(new GothicLauncherFragment());
         }
     }
 
@@ -201,11 +102,122 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MainActivity.OPEN_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (openFileCallback != null && data != null) {
+                openFileCallback.call(data.getData());
+                openFileCallback = null;
+            }
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if ((newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE ||
+            newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) && currentFragment instanceof BaseFileManagerFragment) {
+            ((BaseFileManagerFragment)currentFragment).onOrientationChanged();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (currentFragment != null && currentFragment.isVisible()) {
+            if (currentFragment instanceof BaseFileManagerFragment) {
+                BaseFileManagerFragment fileManagerFragment = (BaseFileManagerFragment)currentFragment;
+                if (fileManagerFragment.onBackPressed()) return;
+            }
+            else if (currentFragment instanceof ContainersFragment || currentFragment instanceof GothicLauncherFragment) {
+                finish();
+                return;
+            }
+        }
+
+        showFragment(new GothicLauncherFragment());
+    }
+
+    public void setOpenFileCallback(Callback<Uri> openFileCallback) {
+        this.openFileCallback = openFileCallback;
+    }
+
     private boolean requestAppPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
             ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) return false;
 
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+        String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+        ActivityCompat.requestPermissions(this, permissions, PERMISSION_WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        int itemId = menuItem.getItemId();
+        if (itemId == R.id.menu_item_add ||
+            itemId == R.id.menu_item_home ||
+            itemId == R.id.menu_item_view_style ||
+            itemId == R.id.menu_item_new_folder) {
+            return super.onOptionsItemSelected(menuItem);
+        }
+        else {
+            if (editInputControls) {
+                setResult(RESULT_OK);
+                finish();
+            }
+            else {
+                if (currentFragment instanceof BaseFileManagerFragment) {
+                    BaseFileManagerFragment fileManagerFragment = (BaseFileManagerFragment)currentFragment;
+                    if (fileManagerFragment.onOptionsMenuClicked()) return true;
+                }
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+            return true;
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+
+        switch (item.getItemId()) {
+            case R.id.menu_item_shortcuts:
+                preferences.edit().putBoolean("show_shortcuts_first", true).apply();
+                showFragment(new ShortcutsFragment());
+                break;
+            case R.id.menu_item_containers:
+                preferences.edit().putBoolean("show_shortcuts_first", false).apply();
+                showFragment(new ContainersFragment());
+                break;
+            case R.id.menu_item_input_controls:
+                showFragment(new InputControlsFragment(selectedProfileId));
+                break;
+            case R.id.menu_item_settings:
+                showFragment(mainSettingsFragment());
+                break;
+            case R.id.menu_item_about:
+                (new AboutDialog(this)).show();
+                break;
+        }
+        return true;
+    }
+
+    private Fragment mainSettingsFragment() {
+        return new SettingsFragment();
+    }
+
+    public void showFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+            .replace(R.id.FLFragmentContainer, fragment)
+            .commit();
+
+        if (drawerLayout != null) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        currentFragment = fragment;
     }
 }
