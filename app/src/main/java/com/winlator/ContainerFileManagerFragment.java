@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,9 +37,11 @@ import com.winlator.win32.PEParser;
 import com.winlator.xenvironment.RootFS;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -125,6 +128,8 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
 
     private void addFavorite(FileInfo file) {
         Context context = getContext();
+        if (context == null || container == null) return;
+
         File favoritesDir = new File(container.getUserDir(), context.getString(R.string.favorites));
         File targetFile = new File(favoritesDir, FileUtils.getBasename(file.name) + ".lnk");
 
@@ -134,6 +139,63 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
             linkInfo.isDirectory = file.type == FileInfo.Type.DIRECTORY;
             boolean success = MSLink.createFile(linkInfo, targetFile);
             if (success) AppUtils.showToast(context, R.string.file_added_to_favorites);
+        }
+    }
+
+    private void createDesktopShortcut(FileInfo file) {
+        Context context = getContext();
+        if (context == null || container == null) return;
+
+        File exeFile = file.toFile();
+        if (!exeFile.isFile() || !file.name.toLowerCase(Locale.ROOT).endsWith(".exe")) {
+            return;
+        }
+
+        String shortcutName = StringUtils.clearReservedChars(FileUtils.getBasename(file.name));
+        if (shortcutName.isEmpty()) shortcutName = "Program";
+
+        File desktopDir = new File(container.getUserDir(), "Desktop");
+        if (!desktopDir.isDirectory() && !desktopDir.mkdirs()) {
+            Toast.makeText(context, "Nie udało się otworzyć pulpitu kontenera", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        File desktopFile = new File(desktopDir, shortcutName + ".desktop");
+        File linkFile = new File(desktopDir, shortcutName + ".lnk");
+        if (desktopFile.exists() || linkFile.exists()) {
+            Toast.makeText(context, "Skrót o tej nazwie już istnieje", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            String exeDosPath = WineUtils.unixToDOSPath(exeFile.getAbsolutePath(), container);
+
+            MSLink.LinkInfo linkInfo = new MSLink.LinkInfo();
+            linkInfo.targetPath = exeDosPath;
+            linkInfo.isDirectory = false;
+
+            if (!MSLink.createFile(linkInfo, linkFile)) {
+                Toast.makeText(context, "Nie udało się utworzyć skrótu", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            String linkDosPath = WineUtils.unixToDOSPath(linkFile.getAbsolutePath(), container);
+            String desktopEntry =
+                    "[Desktop Entry]\n" +
+                    "Name=" + shortcutName + "\n" +
+                    "Exec=wine start.exe " + StringUtils.escapeDOSPath(linkDosPath) + "\n" +
+                    "Type=Application\n" +
+                    "StartupNotify=true\n";
+
+            try (FileOutputStream output = new FileOutputStream(desktopFile)) {
+                output.write(desktopEntry.getBytes("UTF-8"));
+            }
+
+            Toast.makeText(context, "Dodano skrót: " + shortcutName, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            linkFile.delete();
+            desktopFile.delete();
+            Toast.makeText(context, "Błąd tworzenia skrótu: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -360,6 +422,17 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
                 menu.findItem(R.id.menu_item_add_favorite).setVisible(false);
             }
 
+            final int createShortcutMenuId = Menu.FIRST + 100;
+            MenuItem createShortcutItem = menu.add(
+                    Menu.NONE,
+                    createShortcutMenuId,
+                    Menu.NONE,
+                    "Dodaj skrót"
+            );
+            boolean isExe = file.type == FileInfo.Type.FILE &&
+                    file.name.toLowerCase(Locale.ROOT).endsWith(".exe");
+            createShortcutItem.setVisible(isExe);
+
             listItemMenu.setOnMenuItemClickListener((menuItem) -> {
                 int itemId = menuItem.getItemId();
                 switch (itemId) {
@@ -383,6 +456,9 @@ public class ContainerFileManagerFragment extends BaseFileManagerFragment<FileIn
                         break;
                     case R.id.menu_item_info:
                         (new FileInfoDialog(context, file, container)).show();
+                        break;
+                    case Menu.FIRST + 100:
+                        createDesktopShortcut(file);
                         break;
                 }
                 return true;
