@@ -6,10 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
+import com.google.android.material.button.MaterialButton;
 import com.winlator.container.Container;
 import com.winlator.container.ContainerManager;
 import com.winlator.core.AppUtils;
@@ -32,6 +33,10 @@ import com.winlator.xenvironment.RootFSInstaller;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.function.Consumer;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
     public final PreloaderDialog preloaderDialog = new PreloaderDialog(this);
 
     private SharedPreferences preferences;
-    private Button btnConfigure;
-    private Button btnAction;
+    private MaterialButton btnConfigure;
+    private MaterialButton btnAction;
     private TextView tvGameStatus;
 
     private Consumer<Uri> openFileCallback;
@@ -118,29 +123,38 @@ public class MainActivity extends AppCompatActivity {
         String savedPath = preferences.getString(PREF_EXE_PATH, "");
 
         if (container == null) {
-            btnConfigure.setText("Konfiguruj ➔");
+            btnConfigure.setText("Konfiguruj");
             btnConfigure.setEnabled(true);
-            btnConfigure.setBackgroundColor(Color.parseColor("#2C3038"));
+            btnConfigure.setStrokeColor(ColorStateList.valueOf(Color.parseColor("#4A90E2")));
+            btnConfigure.setTextColor(Color.parseColor("#4A90E2"));
 
             btnAction.setEnabled(false);
             btnAction.setText("Wybierz plik .exe gry");
-            tvGameStatus.setText("Najpierw skonfiguruj środowisko");
+            btnAction.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#252A34")));
+            tvGameStatus.setText("Wymagana wstępna konfiguracja");
+            tvGameStatus.setTextColor(Color.parseColor("#E57373"));
         } else if (savedPath.isEmpty()) {
-            btnConfigure.setText("✔ Skonfigurowano");
+            btnConfigure.setText("✔ Gotowy");
             btnConfigure.setEnabled(false);
-            btnConfigure.setBackgroundColor(Color.parseColor("#2E7D32"));
+            btnConfigure.setStrokeColor(ColorStateList.valueOf(Color.parseColor("#4CAF50")));
+            btnConfigure.setTextColor(Color.parseColor("#4CAF50"));
 
             btnAction.setEnabled(true);
-            btnAction.setText("Wybierz plik .exe gry");
-            tvGameStatus.setText("Niewybrany plik .exe");
+            btnAction.setText("Wskaz plik Gothic2.exe");
+            btnAction.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#1565C0")));
+            tvGameStatus.setText("Kontener utworzony – wybierz plik gry");
+            tvGameStatus.setTextColor(Color.parseColor("#FFB74D"));
         } else {
-            btnConfigure.setText("✔ Gotowe");
+            btnConfigure.setText("✔ Gotowy");
             btnConfigure.setEnabled(false);
-            btnConfigure.setBackgroundColor(Color.parseColor("#2E7D32"));
+            btnConfigure.setStrokeColor(Color.parseColor("#4CAF50"));
+            btnConfigure.setTextColor(Color.parseColor("#4CAF50"));
 
             btnAction.setEnabled(true);
-            btnAction.setText("▶ Graj w Gothica");
-            tvGameStatus.setText("Zainstalowane (GOTOWE)");
+            btnAction.setText("▶ URUCHOM GOTHIC II");
+            btnAction.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#2E7D32")));
+            tvGameStatus.setText("Gra jest gotowa do uruchomienia");
+            tvGameStatus.setTextColor(Color.parseColor("#81C784"));
         }
     }
 
@@ -148,12 +162,10 @@ public class MainActivity extends AppCompatActivity {
         if (btnConfigure != null) {
             btnConfigure.setEnabled(false);
         }
-        
+
         try {
             preloaderDialog.show(R.string.starting_up);
-        } catch (Exception e) {
-            // Zabezpieczenie przed różnicami w wersjach PreloaderDialog w konstruktorach
-        }
+        } catch (Exception ignored) {}
 
         try {
             ContainerManager manager = new ContainerManager(this);
@@ -217,7 +229,12 @@ public class MainActivity extends AppCompatActivity {
             getContentResolver().takePersistableUriPermission(uri, flags);
         } catch (Exception ignored) {}
 
-        String path = uri.toString();
+        String path = getRealPathFromURI(this, uri);
+
+        if (path == null || path.isEmpty()) {
+            Toast.makeText(this, "Nie można odczytać ścieżki pliku!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         int containerId = preferences.getInt(PREF_CONTAINER_ID, -1);
         ContainerManager manager = new ContainerManager(this);
@@ -231,6 +248,45 @@ public class MainActivity extends AppCompatActivity {
         updateUIStates();
 
         Toast.makeText(this, "Wybrano plik Gothic EXE!", Toast.LENGTH_SHORT).show();
+    }
+
+    private String getRealPathFromURI(Context context, Uri uri) {
+        if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+
+        try {
+            String uriString = uri.toString();
+            if (uriString.contains("raw%3A")) {
+                String decoded = Uri.decode(uriString);
+                int idx = decoded.indexOf("raw:");
+                if (idx != -1) {
+                    return decoded.substring(idx + 4);
+                }
+            }
+            if (uriString.contains("primary:")) {
+                String split = uriString.split("primary:")[1];
+                String decoded = Uri.decode(split);
+                return android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + decoded;
+            }
+        } catch (Exception ignored) {}
+
+        try {
+            File cacheFile = new File(context.getCacheDir(), "gothic_launch.exe");
+            try (InputStream in = context.getContentResolver().openInputStream(uri);
+                 OutputStream out = new FileOutputStream(cacheFile)) {
+                byte[] buffer = new byte[16384];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+            }
+            return cacheFile.getAbsolutePath();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return uri.toString();
     }
 
     private void launchGame() {
