@@ -17,8 +17,12 @@
         uint32_t head; \
         uint32_t tail; \
         uint32_t status; \
+        uint32_t readSemaphore; \
+        uint32_t writeSemaphore; \
         void* buffer; \
     }
+
+#define SEMAPHORE_WAIT_TIMEOUT_NS 16000000
 
 #ifdef __ANDROID__
 #include <android/log.h>
@@ -64,12 +68,18 @@ RingBuffer* RingBuffer_create(int shmFd, uint32_t bufferSize) {
     memset(sharedData, 0, shmSize);
 
     RingBuffer* ring = calloc(1, sizeof(RingBuffer));
+    ring->useSemaphores = false;
     ring->sharedData = sharedData;
     ring->head = sharedData + offsetof(struct Offsets, head);
     ring->tail = sharedData + offsetof(struct Offsets, tail);
     ring->status = sharedData + offsetof(struct Offsets, status);
+    ring->writeSemaphore = sharedData + offsetof(struct Offsets, writeSemaphore);
+    ring->readSemaphore = sharedData + offsetof(struct Offsets, readSemaphore);
     ring->buffer = sharedData + offsetof(struct Offsets, buffer);
     ring->bufferSize = bufferSize;
+
+    atomic_init(ring->writeSemaphore, bufferSize);
+    atomic_init(ring->readSemaphore, 0);
 
     RingBuffer_setStatus(ring, RING_STATUS_IDLE);
     return ring;
@@ -103,6 +113,7 @@ bool RingBuffer_read(RingBuffer* ring, void* data, uint32_t size) {
     }
 
     RingBuffer_setHead(ring, head + size);
+    if (ring->useSemaphores) writeSemaphore(ring->writeSemaphore, size);
     return true;
 }
 
@@ -126,6 +137,7 @@ bool RingBuffer_write(RingBuffer* ring, const void* data, uint32_t size) {
     }
 
     RingBuffer_setTail(ring, tail + size);
+    if (ring->useSemaphores) writeSemaphore(ring->readSemaphore, size);
     return true;
 }
 
@@ -148,23 +160,39 @@ void RingBuffer_free(RingBuffer* ring) {
 }
 
 bool RingBuffer_waitForRead(RingBuffer* ring, uint32_t size) {
-    uint32_t busyWaitIter = 0;
-    do {
-        if (RingBuffer_size(ring) >= size) break;
-        busyWait(&busyWaitIter);
-        if (RingBuffer_hasStatus(ring, RING_STATUS_EXIT)) return false;
+    if (ring->useSemaphores) {
+        while (1) {
+            if (waitSemaphore(ring->readSemaphore, size, SEMAPHORE_WAIT_TIMEOUT_NS)) break;
+            if (RingBuffer_hasStatus(ring, RING_STATUS_EXIT)) return false;
+        }
     }
-    while (1);
+    else {
+        uint32_t busyWaitIter = 0;
+        do {
+            if (RingBuffer_size(ring) >= size) break;
+            busyWaitIter = busyWait(busyWaitIter);
+            if (RingBuffer_hasStatus(ring, RING_STATUS_EXIT)) return false;
+        }
+        while (1);
+    }
     return true;
 }
 
 bool RingBuffer_waitForWrite(RingBuffer* ring, uint32_t size) {
-    uint32_t busyWaitIter = 0;
-    do {
-        if (RingBuffer_freeSpace(ring) >= size) break;
-        busyWait(&busyWaitIter);
-        if (RingBuffer_hasStatus(ring, RING_STATUS_EXIT)) return false;
+    if (ring->useSemaphores) {
+        while (1) {
+            if (waitSemaphore(ring->writeSemaphore, size, SEMAPHORE_WAIT_TIMEOUT_NS)) break;
+            if (RingBuffer_hasStatus(ring, RING_STATUS_EXIT)) return false;
+        }
     }
-    while (1);
+    else {
+        uint32_t busyWaitIter = 0;
+        do {
+            if (RingBuffer_freeSpace(ring) >= size) break;
+            busyWaitIter = busyWait(busyWaitIter);
+            if (RingBuffer_hasStatus(ring, RING_STATUS_EXIT)) return false;
+        }
+        while (1);
+    }
     return true;
 }

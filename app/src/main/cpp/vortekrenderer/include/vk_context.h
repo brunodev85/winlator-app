@@ -31,6 +31,7 @@ typedef struct VkContext {
     pthread_t requestHandlerThread;
     RingBuffer* clientRing;
     RingBuffer* serverRing;
+    RingBufferPool ringPool[RING_POOL_ARRAY_LEN];
     VkResult status;
 
     int graphicsQueueIndex;
@@ -38,7 +39,6 @@ typedef struct VkContext {
     TextureDecoder* textureDecoder;
     ShaderInspector* shaderInspector;
     ThreadPool* threadPool;
-    SynchronizationObjectManager synchronizationObjectManager;
 
     ArrayList extraDataRequests;
     pthread_mutex_t extraDataRequestsMutex;

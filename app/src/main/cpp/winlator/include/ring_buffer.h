@@ -10,9 +10,12 @@ typedef struct RingBuffer {
     atomic_uint* head;
     atomic_uint* tail;
     atomic_uint* status;
+    atomic_uint* readSemaphore;
+    atomic_uint* writeSemaphore;
     void* buffer;
     void* sharedData;
     uint32_t bufferSize;
+    bool useSemaphores;
 } RingBuffer;
 
 #define RING_STATUS_IDLE (1u<<0)

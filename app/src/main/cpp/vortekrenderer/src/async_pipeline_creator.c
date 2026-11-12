@@ -3,94 +3,102 @@
 #include "vulkan_helper.h"
 
 typedef struct PipelineCreateRequest {
+    RingBuffer* responseRing;
     VkDevice device;
     VkPipelineCache pipelineCache;
-    PipelineType type;
     uint32_t pipelineCount;
     void* pipelineInfos;
     ShaderInspector* shaderInspector;
     MemoryPool memoryPool;
-    int notifyFd;
 } PipelineCreateRequest;
 
-static void pipelineCreateThread(void* param) {
-    PipelineCreateRequest* pipelineCreateRequest = param;
-    VkPipeline pipelines[pipelineCreateRequest->pipelineCount];
+static void createGraphicsPipelinesThread(void* param) {
+    PipelineCreateRequest* req = param;
+    VkPipeline pipelines[req->pipelineCount];
     VkResult result = VK_SUCCESS;
 
-    if (pipelineCreateRequest->type == PIPELINE_TYPE_GRAPHICS) {
-        VkGraphicsPipelineCreateInfo* createInfos = pipelineCreateRequest->pipelineInfos;
-
-        for (int i = 0; i < pipelineCreateRequest->pipelineCount; i++) {
-            ShaderInspector_inspectShaderStages(pipelineCreateRequest->shaderInspector, pipelineCreateRequest->device, (VkPipelineShaderStageCreateInfo*)createInfos[i].pStages, createInfos[i].stageCount, createInfos[i].pVertexInputState);
-        }
-
-        result = vulkanWrapper.vkCreateGraphicsPipelines(pipelineCreateRequest->device, pipelineCreateRequest->pipelineCache, pipelineCreateRequest->pipelineCount, createInfos, NULL, pipelines);
+    VkGraphicsPipelineCreateInfo* createInfos = req->pipelineInfos;
+    for (int i = 0; i < req->pipelineCount; i++) {
+        ShaderInspector_inspectShaderStages(req->shaderInspector, req->device, (VkPipelineShaderStageCreateInfo*)createInfos[i].pStages, createInfos[i].stageCount, createInfos[i].pVertexInputState);
     }
-    else if (pipelineCreateRequest->type == PIPELINE_TYPE_COMPUTE) {
-        VkComputePipelineCreateInfo* createInfos = pipelineCreateRequest->pipelineInfos;
+    result = vulkanWrapper.vkCreateGraphicsPipelines(req->device, req->pipelineCache, req->pipelineCount, createInfos, NULL, pipelines);
+    mp_free(&req->memoryPool);
 
-        for (int i = 0; i < pipelineCreateRequest->pipelineCount; i++) {
-            ShaderInspector_inspectShaderStages(pipelineCreateRequest->shaderInspector, pipelineCreateRequest->device, (VkPipelineShaderStageCreateInfo*)&createInfos[i].stage, 1, NULL);
-        }
-
-        result = vulkanWrapper.vkCreateComputePipelines(pipelineCreateRequest->device, pipelineCreateRequest->pipelineCache, pipelineCreateRequest->pipelineCount, createInfos, NULL, pipelines);
-    }
-
-    mp_free(&pipelineCreateRequest->memoryPool);
-
-    int bufferSize = sizeof(VkResult) + pipelineCreateRequest->pipelineCount * VK_HANDLE_BYTE_COUNT;
+    int bufferSize = sizeof(VkResult) + req->pipelineCount * VK_HANDLE_BYTE_COUNT;
     char outputBuffer[bufferSize];
 
     *(int*)(outputBuffer + 0) = result;
-    for (int i = 0, j = sizeof(VkResult); i < pipelineCreateRequest->pipelineCount; i++, j += VK_HANDLE_BYTE_COUNT) {
+    for (int i = 0, j = sizeof(VkResult); i < req->pipelineCount; i++, j += VK_HANDLE_BYTE_COUNT) {
         *(uint64_t*)(outputBuffer + j) = (uint64_t)pipelines[i];
     }
 
-    write(pipelineCreateRequest->notifyFd, outputBuffer, bufferSize);
-
-    CLOSEFD(pipelineCreateRequest->notifyFd);
-    MEMFREE(pipelineCreateRequest->pipelineInfos);
-    MEMFREE(pipelineCreateRequest);
+    RingBuffer_write(req->responseRing, outputBuffer, bufferSize);
+    free(req);
 }
 
-void AsyncPipelineCreator_create(VkContext* context, PipelineType type) {
+static void createComputePipelinesThread(void* param) {
+    PipelineCreateRequest* req = param;
+    VkPipeline pipelines[req->pipelineCount];
+    VkResult result = VK_SUCCESS;
+
+    VkComputePipelineCreateInfo* createInfos = req->pipelineInfos;
+    for (int i = 0; i < req->pipelineCount; i++) {
+        ShaderInspector_inspectShaderStages(req->shaderInspector, req->device, (VkPipelineShaderStageCreateInfo*)&createInfos[i].stage, 1, NULL);
+    }
+    result = vulkanWrapper.vkCreateComputePipelines(req->device, req->pipelineCache, req->pipelineCount, createInfos, NULL, pipelines);
+    mp_free(&req->memoryPool);
+
+    int bufferSize = sizeof(VkResult) + req->pipelineCount * VK_HANDLE_BYTE_COUNT;
+    char outputBuffer[bufferSize];
+
+    *(int*)(outputBuffer + 0) = result;
+    for (int i = 0, j = sizeof(VkResult); i < req->pipelineCount; i++, j += VK_HANDLE_BYTE_COUNT) {
+        *(uint64_t*)(outputBuffer + j) = (uint64_t)pipelines[i];
+    }
+
+    RingBuffer_write(req->responseRing, outputBuffer, bufferSize);
+    free(req);
+}
+
+void AsyncPipelineCreator_createGraphicsPipelines(VkContext* context) {
+    ringid_t ringId = *(ringid_t*)(context->inputBuffer + 0);
     PipelineCreateRequest* pipelineCreateRequest = calloc(1, sizeof(PipelineCreateRequest));
-    pipelineCreateRequest->type = type;
+    pipelineCreateRequest->responseRing = context->ringPool[ringId].ring;
     pipelineCreateRequest->shaderInspector = context->shaderInspector;
+
+    char* inputBuffer = context->inputBuffer + sizeof(ringid_t);
 
     uint64_t deviceId = 0;
     uint64_t pipelineCacheId = 0;
 
-    if (type == PIPELINE_TYPE_GRAPHICS) {
-        vt_unserialize_vkCreateGraphicsPipelines((VkDevice)&deviceId, (VkPipelineCache)&pipelineCacheId, &pipelineCreateRequest->pipelineCount, NULL, NULL, NULL, context->inputBuffer, NULL);
+    vt_unserialize_vkCreateGraphicsPipelines((VkDevice)&deviceId, (VkPipelineCache)&pipelineCacheId, &pipelineCreateRequest->pipelineCount, NULL, NULL, NULL, inputBuffer, NULL);
 
-        VkGraphicsPipelineCreateInfo* createInfos = calloc(pipelineCreateRequest->pipelineCount, sizeof(VkGraphicsPipelineCreateInfo));
-        vt_unserialize_vkCreateGraphicsPipelines(VK_NULL_HANDLE, VK_NULL_HANDLE, NULL, createInfos, NULL, NULL, context->inputBuffer, &pipelineCreateRequest->memoryPool);
-        pipelineCreateRequest->pipelineInfos = createInfos;
-    }
-    else if (type == PIPELINE_TYPE_COMPUTE) {
-        vt_unserialize_vkCreateComputePipelines((VkDevice)&deviceId, (VkPipelineCache)&pipelineCacheId, &pipelineCreateRequest->pipelineCount, NULL, NULL, NULL, context->inputBuffer, NULL);
-
-        VkComputePipelineCreateInfo* createInfos = calloc(pipelineCreateRequest->pipelineCount, sizeof(VkComputePipelineCreateInfo));
-        vt_unserialize_vkCreateComputePipelines(VK_NULL_HANDLE, VK_NULL_HANDLE, NULL, createInfos, NULL, NULL, context->inputBuffer, &pipelineCreateRequest->memoryPool);
-        pipelineCreateRequest->pipelineInfos = createInfos;
-    }
-
+    VkGraphicsPipelineCreateInfo* createInfos = mp_alloc(&pipelineCreateRequest->memoryPool, pipelineCreateRequest->pipelineCount * sizeof(VkGraphicsPipelineCreateInfo));
+    vt_unserialize_vkCreateGraphicsPipelines(VK_NULL_HANDLE, VK_NULL_HANDLE, NULL, createInfos, NULL, NULL, inputBuffer, &pipelineCreateRequest->memoryPool);
+    pipelineCreateRequest->pipelineInfos = createInfos;
     pipelineCreateRequest->device = VkObject_fromId(deviceId);
     pipelineCreateRequest->pipelineCache = VkObject_fromId(pipelineCacheId);
 
-    int fds[2] = {0};
-    char success = pipe(fds) == 0 ? 1 : 0;
-    send_fds(context->clientFd, fds, 1, &success, 1);
+    ThreadPool_run(context->threadPool, createGraphicsPipelinesThread, pipelineCreateRequest);
+}
 
-    if (success) {
-        pipelineCreateRequest->notifyFd = fds[1];
-        CLOSEFD(fds[0]);
-        ThreadPool_run(context->threadPool, pipelineCreateThread, pipelineCreateRequest);
-    }
-    else {
-        MEMFREE(pipelineCreateRequest->pipelineInfos);
-        MEMFREE(pipelineCreateRequest);
-    }
+void AsyncPipelineCreator_createComputePipelines(VkContext* context) {
+    ringid_t ringId = *(ringid_t*)(context->inputBuffer + 0);
+    PipelineCreateRequest* pipelineCreateRequest = calloc(1, sizeof(PipelineCreateRequest));
+    pipelineCreateRequest->responseRing = context->ringPool[ringId].ring;
+    pipelineCreateRequest->shaderInspector = context->shaderInspector;
+
+    char* inputBuffer = context->inputBuffer + sizeof(ringid_t);
+
+    uint64_t deviceId = 0;
+    uint64_t pipelineCacheId = 0;
+
+    vt_unserialize_vkCreateComputePipelines((VkDevice)&deviceId, (VkPipelineCache)&pipelineCacheId, &pipelineCreateRequest->pipelineCount, NULL, NULL, NULL, inputBuffer, NULL);
+    VkComputePipelineCreateInfo* createInfos = mp_alloc(&pipelineCreateRequest->memoryPool, pipelineCreateRequest->pipelineCount * sizeof(VkComputePipelineCreateInfo));
+    vt_unserialize_vkCreateComputePipelines(VK_NULL_HANDLE, VK_NULL_HANDLE, NULL, createInfos, NULL, NULL, inputBuffer, &pipelineCreateRequest->memoryPool);
+    pipelineCreateRequest->pipelineInfos = createInfos;
+    pipelineCreateRequest->device = VkObject_fromId(deviceId);
+    pipelineCreateRequest->pipelineCache = VkObject_fromId(pipelineCacheId);
+
+    ThreadPool_run(context->threadPool, createComputePipelinesThread, pipelineCreateRequest);
 }

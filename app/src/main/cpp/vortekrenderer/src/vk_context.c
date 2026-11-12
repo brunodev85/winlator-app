@@ -11,8 +11,8 @@ static void loadJMethods(JMethods* jmethods) {
     jmethods->env = env;
 
     jclass cls = (*env)->GetObjectClass(env, jmethods->obj);
-    jmethods->getWindowWidth = (*env)->GetMethodID(env, cls, "getWindowWidth", "(I)I");
-    jmethods->getWindowHeight = (*env)->GetMethodID(env, cls, "getWindowHeight", "(I)I");
+    jmethods->getWindowWidth = (*env)->GetMethodID(env, cls, "getWindowWidth", "(I)S");
+    jmethods->getWindowHeight = (*env)->GetMethodID(env, cls, "getWindowHeight", "(I)S");
     jmethods->getWindowHardwareBuffer = (*env)->GetMethodID(env, cls, "getWindowHardwareBuffer", "(IZ)J");
     jmethods->updateWindowContent = (*env)->GetMethodID(env, cls, "updateWindowContent", "(I)V");
 }
@@ -35,7 +35,7 @@ static ExtraDataRequest* waitForExtraDataRequest(VkContext* context, uint16_t re
         pthread_mutex_unlock(&context->extraDataRequestsMutex);
 
         if (result) break;
-        busyWait(&busyWaitIter);
+        busyWaitIter = busyWait(busyWaitIter);
     }
 
     return context->status >= 0 ? result : NULL;
@@ -83,23 +83,26 @@ static void* requestHandlerThread(void* param) {
 }
 
 static bool setupRingBuffers(VkContext* context) {
-    int fds[2 + MAX_NOTIFY_FDS];
-    fds[0] = ashmemCreateRegion("vt-server-ring", RingBuffer_getSHMemSize(SERVER_RING_BUFFER_SIZE));
-    fds[1] = ashmemCreateRegion("vt-client-ring", RingBuffer_getSHMemSize(CLIENT_RING_BUFFER_SIZE));
+    int shmFds[2 + RING_POOL_ARRAY_LEN];
+    shmFds[0] = ashmemCreateRegion("vt-server-ring", RingBuffer_getSHMemSize(SERVER_RING_BUFFER_SIZE));
+    shmFds[1] = ashmemCreateRegion("vt-client-ring", RingBuffer_getSHMemSize(CLIENT_RING_BUFFER_SIZE));
 
-    context->serverRing = RingBuffer_create(fds[0], SERVER_RING_BUFFER_SIZE);
+    context->serverRing = RingBuffer_create(shmFds[0], SERVER_RING_BUFFER_SIZE);
     if (!context->serverRing) return false;
 
-    context->clientRing = RingBuffer_create(fds[1], CLIENT_RING_BUFFER_SIZE);
+    context->clientRing = RingBuffer_create(shmFds[1], CLIENT_RING_BUFFER_SIZE);
     if (!context->clientRing) return false;
 
-    memcpy(fds + 2, context->synchronizationObjectManager.notifyFdPool.fds, MAX_NOTIFY_FDS * sizeof(int));
+    for (int i = 0; i < RING_POOL_ARRAY_LEN; i++) {
+        shmFds[2+i] = ashmemCreateRegion("vt-ring-pool", RingBuffer_getSHMemSize(RING_POOL_BUFFER_SIZE));
+        context->ringPool[i].ring = RingBuffer_create(shmFds[2+i], RING_POOL_BUFFER_SIZE);
+        context->ringPool[i].ring->useSemaphores = true;
+        context->ringPool[i].acquired = false;
+        if (!context->ringPool[i].ring) return false;
+    }
 
-    int result = send_fds(context->clientFd, fds, ARRAY_SIZE(fds), NULL, 0);
-
-    close(fds[0]);
-    close(fds[1]);
-
+    int result = send_fds(context->clientFd, shmFds, ARRAY_SIZE(shmFds), NULL, 0);
+    for (int i = 0; i < ARRAY_SIZE(shmFds); i++) close(shmFds[i]);
     if (result < 0) return false;
 
     pthread_create(&context->requestHandlerThread, NULL, requestHandlerThread, context);
@@ -115,13 +118,18 @@ VkContext* createVkContext(JNIEnv* env, jobject obj, int clientFd, jobject optio
     context->maxDeviceMemory = getJFieldByName(env, options, "maxDeviceMemory", "S").s;
     context->imageCacheSize = getJFieldByName(env, options, "imageCacheSize", "S").s;
     context->resourceMemoryType = getJFieldByName(env, options, "resourceMemoryType", "B").b;
+    context->presentMode = getJFieldByName(env, options, "presentMode", "B").b;
     context->exposedDeviceExtensions = jstringArrayToCharArray(env, exposedDeviceExtensions);
+    context->maxFramerate = getJFieldByName(env, options, "maxFramerate", "S").s;
+
+    if (context->maxFramerate > 0) context->presentMode = indexOfPresentMode(VK_PRESENT_MODE_FIFO_KHR);
+    if (context->presentMode == indexOfPresentMode(VK_PRESENT_MODE_FIFO_KHR) && context->maxFramerate == 0) {
+        context->maxFramerate = 60;
+    }
 
     pthread_mutex_init(&context->extraDataRequestsMutex, NULL);
 
     mp_init(&context->memoryPool, MEMORY_POOL_MAX_SIZE);
-    SynchronizationObjectManager_init(&context->synchronizationObjectManager);
-
     context->threadPool = ThreadPool_init(THREAD_POOL_NUM_THREADS);
 
     (*env)->GetJavaVM(env, &context->jmethods.jvm);
@@ -141,6 +149,11 @@ void destroyVkContext(JNIEnv* env, VkContext* context) {
     if (context->requestHandlerThread) {
         RingBuffer_setStatus(context->serverRing, RING_STATUS_EXIT);
         RingBuffer_setStatus(context->clientRing, RING_STATUS_EXIT);
+
+        for (int i = 0; i < RING_POOL_ARRAY_LEN; i++) {
+            RingBuffer_setStatus(context->ringPool[i].ring, RING_STATUS_EXIT);
+        }
+
         pthread_join(context->requestHandlerThread, NULL);
 
         ThreadPool_destroy(context->threadPool);
@@ -149,9 +162,11 @@ void destroyVkContext(JNIEnv* env, VkContext* context) {
         context->requestHandlerThread = 0;
         RingBuffer_free(context->serverRing);
         RingBuffer_free(context->clientRing);
-    }
 
-    SynchronizationObjectManager_destroy(&context->synchronizationObjectManager);
+        for (int i = 0; i < RING_POOL_ARRAY_LEN; i++) {
+            RingBuffer_free(context->ringPool[i].ring);
+        }
+    }
 
     if (context->jmethods.obj) {
         (*env)->DeleteGlobalRef(env, context->jmethods.obj);
