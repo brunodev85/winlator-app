@@ -97,10 +97,8 @@ void initVulkanInstance(VkContext* context, VkInstance instance, const VkApplica
     context->hasExternalMemoryFd = isExternalMemoryHandleTypeSupported(physicalDevices[0], VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT);
     context->hasExternalMemoryDMABuf = isExternalMemoryHandleTypeSupported(physicalDevices[0], VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT);
 
-    MEMFREE(context->engineName);
-    context->engineVersion = 0;
-
     if (applicationInfo) {
+        MEMFREE(context->engineName);
         context->engineName = applicationInfo->pEngineName ? strdup(applicationInfo->pEngineName) : NULL;
         context->engineVersion = applicationInfo->engineVersion;
     }
