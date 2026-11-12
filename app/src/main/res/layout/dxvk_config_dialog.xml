@@ -63,7 +63,7 @@
             style="@style/ComboBox"
             android:layout_width="match_parent"
             android:id="@+id/SFramerate"
-            android:entries="@array/dxvk_framerate_entries" />
+            android:entries="@array/max_framerate_entries" />
 
         <TextView
             android:layout_width="wrap_content"

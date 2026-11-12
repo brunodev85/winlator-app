@@ -8,6 +8,7 @@
 #define VORTEK_SERVER_PATH "/data/data/com.winlator/files/rootfs/tmp/.vortek/V0"
 #define VK_HANDLE_BYTE_COUNT 8
 #define THREAD_POOL_NUM_THREADS 8
+#define SWAPCHAIN_STATUS_SUBOPTIMAL (1u<<3)
 
 #include "winlator.h"
 
@@ -67,16 +68,21 @@
 #define VT_WAIT_FOR_OBJECT(requestCode, cmdName, ...) \
     do { \
         VT_CALL_LOCK(); \
-        int bufferSize = vt_sizeof_##cmdName(__VA_ARGS__) + sizeof(notifyid_t); \
+        int bufferSize = vt_sizeof_##cmdName(__VA_ARGS__) + sizeof(ringid_t); \
         char* outputBuffer = mp_alloc(&globalMemoryPool, bufferSize); \
-        notifyid_t notifyId = NotifyFdPool_acquire(&notifyFdPool); \
-        *(notifyid_t*)(outputBuffer + 0) = notifyId; \
-        vt_serialize_##cmdName(__VA_ARGS__, outputBuffer + sizeof(notifyid_t)); \
+        ringid_t ringId = RingBufferPool_acquire(globalRingPool); \
+        if (ringId == RING_ID_INVALID) { \
+            VT_CALL_UNLOCK(); \
+            return VK_ERROR_DEVICE_LOST; \
+        } \
+        *(ringid_t*)(outputBuffer + 0) = ringId; \
+        vt_serialize_##cmdName(__VA_ARGS__, outputBuffer + sizeof(ringid_t)); \
         VT_SEND_CHECKED(requestCode, VT_RETURN); \
         VT_CALL_UNLOCK(); \
-        uint64_t result = NotifyFdPool_wait(&notifyFdPool, notifyId); \
-        NotifyFdPool_free(&notifyFdPool, notifyId); \
-        return result == 1 ? VK_SUCCESS : (result == 2 ? VK_TIMEOUT : VK_ERROR_DEVICE_LOST); \
+        VkResult result; \
+        if (!RingBuffer_read(globalRingPool[ringId].ring, &result, sizeof(VkResult))) return VK_ERROR_DEVICE_LOST; \
+        globalRingPool[ringId].acquired = false; \
+        return result; \
     } \
     while (0)
 
@@ -106,7 +112,7 @@
 #include "socket_utils.h"
 #include "ring_buffer.h"
 #include "thread_pool.h"
-#include "notify_fd_pool.h"
+#include "ring_buffer_pool.h"
 #include "memory_pool.h"
 
 typedef struct VkContext VkContext;
@@ -149,7 +155,7 @@ extern uint16_t maxClientRequestId;
 extern MemoryPool globalMemoryPool;
 extern RingBuffer* serverRing;
 extern RingBuffer* clientRing;
-extern NotifyFdPool notifyFdPool;
+extern RingBufferPool globalRingPool[RING_POOL_ARRAY_LEN];
 #endif
 
 static inline void* findNextVkStructure(void* pNext, VkStructureType type) {

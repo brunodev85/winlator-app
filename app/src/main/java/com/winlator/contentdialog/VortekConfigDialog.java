@@ -14,6 +14,7 @@ import com.winlator.widget.MultiSelectionComboBox;
 import com.winlator.xenvironment.components.VortekRendererComponent;
 
 public class VortekConfigDialog extends ContentDialog {
+    public static final GPUHelper.VkPresentMode DEFAULT_PRESENT_MODE = GPUHelper.VkPresentMode.MAILBOX;
     public static final String DEFAULT_VK_MAX_VERSION = GPUHelper.vkVersionMajor(VortekRendererComponent.VK_MAX_VERSION)+"."+GPUHelper.vkVersionMinor(VortekRendererComponent.VK_MAX_VERSION);
 
     public VortekConfigDialog(final View anchor) {
@@ -28,6 +29,8 @@ public class VortekConfigDialog extends ContentDialog {
         final Spinner sImageCacheSize = findViewById(R.id.SImageCacheSize);
         final Spinner sResourceMemoryType = findViewById(R.id.SResourceMemoryType);
         final MultiSelectionComboBox mscbExposedExtensions = findViewById(R.id.MSCBExposedExtensions);
+        final Spinner sPresentMode = findViewById(R.id.SPresentMode);
+        final Spinner sFramerate = findViewById(R.id.SFramerate);
 
         final String[] deviceExtensions = GPUHelper.vkGetDeviceExtensions();
         mscbExposedExtensions.setPopupWindowWidth(360);
@@ -54,6 +57,8 @@ public class VortekConfigDialog extends ContentDialog {
         AppUtils.setSpinnerSelectionFromMemorySize(sMaxDeviceMemory, config.get("maxDeviceMemory", "0"));
         AppUtils.setSpinnerSelectionFromNumber(sImageCacheSize, config.get("imageCacheSize", String.valueOf(VortekRendererComponent.IMAGE_CACHE_SIZE)));
         sResourceMemoryType.setSelection(config.getInt("resourceMemoryType"));
+        sPresentMode.setSelection(config.getInt("presentMode", DEFAULT_PRESENT_MODE.ordinal()), false);
+        AppUtils.setSpinnerSelectionFromIdentifier(sFramerate, config.get("framerate", "0"));
 
         setOnConfirmCallback(() -> {
             KeyValueSet newConfig = new KeyValueSet();
@@ -62,6 +67,8 @@ public class VortekConfigDialog extends ContentDialog {
             newConfig.put("maxDeviceMemory", StringUtils.parseMemorySize(sMaxDeviceMemory.getSelectedItem()));
             newConfig.put("imageCacheSize", StringUtils.parseNumber(sImageCacheSize.getSelectedItem()));
             newConfig.put("resourceMemoryType", sResourceMemoryType.getSelectedItemPosition());
+            newConfig.put("presentMode", sPresentMode.getSelectedItemPosition());
+            newConfig.put("framerate", StringUtils.parseNumber(sFramerate.getSelectedItem()));
 
             String[] selectedItems = mscbExposedExtensions.getSelectedItems();
             if (selectedItems.length > 0) {

@@ -41,6 +41,8 @@ public class VortekRendererComponent extends EnvironmentComponent implements Con
         public short maxDeviceMemory = 0;
         public short imageCacheSize = IMAGE_CACHE_SIZE;
         public byte resourceMemoryType = 0;
+        public byte presentMode = (byte)VortekConfigDialog.DEFAULT_PRESENT_MODE.ordinal();
+        public short maxFramerate = 0;
         public String[] exposedDeviceExtensions = null;
         public String libvulkanPath = null;
 
@@ -62,6 +64,8 @@ public class VortekRendererComponent extends EnvironmentComponent implements Con
             options.maxDeviceMemory = (short)config.getInt("maxDeviceMemory");
             options.imageCacheSize = (short)config.getInt("imageCacheSize", VortekRendererComponent.IMAGE_CACHE_SIZE);
             options.resourceMemoryType = (byte)config.getInt("resourceMemoryType");
+            options.presentMode = (byte)config.getInt("presentMode", VortekConfigDialog.DEFAULT_PRESENT_MODE.ordinal());
+            options.maxFramerate = (short)config.getInt("framerate");
 
             String adrenotoolsDriver = config.get("adrenotoolsDriver");
             options.libvulkanPath = GeneralComponents.getDefinitivePath(GeneralComponents.Type.ADRENOTOOLS_DRIVER, context, adrenotoolsDriver);
@@ -96,13 +100,13 @@ public class VortekRendererComponent extends EnvironmentComponent implements Con
     }
 
     @Keep
-    private int getWindowWidth(int windowId) {
+    private short getWindowWidth(int windowId) {
         Window window = xServer.windowManager.getWindow(windowId);
         return window != null ? window.getWidth() : 0;
     }
 
     @Keep
-    private int getWindowHeight(int windowId) {
+    private short getWindowHeight(int windowId) {
         Window window = xServer.windowManager.getWindow(windowId);
         return window != null ? window.getHeight() : 0;
     }

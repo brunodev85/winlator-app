@@ -56,8 +56,9 @@
         <item>512 MB</item>
         <item>1024 MB</item>
     </string-array>
-    <string-array name="dxvk_framerate_entries">
+    <string-array name="max_framerate_entries">
         <item>@string/zero_no_limit</item>
+        <item>24</item>
         <item>30</item>
         <item>60</item>
         <item>120</item>

@@ -379,7 +379,7 @@ VkResult TextureDecoder_createImage(TextureDecoder* textureDecoder, VkImageCreat
     newImage->height = imageInfo->extent.height;
 
     imageInfo->format = DECOMPRESSED_FORMAT;
-    imageInfo->flags &= ~VK_IMAGE_CREATE_BLOCK_TEXEL_VIEW_COMPATIBLE_BIT;
+    BITMASK_UNSET(imageInfo->flags, VK_IMAGE_CREATE_BLOCK_TEXEL_VIEW_COMPATIBLE_BIT);
 
     VkImageFormatListCreateInfo* formatListInfo = findNextVkStructure(imageInfo->pNext, VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO);
     if (formatListInfo && formatListInfo->pViewFormats) {

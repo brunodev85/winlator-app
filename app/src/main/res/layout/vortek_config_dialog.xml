@@ -57,6 +57,28 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/present_mode" />
+
+        <Spinner
+            style="@style/ComboBox"
+            android:id="@+id/SPresentMode"
+            android:layout_width="match_parent"
+            android:entries="@array/present_mode_entries" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/frame_rate" />
+
+        <Spinner
+            style="@style/ComboBox"
+            android:layout_width="match_parent"
+            android:id="@+id/SFramerate"
+            android:entries="@array/max_framerate_entries" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/max_device_memory" />
 
         <Spinner

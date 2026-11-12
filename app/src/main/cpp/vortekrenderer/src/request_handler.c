@@ -540,7 +540,7 @@ void vt_handle_vkGetFenceStatus(VkContext* context) {
 }
 
 void vt_handle_vkWaitForFences(VkContext* context) {
-    SynchronizationObjectManager_waitForFences(&context->synchronizationObjectManager, context->threadPool, context->inputBuffer);
+    SynchronizationObjectManager_waitForFences(context);
 }
 
 void vt_handle_vkCreateSemaphore(VkContext* context) {
@@ -899,11 +899,11 @@ void vt_handle_vkMergePipelineCaches(VkContext* context) {
 }
 
 void vt_handle_vkCreateGraphicsPipelines(VkContext* context) {
-    AsyncPipelineCreator_create(context, PIPELINE_TYPE_GRAPHICS);
+    AsyncPipelineCreator_createGraphicsPipelines(context);
 }
 
 void vt_handle_vkCreateComputePipelines(VkContext* context) {
-    AsyncPipelineCreator_create(context, PIPELINE_TYPE_COMPUTE);
+    AsyncPipelineCreator_createComputePipelines(context);
 }
 
 void vt_handle_vkDestroyPipeline(VkContext* context) {
@@ -1918,15 +1918,17 @@ void vt_handle_vkGetPhysicalDeviceSurfaceCapabilitiesKHR(VkContext* context) {
 
     vt_unserialize_vkGetPhysicalDeviceSurfaceCapabilitiesKHR((VkPhysicalDevice)&physicalDeviceId, (VkSurfaceKHR)&windowId, NULL, context->inputBuffer, &context->memoryPool);
 
-    VkExtent2D windowSize;
-    getWindowExtent(&context->jmethods, windowId, &windowSize);
+    short windowSize[2];
+    getWindowSize(&context->jmethods, windowId, windowSize);
+    VkExtent2D extent = {windowSize[0], windowSize[1]};
+    VkPresentModeKHR presentMode = supportedPresentModes[context->presentMode];
 
     VkSurfaceCapabilitiesKHR surfaceCapabilities = {0};
-    surfaceCapabilities.minImageCount = getSurfaceMinImageCount();
+    surfaceCapabilities.minImageCount = getMinImageCountForPresentMode(presentMode);
     surfaceCapabilities.maxImageCount = surfaceCapabilities.minImageCount == 1 ? 2 : 0;
-    surfaceCapabilities.currentExtent = windowSize;
-    surfaceCapabilities.minImageExtent = windowSize;
-    surfaceCapabilities.maxImageExtent = windowSize;
+    surfaceCapabilities.currentExtent = extent;
+    surfaceCapabilities.minImageExtent = extent;
+    surfaceCapabilities.maxImageExtent = extent;
     surfaceCapabilities.maxImageArrayLayers = 1;
     surfaceCapabilities.supportedTransforms = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
     surfaceCapabilities.currentTransform = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
@@ -1959,10 +1961,6 @@ void vt_handle_vkGetPhysicalDeviceSurfaceFormatsKHR(VkContext* context) {
 }
 
 void vt_handle_vkGetPhysicalDeviceSurfacePresentModesKHR(VkContext* context) {
-    static const VkPresentModeKHR supportedPresentModes[] = {VK_PRESENT_MODE_IMMEDIATE_KHR,
-                                                             VK_PRESENT_MODE_MAILBOX_KHR,
-                                                             VK_PRESENT_MODE_FIFO_KHR,
-                                                             VK_PRESENT_MODE_FIFO_RELAXED_KHR};
     uint64_t physicalDeviceId;
     uint32_t presentModeCount;
 
@@ -1985,11 +1983,14 @@ void vt_handle_vkCreateSwapchainKHR(VkContext* context) {
     VkDevice device = VkObject_fromId(deviceId);
 
     VkResult result = VK_SUCCESS;
-    VkExtent2D windowSize;
-    getWindowExtent(&context->jmethods, windowId, &windowSize);
+    short windowSize[2];
+    getWindowSize(&context->jmethods, windowId, windowSize);
+    createInfo.presentMode = supportedPresentModes[context->presentMode];
+
+    RingBuffer_unsetStatus(context->clientRing, SWAPCHAIN_STATUS_SUBOPTIMAL);
 
     XWindowSwapchain* swapchain = NULL;
-    if (createInfo.imageExtent.width == windowSize.width && createInfo.imageExtent.height == windowSize.height) {
+    if (createInfo.imageExtent.width == windowSize[0] && createInfo.imageExtent.height == windowSize[1]) {
         swapchain = XWindowSwapchain_create(device, context->graphicsQueueIndex, &createInfo, &context->jmethods, windowId);
         if (!swapchain) result = VK_ERROR_INITIALIZATION_FAILED;
     }
@@ -2040,17 +2041,15 @@ void vt_handle_vkAcquireNextImageKHR(VkContext* context) {
     uint64_t semaphoreId;
     uint64_t fenceId;
 
-    vt_unserialize_vkAcquireNextImageKHR((VkDevice)&deviceId, (VkSwapchainKHR)&swapchainId, &timeout, (VkSemaphore)&semaphoreId, (VkFence)&fenceId, NULL, context->inputBuffer, &context->memoryPool);
+    ringid_t ringId = *(ringid_t*)(context->inputBuffer + 0);
+    char* inputBuffer = context->inputBuffer + sizeof(ringid_t);
+    vt_unserialize_vkAcquireNextImageKHR((VkDevice)&deviceId, (VkSwapchainKHR)&swapchainId, &timeout, (VkSemaphore)&semaphoreId, (VkFence)&fenceId, NULL, inputBuffer, &context->memoryPool);
     VkDevice device = VkObject_fromId(deviceId);
     XWindowSwapchain* swapchain = VkObject_fromId(swapchainId);
     VkSemaphore semaphore = VkObject_fromId(semaphoreId);
     VkFence fence = VkObject_fromId(fenceId);
 
-    uint32_t imageIndex = 0;
-    VkResult result = XWindowSwapchain_acquireNextImage(swapchain, timeout, semaphore, fence, &imageIndex);
-    if (result == VK_ERROR_DEVICE_LOST) context->status = result;
-
-    vt_send(context->clientRing, result == VK_SUCCESS ? imageIndex : result, NULL, 0);
+    XWindowSwapchain_acquireNextImage(swapchain, context, timeout, semaphore, fence, ringId);
 }
 
 void vt_handle_vkQueuePresentKHR(VkContext* context) {
@@ -2058,7 +2057,7 @@ void vt_handle_vkQueuePresentKHR(VkContext* context) {
     vt_unserialize_VkPresentInfoKHR(&presentInfo, context->inputBuffer, &context->memoryPool);
 
     for (int i = 0; i < presentInfo.swapchainCount; i++) {
-        XWindowSwapchain_presentImage((XWindowSwapchain*)presentInfo.pSwapchains[i]);
+        XWindowSwapchain_presentImage((XWindowSwapchain*)presentInfo.pSwapchains[i], context, presentInfo.pImageIndices[i], presentInfo.pWaitSemaphores, presentInfo.waitSemaphoreCount);
     }
 }
 
@@ -2369,15 +2368,14 @@ void vt_handle_vkCmdSetDeviceMask(VkContext* context) {
 }
 
 void vt_handle_vkAcquireNextImage2KHR(VkContext* context) {
+    ringid_t ringId = *(ringid_t*)(context->inputBuffer + 0);
+    char* inputBuffer = context->inputBuffer + sizeof(ringid_t);
+
     VkAcquireNextImageInfoKHR acquireInfo = {0};
-    vt_unserialize_VkAcquireNextImageInfoKHR(&acquireInfo, context->inputBuffer, &context->memoryPool);
+    vt_unserialize_VkAcquireNextImageInfoKHR(&acquireInfo, inputBuffer, &context->memoryPool);
     XWindowSwapchain* swapchain = (XWindowSwapchain*)acquireInfo.swapchain;
 
-    uint32_t imageIndex = 0;
-    VkResult result = XWindowSwapchain_acquireNextImage(swapchain, acquireInfo.timeout, acquireInfo.semaphore, acquireInfo.fence, &imageIndex);
-    if (result == VK_ERROR_DEVICE_LOST) context->status = result;
-
-    vt_send(context->clientRing, result == VK_SUCCESS ? imageIndex : result, NULL, 0);
+    XWindowSwapchain_acquireNextImage(swapchain, context, acquireInfo.timeout, acquireInfo.semaphore, acquireInfo.fence, ringId);
 }
 
 void vt_handle_vkCmdDispatchBase(VkContext* context) {
@@ -2403,7 +2401,12 @@ void vt_handle_vkGetPhysicalDevicePresentRectanglesKHR(VkContext* context) {
     vt_unserialize_vkGetPhysicalDevicePresentRectanglesKHR((VkPhysicalDevice)&physicalDeviceId, (VkSurfaceKHR)&windowId, &rectCount, NULL, context->inputBuffer, &context->memoryPool);
 
     VkRect2D* rects = rectCount > 0 ? calloc(1, sizeof(VkPhysicalDeviceGroupProperties)) : NULL;
-    if (rects) getWindowExtent(&context->jmethods, windowId, &rects[0].extent);
+    if (rects) {
+        short windowSize[2];
+        getWindowSize(&context->jmethods, windowId, windowSize);
+        rects[0].extent.width = windowSize[0];
+        rects[0].extent.height = windowSize[1];
+    }
     rectCount = 1;
 
     VT_SERIALIZE_CMD(vkGetPhysicalDevicePresentRectanglesKHR, VK_NULL_HANDLE, VK_NULL_HANDLE, &rectCount, rects);
@@ -2675,7 +2678,7 @@ void vt_handle_vkGetSemaphoreCounterValue(VkContext* context) {
 }
 
 void vt_handle_vkWaitSemaphores(VkContext* context) {
-    SynchronizationObjectManager_waitSemaphores(&context->synchronizationObjectManager, context->threadPool, context->inputBuffer);
+    SynchronizationObjectManager_waitSemaphores(context);
 }
 
 void vt_handle_vkSignalSemaphore(VkContext* context) {
