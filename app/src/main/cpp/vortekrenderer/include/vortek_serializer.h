@@ -7,11 +7,11 @@
 extern bool vortekSerializerCastVkObject;
 #endif
 
-static inline int vt_sizeof_VkInstance(VkInstance val) {
+static inline int vt_sizeof_VkHandle(void* val) {
     return 8;
 }
 
-static inline void vt_serialize_VkInstance(VkInstance val, char* outputBuffer) {
+static inline void vt_serialize_VkHandle(void* val, char* outputBuffer) {
 #ifdef VT_SERVER
     *(uint64_t*)(outputBuffer) = (uint64_t)val;
 #else
@@ -19,480 +19,103 @@ static inline void vt_serialize_VkInstance(VkInstance val, char* outputBuffer) {
 #endif
 }
 
-static inline void vt_unserialize_VkInstance(VkInstance val, char* inputBuffer, MemoryPool* memoryPool) {
+static inline void vt_unserialize_VkHandle(void* val, char* inputBuffer, MemoryPool* memoryPool) {
     *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
 }
 
-static inline int vt_sizeof_VkPhysicalDevice(VkPhysicalDevice val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkPhysicalDevice(VkPhysicalDevice val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkPhysicalDevice(VkPhysicalDevice val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkDevice(VkDevice val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkDevice(VkDevice val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkDevice(VkDevice val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkQueue(VkQueue val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkQueue(VkQueue val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkQueue(VkQueue val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkCommandBuffer(VkCommandBuffer val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkCommandBuffer(VkCommandBuffer val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkCommandBuffer(VkCommandBuffer val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkDeviceMemory(VkDeviceMemory val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkDeviceMemory(VkDeviceMemory val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkDeviceMemory(VkDeviceMemory val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkCommandPool(VkCommandPool val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkCommandPool(VkCommandPool val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkCommandPool(VkCommandPool val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkBuffer(VkBuffer val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkBuffer(VkBuffer val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkBuffer(VkBuffer val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkBufferView(VkBufferView val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkBufferView(VkBufferView val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkBufferView(VkBufferView val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkImage(VkImage val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkImage(VkImage val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkImage(VkImage val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkImageView(VkImageView val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkImageView(VkImageView val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkImageView(VkImageView val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkShaderModule(VkShaderModule val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkShaderModule(VkShaderModule val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkShaderModule(VkShaderModule val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkPipeline(VkPipeline val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkPipeline(VkPipeline val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkPipeline(VkPipeline val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkPipelineLayout(VkPipelineLayout val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkPipelineLayout(VkPipelineLayout val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkPipelineLayout(VkPipelineLayout val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkSampler(VkSampler val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkSampler(VkSampler val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkSampler(VkSampler val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkDescriptorSet(VkDescriptorSet val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkDescriptorSet(VkDescriptorSet val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkDescriptorSet(VkDescriptorSet val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkDescriptorSetLayout(VkDescriptorSetLayout val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkDescriptorSetLayout(VkDescriptorSetLayout val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkDescriptorSetLayout(VkDescriptorSetLayout val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkDescriptorPool(VkDescriptorPool val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkDescriptorPool(VkDescriptorPool val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkDescriptorPool(VkDescriptorPool val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkFence(VkFence val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkFence(VkFence val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkFence(VkFence val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkSemaphore(VkSemaphore val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkSemaphore(VkSemaphore val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkSemaphore(VkSemaphore val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkEvent(VkEvent val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkEvent(VkEvent val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkEvent(VkEvent val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkQueryPool(VkQueryPool val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkQueryPool(VkQueryPool val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkQueryPool(VkQueryPool val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkFramebuffer(VkFramebuffer val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkFramebuffer(VkFramebuffer val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkFramebuffer(VkFramebuffer val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkRenderPass(VkRenderPass val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkRenderPass(VkRenderPass val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkRenderPass(VkRenderPass val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkPipelineCache(VkPipelineCache val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkPipelineCache(VkPipelineCache val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkPipelineCache(VkPipelineCache val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkDescriptorUpdateTemplateKHR(VkDescriptorUpdateTemplateKHR val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkDescriptorUpdateTemplateKHR(VkDescriptorUpdateTemplateKHR val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkDescriptorUpdateTemplateKHR(VkDescriptorUpdateTemplateKHR val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkSamplerYcbcrConversion(VkSamplerYcbcrConversion val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkSamplerYcbcrConversion(VkSamplerYcbcrConversion val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkSamplerYcbcrConversion(VkSamplerYcbcrConversion val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkSamplerYcbcrConversionKHR(VkSamplerYcbcrConversionKHR val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkSamplerYcbcrConversionKHR(VkSamplerYcbcrConversionKHR val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkSamplerYcbcrConversionKHR(VkSamplerYcbcrConversionKHR val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkSurfaceKHR(VkSurfaceKHR val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkSurfaceKHR(VkSurfaceKHR val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkSurfaceKHR(VkSurfaceKHR val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
-
-static inline int vt_sizeof_VkSwapchainKHR(VkSwapchainKHR val) {
-    return 8;
-}
-
-static inline void vt_serialize_VkSwapchainKHR(VkSwapchainKHR val, char* outputBuffer) {
-#ifdef VT_SERVER
-    *(uint64_t*)(outputBuffer) = (uint64_t)val;
-#else
-    *(uint64_t*)(outputBuffer) = *(uint64_t*)(val);
-#endif
-}
-
-static inline void vt_unserialize_VkSwapchainKHR(VkSwapchainKHR val, char* inputBuffer, MemoryPool* memoryPool) {
-    *(uint64_t*)(val) = *(uint64_t*)(inputBuffer);
-}
+#define vt_sizeof_VkInstance vt_sizeof_VkHandle
+#define vt_serialize_VkInstance vt_serialize_VkHandle
+#define vt_unserialize_VkInstance vt_unserialize_VkHandle
+#define vt_sizeof_VkPhysicalDevice vt_sizeof_VkHandle
+#define vt_serialize_VkPhysicalDevice vt_serialize_VkHandle
+#define vt_unserialize_VkPhysicalDevice vt_unserialize_VkHandle
+#define vt_sizeof_VkDevice vt_sizeof_VkHandle
+#define vt_serialize_VkDevice vt_serialize_VkHandle
+#define vt_unserialize_VkDevice vt_unserialize_VkHandle
+#define vt_sizeof_VkQueue vt_sizeof_VkHandle
+#define vt_serialize_VkQueue vt_serialize_VkHandle
+#define vt_unserialize_VkQueue vt_unserialize_VkHandle
+#define vt_sizeof_VkCommandBuffer vt_sizeof_VkHandle
+#define vt_serialize_VkCommandBuffer vt_serialize_VkHandle
+#define vt_unserialize_VkCommandBuffer vt_unserialize_VkHandle
+#define vt_sizeof_VkDeviceMemory vt_sizeof_VkHandle
+#define vt_serialize_VkDeviceMemory vt_serialize_VkHandle
+#define vt_unserialize_VkDeviceMemory vt_unserialize_VkHandle
+#define vt_sizeof_VkCommandPool vt_sizeof_VkHandle
+#define vt_serialize_VkCommandPool vt_serialize_VkHandle
+#define vt_unserialize_VkCommandPool vt_unserialize_VkHandle
+#define vt_sizeof_VkBuffer vt_sizeof_VkHandle
+#define vt_serialize_VkBuffer vt_serialize_VkHandle
+#define vt_unserialize_VkBuffer vt_unserialize_VkHandle
+#define vt_sizeof_VkBufferView vt_sizeof_VkHandle
+#define vt_serialize_VkBufferView vt_serialize_VkHandle
+#define vt_unserialize_VkBufferView vt_unserialize_VkHandle
+#define vt_sizeof_VkImage vt_sizeof_VkHandle
+#define vt_serialize_VkImage vt_serialize_VkHandle
+#define vt_unserialize_VkImage vt_unserialize_VkHandle
+#define vt_sizeof_VkImageView vt_sizeof_VkHandle
+#define vt_serialize_VkImageView vt_serialize_VkHandle
+#define vt_unserialize_VkImageView vt_unserialize_VkHandle
+#define vt_sizeof_VkShaderModule vt_sizeof_VkHandle
+#define vt_serialize_VkShaderModule vt_serialize_VkHandle
+#define vt_unserialize_VkShaderModule vt_unserialize_VkHandle
+#define vt_sizeof_VkPipeline vt_sizeof_VkHandle
+#define vt_serialize_VkPipeline vt_serialize_VkHandle
+#define vt_unserialize_VkPipeline vt_unserialize_VkHandle
+#define vt_sizeof_VkPipelineLayout vt_sizeof_VkHandle
+#define vt_serialize_VkPipelineLayout vt_serialize_VkHandle
+#define vt_unserialize_VkPipelineLayout vt_unserialize_VkHandle
+#define vt_sizeof_VkSampler vt_sizeof_VkHandle
+#define vt_serialize_VkSampler vt_serialize_VkHandle
+#define vt_unserialize_VkSampler vt_unserialize_VkHandle
+#define vt_sizeof_VkDescriptorSet vt_sizeof_VkHandle
+#define vt_serialize_VkDescriptorSet vt_serialize_VkHandle
+#define vt_unserialize_VkDescriptorSet vt_unserialize_VkHandle
+#define vt_sizeof_VkDescriptorSetLayout vt_sizeof_VkHandle
+#define vt_serialize_VkDescriptorSetLayout vt_serialize_VkHandle
+#define vt_unserialize_VkDescriptorSetLayout vt_unserialize_VkHandle
+#define vt_sizeof_VkDescriptorPool vt_sizeof_VkHandle
+#define vt_serialize_VkDescriptorPool vt_serialize_VkHandle
+#define vt_unserialize_VkDescriptorPool vt_unserialize_VkHandle
+#define vt_sizeof_VkFence vt_sizeof_VkHandle
+#define vt_serialize_VkFence vt_serialize_VkHandle
+#define vt_unserialize_VkFence vt_unserialize_VkHandle
+#define vt_sizeof_VkSemaphore vt_sizeof_VkHandle
+#define vt_serialize_VkSemaphore vt_serialize_VkHandle
+#define vt_unserialize_VkSemaphore vt_unserialize_VkHandle
+#define vt_sizeof_VkEvent vt_sizeof_VkHandle
+#define vt_serialize_VkEvent vt_serialize_VkHandle
+#define vt_unserialize_VkEvent vt_unserialize_VkHandle
+#define vt_sizeof_VkQueryPool vt_sizeof_VkHandle
+#define vt_serialize_VkQueryPool vt_serialize_VkHandle
+#define vt_unserialize_VkQueryPool vt_unserialize_VkHandle
+#define vt_sizeof_VkFramebuffer vt_sizeof_VkHandle
+#define vt_serialize_VkFramebuffer vt_serialize_VkHandle
+#define vt_unserialize_VkFramebuffer vt_unserialize_VkHandle
+#define vt_sizeof_VkRenderPass vt_sizeof_VkHandle
+#define vt_serialize_VkRenderPass vt_serialize_VkHandle
+#define vt_unserialize_VkRenderPass vt_unserialize_VkHandle
+#define vt_sizeof_VkPipelineCache vt_sizeof_VkHandle
+#define vt_serialize_VkPipelineCache vt_serialize_VkHandle
+#define vt_unserialize_VkPipelineCache vt_unserialize_VkHandle
+#define vt_sizeof_VkDescriptorUpdateTemplateKHR vt_sizeof_VkHandle
+#define vt_serialize_VkDescriptorUpdateTemplateKHR vt_serialize_VkHandle
+#define vt_unserialize_VkDescriptorUpdateTemplateKHR vt_unserialize_VkHandle
+#define vt_sizeof_VkSamplerYcbcrConversion vt_sizeof_VkHandle
+#define vt_serialize_VkSamplerYcbcrConversion vt_serialize_VkHandle
+#define vt_unserialize_VkSamplerYcbcrConversion vt_unserialize_VkHandle
+#define vt_sizeof_VkSamplerYcbcrConversionKHR vt_sizeof_VkHandle
+#define vt_serialize_VkSamplerYcbcrConversionKHR vt_serialize_VkHandle
+#define vt_unserialize_VkSamplerYcbcrConversionKHR vt_unserialize_VkHandle
+#define vt_sizeof_VkSurfaceKHR vt_sizeof_VkHandle
+#define vt_serialize_VkSurfaceKHR vt_serialize_VkHandle
+#define vt_unserialize_VkSurfaceKHR vt_unserialize_VkHandle
+#define vt_sizeof_VkSwapchainKHR vt_sizeof_VkHandle
+#define vt_serialize_VkSwapchainKHR vt_serialize_VkHandle
+#define vt_unserialize_VkSwapchainKHR vt_unserialize_VkHandle
 
 static inline int vt_sizeof_VkExtent3D(VkExtent3D* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // width
-    bufferSize += 4; // height
-    bufferSize += 4; // depth
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkExtent3D(VkExtent3D* val, char* outputBuffer) {
@@ -516,11 +139,7 @@ static inline void vt_unserialize_VkExtent3D(VkExtent3D* val, char* inputBuffer,
 }
 
 static inline int vt_sizeof_VkOffset3D(VkOffset3D* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // x
-    bufferSize += 4; // y
-    bufferSize += 4; // z
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkOffset3D(VkOffset3D* val, char* outputBuffer) {
@@ -544,12 +163,7 @@ static inline void vt_unserialize_VkOffset3D(VkOffset3D* val, char* inputBuffer,
 }
 
 static inline int vt_sizeof_VkImageSubresourceLayers(VkImageSubresourceLayers* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // aspectMask
-    bufferSize += 4; // mipLevel
-    bufferSize += 4; // baseArrayLayer
-    bufferSize += 4; // layerCount
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkImageSubresourceLayers(VkImageSubresourceLayers* val, char* outputBuffer) {
@@ -577,8 +191,7 @@ static inline void vt_unserialize_VkImageSubresourceLayers(VkImageSubresourceLay
 }
 
 static inline int vt_sizeof_VkImageResolve2(VkImageResolve2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkImageSubresourceLayers(&val->srcSubresource);
     bufferSize += vt_sizeof_VkOffset3D(&val->srcOffset);
     bufferSize += vt_sizeof_VkImageSubresourceLayers(&val->dstSubresource);
@@ -623,11 +236,7 @@ static inline void vt_unserialize_VkImageResolve2(VkImageResolve2* val, char* in
 }
 
 static inline int vt_sizeof_VkBufferImageCopy2(VkBufferImageCopy2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 8; // bufferOffset
-    bufferSize += 4; // bufferRowLength
-    bufferSize += 4; // bufferImageHeight
+    int bufferSize = 20;
     bufferSize += vt_sizeof_VkImageSubresourceLayers(&val->imageSubresource);
     bufferSize += vt_sizeof_VkOffset3D(&val->imageOffset);
     bufferSize += vt_sizeof_VkExtent3D(&val->imageExtent);
@@ -674,8 +283,7 @@ static inline void vt_unserialize_VkBufferImageCopy2(VkBufferImageCopy2* val, ch
 }
 
 static inline int vt_sizeof_VkImageBlit2(VkImageBlit2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkImageSubresourceLayers(&val->srcSubresource);
     bufferSize += 2 * vt_sizeof_VkOffset3D(&val->srcOffsets[0]);
     bufferSize += vt_sizeof_VkImageSubresourceLayers(&val->dstSubresource);
@@ -715,8 +323,7 @@ static inline void vt_unserialize_VkImageBlit2(VkImageBlit2* val, char* inputBuf
 }
 
 static inline int vt_sizeof_VkImageCopy2(VkImageCopy2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkImageSubresourceLayers(&val->srcSubresource);
     bufferSize += vt_sizeof_VkOffset3D(&val->srcOffset);
     bufferSize += vt_sizeof_VkImageSubresourceLayers(&val->dstSubresource);
@@ -761,12 +368,7 @@ static inline void vt_unserialize_VkImageCopy2(VkImageCopy2* val, char* inputBuf
 }
 
 static inline int vt_sizeof_VkBufferCopy2(VkBufferCopy2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 8; // srcOffset
-    bufferSize += 8; // dstOffset
-    bufferSize += 8; // size
-    return bufferSize;
+    return 28;
 }
 
 static inline void vt_serialize_VkBufferCopy2(VkBufferCopy2* val, char* outputBuffer) {
@@ -797,16 +399,8 @@ static inline void vt_unserialize_VkBufferCopy2(VkBufferCopy2* val, char* inputB
 }
 
 static inline int vt_sizeof_VkCommandBufferInheritanceRenderingInfo(VkCommandBufferInheritanceRenderingInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // viewMask
-    bufferSize += 4; // colorAttachmentCount
-    bufferSize += 4;
+    int bufferSize = 32;
     bufferSize += val->pColorAttachmentFormats ? val->colorAttachmentCount * 4 : 0;
-    bufferSize += 4; // depthAttachmentFormat
-    bufferSize += 4; // stencilAttachmentFormat
-    bufferSize += 4; // rasterizationSamples
     return bufferSize;
 }
 
@@ -872,10 +466,7 @@ static inline void vt_unserialize_VkCommandBufferInheritanceRenderingInfo(VkComm
 }
 
 static inline int vt_sizeof_VkCommandBufferInheritanceConditionalRenderingInfoEXT(VkCommandBufferInheritanceConditionalRenderingInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // conditionalRenderingEnable
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkCommandBufferInheritanceConditionalRenderingInfoEXT(VkCommandBufferInheritanceConditionalRenderingInfoEXT* val, char* outputBuffer) {
@@ -898,8 +489,7 @@ static inline void vt_unserialize_VkCommandBufferInheritanceConditionalRendering
 }
 
 static inline int vt_sizeof_VkCommandBufferInheritanceInfo(VkCommandBufferInheritanceInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 20;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -929,11 +519,7 @@ static inline int vt_sizeof_VkCommandBufferInheritanceInfo(VkCommandBufferInheri
     }
     bufferSize += 4;
     bufferSize += vt_sizeof_VkRenderPass(val->renderPass);
-    bufferSize += 4; // subpass
     bufferSize += vt_sizeof_VkFramebuffer(val->framebuffer);
-    bufferSize += 4; // occlusionQueryEnable
-    bufferSize += 4; // queryFlags
-    bufferSize += 4; // pipelineStatistics
     return bufferSize;
 }
 
@@ -1096,10 +682,7 @@ static inline void vt_unserialize_VkCommandBufferInheritanceInfo(VkCommandBuffer
 }
 
 static inline int vt_sizeof_VkAttachmentReference(VkAttachmentReference* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // attachment
-    bufferSize += 4; // layout
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkAttachmentReference(VkAttachmentReference* val, char* outputBuffer) {
@@ -1119,15 +702,7 @@ static inline void vt_unserialize_VkAttachmentReference(VkAttachmentReference* v
 }
 
 static inline int vt_sizeof_VkSubpassDependency(VkSubpassDependency* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // srcSubpass
-    bufferSize += 4; // dstSubpass
-    bufferSize += 4; // srcStageMask
-    bufferSize += 4; // dstStageMask
-    bufferSize += 4; // srcAccessMask
-    bufferSize += 4; // dstAccessMask
-    bufferSize += 4; // dependencyFlags
-    return bufferSize;
+    return 28;
 }
 
 static inline void vt_serialize_VkSubpassDependency(VkSubpassDependency* val, char* outputBuffer) {
@@ -1167,11 +742,7 @@ static inline void vt_unserialize_VkSubpassDependency(VkSubpassDependency* val, 
 }
 
 static inline int vt_sizeof_VkSubpassDescription(VkSubpassDescription* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // flags
-    bufferSize += 4; // pipelineBindPoint
-    bufferSize += 4; // inputAttachmentCount
-    bufferSize += 4;
+    int bufferSize = 40;
     if (val->pInputAttachments) {
         int arrSize = val->inputAttachmentCount ? val->inputAttachmentCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -1179,8 +750,6 @@ static inline int vt_sizeof_VkSubpassDescription(VkSubpassDescription* val) {
             bufferSize += vt_sizeof_VkAttachmentReference(&val->pInputAttachments[i]);
         }
     }
-    bufferSize += 4; // colorAttachmentCount
-    bufferSize += 4;
     if (val->pColorAttachments) {
         int arrSize = val->colorAttachmentCount ? val->colorAttachmentCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -1188,7 +757,6 @@ static inline int vt_sizeof_VkSubpassDescription(VkSubpassDescription* val) {
             bufferSize += vt_sizeof_VkAttachmentReference(&val->pColorAttachments[i]);
         }
     }
-    bufferSize += 4;
     if (val->pResolveAttachments) {
         int arrSize = val->colorAttachmentCount ? val->colorAttachmentCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -1196,10 +764,7 @@ static inline int vt_sizeof_VkSubpassDescription(VkSubpassDescription* val) {
             bufferSize += vt_sizeof_VkAttachmentReference(&val->pResolveAttachments[i]);
         }
     }
-    bufferSize += 4;
     bufferSize += val->pDepthStencilAttachment ? vt_sizeof_VkAttachmentReference(val->pDepthStencilAttachment) : 0;
-    bufferSize += 4; // preserveAttachmentCount
-    bufferSize += 4;
     bufferSize += val->pPreserveAttachments ? val->preserveAttachmentCount * 4 : 0;
     return bufferSize;
 }
@@ -1375,17 +940,7 @@ static inline void vt_unserialize_VkSubpassDescription(VkSubpassDescription* val
 }
 
 static inline int vt_sizeof_VkAttachmentDescription(VkAttachmentDescription* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // flags
-    bufferSize += 4; // format
-    bufferSize += 4; // samples
-    bufferSize += 4; // loadOp
-    bufferSize += 4; // storeOp
-    bufferSize += 4; // stencilLoadOp
-    bufferSize += 4; // stencilStoreOp
-    bufferSize += 4; // initialLayout
-    bufferSize += 4; // finalLayout
-    return bufferSize;
+    return 36;
 }
 
 static inline void vt_serialize_VkAttachmentDescription(VkAttachmentDescription* val, char* outputBuffer) {
@@ -1433,10 +988,8 @@ static inline void vt_unserialize_VkAttachmentDescription(VkAttachmentDescriptio
 }
 
 static inline int vt_sizeof_VkDescriptorBufferInfo(VkDescriptorBufferInfo* val) {
-    int bufferSize = 0;
+    int bufferSize = 16;
     bufferSize += vt_sizeof_VkBuffer(val->buffer);
-    bufferSize += 8; // offset
-    bufferSize += 8; // range
     return bufferSize;
 }
 
@@ -1475,10 +1028,9 @@ static inline void vt_unserialize_VkDescriptorBufferInfo(VkDescriptorBufferInfo*
 }
 
 static inline int vt_sizeof_VkDescriptorImageInfo(VkDescriptorImageInfo* val) {
-    int bufferSize = 0;
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkSampler(val->sampler);
     bufferSize += vt_sizeof_VkImageView(val->imageView);
-    bufferSize += 4; // imageLayout
     return bufferSize;
 }
 
@@ -1531,10 +1083,7 @@ static inline void vt_unserialize_VkDescriptorImageInfo(VkDescriptorImageInfo* v
 }
 
 static inline int vt_sizeof_VkDescriptorPoolSize(VkDescriptorPoolSize* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // type
-    bufferSize += 4; // descriptorCount
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkDescriptorPoolSize(VkDescriptorPoolSize* val, char* outputBuffer) {
@@ -1554,12 +1103,7 @@ static inline void vt_unserialize_VkDescriptorPoolSize(VkDescriptorPoolSize* val
 }
 
 static inline int vt_sizeof_VkDescriptorSetLayoutBinding(VkDescriptorSetLayoutBinding* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // binding
-    bufferSize += 4; // descriptorType
-    bufferSize += 4; // descriptorCount
-    bufferSize += 4; // stageFlags
-    bufferSize += 4;
+    int bufferSize = 20;
     if (val->pImmutableSamplers) {
         for (int i = 0; i < val->descriptorCount; i++) {
             bufferSize += vt_sizeof_VkSampler(val->pImmutableSamplers[i]);
@@ -1633,11 +1177,7 @@ static inline void vt_unserialize_VkDescriptorSetLayoutBinding(VkDescriptorSetLa
 }
 
 static inline int vt_sizeof_VkSpecializationMapEntry(VkSpecializationMapEntry* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // constantID
-    bufferSize += 4; // offset
-    bufferSize += 8; // size
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkSpecializationMapEntry(VkSpecializationMapEntry* val, char* outputBuffer) {
@@ -1661,11 +1201,7 @@ static inline void vt_unserialize_VkSpecializationMapEntry(VkSpecializationMapEn
 }
 
 static inline int vt_sizeof_VkImageSubresource(VkImageSubresource* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // aspectMask
-    bufferSize += 4; // mipLevel
-    bufferSize += 4; // arrayLayer
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkImageSubresource(VkImageSubresource* val, char* outputBuffer) {
@@ -1689,9 +1225,7 @@ static inline void vt_unserialize_VkImageSubresource(VkImageSubresource* val, ch
 }
 
 static inline int vt_sizeof_VkSpecializationInfo(VkSpecializationInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // mapEntryCount
-    bufferSize += 4;
+    int bufferSize = 20;
     if (val->pMapEntries) {
         int arrSize = val->mapEntryCount ? val->mapEntryCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -1699,8 +1233,6 @@ static inline int vt_sizeof_VkSpecializationInfo(VkSpecializationInfo* val) {
             bufferSize += vt_sizeof_VkSpecializationMapEntry(&val->pMapEntries[i]);
         }
     }
-    bufferSize += 8; // dataSize
-    bufferSize += 4;
     bufferSize += val->pData ? val->dataSize : 0;
     return bufferSize;
 }
@@ -1775,10 +1307,7 @@ static inline void vt_unserialize_VkSpecializationInfo(VkSpecializationInfo* val
 }
 
 static inline int vt_sizeof_VkPipelineShaderStageModuleIdentifierCreateInfoEXT(VkPipelineShaderStageModuleIdentifierCreateInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // identifierSize
-    bufferSize += 4;
+    int bufferSize = 12;
     bufferSize += val->pIdentifier ? val->identifierSize * 1 : 0;
     return bufferSize;
 }
@@ -1825,10 +1354,7 @@ static inline void vt_unserialize_VkPipelineShaderStageModuleIdentifierCreateInf
 }
 
 static inline int vt_sizeof_VkPipelineShaderStageRequiredSubgroupSizeCreateInfo(VkPipelineShaderStageRequiredSubgroupSizeCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // requiredSubgroupSize
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPipelineShaderStageRequiredSubgroupSizeCreateInfo(VkPipelineShaderStageRequiredSubgroupSizeCreateInfo* val, char* outputBuffer) {
@@ -1851,11 +1377,7 @@ static inline void vt_unserialize_VkPipelineShaderStageRequiredSubgroupSizeCreat
 }
 
 static inline int vt_sizeof_VkShaderModuleCreateInfo(VkShaderModuleCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 8; // codeSize
-    bufferSize += 4;
+    int bufferSize = 20;
     bufferSize += val->codeSize;
     return bufferSize;
 }
@@ -1895,10 +1417,7 @@ static inline void vt_unserialize_VkShaderModuleCreateInfo(VkShaderModuleCreateI
 }
 
 static inline int vt_sizeof_VkVertexInputBindingDivisorDescriptionKHR(VkVertexInputBindingDivisorDescriptionKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // binding
-    bufferSize += 4; // divisor
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkVertexInputBindingDivisorDescriptionKHR(VkVertexInputBindingDivisorDescriptionKHR* val, char* outputBuffer) {
@@ -1918,12 +1437,7 @@ static inline void vt_unserialize_VkVertexInputBindingDivisorDescriptionKHR(VkVe
 }
 
 static inline int vt_sizeof_VkVertexInputAttributeDescription(VkVertexInputAttributeDescription* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // location
-    bufferSize += 4; // binding
-    bufferSize += 4; // format
-    bufferSize += 4; // offset
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkVertexInputAttributeDescription(VkVertexInputAttributeDescription* val, char* outputBuffer) {
@@ -1951,11 +1465,7 @@ static inline void vt_unserialize_VkVertexInputAttributeDescription(VkVertexInpu
 }
 
 static inline int vt_sizeof_VkVertexInputBindingDescription(VkVertexInputBindingDescription* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // binding
-    bufferSize += 4; // stride
-    bufferSize += 4; // inputRate
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkVertexInputBindingDescription(VkVertexInputBindingDescription* val, char* outputBuffer) {
@@ -1979,10 +1489,7 @@ static inline void vt_unserialize_VkVertexInputBindingDescription(VkVertexInputB
 }
 
 static inline int vt_sizeof_VkPipelineVertexInputDivisorStateCreateInfoKHR(VkPipelineVertexInputDivisorStateCreateInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // vertexBindingDivisorCount
-    bufferSize += 4;
+    int bufferSize = 12;
     if (val->pVertexBindingDivisors) {
         int arrSize = val->vertexBindingDivisorCount ? val->vertexBindingDivisorCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -2046,10 +1553,7 @@ static inline void vt_unserialize_VkPipelineVertexInputDivisorStateCreateInfoKHR
 }
 
 static inline int vt_sizeof_VkExtent2D(VkExtent2D* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // width
-    bufferSize += 4; // height
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkExtent2D(VkExtent2D* val, char* outputBuffer) {
@@ -2069,10 +1573,7 @@ static inline void vt_unserialize_VkExtent2D(VkExtent2D* val, char* inputBuffer,
 }
 
 static inline int vt_sizeof_VkOffset2D(VkOffset2D* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // x
-    bufferSize += 4; // y
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkOffset2D(VkOffset2D* val, char* outputBuffer) {
@@ -2092,10 +1593,7 @@ static inline void vt_unserialize_VkOffset2D(VkOffset2D* val, char* inputBuffer,
 }
 
 static inline int vt_sizeof_VkPipelineTessellationDomainOriginStateCreateInfo(VkPipelineTessellationDomainOriginStateCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // domainOrigin
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPipelineTessellationDomainOriginStateCreateInfo(VkPipelineTessellationDomainOriginStateCreateInfo* val, char* outputBuffer) {
@@ -2141,14 +1639,7 @@ static inline void vt_unserialize_VkRect2D(VkRect2D* val, char* inputBuffer, Mem
 }
 
 static inline int vt_sizeof_VkViewport(VkViewport* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // x
-    bufferSize += 4; // y
-    bufferSize += 4; // width
-    bufferSize += 4; // height
-    bufferSize += 4; // minDepth
-    bufferSize += 4; // maxDepth
-    return bufferSize;
+    return 24;
 }
 
 static inline void vt_serialize_VkViewport(VkViewport* val, char* outputBuffer) {
@@ -2184,10 +1675,7 @@ static inline void vt_unserialize_VkViewport(VkViewport* val, char* inputBuffer,
 }
 
 static inline int vt_sizeof_VkPipelineViewportDepthClipControlCreateInfoEXT(VkPipelineViewportDepthClipControlCreateInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // negativeOneToOne
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPipelineViewportDepthClipControlCreateInfoEXT(VkPipelineViewportDepthClipControlCreateInfoEXT* val, char* outputBuffer) {
@@ -2210,10 +1698,7 @@ static inline void vt_unserialize_VkPipelineViewportDepthClipControlCreateInfoEX
 }
 
 static inline int vt_sizeof_VkPipelineRasterizationProvokingVertexStateCreateInfoEXT(VkPipelineRasterizationProvokingVertexStateCreateInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // provokingVertexMode
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPipelineRasterizationProvokingVertexStateCreateInfoEXT(VkPipelineRasterizationProvokingVertexStateCreateInfoEXT* val, char* outputBuffer) {
@@ -2236,11 +1721,7 @@ static inline void vt_unserialize_VkPipelineRasterizationProvokingVertexStateCre
 }
 
 static inline int vt_sizeof_VkPipelineRasterizationDepthClipStateCreateInfoEXT(VkPipelineRasterizationDepthClipStateCreateInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // depthClipEnable
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPipelineRasterizationDepthClipStateCreateInfoEXT(VkPipelineRasterizationDepthClipStateCreateInfoEXT* val, char* outputBuffer) {
@@ -2267,10 +1748,7 @@ static inline void vt_unserialize_VkPipelineRasterizationDepthClipStateCreateInf
 }
 
 static inline int vt_sizeof_VkSampleLocationEXT(VkSampleLocationEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // x
-    bufferSize += 4; // y
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkSampleLocationEXT(VkSampleLocationEXT* val, char* outputBuffer) {
@@ -2290,11 +1768,7 @@ static inline void vt_unserialize_VkSampleLocationEXT(VkSampleLocationEXT* val, 
 }
 
 static inline int vt_sizeof_VkPipelineRasterizationStateStreamCreateInfoEXT(VkPipelineRasterizationStateStreamCreateInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // rasterizationStream
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPipelineRasterizationStateStreamCreateInfoEXT(VkPipelineRasterizationStateStreamCreateInfoEXT* val, char* outputBuffer) {
@@ -2321,12 +1795,8 @@ static inline void vt_unserialize_VkPipelineRasterizationStateStreamCreateInfoEX
 }
 
 static inline int vt_sizeof_VkSampleLocationsInfoEXT(VkSampleLocationsInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // sampleLocationsPerPixel
+    int bufferSize = 16;
     bufferSize += vt_sizeof_VkExtent2D(&val->sampleLocationGridSize);
-    bufferSize += 4; // sampleLocationsCount
-    bufferSize += 4;
     if (val->pSampleLocations) {
         int arrSize = val->sampleLocationsCount ? val->sampleLocationsCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -2398,12 +1868,7 @@ static inline void vt_unserialize_VkSampleLocationsInfoEXT(VkSampleLocationsInfo
 }
 
 static inline int vt_sizeof_VkPipelineRasterizationConservativeStateCreateInfoEXT(VkPipelineRasterizationConservativeStateCreateInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // conservativeRasterizationMode
-    bufferSize += 4; // extraPrimitiveOverestimationSize
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkPipelineRasterizationConservativeStateCreateInfoEXT(VkPipelineRasterizationConservativeStateCreateInfoEXT* val, char* outputBuffer) {
@@ -2434,9 +1899,7 @@ static inline void vt_unserialize_VkPipelineRasterizationConservativeStateCreate
 }
 
 static inline int vt_sizeof_VkPipelineSampleLocationsStateCreateInfoEXT(VkPipelineSampleLocationsStateCreateInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // sampleLocationsEnable
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkSampleLocationsInfoEXT(&val->sampleLocationsInfo);
     return bufferSize;
 }
@@ -2465,15 +1928,7 @@ static inline void vt_unserialize_VkPipelineSampleLocationsStateCreateInfoEXT(Vk
 }
 
 static inline int vt_sizeof_VkStencilOpState(VkStencilOpState* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // failOp
-    bufferSize += 4; // passOp
-    bufferSize += 4; // depthFailOp
-    bufferSize += 4; // compareOp
-    bufferSize += 4; // compareMask
-    bufferSize += 4; // writeMask
-    bufferSize += 4; // reference
-    return bufferSize;
+    return 28;
 }
 
 static inline void vt_serialize_VkStencilOpState(VkStencilOpState* val, char* outputBuffer) {
@@ -2513,16 +1968,7 @@ static inline void vt_unserialize_VkStencilOpState(VkStencilOpState* val, char* 
 }
 
 static inline int vt_sizeof_VkPipelineColorBlendAttachmentState(VkPipelineColorBlendAttachmentState* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // blendEnable
-    bufferSize += 4; // srcColorBlendFactor
-    bufferSize += 4; // dstColorBlendFactor
-    bufferSize += 4; // colorBlendOp
-    bufferSize += 4; // srcAlphaBlendFactor
-    bufferSize += 4; // dstAlphaBlendFactor
-    bufferSize += 4; // alphaBlendOp
-    bufferSize += 4; // colorWriteMask
-    return bufferSize;
+    return 32;
 }
 
 static inline void vt_serialize_VkPipelineColorBlendAttachmentState(VkPipelineColorBlendAttachmentState* val, char* outputBuffer) {
@@ -2566,10 +2012,7 @@ static inline void vt_unserialize_VkPipelineColorBlendAttachmentState(VkPipeline
 }
 
 static inline int vt_sizeof_VkPipelineColorWriteCreateInfoEXT(VkPipelineColorWriteCreateInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // attachmentCount
-    bufferSize += 4;
+    int bufferSize = 12;
     bufferSize += val->pColorWriteEnables ? val->attachmentCount * 4 : 0;
     return bufferSize;
 }
@@ -2616,11 +2059,7 @@ static inline void vt_unserialize_VkPipelineColorWriteCreateInfoEXT(VkPipelineCo
 }
 
 static inline int vt_sizeof_VkPipelineDynamicStateCreateInfo(VkPipelineDynamicStateCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // dynamicStateCount
-    bufferSize += 4;
+    int bufferSize = 16;
     bufferSize += val->pDynamicStates ? val->dynamicStateCount * 4 : 0;
     return bufferSize;
 }
@@ -2671,8 +2110,7 @@ static inline void vt_unserialize_VkPipelineDynamicStateCreateInfo(VkPipelineDyn
 }
 
 static inline int vt_sizeof_VkPipelineColorBlendStateCreateInfo(VkPipelineColorBlendStateCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 24;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -2695,11 +2133,6 @@ static inline int vt_sizeof_VkPipelineColorBlendStateCreateInfo(VkPipelineColorB
         sBase->pNext = oldPNext;
         pNext = sBase->pNext;
     }
-    bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // logicOpEnable
-    bufferSize += 4; // logicOp
-    bufferSize += 4; // attachmentCount
     bufferSize += 4;
     if (val->pAttachments) {
         int arrSize = val->attachmentCount ? val->attachmentCount : 0;
@@ -2848,18 +2281,9 @@ static inline void vt_unserialize_VkPipelineColorBlendStateCreateInfo(VkPipeline
 }
 
 static inline int vt_sizeof_VkPipelineDepthStencilStateCreateInfo(VkPipelineDepthStencilStateCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // depthTestEnable
-    bufferSize += 4; // depthWriteEnable
-    bufferSize += 4; // depthCompareOp
-    bufferSize += 4; // depthBoundsTestEnable
-    bufferSize += 4; // stencilTestEnable
+    int bufferSize = 36;
     bufferSize += vt_sizeof_VkStencilOpState(&val->front);
     bufferSize += vt_sizeof_VkStencilOpState(&val->back);
-    bufferSize += 4; // minDepthBounds
-    bufferSize += 4; // maxDepthBounds
     return bufferSize;
 }
 
@@ -2919,8 +2343,7 @@ static inline void vt_unserialize_VkPipelineDepthStencilStateCreateInfo(VkPipeli
 }
 
 static inline int vt_sizeof_VkPipelineMultisampleStateCreateInfo(VkPipelineMultisampleStateCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 28;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -2944,12 +2367,6 @@ static inline int vt_sizeof_VkPipelineMultisampleStateCreateInfo(VkPipelineMulti
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // rasterizationSamples
-    bufferSize += 4; // sampleShadingEnable
-    bufferSize += 4; // minSampleShading
-    bufferSize += 4; // alphaToCoverageEnable
-    bufferSize += 4; // alphaToOneEnable
     return bufferSize;
 }
 
@@ -3061,8 +2478,7 @@ static inline void vt_unserialize_VkPipelineMultisampleStateCreateInfo(VkPipelin
 }
 
 static inline int vt_sizeof_VkPipelineRasterizationStateCreateInfo(VkPipelineRasterizationStateCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 48;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -3101,17 +2517,6 @@ static inline int vt_sizeof_VkPipelineRasterizationStateCreateInfo(VkPipelineRas
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // depthClampEnable
-    bufferSize += 4; // rasterizerDiscardEnable
-    bufferSize += 4; // polygonMode
-    bufferSize += 4; // cullMode
-    bufferSize += 4; // frontFace
-    bufferSize += 4; // depthBiasEnable
-    bufferSize += 4; // depthBiasConstantFactor
-    bufferSize += 4; // depthBiasClamp
-    bufferSize += 4; // depthBiasSlopeFactor
-    bufferSize += 4; // lineWidth
     return bufferSize;
 }
 
@@ -3314,8 +2719,7 @@ static inline void vt_unserialize_VkPipelineRasterizationStateCreateInfo(VkPipel
 }
 
 static inline int vt_sizeof_VkPipelineViewportStateCreateInfo(VkPipelineViewportStateCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 24;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -3339,9 +2743,6 @@ static inline int vt_sizeof_VkPipelineViewportStateCreateInfo(VkPipelineViewport
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // viewportCount
-    bufferSize += 4;
     if (val->pViewports) {
         int arrSize = val->viewportCount ? val->viewportCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -3349,8 +2750,6 @@ static inline int vt_sizeof_VkPipelineViewportStateCreateInfo(VkPipelineViewport
             bufferSize += vt_sizeof_VkViewport(&val->pViewports[i]);
         }
     }
-    bufferSize += 4; // scissorCount
-    bufferSize += 4;
     if (val->pScissors) {
         int arrSize = val->scissorCount ? val->scissorCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -3522,8 +2921,7 @@ static inline void vt_unserialize_VkPipelineViewportStateCreateInfo(VkPipelineVi
 }
 
 static inline int vt_sizeof_VkPipelineTessellationStateCreateInfo(VkPipelineTessellationStateCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 12;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -3547,8 +2945,6 @@ static inline int vt_sizeof_VkPipelineTessellationStateCreateInfo(VkPipelineTess
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // patchControlPoints
     return bufferSize;
 }
 
@@ -3643,12 +3039,7 @@ static inline void vt_unserialize_VkPipelineTessellationStateCreateInfo(VkPipeli
 }
 
 static inline int vt_sizeof_VkPipelineInputAssemblyStateCreateInfo(VkPipelineInputAssemblyStateCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // topology
-    bufferSize += 4; // primitiveRestartEnable
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkPipelineInputAssemblyStateCreateInfo(VkPipelineInputAssemblyStateCreateInfo* val, char* outputBuffer) {
@@ -3679,8 +3070,7 @@ static inline void vt_unserialize_VkPipelineInputAssemblyStateCreateInfo(VkPipel
 }
 
 static inline int vt_sizeof_VkPipelineVertexInputStateCreateInfo(VkPipelineVertexInputStateCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 24;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -3704,9 +3094,6 @@ static inline int vt_sizeof_VkPipelineVertexInputStateCreateInfo(VkPipelineVerte
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // vertexBindingDescriptionCount
-    bufferSize += 4;
     if (val->pVertexBindingDescriptions) {
         int arrSize = val->vertexBindingDescriptionCount ? val->vertexBindingDescriptionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -3714,8 +3101,6 @@ static inline int vt_sizeof_VkPipelineVertexInputStateCreateInfo(VkPipelineVerte
             bufferSize += vt_sizeof_VkVertexInputBindingDescription(&val->pVertexBindingDescriptions[i]);
         }
     }
-    bufferSize += 4; // vertexAttributeDescriptionCount
-    bufferSize += 4;
     if (val->pVertexAttributeDescriptions) {
         int arrSize = val->vertexAttributeDescriptionCount ? val->vertexAttributeDescriptionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -3887,8 +3272,7 @@ static inline void vt_unserialize_VkPipelineVertexInputStateCreateInfo(VkPipelin
 }
 
 static inline int vt_sizeof_VkPipelineShaderStageCreateInfo(VkPipelineShaderStageCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 20;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -3922,12 +3306,8 @@ static inline int vt_sizeof_VkPipelineShaderStageCreateInfo(VkPipelineShaderStag
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // stage
     bufferSize += vt_sizeof_VkShaderModule(val->module);
-    bufferSize += 4;
     bufferSize += val->pName ? strlen(val->pName) + 1 : 0;
-    bufferSize += 4;
     bufferSize += val->pSpecializationInfo ? vt_sizeof_VkSpecializationInfo(val->pSpecializationInfo) : 0;
     return bufferSize;
 }
@@ -4131,13 +3511,11 @@ static inline void vt_unserialize_VkPipelineShaderStageCreateInfo(VkPipelineShad
 }
 
 static inline int vt_sizeof_VkSparseImageMemoryBind(VkSparseImageMemoryBind* val) {
-    int bufferSize = 0;
+    int bufferSize = 12;
     bufferSize += vt_sizeof_VkImageSubresource(&val->subresource);
     bufferSize += vt_sizeof_VkOffset3D(&val->offset);
     bufferSize += vt_sizeof_VkExtent3D(&val->extent);
     bufferSize += vt_sizeof_VkDeviceMemory(val->memory);
-    bufferSize += 8; // memoryOffset
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -4188,12 +3566,8 @@ static inline void vt_unserialize_VkSparseImageMemoryBind(VkSparseImageMemoryBin
 }
 
 static inline int vt_sizeof_VkSparseMemoryBind(VkSparseMemoryBind* val) {
-    int bufferSize = 0;
-    bufferSize += 8; // resourceOffset
-    bufferSize += 8; // size
+    int bufferSize = 28;
     bufferSize += vt_sizeof_VkDeviceMemory(val->memory);
-    bufferSize += 8; // memoryOffset
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -4240,10 +3614,8 @@ static inline void vt_unserialize_VkSparseMemoryBind(VkSparseMemoryBind* val, ch
 }
 
 static inline int vt_sizeof_VkSparseImageMemoryBindInfo(VkSparseImageMemoryBindInfo* val) {
-    int bufferSize = 0;
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkImage(val->image);
-    bufferSize += 4; // bindCount
-    bufferSize += 4;
     if (val->pBinds) {
         int arrSize = val->bindCount ? val->bindCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -4318,10 +3690,8 @@ static inline void vt_unserialize_VkSparseImageMemoryBindInfo(VkSparseImageMemor
 }
 
 static inline int vt_sizeof_VkSparseImageOpaqueMemoryBindInfo(VkSparseImageOpaqueMemoryBindInfo* val) {
-    int bufferSize = 0;
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkImage(val->image);
-    bufferSize += 4; // bindCount
-    bufferSize += 4;
     if (val->pBinds) {
         int arrSize = val->bindCount ? val->bindCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -4396,10 +3766,8 @@ static inline void vt_unserialize_VkSparseImageOpaqueMemoryBindInfo(VkSparseImag
 }
 
 static inline int vt_sizeof_VkSparseBufferMemoryBindInfo(VkSparseBufferMemoryBindInfo* val) {
-    int bufferSize = 0;
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkBuffer(val->buffer);
-    bufferSize += 4; // bindCount
-    bufferSize += 4;
     if (val->pBinds) {
         int arrSize = val->bindCount ? val->bindCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -4474,63 +3842,7 @@ static inline void vt_unserialize_VkSparseBufferMemoryBindInfo(VkSparseBufferMem
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceFeatures(VkPhysicalDeviceFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // robustBufferAccess
-    bufferSize += 4; // fullDrawIndexUint32
-    bufferSize += 4; // imageCubeArray
-    bufferSize += 4; // independentBlend
-    bufferSize += 4; // geometryShader
-    bufferSize += 4; // tessellationShader
-    bufferSize += 4; // sampleRateShading
-    bufferSize += 4; // dualSrcBlend
-    bufferSize += 4; // logicOp
-    bufferSize += 4; // multiDrawIndirect
-    bufferSize += 4; // drawIndirectFirstInstance
-    bufferSize += 4; // depthClamp
-    bufferSize += 4; // depthBiasClamp
-    bufferSize += 4; // fillModeNonSolid
-    bufferSize += 4; // depthBounds
-    bufferSize += 4; // wideLines
-    bufferSize += 4; // largePoints
-    bufferSize += 4; // alphaToOne
-    bufferSize += 4; // multiViewport
-    bufferSize += 4; // samplerAnisotropy
-    bufferSize += 4; // textureCompressionETC2
-    bufferSize += 4; // textureCompressionASTC_LDR
-    bufferSize += 4; // textureCompressionBC
-    bufferSize += 4; // occlusionQueryPrecise
-    bufferSize += 4; // pipelineStatisticsQuery
-    bufferSize += 4; // vertexPipelineStoresAndAtomics
-    bufferSize += 4; // fragmentStoresAndAtomics
-    bufferSize += 4; // shaderTessellationAndGeometryPointSize
-    bufferSize += 4; // shaderImageGatherExtended
-    bufferSize += 4; // shaderStorageImageExtendedFormats
-    bufferSize += 4; // shaderStorageImageMultisample
-    bufferSize += 4; // shaderStorageImageReadWithoutFormat
-    bufferSize += 4; // shaderStorageImageWriteWithoutFormat
-    bufferSize += 4; // shaderUniformBufferArrayDynamicIndexing
-    bufferSize += 4; // shaderSampledImageArrayDynamicIndexing
-    bufferSize += 4; // shaderStorageBufferArrayDynamicIndexing
-    bufferSize += 4; // shaderStorageImageArrayDynamicIndexing
-    bufferSize += 4; // shaderClipDistance
-    bufferSize += 4; // shaderCullDistance
-    bufferSize += 4; // shaderFloat64
-    bufferSize += 4; // shaderInt64
-    bufferSize += 4; // shaderInt16
-    bufferSize += 4; // shaderResourceResidency
-    bufferSize += 4; // shaderResourceMinLod
-    bufferSize += 4; // sparseBinding
-    bufferSize += 4; // sparseResidencyBuffer
-    bufferSize += 4; // sparseResidencyImage2D
-    bufferSize += 4; // sparseResidencyImage3D
-    bufferSize += 4; // sparseResidency2Samples
-    bufferSize += 4; // sparseResidency4Samples
-    bufferSize += 4; // sparseResidency8Samples
-    bufferSize += 4; // sparseResidency16Samples
-    bufferSize += 4; // sparseResidencyAliased
-    bufferSize += 4; // variableMultisampleRate
-    bufferSize += 4; // inheritedQueries
-    return bufferSize;
+    return 220;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceFeatures(VkPhysicalDeviceFeatures* val, char* outputBuffer) {
@@ -4762,12 +4074,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures(VkPhysicalDeviceFeatu
 }
 
 static inline int vt_sizeof_VkDeviceQueueCreateInfo(VkDeviceQueueCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // queueFamilyIndex
-    bufferSize += 4; // queueCount
-    bufferSize += 4;
+    int bufferSize = 20;
     bufferSize += val->pQueuePriorities ? val->queueCount * 4 : 0;
     return bufferSize;
 }
@@ -4822,15 +4129,9 @@ static inline void vt_unserialize_VkDeviceQueueCreateInfo(VkDeviceQueueCreateInf
 }
 
 static inline int vt_sizeof_VkApplicationInfo(VkApplicationInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4;
+    int bufferSize = 24;
     bufferSize += val->pApplicationName ? strlen(val->pApplicationName) + 1 : 0;
-    bufferSize += 4; // applicationVersion
-    bufferSize += 4;
     bufferSize += val->pEngineName ? strlen(val->pEngineName) + 1 : 0;
-    bufferSize += 4; // engineVersion
-    bufferSize += 4; // apiVersion
     return bufferSize;
 }
 
@@ -4904,10 +4205,7 @@ static inline void vt_unserialize_VkApplicationInfo(VkApplicationInfo* val, char
 }
 
 static inline int vt_sizeof_VkPipelineCreationFeedback(VkPipelineCreationFeedback* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // flags
-    bufferSize += 8; // duration
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPipelineCreationFeedback(VkPipelineCreationFeedback* val, char* outputBuffer) {
@@ -4927,11 +4225,7 @@ static inline void vt_unserialize_VkPipelineCreationFeedback(VkPipelineCreationF
 }
 
 static inline int vt_sizeof_VkPushConstantRange(VkPushConstantRange* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // stageFlags
-    bufferSize += 4; // offset
-    bufferSize += 4; // size
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPushConstantRange(VkPushConstantRange* val, char* outputBuffer) {
@@ -4955,12 +4249,8 @@ static inline void vt_unserialize_VkPushConstantRange(VkPushConstantRange* val, 
 }
 
 static inline int vt_sizeof_VkSemaphoreSubmitInfo(VkSemaphoreSubmitInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 24;
     bufferSize += vt_sizeof_VkSemaphore(val->semaphore);
-    bufferSize += 8; // value
-    bufferSize += 8; // stageMask
-    bufferSize += 4; // deviceIndex
     return bufferSize;
 }
 
@@ -5010,10 +4300,8 @@ static inline void vt_unserialize_VkSemaphoreSubmitInfo(VkSemaphoreSubmitInfo* v
 }
 
 static inline int vt_sizeof_VkCommandBufferSubmitInfo(VkCommandBufferSubmitInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkCommandBuffer(val->commandBuffer);
-    bufferSize += 4; // deviceMask
     return bufferSize;
 }
 
@@ -5055,13 +4343,7 @@ static inline void vt_unserialize_VkCommandBufferSubmitInfo(VkCommandBufferSubmi
 }
 
 static inline int vt_sizeof_VkImageSubresourceRange(VkImageSubresourceRange* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // aspectMask
-    bufferSize += 4; // baseMipLevel
-    bufferSize += 4; // levelCount
-    bufferSize += 4; // baseArrayLayer
-    bufferSize += 4; // layerCount
-    return bufferSize;
+    return 20;
 }
 
 static inline void vt_serialize_VkImageSubresourceRange(VkImageSubresourceRange* val, char* outputBuffer) {
@@ -5093,10 +4375,8 @@ static inline void vt_unserialize_VkImageSubresourceRange(VkImageSubresourceRang
 }
 
 static inline int vt_sizeof_VkSparseImageFormatProperties(VkSparseImageFormatProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // aspectMask
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkExtent3D(&val->imageGranularity);
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -5121,12 +4401,7 @@ static inline void vt_unserialize_VkSparseImageFormatProperties(VkSparseImageFor
 }
 
 static inline int vt_sizeof_VkComponentMapping(VkComponentMapping* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // r
-    bufferSize += 4; // g
-    bufferSize += 4; // b
-    bufferSize += 4; // a
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkComponentMapping(VkComponentMapping* val, char* outputBuffer) {
@@ -5154,12 +4429,8 @@ static inline void vt_unserialize_VkComponentMapping(VkComponentMapping* val, ch
 }
 
 static inline int vt_sizeof_VkSparseImageMemoryRequirements(VkSparseImageMemoryRequirements* val) {
-    int bufferSize = 0;
+    int bufferSize = 28;
     bufferSize += vt_sizeof_VkSparseImageFormatProperties(&val->formatProperties);
-    bufferSize += 4; // imageMipTailFirstLod
-    bufferSize += 8; // imageMipTailSize
-    bufferSize += 8; // imageMipTailOffset
-    bufferSize += 8; // imageMipTailStride
     return bufferSize;
 }
 
@@ -5192,11 +4463,7 @@ static inline void vt_unserialize_VkSparseImageMemoryRequirements(VkSparseImageM
 }
 
 static inline int vt_sizeof_VkMemoryRequirements(VkMemoryRequirements* val) {
-    int bufferSize = 0;
-    bufferSize += 8; // size
-    bufferSize += 8; // alignment
-    bufferSize += 4; // memoryTypeBits
-    return bufferSize;
+    return 20;
 }
 
 static inline void vt_serialize_VkMemoryRequirements(VkMemoryRequirements* val, char* outputBuffer) {
@@ -5220,10 +4487,7 @@ static inline void vt_unserialize_VkMemoryRequirements(VkMemoryRequirements* val
 }
 
 static inline int vt_sizeof_VkImagePlaneMemoryRequirementsInfo(VkImagePlaneMemoryRequirementsInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // planeAspect
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkImagePlaneMemoryRequirementsInfo(VkImagePlaneMemoryRequirementsInfo* val, char* outputBuffer) {
@@ -5246,11 +4510,7 @@ static inline void vt_unserialize_VkImagePlaneMemoryRequirementsInfo(VkImagePlan
 }
 
 static inline int vt_sizeof_VkInputAttachmentAspectReference(VkInputAttachmentAspectReference* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // subpass
-    bufferSize += 4; // inputAttachmentIndex
-    bufferSize += 4; // aspectMask
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkInputAttachmentAspectReference(VkInputAttachmentAspectReference* val, char* outputBuffer) {
@@ -5274,11 +4534,7 @@ static inline void vt_unserialize_VkInputAttachmentAspectReference(VkInputAttach
 }
 
 static inline int vt_sizeof_VkAttachmentDescriptionStencilLayout(VkAttachmentDescriptionStencilLayout* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // stencilInitialLayout
-    bufferSize += 4; // stencilFinalLayout
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkAttachmentDescriptionStencilLayout(VkAttachmentDescriptionStencilLayout* val, char* outputBuffer) {
@@ -5305,10 +4561,7 @@ static inline void vt_unserialize_VkAttachmentDescriptionStencilLayout(VkAttachm
 }
 
 static inline int vt_sizeof_VkAttachmentReferenceStencilLayout(VkAttachmentReferenceStencilLayout* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // stencilLayout
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkAttachmentReferenceStencilLayout(VkAttachmentReferenceStencilLayout* val, char* outputBuffer) {
@@ -5331,13 +4584,7 @@ static inline void vt_unserialize_VkAttachmentReferenceStencilLayout(VkAttachmen
 }
 
 static inline int vt_sizeof_VkMemoryBarrier2(VkMemoryBarrier2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 8; // srcStageMask
-    bufferSize += 8; // srcAccessMask
-    bufferSize += 8; // dstStageMask
-    bufferSize += 8; // dstAccessMask
-    return bufferSize;
+    return 36;
 }
 
 static inline void vt_serialize_VkMemoryBarrier2(VkMemoryBarrier2* val, char* outputBuffer) {
@@ -5372,8 +4619,7 @@ static inline void vt_unserialize_VkMemoryBarrier2(VkMemoryBarrier2* val, char* 
 }
 
 static inline int vt_sizeof_VkAttachmentReference2(VkAttachmentReference2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 16;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -5397,9 +4643,6 @@ static inline int vt_sizeof_VkAttachmentReference2(VkAttachmentReference2* val) 
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // attachment
-    bufferSize += 4; // layout
-    bufferSize += 4; // aspectMask
     return bufferSize;
 }
 
@@ -5498,11 +4741,7 @@ static inline void vt_unserialize_VkAttachmentReference2(VkAttachmentReference2*
 }
 
 static inline int vt_sizeof_VkSubpassDescriptionDepthStencilResolve(VkSubpassDescriptionDepthStencilResolve* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // depthResolveMode
-    bufferSize += 4; // stencilResolveMode
-    bufferSize += 4;
+    int bufferSize = 16;
     bufferSize += val->pDepthStencilResolveAttachment ? vt_sizeof_VkAttachmentReference2(val->pDepthStencilResolveAttachment) : 0;
     return bufferSize;
 }
@@ -5552,8 +4791,7 @@ static inline void vt_unserialize_VkSubpassDescriptionDepthStencilResolve(VkSubp
 }
 
 static inline int vt_sizeof_VkSubpassDependency2(VkSubpassDependency2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 36;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -5577,14 +4815,6 @@ static inline int vt_sizeof_VkSubpassDependency2(VkSubpassDependency2* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // srcSubpass
-    bufferSize += 4; // dstSubpass
-    bufferSize += 4; // srcStageMask
-    bufferSize += 4; // dstStageMask
-    bufferSize += 4; // srcAccessMask
-    bufferSize += 4; // dstAccessMask
-    bufferSize += 4; // dependencyFlags
-    bufferSize += 4; // viewOffset
     return bufferSize;
 }
 
@@ -5703,8 +4933,7 @@ static inline void vt_unserialize_VkSubpassDependency2(VkSubpassDependency2* val
 }
 
 static inline int vt_sizeof_VkSubpassDescription2(VkSubpassDescription2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 48;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -5728,11 +4957,6 @@ static inline int vt_sizeof_VkSubpassDescription2(VkSubpassDescription2* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // pipelineBindPoint
-    bufferSize += 4; // viewMask
-    bufferSize += 4; // inputAttachmentCount
-    bufferSize += 4;
     if (val->pInputAttachments) {
         int arrSize = val->inputAttachmentCount ? val->inputAttachmentCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -5740,8 +4964,6 @@ static inline int vt_sizeof_VkSubpassDescription2(VkSubpassDescription2* val) {
             bufferSize += vt_sizeof_VkAttachmentReference2(&val->pInputAttachments[i]);
         }
     }
-    bufferSize += 4; // colorAttachmentCount
-    bufferSize += 4;
     if (val->pColorAttachments) {
         int arrSize = val->colorAttachmentCount ? val->colorAttachmentCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -5749,7 +4971,6 @@ static inline int vt_sizeof_VkSubpassDescription2(VkSubpassDescription2* val) {
             bufferSize += vt_sizeof_VkAttachmentReference2(&val->pColorAttachments[i]);
         }
     }
-    bufferSize += 4;
     if (val->pResolveAttachments) {
         int arrSize = val->colorAttachmentCount ? val->colorAttachmentCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -5757,10 +4978,7 @@ static inline int vt_sizeof_VkSubpassDescription2(VkSubpassDescription2* val) {
             bufferSize += vt_sizeof_VkAttachmentReference2(&val->pResolveAttachments[i]);
         }
     }
-    bufferSize += 4;
     bufferSize += val->pDepthStencilAttachment ? vt_sizeof_VkAttachmentReference2(val->pDepthStencilAttachment) : 0;
-    bufferSize += 4; // preserveAttachmentCount
-    bufferSize += 4;
     bufferSize += val->pPreserveAttachments ? val->preserveAttachmentCount * 4 : 0;
     return bufferSize;
 }
@@ -6014,8 +5232,7 @@ static inline void vt_unserialize_VkSubpassDescription2(VkSubpassDescription2* v
 }
 
 static inline int vt_sizeof_VkAttachmentDescription2(VkAttachmentDescription2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 40;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -6039,15 +5256,6 @@ static inline int vt_sizeof_VkAttachmentDescription2(VkAttachmentDescription2* v
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // format
-    bufferSize += 4; // samples
-    bufferSize += 4; // loadOp
-    bufferSize += 4; // storeOp
-    bufferSize += 4; // stencilLoadOp
-    bufferSize += 4; // stencilStoreOp
-    bufferSize += 4; // initialLayout
-    bufferSize += 4; // finalLayout
     return bufferSize;
 }
 
@@ -6170,15 +5378,7 @@ static inline void vt_unserialize_VkAttachmentDescription2(VkAttachmentDescripti
 }
 
 static inline int vt_sizeof_VkFramebufferAttachmentImageInfo(VkFramebufferAttachmentImageInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // usage
-    bufferSize += 4; // width
-    bufferSize += 4; // height
-    bufferSize += 4; // layerCount
-    bufferSize += 4; // viewFormatCount
-    bufferSize += 4;
+    int bufferSize = 32;
     bufferSize += val->pViewFormats ? val->viewFormatCount * 4 : 0;
     return bufferSize;
 }
@@ -6245,10 +5445,7 @@ static inline void vt_unserialize_VkFramebufferAttachmentImageInfo(VkFramebuffer
 }
 
 static inline int vt_sizeof_VkMemoryHeap(VkMemoryHeap* val) {
-    int bufferSize = 0;
-    bufferSize += 8; // size
-    bufferSize += 4; // flags
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkMemoryHeap(VkMemoryHeap* val, char* outputBuffer) {
@@ -6268,10 +5465,7 @@ static inline void vt_unserialize_VkMemoryHeap(VkMemoryHeap* val, char* inputBuf
 }
 
 static inline int vt_sizeof_VkMemoryType(VkMemoryType* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // propertyFlags
-    bufferSize += 4; // heapIndex
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkMemoryType(VkMemoryType* val, char* outputBuffer) {
@@ -6291,10 +5485,8 @@ static inline void vt_unserialize_VkMemoryType(VkMemoryType* val, char* inputBuf
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceMemoryProperties(VkPhysicalDeviceMemoryProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // memoryTypeCount
+    int bufferSize = 8;
     bufferSize += val->memoryTypeCount * vt_sizeof_VkMemoryType(&val->memoryTypes[0]);
-    bufferSize += 4; // memoryHeapCount
     bufferSize += val->memoryHeapCount * vt_sizeof_VkMemoryHeap(&val->memoryHeaps[0]);
     return bufferSize;
 }
@@ -6324,8 +5516,7 @@ static inline void vt_unserialize_VkPhysicalDeviceMemoryProperties(VkPhysicalDev
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceMemoryBudgetPropertiesEXT(VkPhysicalDeviceMemoryBudgetPropertiesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += VK_MAX_MEMORY_HEAPS;
     bufferSize += VK_MAX_MEMORY_HEAPS;
     return bufferSize;
@@ -6355,10 +5546,7 @@ static inline void vt_unserialize_VkPhysicalDeviceMemoryBudgetPropertiesEXT(VkPh
 }
 
 static inline int vt_sizeof_VkQueueFamilyProperties(VkQueueFamilyProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // queueFlags
-    bufferSize += 4; // queueCount
-    bufferSize += 4; // timestampValidBits
+    int bufferSize = 12;
     bufferSize += vt_sizeof_VkExtent3D(&val->minImageTransferGranularity);
     return bufferSize;
 }
@@ -6388,10 +5576,7 @@ static inline void vt_unserialize_VkQueueFamilyProperties(VkQueueFamilyPropertie
 }
 
 static inline int vt_sizeof_VkImageStencilUsageCreateInfo(VkImageStencilUsageCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // stencilUsage
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkImageStencilUsageCreateInfo(VkImageStencilUsageCreateInfo* val, char* outputBuffer) {
@@ -6414,10 +5599,7 @@ static inline void vt_unserialize_VkImageStencilUsageCreateInfo(VkImageStencilUs
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceExternalImageFormatInfo(VkPhysicalDeviceExternalImageFormatInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // handleType
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceExternalImageFormatInfo(VkPhysicalDeviceExternalImageFormatInfo* val, char* outputBuffer) {
@@ -6440,12 +5622,8 @@ static inline void vt_unserialize_VkPhysicalDeviceExternalImageFormatInfo(VkPhys
 }
 
 static inline int vt_sizeof_VkImageFormatProperties(VkImageFormatProperties* val) {
-    int bufferSize = 0;
+    int bufferSize = 20;
     bufferSize += vt_sizeof_VkExtent3D(&val->maxExtent);
-    bufferSize += 4; // maxMipLevels
-    bufferSize += 4; // maxArrayLayers
-    bufferSize += 4; // sampleCounts
-    bufferSize += 8; // maxResourceSize
     return bufferSize;
 }
 
@@ -6478,10 +5656,7 @@ static inline void vt_unserialize_VkImageFormatProperties(VkImageFormatPropertie
 }
 
 static inline int vt_sizeof_VkSamplerYcbcrConversionImageFormatProperties(VkSamplerYcbcrConversionImageFormatProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // combinedImageSamplerDescriptorCount
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkSamplerYcbcrConversionImageFormatProperties(VkSamplerYcbcrConversionImageFormatProperties* val, char* outputBuffer) {
@@ -6504,11 +5679,7 @@ static inline void vt_unserialize_VkSamplerYcbcrConversionImageFormatProperties(
 }
 
 static inline int vt_sizeof_VkExternalMemoryProperties(VkExternalMemoryProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // externalMemoryFeatures
-    bufferSize += 4; // exportFromImportedHandleTypes
-    bufferSize += 4; // compatibleHandleTypes
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkExternalMemoryProperties(VkExternalMemoryProperties* val, char* outputBuffer) {
@@ -6532,8 +5703,7 @@ static inline void vt_unserialize_VkExternalMemoryProperties(VkExternalMemoryPro
 }
 
 static inline int vt_sizeof_VkExternalImageFormatProperties(VkExternalImageFormatProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkExternalMemoryProperties(&val->externalMemoryProperties);
     return bufferSize;
 }
@@ -6558,13 +5728,7 @@ static inline void vt_unserialize_VkExternalImageFormatProperties(VkExternalImag
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceSparseProperties(VkPhysicalDeviceSparseProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // residencyStandard2DBlockShape
-    bufferSize += 4; // residencyStandard2DMultisampleBlockShape
-    bufferSize += 4; // residencyStandard3DBlockShape
-    bufferSize += 4; // residencyAlignedMipSize
-    bufferSize += 4; // residencyNonResidentStrict
-    return bufferSize;
+    return 20;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceSparseProperties(VkPhysicalDeviceSparseProperties* val, char* outputBuffer) {
@@ -6596,113 +5760,13 @@ static inline void vt_unserialize_VkPhysicalDeviceSparseProperties(VkPhysicalDev
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceLimits(VkPhysicalDeviceLimits* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // maxImageDimension1D
-    bufferSize += 4; // maxImageDimension2D
-    bufferSize += 4; // maxImageDimension3D
-    bufferSize += 4; // maxImageDimensionCube
-    bufferSize += 4; // maxImageArrayLayers
-    bufferSize += 4; // maxTexelBufferElements
-    bufferSize += 4; // maxUniformBufferRange
-    bufferSize += 4; // maxStorageBufferRange
-    bufferSize += 4; // maxPushConstantsSize
-    bufferSize += 4; // maxMemoryAllocationCount
-    bufferSize += 4; // maxSamplerAllocationCount
-    bufferSize += 8; // bufferImageGranularity
-    bufferSize += 8; // sparseAddressSpaceSize
-    bufferSize += 4; // maxBoundDescriptorSets
-    bufferSize += 4; // maxPerStageDescriptorSamplers
-    bufferSize += 4; // maxPerStageDescriptorUniformBuffers
-    bufferSize += 4; // maxPerStageDescriptorStorageBuffers
-    bufferSize += 4; // maxPerStageDescriptorSampledImages
-    bufferSize += 4; // maxPerStageDescriptorStorageImages
-    bufferSize += 4; // maxPerStageDescriptorInputAttachments
-    bufferSize += 4; // maxPerStageResources
-    bufferSize += 4; // maxDescriptorSetSamplers
-    bufferSize += 4; // maxDescriptorSetUniformBuffers
-    bufferSize += 4; // maxDescriptorSetUniformBuffersDynamic
-    bufferSize += 4; // maxDescriptorSetStorageBuffers
-    bufferSize += 4; // maxDescriptorSetStorageBuffersDynamic
-    bufferSize += 4; // maxDescriptorSetSampledImages
-    bufferSize += 4; // maxDescriptorSetStorageImages
-    bufferSize += 4; // maxDescriptorSetInputAttachments
-    bufferSize += 4; // maxVertexInputAttributes
-    bufferSize += 4; // maxVertexInputBindings
-    bufferSize += 4; // maxVertexInputAttributeOffset
-    bufferSize += 4; // maxVertexInputBindingStride
-    bufferSize += 4; // maxVertexOutputComponents
-    bufferSize += 4; // maxTessellationGenerationLevel
-    bufferSize += 4; // maxTessellationPatchSize
-    bufferSize += 4; // maxTessellationControlPerVertexInputComponents
-    bufferSize += 4; // maxTessellationControlPerVertexOutputComponents
-    bufferSize += 4; // maxTessellationControlPerPatchOutputComponents
-    bufferSize += 4; // maxTessellationControlTotalOutputComponents
-    bufferSize += 4; // maxTessellationEvaluationInputComponents
-    bufferSize += 4; // maxTessellationEvaluationOutputComponents
-    bufferSize += 4; // maxGeometryShaderInvocations
-    bufferSize += 4; // maxGeometryInputComponents
-    bufferSize += 4; // maxGeometryOutputComponents
-    bufferSize += 4; // maxGeometryOutputVertices
-    bufferSize += 4; // maxGeometryTotalOutputComponents
-    bufferSize += 4; // maxFragmentInputComponents
-    bufferSize += 4; // maxFragmentOutputAttachments
-    bufferSize += 4; // maxFragmentDualSrcAttachments
-    bufferSize += 4; // maxFragmentCombinedOutputResources
-    bufferSize += 4; // maxComputeSharedMemorySize
+    int bufferSize = 436;
     bufferSize += 3 * 4;
-    bufferSize += 4; // maxComputeWorkGroupInvocations
     bufferSize += 3 * 4;
-    bufferSize += 4; // subPixelPrecisionBits
-    bufferSize += 4; // subTexelPrecisionBits
-    bufferSize += 4; // mipmapPrecisionBits
-    bufferSize += 4; // maxDrawIndexedIndexValue
-    bufferSize += 4; // maxDrawIndirectCount
-    bufferSize += 4; // maxSamplerLodBias
-    bufferSize += 4; // maxSamplerAnisotropy
-    bufferSize += 4; // maxViewports
     bufferSize += 2 * 4;
     bufferSize += 2 * 4;
-    bufferSize += 4; // viewportSubPixelBits
-    bufferSize += 8; // minMemoryMapAlignment
-    bufferSize += 8; // minTexelBufferOffsetAlignment
-    bufferSize += 8; // minUniformBufferOffsetAlignment
-    bufferSize += 8; // minStorageBufferOffsetAlignment
-    bufferSize += 4; // minTexelOffset
-    bufferSize += 4; // maxTexelOffset
-    bufferSize += 4; // minTexelGatherOffset
-    bufferSize += 4; // maxTexelGatherOffset
-    bufferSize += 4; // minInterpolationOffset
-    bufferSize += 4; // maxInterpolationOffset
-    bufferSize += 4; // subPixelInterpolationOffsetBits
-    bufferSize += 4; // maxFramebufferWidth
-    bufferSize += 4; // maxFramebufferHeight
-    bufferSize += 4; // maxFramebufferLayers
-    bufferSize += 4; // framebufferColorSampleCounts
-    bufferSize += 4; // framebufferDepthSampleCounts
-    bufferSize += 4; // framebufferStencilSampleCounts
-    bufferSize += 4; // framebufferNoAttachmentsSampleCounts
-    bufferSize += 4; // maxColorAttachments
-    bufferSize += 4; // sampledImageColorSampleCounts
-    bufferSize += 4; // sampledImageIntegerSampleCounts
-    bufferSize += 4; // sampledImageDepthSampleCounts
-    bufferSize += 4; // sampledImageStencilSampleCounts
-    bufferSize += 4; // storageImageSampleCounts
-    bufferSize += 4; // maxSampleMaskWords
-    bufferSize += 4; // timestampComputeAndGraphics
-    bufferSize += 4; // timestampPeriod
-    bufferSize += 4; // maxClipDistances
-    bufferSize += 4; // maxCullDistances
-    bufferSize += 4; // maxCombinedClipAndCullDistances
-    bufferSize += 4; // discreteQueuePriorities
     bufferSize += 2 * 4;
     bufferSize += 2 * 4;
-    bufferSize += 4; // pointSizeGranularity
-    bufferSize += 4; // lineWidthGranularity
-    bufferSize += 4; // strictLines
-    bufferSize += 4; // standardSampleLocations
-    bufferSize += 8; // optimalBufferCopyOffsetAlignment
-    bufferSize += 8; // optimalBufferCopyRowPitchAlignment
-    bufferSize += 8; // nonCoherentAtomSize
     return bufferSize;
 }
 
@@ -7139,11 +6203,7 @@ static inline void vt_unserialize_VkPhysicalDeviceLimits(VkPhysicalDeviceLimits*
 }
 
 static inline int vt_sizeof_VkFormatProperties(VkFormatProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // linearTilingFeatures
-    bufferSize += 4; // optimalTilingFeatures
-    bufferSize += 4; // bufferFeatures
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkFormatProperties(VkFormatProperties* val, char* outputBuffer) {
@@ -7167,12 +6227,7 @@ static inline void vt_unserialize_VkFormatProperties(VkFormatProperties* val, ch
 }
 
 static inline int vt_sizeof_VkFormatProperties3(VkFormatProperties3* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 8; // linearTilingFeatures
-    bufferSize += 8; // optimalTilingFeatures
-    bufferSize += 8; // bufferFeatures
-    return bufferSize;
+    return 28;
 }
 
 static inline void vt_serialize_VkFormatProperties3(VkFormatProperties3* val, char* outputBuffer) {
@@ -7203,12 +6258,7 @@ static inline void vt_unserialize_VkFormatProperties3(VkFormatProperties3* val, 
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceProperties(VkPhysicalDeviceProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // apiVersion
-    bufferSize += 4; // driverVersion
-    bufferSize += 4; // vendorID
-    bufferSize += 4; // deviceID
-    bufferSize += 4; // deviceType
+    int bufferSize = 20;
     bufferSize += strlen(val->deviceName) + 1;
     bufferSize += VK_UUID_SIZE;
     bufferSize += vt_sizeof_VkPhysicalDeviceLimits(&val->limits);
@@ -7269,10 +6319,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties(VkPhysicalDevicePro
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceMapMemoryPlacedPropertiesEXT(VkPhysicalDeviceMapMemoryPlacedPropertiesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 8; // minPlacedMemoryMapAlignment
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceMapMemoryPlacedPropertiesEXT(VkPhysicalDeviceMapMemoryPlacedPropertiesEXT* val, char* outputBuffer) {
@@ -7295,8 +6342,7 @@ static inline void vt_unserialize_VkPhysicalDeviceMapMemoryPlacedPropertiesEXT(V
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT(VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += VK_UUID_SIZE;
     return bufferSize;
 }
@@ -7321,39 +6367,7 @@ static inline void vt_unserialize_VkPhysicalDeviceShaderModuleIdentifierProperti
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceShaderIntegerDotProductProperties(VkPhysicalDeviceShaderIntegerDotProductProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // integerDotProduct8BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProduct8BitSignedAccelerated
-    bufferSize += 4; // integerDotProduct8BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProduct4x8BitPackedUnsignedAccelerated
-    bufferSize += 4; // integerDotProduct4x8BitPackedSignedAccelerated
-    bufferSize += 4; // integerDotProduct4x8BitPackedMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProduct16BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProduct16BitSignedAccelerated
-    bufferSize += 4; // integerDotProduct16BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProduct32BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProduct32BitSignedAccelerated
-    bufferSize += 4; // integerDotProduct32BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProduct64BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProduct64BitSignedAccelerated
-    bufferSize += 4; // integerDotProduct64BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating8BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating8BitSignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating8BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating4x8BitPackedUnsignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating4x8BitPackedSignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating4x8BitPackedMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating16BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating16BitSignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating16BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating32BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating32BitSignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating32BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating64BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating64BitSignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating64BitMixedSignednessAccelerated
-    return bufferSize;
+    return 124;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceShaderIntegerDotProductProperties(VkPhysicalDeviceShaderIntegerDotProductProperties* val, char* outputBuffer) {
@@ -7492,11 +6506,7 @@ static inline void vt_unserialize_VkPhysicalDeviceShaderIntegerDotProductPropert
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceProvokingVertexPropertiesEXT(VkPhysicalDeviceProvokingVertexPropertiesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // provokingVertexModePerPipeline
-    bufferSize += 4; // transformFeedbackPreservesTriangleFanProvokingVertex
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceProvokingVertexPropertiesEXT(VkPhysicalDeviceProvokingVertexPropertiesEXT* val, char* outputBuffer) {
@@ -7523,11 +6533,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProvokingVertexPropertiesEXT(V
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceRobustness2PropertiesEXT(VkPhysicalDeviceRobustness2PropertiesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 8; // robustStorageBufferAccessSizeAlignment
-    bufferSize += 8; // robustUniformBufferAccessSizeAlignment
-    return bufferSize;
+    return 20;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceRobustness2PropertiesEXT(VkPhysicalDeviceRobustness2PropertiesEXT* val, char* outputBuffer) {
@@ -7554,10 +6560,7 @@ static inline void vt_unserialize_VkPhysicalDeviceRobustness2PropertiesEXT(VkPhy
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceExtendedDynamicState3PropertiesEXT(VkPhysicalDeviceExtendedDynamicState3PropertiesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // dynamicPrimitiveTopologyUnrestricted
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceExtendedDynamicState3PropertiesEXT(VkPhysicalDeviceExtendedDynamicState3PropertiesEXT* val, char* outputBuffer) {
@@ -7580,10 +6583,7 @@ static inline void vt_unserialize_VkPhysicalDeviceExtendedDynamicState3Propertie
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceCustomBorderColorPropertiesEXT(VkPhysicalDeviceCustomBorderColorPropertiesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // maxCustomBorderColorSamplers
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceCustomBorderColorPropertiesEXT(VkPhysicalDeviceCustomBorderColorPropertiesEXT* val, char* outputBuffer) {
@@ -7606,54 +6606,7 @@ static inline void vt_unserialize_VkPhysicalDeviceCustomBorderColorPropertiesEXT
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceVulkan13Properties(VkPhysicalDeviceVulkan13Properties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // minSubgroupSize
-    bufferSize += 4; // maxSubgroupSize
-    bufferSize += 4; // maxComputeWorkgroupSubgroups
-    bufferSize += 4; // requiredSubgroupSizeStages
-    bufferSize += 4; // maxInlineUniformBlockSize
-    bufferSize += 4; // maxPerStageDescriptorInlineUniformBlocks
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks
-    bufferSize += 4; // maxDescriptorSetInlineUniformBlocks
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindInlineUniformBlocks
-    bufferSize += 4; // maxInlineUniformTotalSize
-    bufferSize += 4; // integerDotProduct8BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProduct8BitSignedAccelerated
-    bufferSize += 4; // integerDotProduct8BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProduct4x8BitPackedUnsignedAccelerated
-    bufferSize += 4; // integerDotProduct4x8BitPackedSignedAccelerated
-    bufferSize += 4; // integerDotProduct4x8BitPackedMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProduct16BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProduct16BitSignedAccelerated
-    bufferSize += 4; // integerDotProduct16BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProduct32BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProduct32BitSignedAccelerated
-    bufferSize += 4; // integerDotProduct32BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProduct64BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProduct64BitSignedAccelerated
-    bufferSize += 4; // integerDotProduct64BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating8BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating8BitSignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating8BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating4x8BitPackedUnsignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating4x8BitPackedSignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating4x8BitPackedMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating16BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating16BitSignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating16BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating32BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating32BitSignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating32BitMixedSignednessAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating64BitUnsignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating64BitSignedAccelerated
-    bufferSize += 4; // integerDotProductAccumulatingSaturating64BitMixedSignednessAccelerated
-    bufferSize += 8; // storageTexelBufferOffsetAlignmentBytes
-    bufferSize += 4; // storageTexelBufferOffsetSingleTexelAlignment
-    bufferSize += 8; // uniformTexelBufferOffsetAlignmentBytes
-    bufferSize += 4; // uniformTexelBufferOffsetSingleTexelAlignment
-    bufferSize += 8; // maxBufferSize
-    return bufferSize;
+    return 196;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceVulkan13Properties(VkPhysicalDeviceVulkan13Properties* val, char* outputBuffer) {
@@ -7852,12 +6805,7 @@ static inline void vt_unserialize_VkPhysicalDeviceVulkan13Properties(VkPhysicalD
 }
 
 static inline int vt_sizeof_VkConformanceVersion(VkConformanceVersion* val) {
-    int bufferSize = 0;
-    bufferSize += 1; // major
-    bufferSize += 1; // minor
-    bufferSize += 1; // subminor
-    bufferSize += 1; // patch
-    return bufferSize;
+    return 4;
 }
 
 static inline void vt_serialize_VkConformanceVersion(VkConformanceVersion* val, char* outputBuffer) {
@@ -7885,60 +6833,10 @@ static inline void vt_unserialize_VkConformanceVersion(VkConformanceVersion* val
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceVulkan12Properties(VkPhysicalDeviceVulkan12Properties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // driverID
+    int bufferSize = 204;
     bufferSize += strlen(val->driverName) + 1;
     bufferSize += strlen(val->driverInfo) + 1;
     bufferSize += vt_sizeof_VkConformanceVersion(&val->conformanceVersion);
-    bufferSize += 4; // denormBehaviorIndependence
-    bufferSize += 4; // roundingModeIndependence
-    bufferSize += 4; // shaderSignedZeroInfNanPreserveFloat16
-    bufferSize += 4; // shaderSignedZeroInfNanPreserveFloat32
-    bufferSize += 4; // shaderSignedZeroInfNanPreserveFloat64
-    bufferSize += 4; // shaderDenormPreserveFloat16
-    bufferSize += 4; // shaderDenormPreserveFloat32
-    bufferSize += 4; // shaderDenormPreserveFloat64
-    bufferSize += 4; // shaderDenormFlushToZeroFloat16
-    bufferSize += 4; // shaderDenormFlushToZeroFloat32
-    bufferSize += 4; // shaderDenormFlushToZeroFloat64
-    bufferSize += 4; // shaderRoundingModeRTEFloat16
-    bufferSize += 4; // shaderRoundingModeRTEFloat32
-    bufferSize += 4; // shaderRoundingModeRTEFloat64
-    bufferSize += 4; // shaderRoundingModeRTZFloat16
-    bufferSize += 4; // shaderRoundingModeRTZFloat32
-    bufferSize += 4; // shaderRoundingModeRTZFloat64
-    bufferSize += 4; // maxUpdateAfterBindDescriptorsInAllPools
-    bufferSize += 4; // shaderUniformBufferArrayNonUniformIndexingNative
-    bufferSize += 4; // shaderSampledImageArrayNonUniformIndexingNative
-    bufferSize += 4; // shaderStorageBufferArrayNonUniformIndexingNative
-    bufferSize += 4; // shaderStorageImageArrayNonUniformIndexingNative
-    bufferSize += 4; // shaderInputAttachmentArrayNonUniformIndexingNative
-    bufferSize += 4; // robustBufferAccessUpdateAfterBind
-    bufferSize += 4; // quadDivergentImplicitLod
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindSamplers
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindUniformBuffers
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindStorageBuffers
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindSampledImages
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindStorageImages
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindInputAttachments
-    bufferSize += 4; // maxPerStageUpdateAfterBindResources
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindSamplers
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindUniformBuffers
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindUniformBuffersDynamic
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindStorageBuffers
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindStorageBuffersDynamic
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindSampledImages
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindStorageImages
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindInputAttachments
-    bufferSize += 4; // supportedDepthResolveModes
-    bufferSize += 4; // supportedStencilResolveModes
-    bufferSize += 4; // independentResolveNone
-    bufferSize += 4; // independentResolve
-    bufferSize += 4; // filterMinmaxSingleComponentFormats
-    bufferSize += 4; // filterMinmaxImageComponentMapping
-    bufferSize += 8; // maxTimelineSemaphoreValueDifference
-    bufferSize += 4; // framebufferIntegerColorSampleCounts
     return bufferSize;
 }
 
@@ -8182,23 +7080,10 @@ static inline void vt_unserialize_VkPhysicalDeviceVulkan12Properties(VkPhysicalD
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceVulkan11Properties(VkPhysicalDeviceVulkan11Properties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 56;
     bufferSize += VK_UUID_SIZE;
     bufferSize += VK_UUID_SIZE;
     bufferSize += VK_LUID_SIZE;
-    bufferSize += 4; // deviceNodeMask
-    bufferSize += 4; // deviceLUIDValid
-    bufferSize += 4; // subgroupSize
-    bufferSize += 4; // subgroupSupportedStages
-    bufferSize += 4; // subgroupSupportedOperations
-    bufferSize += 4; // subgroupQuadOperationsInAllStages
-    bufferSize += 4; // pointClippingBehavior
-    bufferSize += 4; // maxMultiviewViewCount
-    bufferSize += 4; // maxMultiviewInstanceIndex
-    bufferSize += 4; // protectedNoFault
-    bufferSize += 4; // maxPerSetDescriptors
-    bufferSize += 8; // maxMemoryAllocationSize
     return bufferSize;
 }
 
@@ -8278,13 +7163,7 @@ static inline void vt_unserialize_VkPhysicalDeviceVulkan11Properties(VkPhysicalD
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceSubgroupSizeControlProperties(VkPhysicalDeviceSubgroupSizeControlProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // minSubgroupSize
-    bufferSize += 4; // maxSubgroupSize
-    bufferSize += 4; // maxComputeWorkgroupSubgroups
-    bufferSize += 4; // requiredSubgroupSizeStages
-    return bufferSize;
+    return 20;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceSubgroupSizeControlProperties(VkPhysicalDeviceSubgroupSizeControlProperties* val, char* outputBuffer) {
@@ -8319,13 +7198,7 @@ static inline void vt_unserialize_VkPhysicalDeviceSubgroupSizeControlProperties(
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceTexelBufferAlignmentProperties(VkPhysicalDeviceTexelBufferAlignmentProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 8; // storageTexelBufferOffsetAlignmentBytes
-    bufferSize += 4; // storageTexelBufferOffsetSingleTexelAlignment
-    bufferSize += 8; // uniformTexelBufferOffsetAlignmentBytes
-    bufferSize += 4; // uniformTexelBufferOffsetSingleTexelAlignment
-    return bufferSize;
+    return 28;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceTexelBufferAlignmentProperties(VkPhysicalDeviceTexelBufferAlignmentProperties* val, char* outputBuffer) {
@@ -8360,13 +7233,7 @@ static inline void vt_unserialize_VkPhysicalDeviceTexelBufferAlignmentProperties
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceDepthStencilResolveProperties(VkPhysicalDeviceDepthStencilResolveProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // supportedDepthResolveModes
-    bufferSize += 4; // supportedStencilResolveModes
-    bufferSize += 4; // independentResolveNone
-    bufferSize += 4; // independentResolve
-    return bufferSize;
+    return 20;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceDepthStencilResolveProperties(VkPhysicalDeviceDepthStencilResolveProperties* val, char* outputBuffer) {
@@ -8401,11 +7268,7 @@ static inline void vt_unserialize_VkPhysicalDeviceDepthStencilResolveProperties(
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceVertexAttributeDivisorPropertiesKHR(VkPhysicalDeviceVertexAttributeDivisorPropertiesKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // maxVertexAttribDivisor
-    bufferSize += 4; // supportsNonZeroFirstInstance
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceVertexAttributeDivisorPropertiesKHR(VkPhysicalDeviceVertexAttributeDivisorPropertiesKHR* val, char* outputBuffer) {
@@ -8432,10 +7295,7 @@ static inline void vt_unserialize_VkPhysicalDeviceVertexAttributeDivisorProperti
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT(VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // maxVertexAttribDivisor
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT(VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT* val, char* outputBuffer) {
@@ -8458,10 +7318,7 @@ static inline void vt_unserialize_VkPhysicalDeviceVertexAttributeDivisorProperti
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceTimelineSemaphoreProperties(VkPhysicalDeviceTimelineSemaphoreProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 8; // maxTimelineSemaphoreValueDifference
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceTimelineSemaphoreProperties(VkPhysicalDeviceTimelineSemaphoreProperties* val, char* outputBuffer) {
@@ -8484,32 +7341,7 @@ static inline void vt_unserialize_VkPhysicalDeviceTimelineSemaphoreProperties(Vk
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceDescriptorIndexingProperties(VkPhysicalDeviceDescriptorIndexingProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // maxUpdateAfterBindDescriptorsInAllPools
-    bufferSize += 4; // shaderUniformBufferArrayNonUniformIndexingNative
-    bufferSize += 4; // shaderSampledImageArrayNonUniformIndexingNative
-    bufferSize += 4; // shaderStorageBufferArrayNonUniformIndexingNative
-    bufferSize += 4; // shaderStorageImageArrayNonUniformIndexingNative
-    bufferSize += 4; // shaderInputAttachmentArrayNonUniformIndexingNative
-    bufferSize += 4; // robustBufferAccessUpdateAfterBind
-    bufferSize += 4; // quadDivergentImplicitLod
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindSamplers
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindUniformBuffers
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindStorageBuffers
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindSampledImages
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindStorageImages
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindInputAttachments
-    bufferSize += 4; // maxPerStageUpdateAfterBindResources
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindSamplers
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindUniformBuffers
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindUniformBuffersDynamic
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindStorageBuffers
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindStorageBuffersDynamic
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindSampledImages
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindStorageImages
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindInputAttachments
-    return bufferSize;
+    return 96;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceDescriptorIndexingProperties(VkPhysicalDeviceDescriptorIndexingProperties* val, char* outputBuffer) {
@@ -8620,18 +7452,7 @@ static inline void vt_unserialize_VkPhysicalDeviceDescriptorIndexingProperties(V
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceConservativeRasterizationPropertiesEXT(VkPhysicalDeviceConservativeRasterizationPropertiesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // primitiveOverestimationSize
-    bufferSize += 4; // maxExtraPrimitiveOverestimationSize
-    bufferSize += 4; // extraPrimitiveOverestimationSizeGranularity
-    bufferSize += 4; // primitiveUnderestimation
-    bufferSize += 4; // conservativePointAndLineRasterization
-    bufferSize += 4; // degenerateTrianglesRasterized
-    bufferSize += 4; // degenerateLinesRasterized
-    bufferSize += 4; // fullyCoveredFragmentShaderInputVariable
-    bufferSize += 4; // conservativeRasterizationPostDepthCoverage
-    return bufferSize;
+    return 40;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceConservativeRasterizationPropertiesEXT(VkPhysicalDeviceConservativeRasterizationPropertiesEXT* val, char* outputBuffer) {
@@ -8686,26 +7507,7 @@ static inline void vt_unserialize_VkPhysicalDeviceConservativeRasterizationPrope
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceFloatControlsProperties(VkPhysicalDeviceFloatControlsProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // denormBehaviorIndependence
-    bufferSize += 4; // roundingModeIndependence
-    bufferSize += 4; // shaderSignedZeroInfNanPreserveFloat16
-    bufferSize += 4; // shaderSignedZeroInfNanPreserveFloat32
-    bufferSize += 4; // shaderSignedZeroInfNanPreserveFloat64
-    bufferSize += 4; // shaderDenormPreserveFloat16
-    bufferSize += 4; // shaderDenormPreserveFloat32
-    bufferSize += 4; // shaderDenormPreserveFloat64
-    bufferSize += 4; // shaderDenormFlushToZeroFloat16
-    bufferSize += 4; // shaderDenormFlushToZeroFloat32
-    bufferSize += 4; // shaderDenormFlushToZeroFloat64
-    bufferSize += 4; // shaderRoundingModeRTEFloat16
-    bufferSize += 4; // shaderRoundingModeRTEFloat32
-    bufferSize += 4; // shaderRoundingModeRTEFloat64
-    bufferSize += 4; // shaderRoundingModeRTZFloat16
-    bufferSize += 4; // shaderRoundingModeRTZFloat32
-    bufferSize += 4; // shaderRoundingModeRTZFloat64
-    return bufferSize;
+    return 72;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceFloatControlsProperties(VkPhysicalDeviceFloatControlsProperties* val, char* outputBuffer) {
@@ -8792,10 +7594,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFloatControlsProperties(VkPhys
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceMaintenance4Properties(VkPhysicalDeviceMaintenance4Properties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 8; // maxBufferSize
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceMaintenance4Properties(VkPhysicalDeviceMaintenance4Properties* val, char* outputBuffer) {
@@ -8818,11 +7617,7 @@ static inline void vt_unserialize_VkPhysicalDeviceMaintenance4Properties(VkPhysi
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceMaintenance3Properties(VkPhysicalDeviceMaintenance3Properties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // maxPerSetDescriptors
-    bufferSize += 8; // maxMemoryAllocationSize
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceMaintenance3Properties(VkPhysicalDeviceMaintenance3Properties* val, char* outputBuffer) {
@@ -8849,14 +7644,7 @@ static inline void vt_unserialize_VkPhysicalDeviceMaintenance3Properties(VkPhysi
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceInlineUniformBlockProperties(VkPhysicalDeviceInlineUniformBlockProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // maxInlineUniformBlockSize
-    bufferSize += 4; // maxPerStageDescriptorInlineUniformBlocks
-    bufferSize += 4; // maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks
-    bufferSize += 4; // maxDescriptorSetInlineUniformBlocks
-    bufferSize += 4; // maxDescriptorSetUpdateAfterBindInlineUniformBlocks
-    return bufferSize;
+    return 24;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceInlineUniformBlockProperties(VkPhysicalDeviceInlineUniformBlockProperties* val, char* outputBuffer) {
@@ -8895,13 +7683,9 @@ static inline void vt_unserialize_VkPhysicalDeviceInlineUniformBlockProperties(V
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceSampleLocationsPropertiesEXT(VkPhysicalDeviceSampleLocationsPropertiesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // sampleLocationSampleCounts
+    int bufferSize = 16;
     bufferSize += vt_sizeof_VkExtent2D(&val->maxSampleLocationGridSize);
     bufferSize += 2 * 4;
-    bufferSize += 4; // sampleLocationSubPixelBits
-    bufferSize += 4; // variableSampleLocations
     return bufferSize;
 }
 
@@ -8941,11 +7725,7 @@ static inline void vt_unserialize_VkPhysicalDeviceSampleLocationsPropertiesEXT(V
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceSamplerFilterMinmaxProperties(VkPhysicalDeviceSamplerFilterMinmaxProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // filterMinmaxSingleComponentFormats
-    bufferSize += 4; // filterMinmaxImageComponentMapping
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceSamplerFilterMinmaxProperties(VkPhysicalDeviceSamplerFilterMinmaxProperties* val, char* outputBuffer) {
@@ -8972,10 +7752,7 @@ static inline void vt_unserialize_VkPhysicalDeviceSamplerFilterMinmaxProperties(
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceProtectedMemoryProperties(VkPhysicalDeviceProtectedMemoryProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // protectedNoFault
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceProtectedMemoryProperties(VkPhysicalDeviceProtectedMemoryProperties* val, char* outputBuffer) {
@@ -8998,10 +7775,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProtectedMemoryProperties(VkPh
 }
 
 static inline int vt_sizeof_VkPhysicalDevicePointClippingProperties(VkPhysicalDevicePointClippingProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // pointClippingBehavior
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDevicePointClippingProperties(VkPhysicalDevicePointClippingProperties* val, char* outputBuffer) {
@@ -9024,13 +7798,7 @@ static inline void vt_unserialize_VkPhysicalDevicePointClippingProperties(VkPhys
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceSubgroupProperties(VkPhysicalDeviceSubgroupProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // subgroupSize
-    bufferSize += 4; // supportedStages
-    bufferSize += 4; // supportedOperations
-    bufferSize += 4; // quadOperationsInAllStages
-    return bufferSize;
+    return 20;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceSubgroupProperties(VkPhysicalDeviceSubgroupProperties* val, char* outputBuffer) {
@@ -9065,11 +7833,7 @@ static inline void vt_unserialize_VkPhysicalDeviceSubgroupProperties(VkPhysicalD
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceMultiviewProperties(VkPhysicalDeviceMultiviewProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // maxMultiviewViewCount
-    bufferSize += 4; // maxMultiviewInstanceIndex
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceMultiviewProperties(VkPhysicalDeviceMultiviewProperties* val, char* outputBuffer) {
@@ -9096,13 +7860,10 @@ static inline void vt_unserialize_VkPhysicalDeviceMultiviewProperties(VkPhysical
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceIDProperties(VkPhysicalDeviceIDProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 12;
     bufferSize += VK_UUID_SIZE;
     bufferSize += VK_UUID_SIZE;
     bufferSize += VK_LUID_SIZE;
-    bufferSize += 4; // deviceNodeMask
-    bufferSize += 4; // deviceLUIDValid
     return bufferSize;
 }
 
@@ -9142,9 +7903,7 @@ static inline void vt_unserialize_VkPhysicalDeviceIDProperties(VkPhysicalDeviceI
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceDriverProperties(VkPhysicalDeviceDriverProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // driverID
+    int bufferSize = 8;
     bufferSize += strlen(val->driverName) + 1;
     bufferSize += strlen(val->driverInfo) + 1;
     bufferSize += vt_sizeof_VkConformanceVersion(&val->conformanceVersion);
@@ -9199,10 +7958,7 @@ static inline void vt_unserialize_VkPhysicalDeviceDriverProperties(VkPhysicalDev
 }
 
 static inline int vt_sizeof_VkPhysicalDevicePushDescriptorPropertiesKHR(VkPhysicalDevicePushDescriptorPropertiesKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // maxPushDescriptors
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDevicePushDescriptorPropertiesKHR(VkPhysicalDevicePushDescriptorPropertiesKHR* val, char* outputBuffer) {
@@ -9225,12 +7981,7 @@ static inline void vt_unserialize_VkPhysicalDevicePushDescriptorPropertiesKHR(Vk
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceMapMemoryPlacedFeaturesEXT(VkPhysicalDeviceMapMemoryPlacedFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // memoryMapPlaced
-    bufferSize += 4; // memoryMapRangePlaced
-    bufferSize += 4; // memoryUnmapReserve
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceMapMemoryPlacedFeaturesEXT(VkPhysicalDeviceMapMemoryPlacedFeaturesEXT* val, char* outputBuffer) {
@@ -9261,10 +8012,7 @@ static inline void vt_unserialize_VkPhysicalDeviceMapMemoryPlacedFeaturesEXT(VkP
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT(VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // shaderModuleIdentifier
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT(VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT* val, char* outputBuffer) {
@@ -9287,10 +8035,7 @@ static inline void vt_unserialize_VkPhysicalDeviceShaderModuleIdentifierFeatures
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceShaderIntegerDotProductFeatures(VkPhysicalDeviceShaderIntegerDotProductFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // shaderIntegerDotProduct
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceShaderIntegerDotProductFeatures(VkPhysicalDeviceShaderIntegerDotProductFeatures* val, char* outputBuffer) {
@@ -9313,11 +8058,7 @@ static inline void vt_unserialize_VkPhysicalDeviceShaderIntegerDotProductFeature
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceProvokingVertexFeaturesEXT(VkPhysicalDeviceProvokingVertexFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // provokingVertexLast
-    bufferSize += 4; // transformFeedbackPreservesProvokingVertex
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceProvokingVertexFeaturesEXT(VkPhysicalDeviceProvokingVertexFeaturesEXT* val, char* outputBuffer) {
@@ -9344,10 +8085,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProvokingVertexFeaturesEXT(VkP
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceSynchronization2Features(VkPhysicalDeviceSynchronization2Features* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // synchronization2
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceSynchronization2Features(VkPhysicalDeviceSynchronization2Features* val, char* outputBuffer) {
@@ -9370,10 +8108,7 @@ static inline void vt_unserialize_VkPhysicalDeviceSynchronization2Features(VkPhy
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceColorWriteEnableFeaturesEXT(VkPhysicalDeviceColorWriteEnableFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // colorWriteEnable
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceColorWriteEnableFeaturesEXT(VkPhysicalDeviceColorWriteEnableFeaturesEXT* val, char* outputBuffer) {
@@ -9396,10 +8131,7 @@ static inline void vt_unserialize_VkPhysicalDeviceColorWriteEnableFeaturesEXT(Vk
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceDepthClipControlFeaturesEXT(VkPhysicalDeviceDepthClipControlFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // depthClipControl
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceDepthClipControlFeaturesEXT(VkPhysicalDeviceDepthClipControlFeaturesEXT* val, char* outputBuffer) {
@@ -9422,10 +8154,7 @@ static inline void vt_unserialize_VkPhysicalDeviceDepthClipControlFeaturesEXT(Vk
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT(VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // mutableDescriptorType
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT(VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT* val, char* outputBuffer) {
@@ -9448,10 +8177,7 @@ static inline void vt_unserialize_VkPhysicalDeviceMutableDescriptorTypeFeaturesE
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceShaderTerminateInvocationFeatures(VkPhysicalDeviceShaderTerminateInvocationFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // shaderTerminateInvocation
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceShaderTerminateInvocationFeatures(VkPhysicalDeviceShaderTerminateInvocationFeatures* val, char* outputBuffer) {
@@ -9474,11 +8200,7 @@ static inline void vt_unserialize_VkPhysicalDeviceShaderTerminateInvocationFeatu
 }
 
 static inline int vt_sizeof_VkPhysicalDevice4444FormatsFeaturesEXT(VkPhysicalDevice4444FormatsFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // formatA4R4G4B4
-    bufferSize += 4; // formatA4B4G4R4
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDevice4444FormatsFeaturesEXT(VkPhysicalDevice4444FormatsFeaturesEXT* val, char* outputBuffer) {
@@ -9505,10 +8227,7 @@ static inline void vt_unserialize_VkPhysicalDevice4444FormatsFeaturesEXT(VkPhysi
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceImageRobustnessFeatures(VkPhysicalDeviceImageRobustnessFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // robustImageAccess
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceImageRobustnessFeatures(VkPhysicalDeviceImageRobustnessFeatures* val, char* outputBuffer) {
@@ -9531,12 +8250,7 @@ static inline void vt_unserialize_VkPhysicalDeviceImageRobustnessFeatures(VkPhys
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceRobustness2FeaturesEXT(VkPhysicalDeviceRobustness2FeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // robustBufferAccess2
-    bufferSize += 4; // robustImageAccess2
-    bufferSize += 4; // nullDescriptor
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceRobustness2FeaturesEXT(VkPhysicalDeviceRobustness2FeaturesEXT* val, char* outputBuffer) {
@@ -9567,10 +8281,7 @@ static inline void vt_unserialize_VkPhysicalDeviceRobustness2FeaturesEXT(VkPhysi
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures(VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // shaderZeroInitializeWorkgroupMemory
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures(VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures* val, char* outputBuffer) {
@@ -9593,40 +8304,7 @@ static inline void vt_unserialize_VkPhysicalDeviceZeroInitializeWorkgroupMemoryF
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceExtendedDynamicState3FeaturesEXT(VkPhysicalDeviceExtendedDynamicState3FeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // extendedDynamicState3TessellationDomainOrigin
-    bufferSize += 4; // extendedDynamicState3DepthClampEnable
-    bufferSize += 4; // extendedDynamicState3PolygonMode
-    bufferSize += 4; // extendedDynamicState3RasterizationSamples
-    bufferSize += 4; // extendedDynamicState3SampleMask
-    bufferSize += 4; // extendedDynamicState3AlphaToCoverageEnable
-    bufferSize += 4; // extendedDynamicState3AlphaToOneEnable
-    bufferSize += 4; // extendedDynamicState3LogicOpEnable
-    bufferSize += 4; // extendedDynamicState3ColorBlendEnable
-    bufferSize += 4; // extendedDynamicState3ColorBlendEquation
-    bufferSize += 4; // extendedDynamicState3ColorWriteMask
-    bufferSize += 4; // extendedDynamicState3RasterizationStream
-    bufferSize += 4; // extendedDynamicState3ConservativeRasterizationMode
-    bufferSize += 4; // extendedDynamicState3ExtraPrimitiveOverestimationSize
-    bufferSize += 4; // extendedDynamicState3DepthClipEnable
-    bufferSize += 4; // extendedDynamicState3SampleLocationsEnable
-    bufferSize += 4; // extendedDynamicState3ColorBlendAdvanced
-    bufferSize += 4; // extendedDynamicState3ProvokingVertexMode
-    bufferSize += 4; // extendedDynamicState3LineRasterizationMode
-    bufferSize += 4; // extendedDynamicState3LineStippleEnable
-    bufferSize += 4; // extendedDynamicState3DepthClipNegativeOneToOne
-    bufferSize += 4; // extendedDynamicState3ViewportWScalingEnable
-    bufferSize += 4; // extendedDynamicState3ViewportSwizzle
-    bufferSize += 4; // extendedDynamicState3CoverageToColorEnable
-    bufferSize += 4; // extendedDynamicState3CoverageToColorLocation
-    bufferSize += 4; // extendedDynamicState3CoverageModulationMode
-    bufferSize += 4; // extendedDynamicState3CoverageModulationTableEnable
-    bufferSize += 4; // extendedDynamicState3CoverageModulationTable
-    bufferSize += 4; // extendedDynamicState3CoverageReductionMode
-    bufferSize += 4; // extendedDynamicState3RepresentativeFragmentTestEnable
-    bufferSize += 4; // extendedDynamicState3ShadingRateImageEnable
-    return bufferSize;
+    return 128;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceExtendedDynamicState3FeaturesEXT(VkPhysicalDeviceExtendedDynamicState3FeaturesEXT* val, char* outputBuffer) {
@@ -9769,10 +8447,7 @@ static inline void vt_unserialize_VkPhysicalDeviceExtendedDynamicState3FeaturesE
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceExtendedDynamicStateFeaturesEXT(VkPhysicalDeviceExtendedDynamicStateFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // extendedDynamicState
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceExtendedDynamicStateFeaturesEXT(VkPhysicalDeviceExtendedDynamicStateFeaturesEXT* val, char* outputBuffer) {
@@ -9795,11 +8470,7 @@ static inline void vt_unserialize_VkPhysicalDeviceExtendedDynamicStateFeaturesEX
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceBorderColorSwizzleFeaturesEXT(VkPhysicalDeviceBorderColorSwizzleFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // borderColorSwizzle
-    bufferSize += 4; // borderColorSwizzleFromImage
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceBorderColorSwizzleFeaturesEXT(VkPhysicalDeviceBorderColorSwizzleFeaturesEXT* val, char* outputBuffer) {
@@ -9826,11 +8497,7 @@ static inline void vt_unserialize_VkPhysicalDeviceBorderColorSwizzleFeaturesEXT(
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceCustomBorderColorFeaturesEXT(VkPhysicalDeviceCustomBorderColorFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // customBorderColors
-    bufferSize += 4; // customBorderColorWithoutFormat
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceCustomBorderColorFeaturesEXT(VkPhysicalDeviceCustomBorderColorFeaturesEXT* val, char* outputBuffer) {
@@ -9857,24 +8524,7 @@ static inline void vt_unserialize_VkPhysicalDeviceCustomBorderColorFeaturesEXT(V
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceVulkan13Features(VkPhysicalDeviceVulkan13Features* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // robustImageAccess
-    bufferSize += 4; // inlineUniformBlock
-    bufferSize += 4; // descriptorBindingInlineUniformBlockUpdateAfterBind
-    bufferSize += 4; // pipelineCreationCacheControl
-    bufferSize += 4; // privateData
-    bufferSize += 4; // shaderDemoteToHelperInvocation
-    bufferSize += 4; // shaderTerminateInvocation
-    bufferSize += 4; // subgroupSizeControl
-    bufferSize += 4; // computeFullSubgroups
-    bufferSize += 4; // synchronization2
-    bufferSize += 4; // textureCompressionASTC_HDR
-    bufferSize += 4; // shaderZeroInitializeWorkgroupMemory
-    bufferSize += 4; // dynamicRendering
-    bufferSize += 4; // shaderIntegerDotProduct
-    bufferSize += 4; // maintenance4
-    return bufferSize;
+    return 64;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceVulkan13Features(VkPhysicalDeviceVulkan13Features* val, char* outputBuffer) {
@@ -9953,56 +8603,7 @@ static inline void vt_unserialize_VkPhysicalDeviceVulkan13Features(VkPhysicalDev
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceVulkan12Features(VkPhysicalDeviceVulkan12Features* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // samplerMirrorClampToEdge
-    bufferSize += 4; // drawIndirectCount
-    bufferSize += 4; // storageBuffer8BitAccess
-    bufferSize += 4; // uniformAndStorageBuffer8BitAccess
-    bufferSize += 4; // storagePushConstant8
-    bufferSize += 4; // shaderBufferInt64Atomics
-    bufferSize += 4; // shaderSharedInt64Atomics
-    bufferSize += 4; // shaderFloat16
-    bufferSize += 4; // shaderInt8
-    bufferSize += 4; // descriptorIndexing
-    bufferSize += 4; // shaderInputAttachmentArrayDynamicIndexing
-    bufferSize += 4; // shaderUniformTexelBufferArrayDynamicIndexing
-    bufferSize += 4; // shaderStorageTexelBufferArrayDynamicIndexing
-    bufferSize += 4; // shaderUniformBufferArrayNonUniformIndexing
-    bufferSize += 4; // shaderSampledImageArrayNonUniformIndexing
-    bufferSize += 4; // shaderStorageBufferArrayNonUniformIndexing
-    bufferSize += 4; // shaderStorageImageArrayNonUniformIndexing
-    bufferSize += 4; // shaderInputAttachmentArrayNonUniformIndexing
-    bufferSize += 4; // shaderUniformTexelBufferArrayNonUniformIndexing
-    bufferSize += 4; // shaderStorageTexelBufferArrayNonUniformIndexing
-    bufferSize += 4; // descriptorBindingUniformBufferUpdateAfterBind
-    bufferSize += 4; // descriptorBindingSampledImageUpdateAfterBind
-    bufferSize += 4; // descriptorBindingStorageImageUpdateAfterBind
-    bufferSize += 4; // descriptorBindingStorageBufferUpdateAfterBind
-    bufferSize += 4; // descriptorBindingUniformTexelBufferUpdateAfterBind
-    bufferSize += 4; // descriptorBindingStorageTexelBufferUpdateAfterBind
-    bufferSize += 4; // descriptorBindingUpdateUnusedWhilePending
-    bufferSize += 4; // descriptorBindingPartiallyBound
-    bufferSize += 4; // descriptorBindingVariableDescriptorCount
-    bufferSize += 4; // runtimeDescriptorArray
-    bufferSize += 4; // samplerFilterMinmax
-    bufferSize += 4; // scalarBlockLayout
-    bufferSize += 4; // imagelessFramebuffer
-    bufferSize += 4; // uniformBufferStandardLayout
-    bufferSize += 4; // shaderSubgroupExtendedTypes
-    bufferSize += 4; // separateDepthStencilLayouts
-    bufferSize += 4; // hostQueryReset
-    bufferSize += 4; // timelineSemaphore
-    bufferSize += 4; // bufferDeviceAddress
-    bufferSize += 4; // bufferDeviceAddressCaptureReplay
-    bufferSize += 4; // bufferDeviceAddressMultiDevice
-    bufferSize += 4; // vulkanMemoryModel
-    bufferSize += 4; // vulkanMemoryModelDeviceScope
-    bufferSize += 4; // vulkanMemoryModelAvailabilityVisibilityChains
-    bufferSize += 4; // shaderOutputViewportIndex
-    bufferSize += 4; // shaderOutputLayer
-    bufferSize += 4; // subgroupBroadcastDynamicId
-    return bufferSize;
+    return 192;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceVulkan12Features(VkPhysicalDeviceVulkan12Features* val, char* outputBuffer) {
@@ -10209,21 +8810,7 @@ static inline void vt_unserialize_VkPhysicalDeviceVulkan12Features(VkPhysicalDev
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceVulkan11Features(VkPhysicalDeviceVulkan11Features* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // storageBuffer16BitAccess
-    bufferSize += 4; // uniformAndStorageBuffer16BitAccess
-    bufferSize += 4; // storagePushConstant16
-    bufferSize += 4; // storageInputOutput16
-    bufferSize += 4; // multiview
-    bufferSize += 4; // multiviewGeometryShader
-    bufferSize += 4; // multiviewTessellationShader
-    bufferSize += 4; // variablePointersStorageBuffer
-    bufferSize += 4; // variablePointers
-    bufferSize += 4; // protectedMemory
-    bufferSize += 4; // samplerYcbcrConversion
-    bufferSize += 4; // shaderDrawParameters
-    return bufferSize;
+    return 52;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceVulkan11Features(VkPhysicalDeviceVulkan11Features* val, char* outputBuffer) {
@@ -10290,10 +8877,7 @@ static inline void vt_unserialize_VkPhysicalDeviceVulkan11Features(VkPhysicalDev
 }
 
 static inline int vt_sizeof_VkPhysicalDevicePipelineCreationCacheControlFeatures(VkPhysicalDevicePipelineCreationCacheControlFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // pipelineCreationCacheControl
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDevicePipelineCreationCacheControlFeatures(VkPhysicalDevicePipelineCreationCacheControlFeatures* val, char* outputBuffer) {
@@ -10316,11 +8900,7 @@ static inline void vt_unserialize_VkPhysicalDevicePipelineCreationCacheControlFe
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceSubgroupSizeControlFeatures(VkPhysicalDeviceSubgroupSizeControlFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // subgroupSizeControl
-    bufferSize += 4; // computeFullSubgroups
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceSubgroupSizeControlFeatures(VkPhysicalDeviceSubgroupSizeControlFeatures* val, char* outputBuffer) {
@@ -10347,10 +8927,7 @@ static inline void vt_unserialize_VkPhysicalDeviceSubgroupSizeControlFeatures(Vk
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT(VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // texelBufferAlignment
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT(VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT* val, char* outputBuffer) {
@@ -10373,10 +8950,7 @@ static inline void vt_unserialize_VkPhysicalDeviceTexelBufferAlignmentFeaturesEX
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures(VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // shaderDemoteToHelperInvocation
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures(VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures* val, char* outputBuffer) {
@@ -10399,10 +8973,7 @@ static inline void vt_unserialize_VkPhysicalDeviceShaderDemoteToHelperInvocation
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures(VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // separateDepthStencilLayouts
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures(VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures* val, char* outputBuffer) {
@@ -10425,12 +8996,7 @@ static inline void vt_unserialize_VkPhysicalDeviceSeparateDepthStencilLayoutsFea
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT(VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // fragmentShaderSampleInterlock
-    bufferSize += 4; // fragmentShaderPixelInterlock
-    bufferSize += 4; // fragmentShaderShadingRateInterlock
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT(VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT* val, char* outputBuffer) {
@@ -10461,10 +9027,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFragmentShaderInterlockFeature
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceTextureCompressionASTCHDRFeatures(VkPhysicalDeviceTextureCompressionASTCHDRFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // textureCompressionASTC_HDR
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceTextureCompressionASTCHDRFeatures(VkPhysicalDeviceTextureCompressionASTCHDRFeatures* val, char* outputBuffer) {
@@ -10487,10 +9050,7 @@ static inline void vt_unserialize_VkPhysicalDeviceTextureCompressionASTCHDRFeatu
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceImagelessFramebufferFeatures(VkPhysicalDeviceImagelessFramebufferFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // imagelessFramebuffer
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceImagelessFramebufferFeatures(VkPhysicalDeviceImagelessFramebufferFeatures* val, char* outputBuffer) {
@@ -10513,12 +9073,7 @@ static inline void vt_unserialize_VkPhysicalDeviceImagelessFramebufferFeatures(V
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceBufferDeviceAddressFeatures(VkPhysicalDeviceBufferDeviceAddressFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // bufferDeviceAddress
-    bufferSize += 4; // bufferDeviceAddressCaptureReplay
-    bufferSize += 4; // bufferDeviceAddressMultiDevice
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceBufferDeviceAddressFeatures(VkPhysicalDeviceBufferDeviceAddressFeatures* val, char* outputBuffer) {
@@ -10549,10 +9104,7 @@ static inline void vt_unserialize_VkPhysicalDeviceBufferDeviceAddressFeatures(Vk
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceDepthClipEnableFeaturesEXT(VkPhysicalDeviceDepthClipEnableFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // depthClipEnable
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceDepthClipEnableFeaturesEXT(VkPhysicalDeviceDepthClipEnableFeaturesEXT* val, char* outputBuffer) {
@@ -10575,10 +9127,7 @@ static inline void vt_unserialize_VkPhysicalDeviceDepthClipEnableFeaturesEXT(VkP
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceUniformBufferStandardLayoutFeatures(VkPhysicalDeviceUniformBufferStandardLayoutFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // uniformBufferStandardLayout
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceUniformBufferStandardLayoutFeatures(VkPhysicalDeviceUniformBufferStandardLayoutFeatures* val, char* outputBuffer) {
@@ -10601,10 +9150,7 @@ static inline void vt_unserialize_VkPhysicalDeviceUniformBufferStandardLayoutFea
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceScalarBlockLayoutFeatures(VkPhysicalDeviceScalarBlockLayoutFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // scalarBlockLayout
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceScalarBlockLayoutFeatures(VkPhysicalDeviceScalarBlockLayoutFeatures* val, char* outputBuffer) {
@@ -10627,11 +9173,7 @@ static inline void vt_unserialize_VkPhysicalDeviceScalarBlockLayoutFeatures(VkPh
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceVertexAttributeDivisorFeaturesKHR(VkPhysicalDeviceVertexAttributeDivisorFeaturesKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // vertexAttributeInstanceRateDivisor
-    bufferSize += 4; // vertexAttributeInstanceRateZeroDivisor
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceVertexAttributeDivisorFeaturesKHR(VkPhysicalDeviceVertexAttributeDivisorFeaturesKHR* val, char* outputBuffer) {
@@ -10658,11 +9200,7 @@ static inline void vt_unserialize_VkPhysicalDeviceVertexAttributeDivisorFeatures
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceShaderAtomicInt64Features(VkPhysicalDeviceShaderAtomicInt64Features* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // shaderBufferInt64Atomics
-    bufferSize += 4; // shaderSharedInt64Atomics
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceShaderAtomicInt64Features(VkPhysicalDeviceShaderAtomicInt64Features* val, char* outputBuffer) {
@@ -10689,12 +9227,7 @@ static inline void vt_unserialize_VkPhysicalDeviceShaderAtomicInt64Features(VkPh
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceVulkanMemoryModelFeatures(VkPhysicalDeviceVulkanMemoryModelFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // vulkanMemoryModel
-    bufferSize += 4; // vulkanMemoryModelDeviceScope
-    bufferSize += 4; // vulkanMemoryModelAvailabilityVisibilityChains
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceVulkanMemoryModelFeatures(VkPhysicalDeviceVulkanMemoryModelFeatures* val, char* outputBuffer) {
@@ -10725,11 +9258,7 @@ static inline void vt_unserialize_VkPhysicalDeviceVulkanMemoryModelFeatures(VkPh
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceConditionalRenderingFeaturesEXT(VkPhysicalDeviceConditionalRenderingFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // conditionalRendering
-    bufferSize += 4; // inheritedConditionalRendering
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceConditionalRenderingFeaturesEXT(VkPhysicalDeviceConditionalRenderingFeaturesEXT* val, char* outputBuffer) {
@@ -10756,12 +9285,7 @@ static inline void vt_unserialize_VkPhysicalDeviceConditionalRenderingFeaturesEX
 }
 
 static inline int vt_sizeof_VkPhysicalDevice8BitStorageFeatures(VkPhysicalDevice8BitStorageFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // storageBuffer8BitAccess
-    bufferSize += 4; // uniformAndStorageBuffer8BitAccess
-    bufferSize += 4; // storagePushConstant8
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkPhysicalDevice8BitStorageFeatures(VkPhysicalDevice8BitStorageFeatures* val, char* outputBuffer) {
@@ -10792,10 +9316,7 @@ static inline void vt_unserialize_VkPhysicalDevice8BitStorageFeatures(VkPhysical
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceTimelineSemaphoreFeatures(VkPhysicalDeviceTimelineSemaphoreFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // timelineSemaphore
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceTimelineSemaphoreFeatures(VkPhysicalDeviceTimelineSemaphoreFeatures* val, char* outputBuffer) {
@@ -10818,29 +9339,7 @@ static inline void vt_unserialize_VkPhysicalDeviceTimelineSemaphoreFeatures(VkPh
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceDescriptorIndexingFeatures(VkPhysicalDeviceDescriptorIndexingFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // shaderInputAttachmentArrayDynamicIndexing
-    bufferSize += 4; // shaderUniformTexelBufferArrayDynamicIndexing
-    bufferSize += 4; // shaderStorageTexelBufferArrayDynamicIndexing
-    bufferSize += 4; // shaderUniformBufferArrayNonUniformIndexing
-    bufferSize += 4; // shaderSampledImageArrayNonUniformIndexing
-    bufferSize += 4; // shaderStorageBufferArrayNonUniformIndexing
-    bufferSize += 4; // shaderStorageImageArrayNonUniformIndexing
-    bufferSize += 4; // shaderInputAttachmentArrayNonUniformIndexing
-    bufferSize += 4; // shaderUniformTexelBufferArrayNonUniformIndexing
-    bufferSize += 4; // shaderStorageTexelBufferArrayNonUniformIndexing
-    bufferSize += 4; // descriptorBindingUniformBufferUpdateAfterBind
-    bufferSize += 4; // descriptorBindingSampledImageUpdateAfterBind
-    bufferSize += 4; // descriptorBindingStorageImageUpdateAfterBind
-    bufferSize += 4; // descriptorBindingStorageBufferUpdateAfterBind
-    bufferSize += 4; // descriptorBindingUniformTexelBufferUpdateAfterBind
-    bufferSize += 4; // descriptorBindingStorageTexelBufferUpdateAfterBind
-    bufferSize += 4; // descriptorBindingUpdateUnusedWhilePending
-    bufferSize += 4; // descriptorBindingPartiallyBound
-    bufferSize += 4; // descriptorBindingVariableDescriptorCount
-    bufferSize += 4; // runtimeDescriptorArray
-    return bufferSize;
+    return 84;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceDescriptorIndexingFeatures(VkPhysicalDeviceDescriptorIndexingFeatures* val, char* outputBuffer) {
@@ -10939,10 +9438,7 @@ static inline void vt_unserialize_VkPhysicalDeviceDescriptorIndexingFeatures(VkP
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceHostQueryResetFeatures(VkPhysicalDeviceHostQueryResetFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // hostQueryReset
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceHostQueryResetFeatures(VkPhysicalDeviceHostQueryResetFeatures* val, char* outputBuffer) {
@@ -10965,11 +9461,7 @@ static inline void vt_unserialize_VkPhysicalDeviceHostQueryResetFeatures(VkPhysi
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceShaderFloat16Int8Features(VkPhysicalDeviceShaderFloat16Int8Features* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // shaderFloat16
-    bufferSize += 4; // shaderInt8
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceShaderFloat16Int8Features(VkPhysicalDeviceShaderFloat16Int8Features* val, char* outputBuffer) {
@@ -10996,10 +9488,7 @@ static inline void vt_unserialize_VkPhysicalDeviceShaderFloat16Int8Features(VkPh
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceShaderDrawParametersFeatures(VkPhysicalDeviceShaderDrawParametersFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // shaderDrawParameters
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceShaderDrawParametersFeatures(VkPhysicalDeviceShaderDrawParametersFeatures* val, char* outputBuffer) {
@@ -11022,10 +9511,7 @@ static inline void vt_unserialize_VkPhysicalDeviceShaderDrawParametersFeatures(V
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceMaintenance4Features(VkPhysicalDeviceMaintenance4Features* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // maintenance4
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceMaintenance4Features(VkPhysicalDeviceMaintenance4Features* val, char* outputBuffer) {
@@ -11048,11 +9534,7 @@ static inline void vt_unserialize_VkPhysicalDeviceMaintenance4Features(VkPhysica
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceInlineUniformBlockFeatures(VkPhysicalDeviceInlineUniformBlockFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // inlineUniformBlock
-    bufferSize += 4; // descriptorBindingInlineUniformBlockUpdateAfterBind
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceInlineUniformBlockFeatures(VkPhysicalDeviceInlineUniformBlockFeatures* val, char* outputBuffer) {
@@ -11079,10 +9561,7 @@ static inline void vt_unserialize_VkPhysicalDeviceInlineUniformBlockFeatures(VkP
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceProtectedMemoryFeatures(VkPhysicalDeviceProtectedMemoryFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // protectedMemory
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceProtectedMemoryFeatures(VkPhysicalDeviceProtectedMemoryFeatures* val, char* outputBuffer) {
@@ -11105,10 +9584,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProtectedMemoryFeatures(VkPhys
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceSamplerYcbcrConversionFeatures(VkPhysicalDeviceSamplerYcbcrConversionFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // samplerYcbcrConversion
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceSamplerYcbcrConversionFeatures(VkPhysicalDeviceSamplerYcbcrConversionFeatures* val, char* outputBuffer) {
@@ -11131,10 +9607,7 @@ static inline void vt_unserialize_VkPhysicalDeviceSamplerYcbcrConversionFeatures
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures(VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // shaderSubgroupExtendedTypes
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures(VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures* val, char* outputBuffer) {
@@ -11157,13 +9630,7 @@ static inline void vt_unserialize_VkPhysicalDeviceShaderSubgroupExtendedTypesFea
 }
 
 static inline int vt_sizeof_VkPhysicalDevice16BitStorageFeatures(VkPhysicalDevice16BitStorageFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // storageBuffer16BitAccess
-    bufferSize += 4; // uniformAndStorageBuffer16BitAccess
-    bufferSize += 4; // storagePushConstant16
-    bufferSize += 4; // storageInputOutput16
-    return bufferSize;
+    return 20;
 }
 
 static inline void vt_serialize_VkPhysicalDevice16BitStorageFeatures(VkPhysicalDevice16BitStorageFeatures* val, char* outputBuffer) {
@@ -11198,12 +9665,7 @@ static inline void vt_unserialize_VkPhysicalDevice16BitStorageFeatures(VkPhysica
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceMultiviewFeatures(VkPhysicalDeviceMultiviewFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // multiview
-    bufferSize += 4; // multiviewGeometryShader
-    bufferSize += 4; // multiviewTessellationShader
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceMultiviewFeatures(VkPhysicalDeviceMultiviewFeatures* val, char* outputBuffer) {
@@ -11234,11 +9696,7 @@ static inline void vt_unserialize_VkPhysicalDeviceMultiviewFeatures(VkPhysicalDe
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceVariablePointersFeatures(VkPhysicalDeviceVariablePointersFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // variablePointersStorageBuffer
-    bufferSize += 4; // variablePointers
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceVariablePointersFeatures(VkPhysicalDeviceVariablePointersFeatures* val, char* outputBuffer) {
@@ -11265,10 +9723,7 @@ static inline void vt_unserialize_VkPhysicalDeviceVariablePointersFeatures(VkPhy
 }
 
 static inline int vt_sizeof_VkClearDepthStencilValue(VkClearDepthStencilValue* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // depth
-    bufferSize += 4; // stencil
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkClearDepthStencilValue(VkClearDepthStencilValue* val, char* outputBuffer) {
@@ -11300,10 +9755,7 @@ static inline void vt_unserialize_VkClearColorValue(VkClearColorValue* val, char
 }
 
 static inline int vt_sizeof_VkPhysicalDevicePrivateDataFeatures(VkPhysicalDevicePrivateDataFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // privateData
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDevicePrivateDataFeatures(VkPhysicalDevicePrivateDataFeatures* val, char* outputBuffer) {
@@ -11338,15 +9790,9 @@ static inline void vt_unserialize_VkClearValue(VkClearValue* val, char* inputBuf
 }
 
 static inline int vt_sizeof_VkRenderingAttachmentInfo(VkRenderingAttachmentInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 24;
     bufferSize += vt_sizeof_VkImageView(val->imageView);
-    bufferSize += 4; // imageLayout
-    bufferSize += 4; // resolveMode
     bufferSize += vt_sizeof_VkImageView(val->resolveImageView);
-    bufferSize += 4; // resolveImageLayout
-    bufferSize += 4; // loadOp
-    bufferSize += 4; // storeOp
     bufferSize += vt_sizeof_VkClearValue(&val->clearValue);
     return bufferSize;
 }
@@ -11427,11 +9873,7 @@ static inline void vt_unserialize_VkRenderingAttachmentInfo(VkRenderingAttachmen
 }
 
 static inline int vt_sizeof_VkDeviceGroupRenderPassBeginInfo(VkDeviceGroupRenderPassBeginInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // deviceMask
-    bufferSize += 4; // deviceRenderAreaCount
-    bufferSize += 4;
+    int bufferSize = 16;
     if (val->pDeviceRenderAreas) {
         int arrSize = val->deviceRenderAreaCount ? val->deviceRenderAreaCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -11499,12 +9941,8 @@ static inline void vt_unserialize_VkDeviceGroupRenderPassBeginInfo(VkDeviceGroup
 }
 
 static inline int vt_sizeof_VkDeviceGroupPresentInfoKHR(VkDeviceGroupPresentInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // swapchainCount
-    bufferSize += 4;
+    int bufferSize = 16;
     bufferSize += val->pDeviceMasks ? val->swapchainCount * 4 : 0;
-    bufferSize += 4; // mode
     return bufferSize;
 }
 
@@ -11554,10 +9992,7 @@ static inline void vt_unserialize_VkDeviceGroupPresentInfoKHR(VkDeviceGroupPrese
 }
 
 static inline int vt_sizeof_VkImageFormatListCreateInfo(VkImageFormatListCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // viewFormatCount
-    bufferSize += 4;
+    int bufferSize = 12;
     bufferSize += val->pViewFormats ? val->viewFormatCount * 4 : 0;
     return bufferSize;
 }
@@ -11604,10 +10039,7 @@ static inline void vt_unserialize_VkImageFormatListCreateInfo(VkImageFormatListC
 }
 
 static inline int vt_sizeof_VkDeviceGroupSwapchainCreateInfoKHR(VkDeviceGroupSwapchainCreateInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // modes
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkDeviceGroupSwapchainCreateInfoKHR(VkDeviceGroupSwapchainCreateInfoKHR* val, char* outputBuffer) {
@@ -11630,17 +10062,10 @@ static inline void vt_unserialize_VkDeviceGroupSwapchainCreateInfoKHR(VkDeviceGr
 }
 
 static inline int vt_sizeof_VkSurfaceCapabilitiesKHR(VkSurfaceCapabilitiesKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // minImageCount
-    bufferSize += 4; // maxImageCount
+    int bufferSize = 28;
     bufferSize += vt_sizeof_VkExtent2D(&val->currentExtent);
     bufferSize += vt_sizeof_VkExtent2D(&val->minImageExtent);
     bufferSize += vt_sizeof_VkExtent2D(&val->maxImageExtent);
-    bufferSize += 4; // maxImageArrayLayers
-    bufferSize += 4; // supportedTransforms
-    bufferSize += 4; // currentTransform
-    bufferSize += 4; // supportedCompositeAlpha
-    bufferSize += 4; // supportedUsageFlags
     return bufferSize;
 }
 
@@ -11693,10 +10118,7 @@ static inline void vt_unserialize_VkSurfaceCapabilitiesKHR(VkSurfaceCapabilities
 }
 
 static inline int vt_sizeof_VkSurfaceFormatKHR(VkSurfaceFormatKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // format
-    bufferSize += 4; // colorSpace
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkSurfaceFormatKHR(VkSurfaceFormatKHR* val, char* outputBuffer) {
@@ -11716,8 +10138,7 @@ static inline void vt_unserialize_VkSurfaceFormatKHR(VkSurfaceFormatKHR* val, ch
 }
 
 static inline int vt_sizeof_VkSwapchainCreateInfoKHR(VkSwapchainCreateInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 56;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -11746,22 +10167,9 @@ static inline int vt_sizeof_VkSwapchainCreateInfoKHR(VkSwapchainCreateInfoKHR* v
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
     bufferSize += vt_sizeof_VkSurfaceKHR(val->surface);
-    bufferSize += 4; // minImageCount
-    bufferSize += 4; // imageFormat
-    bufferSize += 4; // imageColorSpace
     bufferSize += vt_sizeof_VkExtent2D(&val->imageExtent);
-    bufferSize += 4; // imageArrayLayers
-    bufferSize += 4; // imageUsage
-    bufferSize += 4; // imageSharingMode
-    bufferSize += 4; // queueFamilyIndexCount
-    bufferSize += 4;
     bufferSize += val->pQueueFamilyIndices ? val->queueFamilyIndexCount * 4 : 0;
-    bufferSize += 4; // preTransform
-    bufferSize += 4; // compositeAlpha
-    bufferSize += 4; // presentMode
-    bufferSize += 4; // clipped
     bufferSize += vt_sizeof_VkSwapchainKHR(val->oldSwapchain);
     return bufferSize;
 }
@@ -11971,8 +10379,7 @@ static inline void vt_unserialize_VkSwapchainCreateInfoKHR(VkSwapchainCreateInfo
 }
 
 static inline int vt_sizeof_VkPresentInfoKHR(VkPresentInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 28;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -11996,23 +10403,17 @@ static inline int vt_sizeof_VkPresentInfoKHR(VkPresentInfoKHR* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // waitSemaphoreCount
-    bufferSize += 4;
     if (val->pWaitSemaphores) {
         for (int i = 0; i < val->waitSemaphoreCount; i++) {
             bufferSize += vt_sizeof_VkSemaphore(val->pWaitSemaphores[i]);
         }
     }
-    bufferSize += 4; // swapchainCount
-    bufferSize += 4;
     if (val->pSwapchains) {
         for (int i = 0; i < val->swapchainCount; i++) {
             bufferSize += vt_sizeof_VkSwapchainKHR(val->pSwapchains[i]);
         }
     }
-    bufferSize += 4;
     bufferSize += val->pImageIndices ? val->swapchainCount * 4 : 0;
-    bufferSize += 4;
     bufferSize += val->pResults ? val->swapchainCount * 4 : 0;
     return bufferSize;
 }
@@ -12232,8 +10633,7 @@ static inline void vt_unserialize_VkPresentInfoKHR(VkPresentInfoKHR* val, char* 
 }
 
 static inline int vt_sizeof_VkImageSwapchainCreateInfoKHR(VkImageSwapchainCreateInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkSwapchainKHR(val->swapchain);
     return bufferSize;
 }
@@ -12272,10 +10672,8 @@ static inline void vt_unserialize_VkImageSwapchainCreateInfoKHR(VkImageSwapchain
 }
 
 static inline int vt_sizeof_VkBindImageMemorySwapchainInfoKHR(VkBindImageMemorySwapchainInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkSwapchainKHR(val->swapchain);
-    bufferSize += 4; // imageIndex
     return bufferSize;
 }
 
@@ -12317,13 +10715,10 @@ static inline void vt_unserialize_VkBindImageMemorySwapchainInfoKHR(VkBindImageM
 }
 
 static inline int vt_sizeof_VkAcquireNextImageInfoKHR(VkAcquireNextImageInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 16;
     bufferSize += vt_sizeof_VkSwapchainKHR(val->swapchain);
-    bufferSize += 8; // timeout
     bufferSize += vt_sizeof_VkSemaphore(val->semaphore);
     bufferSize += vt_sizeof_VkFence(val->fence);
-    bufferSize += 4; // deviceMask
     return bufferSize;
 }
 
@@ -12405,10 +10800,8 @@ static inline void vt_unserialize_VkAcquireNextImageInfoKHR(VkAcquireNextImageIn
 }
 
 static inline int vt_sizeof_VkDeviceGroupPresentCapabilitiesKHR(VkDeviceGroupPresentCapabilitiesKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 8;
     bufferSize += VK_MAX_DEVICE_GROUP_SIZE;
-    bufferSize += 4; // modes
     return bufferSize;
 }
 
@@ -12436,11 +10829,7 @@ static inline void vt_unserialize_VkDeviceGroupPresentCapabilitiesKHR(VkDeviceGr
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceTransformFeedbackFeaturesEXT(VkPhysicalDeviceTransformFeedbackFeaturesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // transformFeedback
-    bufferSize += 4; // geometryStreams
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceTransformFeedbackFeaturesEXT(VkPhysicalDeviceTransformFeedbackFeaturesEXT* val, char* outputBuffer) {
@@ -12467,19 +10856,7 @@ static inline void vt_unserialize_VkPhysicalDeviceTransformFeedbackFeaturesEXT(V
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceTransformFeedbackPropertiesEXT(VkPhysicalDeviceTransformFeedbackPropertiesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // maxTransformFeedbackStreams
-    bufferSize += 4; // maxTransformFeedbackBuffers
-    bufferSize += 8; // maxTransformFeedbackBufferSize
-    bufferSize += 4; // maxTransformFeedbackStreamDataSize
-    bufferSize += 4; // maxTransformFeedbackBufferDataSize
-    bufferSize += 4; // maxTransformFeedbackBufferDataStride
-    bufferSize += 4; // transformFeedbackQueries
-    bufferSize += 4; // transformFeedbackStreamsLinesTriangles
-    bufferSize += 4; // transformFeedbackRasterizationStreamSelect
-    bufferSize += 4; // transformFeedbackDraw
-    return bufferSize;
+    return 48;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceTransformFeedbackPropertiesEXT(VkPhysicalDeviceTransformFeedbackPropertiesEXT* val, char* outputBuffer) {
@@ -12538,8 +10915,7 @@ static inline void vt_unserialize_VkPhysicalDeviceTransformFeedbackPropertiesEXT
 }
 
 static inline int vt_sizeof_VkRenderingInfo(VkRenderingInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 32;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -12563,12 +10939,7 @@ static inline int vt_sizeof_VkRenderingInfo(VkRenderingInfo* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
     bufferSize += vt_sizeof_VkRect2D(&val->renderArea);
-    bufferSize += 4; // layerCount
-    bufferSize += 4; // viewMask
-    bufferSize += 4; // colorAttachmentCount
-    bufferSize += 4;
     if (val->pColorAttachments) {
         int arrSize = val->colorAttachmentCount ? val->colorAttachmentCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -12576,9 +10947,7 @@ static inline int vt_sizeof_VkRenderingInfo(VkRenderingInfo* val) {
             bufferSize += vt_sizeof_VkRenderingAttachmentInfo(&val->pColorAttachments[i]);
         }
     }
-    bufferSize += 4;
     bufferSize += val->pDepthAttachment ? vt_sizeof_VkRenderingAttachmentInfo(val->pDepthAttachment) : 0;
-    bufferSize += 4;
     bufferSize += val->pStencilAttachment ? vt_sizeof_VkRenderingAttachmentInfo(val->pStencilAttachment) : 0;
     return bufferSize;
 }
@@ -12761,14 +11130,8 @@ static inline void vt_unserialize_VkRenderingInfo(VkRenderingInfo* val, char* in
 }
 
 static inline int vt_sizeof_VkPipelineRenderingCreateInfo(VkPipelineRenderingCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // viewMask
-    bufferSize += 4; // colorAttachmentCount
-    bufferSize += 4;
+    int bufferSize = 24;
     bufferSize += val->pColorAttachmentFormats ? val->colorAttachmentCount * 4 : 0;
-    bufferSize += 4; // depthAttachmentFormat
-    bufferSize += 4; // stencilAttachmentFormat
     return bufferSize;
 }
 
@@ -12826,10 +11189,7 @@ static inline void vt_unserialize_VkPipelineRenderingCreateInfo(VkPipelineRender
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceDynamicRenderingFeatures(VkPhysicalDeviceDynamicRenderingFeatures* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // dynamicRendering
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceDynamicRenderingFeatures(VkPhysicalDeviceDynamicRenderingFeatures* val, char* outputBuffer) {
@@ -12852,8 +11212,7 @@ static inline void vt_unserialize_VkPhysicalDeviceDynamicRenderingFeatures(VkPhy
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeatures2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -14476,8 +12835,7 @@ static inline void vt_unserialize_VkPhysicalDeviceFeatures2(VkPhysicalDeviceFeat
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceProperties2(VkPhysicalDeviceProperties2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -15491,8 +13849,7 @@ static inline void vt_unserialize_VkPhysicalDeviceProperties2(VkPhysicalDevicePr
 }
 
 static inline int vt_sizeof_VkFormatProperties2(VkFormatProperties2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -15607,8 +13964,7 @@ static inline void vt_unserialize_VkFormatProperties2(VkFormatProperties2* val, 
 }
 
 static inline int vt_sizeof_VkImageFormatProperties2(VkImageFormatProperties2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -15752,8 +14108,7 @@ static inline void vt_unserialize_VkImageFormatProperties2(VkImageFormatProperti
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceImageFormatInfo2(VkPhysicalDeviceImageFormatInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 24;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -15787,11 +14142,6 @@ static inline int vt_sizeof_VkPhysicalDeviceImageFormatInfo2(VkPhysicalDeviceIma
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // format
-    bufferSize += 4; // type
-    bufferSize += 4; // tiling
-    bufferSize += 4; // usage
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -15946,8 +14296,7 @@ static inline void vt_unserialize_VkPhysicalDeviceImageFormatInfo2(VkPhysicalDev
 }
 
 static inline int vt_sizeof_VkQueueFamilyProperties2(VkQueueFamilyProperties2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkQueueFamilyProperties(&val->queueFamilyProperties);
     return bufferSize;
 }
@@ -15972,8 +14321,7 @@ static inline void vt_unserialize_VkQueueFamilyProperties2(VkQueueFamilyProperti
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceMemoryProperties2(VkPhysicalDeviceMemoryProperties2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -16088,8 +14436,7 @@ static inline void vt_unserialize_VkPhysicalDeviceMemoryProperties2(VkPhysicalDe
 }
 
 static inline int vt_sizeof_VkSparseImageFormatProperties2(VkSparseImageFormatProperties2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkSparseImageFormatProperties(&val->properties);
     return bufferSize;
 }
@@ -16114,14 +14461,7 @@ static inline void vt_unserialize_VkSparseImageFormatProperties2(VkSparseImageFo
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceSparseImageFormatInfo2(VkPhysicalDeviceSparseImageFormatInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // format
-    bufferSize += 4; // type
-    bufferSize += 4; // samples
-    bufferSize += 4; // usage
-    bufferSize += 4; // tiling
-    return bufferSize;
+    return 24;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceSparseImageFormatInfo2(VkPhysicalDeviceSparseImageFormatInfo2* val, char* outputBuffer) {
@@ -16160,10 +14500,7 @@ static inline void vt_unserialize_VkPhysicalDeviceSparseImageFormatInfo2(VkPhysi
 }
 
 static inline int vt_sizeof_VkExternalMemoryImageCreateInfo(VkExternalMemoryImageCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // handleTypes
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkExternalMemoryImageCreateInfo(VkExternalMemoryImageCreateInfo* val, char* outputBuffer) {
@@ -16186,10 +14523,7 @@ static inline void vt_unserialize_VkExternalMemoryImageCreateInfo(VkExternalMemo
 }
 
 static inline int vt_sizeof_VkExternalMemoryBufferCreateInfo(VkExternalMemoryBufferCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // handleTypes
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkExternalMemoryBufferCreateInfo(VkExternalMemoryBufferCreateInfo* val, char* outputBuffer) {
@@ -16212,10 +14546,7 @@ static inline void vt_unserialize_VkExternalMemoryBufferCreateInfo(VkExternalMem
 }
 
 static inline int vt_sizeof_VkExportMemoryAllocateInfo(VkExportMemoryAllocateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // handleTypes
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkExportMemoryAllocateInfo(VkExportMemoryAllocateInfo* val, char* outputBuffer) {
@@ -16238,11 +14569,7 @@ static inline void vt_unserialize_VkExportMemoryAllocateInfo(VkExportMemoryAlloc
 }
 
 static inline int vt_sizeof_VkImportMemoryFdInfoKHR(VkImportMemoryFdInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // handleType
-    bufferSize += 4; // fd
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkImportMemoryFdInfoKHR(VkImportMemoryFdInfoKHR* val, char* outputBuffer) {
@@ -16269,10 +14596,7 @@ static inline void vt_unserialize_VkImportMemoryFdInfoKHR(VkImportMemoryFdInfoKH
 }
 
 static inline int vt_sizeof_VkMemoryFdPropertiesKHR(VkMemoryFdPropertiesKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // memoryTypeBits
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkMemoryFdPropertiesKHR(VkMemoryFdPropertiesKHR* val, char* outputBuffer) {
@@ -16295,10 +14619,8 @@ static inline void vt_unserialize_VkMemoryFdPropertiesKHR(VkMemoryFdPropertiesKH
 }
 
 static inline int vt_sizeof_VkMemoryGetFdInfoKHR(VkMemoryGetFdInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkDeviceMemory(val->memory);
-    bufferSize += 4; // handleType
     return bufferSize;
 }
 
@@ -16340,10 +14662,7 @@ static inline void vt_unserialize_VkMemoryGetFdInfoKHR(VkMemoryGetFdInfoKHR* val
 }
 
 static inline int vt_sizeof_VkExportSemaphoreCreateInfo(VkExportSemaphoreCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // handleTypes
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkExportSemaphoreCreateInfo(VkExportSemaphoreCreateInfo* val, char* outputBuffer) {
@@ -16366,12 +14685,8 @@ static inline void vt_unserialize_VkExportSemaphoreCreateInfo(VkExportSemaphoreC
 }
 
 static inline int vt_sizeof_VkImportSemaphoreFdInfoKHR(VkImportSemaphoreFdInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 16;
     bufferSize += vt_sizeof_VkSemaphore(val->semaphore);
-    bufferSize += 4; // flags
-    bufferSize += 4; // handleType
-    bufferSize += 4; // fd
     return bufferSize;
 }
 
@@ -16421,10 +14736,8 @@ static inline void vt_unserialize_VkImportSemaphoreFdInfoKHR(VkImportSemaphoreFd
 }
 
 static inline int vt_sizeof_VkSemaphoreGetFdInfoKHR(VkSemaphoreGetFdInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkSemaphore(val->semaphore);
-    bufferSize += 4; // handleType
     return bufferSize;
 }
 
@@ -16466,11 +14779,8 @@ static inline void vt_unserialize_VkSemaphoreGetFdInfoKHR(VkSemaphoreGetFdInfoKH
 }
 
 static inline int vt_sizeof_VkConditionalRenderingBeginInfoEXT(VkConditionalRenderingBeginInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 16;
     bufferSize += vt_sizeof_VkBuffer(val->buffer);
-    bufferSize += 8; // offset
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -16516,14 +14826,7 @@ static inline void vt_unserialize_VkConditionalRenderingBeginInfoEXT(VkCondition
 }
 
 static inline int vt_sizeof_VkDescriptorUpdateTemplateEntry(VkDescriptorUpdateTemplateEntry* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // dstBinding
-    bufferSize += 4; // dstArrayElement
-    bufferSize += 4; // descriptorCount
-    bufferSize += 4; // descriptorType
-    bufferSize += 8; // offset
-    bufferSize += 8; // stride
-    return bufferSize;
+    return 32;
 }
 
 static inline void vt_serialize_VkDescriptorUpdateTemplateEntry(VkDescriptorUpdateTemplateEntry* val, char* outputBuffer) {
@@ -16559,11 +14862,7 @@ static inline void vt_unserialize_VkDescriptorUpdateTemplateEntry(VkDescriptorUp
 }
 
 static inline int vt_sizeof_VkDescriptorUpdateTemplateCreateInfo(VkDescriptorUpdateTemplateCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // descriptorUpdateEntryCount
-    bufferSize += 4;
+    int bufferSize = 28;
     if (val->pDescriptorUpdateEntries) {
         int arrSize = val->descriptorUpdateEntryCount ? val->descriptorUpdateEntryCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -16571,11 +14870,8 @@ static inline int vt_sizeof_VkDescriptorUpdateTemplateCreateInfo(VkDescriptorUpd
             bufferSize += vt_sizeof_VkDescriptorUpdateTemplateEntry(&val->pDescriptorUpdateEntries[i]);
         }
     }
-    bufferSize += 4; // templateType
     bufferSize += vt_sizeof_VkDescriptorSetLayout(val->descriptorSetLayout);
-    bufferSize += 4; // pipelineBindPoint
     bufferSize += vt_sizeof_VkPipelineLayout(val->pipelineLayout);
-    bufferSize += 4; // set
     return bufferSize;
 }
 
@@ -16684,10 +14980,7 @@ static inline void vt_unserialize_VkDescriptorUpdateTemplateCreateInfo(VkDescrip
 }
 
 static inline int vt_sizeof_VkFramebufferAttachmentsCreateInfo(VkFramebufferAttachmentsCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // attachmentImageInfoCount
-    bufferSize += 4;
+    int bufferSize = 12;
     if (val->pAttachmentImageInfos) {
         int arrSize = val->attachmentImageInfoCount ? val->attachmentImageInfoCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -16751,10 +15044,7 @@ static inline void vt_unserialize_VkFramebufferAttachmentsCreateInfo(VkFramebuff
 }
 
 static inline int vt_sizeof_VkRenderPassAttachmentBeginInfo(VkRenderPassAttachmentBeginInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // attachmentCount
-    bufferSize += 4;
+    int bufferSize = 12;
     if (val->pAttachments) {
         for (int i = 0; i < val->attachmentCount; i++) {
             bufferSize += vt_sizeof_VkImageView(val->pAttachments[i]);
@@ -16823,11 +15113,7 @@ static inline void vt_unserialize_VkRenderPassAttachmentBeginInfo(VkRenderPassAt
 }
 
 static inline int vt_sizeof_VkRenderPassCreateInfo2(VkRenderPassCreateInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // attachmentCount
-    bufferSize += 4;
+    int bufferSize = 40;
     if (val->pAttachments) {
         int arrSize = val->attachmentCount ? val->attachmentCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -16835,8 +15121,6 @@ static inline int vt_sizeof_VkRenderPassCreateInfo2(VkRenderPassCreateInfo2* val
             bufferSize += vt_sizeof_VkAttachmentDescription2(&val->pAttachments[i]);
         }
     }
-    bufferSize += 4; // subpassCount
-    bufferSize += 4;
     if (val->pSubpasses) {
         int arrSize = val->subpassCount ? val->subpassCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -16844,8 +15128,6 @@ static inline int vt_sizeof_VkRenderPassCreateInfo2(VkRenderPassCreateInfo2* val
             bufferSize += vt_sizeof_VkSubpassDescription2(&val->pSubpasses[i]);
         }
     }
-    bufferSize += 4; // dependencyCount
-    bufferSize += 4;
     if (val->pDependencies) {
         int arrSize = val->dependencyCount ? val->dependencyCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -16853,8 +15135,6 @@ static inline int vt_sizeof_VkRenderPassCreateInfo2(VkRenderPassCreateInfo2* val
             bufferSize += vt_sizeof_VkSubpassDependency2(&val->pDependencies[i]);
         }
     }
-    bufferSize += 4; // correlatedViewMaskCount
-    bufferSize += 4;
     bufferSize += val->pCorrelatedViewMasks ? val->correlatedViewMaskCount * 4 : 0;
     return bufferSize;
 }
@@ -17016,10 +15296,7 @@ static inline void vt_unserialize_VkRenderPassCreateInfo2(VkRenderPassCreateInfo
 }
 
 static inline int vt_sizeof_VkSubpassBeginInfo(VkSubpassBeginInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // contents
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkSubpassBeginInfo(VkSubpassBeginInfo* val, char* outputBuffer) {
@@ -17042,9 +15319,7 @@ static inline void vt_unserialize_VkSubpassBeginInfo(VkSubpassBeginInfo* val, ch
 }
 
 static inline int vt_sizeof_VkSubpassEndInfo(VkSubpassEndInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    return bufferSize;
+    return 4;
 }
 
 static inline void vt_serialize_VkSubpassEndInfo(VkSubpassEndInfo* val, char* outputBuffer) {
@@ -17063,10 +15338,7 @@ static inline void vt_unserialize_VkSubpassEndInfo(VkSubpassEndInfo* val, char* 
 }
 
 static inline int vt_sizeof_VkExportFenceCreateInfo(VkExportFenceCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // handleTypes
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkExportFenceCreateInfo(VkExportFenceCreateInfo* val, char* outputBuffer) {
@@ -17089,12 +15361,8 @@ static inline void vt_unserialize_VkExportFenceCreateInfo(VkExportFenceCreateInf
 }
 
 static inline int vt_sizeof_VkImportFenceFdInfoKHR(VkImportFenceFdInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 16;
     bufferSize += vt_sizeof_VkFence(val->fence);
-    bufferSize += 4; // flags
-    bufferSize += 4; // handleType
-    bufferSize += 4; // fd
     return bufferSize;
 }
 
@@ -17144,10 +15412,8 @@ static inline void vt_unserialize_VkImportFenceFdInfoKHR(VkImportFenceFdInfoKHR*
 }
 
 static inline int vt_sizeof_VkFenceGetFdInfoKHR(VkFenceGetFdInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkFence(val->fence);
-    bufferSize += 4; // handleType
     return bufferSize;
 }
 
@@ -17189,10 +15455,7 @@ static inline void vt_unserialize_VkFenceGetFdInfoKHR(VkFenceGetFdInfoKHR* val, 
 }
 
 static inline int vt_sizeof_VkRenderPassInputAttachmentAspectCreateInfo(VkRenderPassInputAttachmentAspectCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // aspectReferenceCount
-    bufferSize += 4;
+    int bufferSize = 12;
     if (val->pAspectReferences) {
         int arrSize = val->aspectReferenceCount ? val->aspectReferenceCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -17256,10 +15519,7 @@ static inline void vt_unserialize_VkRenderPassInputAttachmentAspectCreateInfo(Vk
 }
 
 static inline int vt_sizeof_VkImageViewUsageCreateInfo(VkImageViewUsageCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // usage
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkImageViewUsageCreateInfo(VkImageViewUsageCreateInfo* val, char* outputBuffer) {
@@ -17282,11 +15542,7 @@ static inline void vt_unserialize_VkImageViewUsageCreateInfo(VkImageViewUsageCre
 }
 
 static inline int vt_sizeof_VkMemoryDedicatedRequirements(VkMemoryDedicatedRequirements* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // prefersDedicatedAllocation
-    bufferSize += 4; // requiresDedicatedAllocation
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkMemoryDedicatedRequirements(VkMemoryDedicatedRequirements* val, char* outputBuffer) {
@@ -17313,8 +15569,7 @@ static inline void vt_unserialize_VkMemoryDedicatedRequirements(VkMemoryDedicate
 }
 
 static inline int vt_sizeof_VkMemoryDedicatedAllocateInfo(VkMemoryDedicatedAllocateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkImage(val->image);
     bufferSize += vt_sizeof_VkBuffer(val->buffer);
     return bufferSize;
@@ -17372,8 +15627,7 @@ static inline void vt_unserialize_VkMemoryDedicatedAllocateInfo(VkMemoryDedicate
 }
 
 static inline int vt_sizeof_VkAttachmentSampleLocationsEXT(VkAttachmentSampleLocationsEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // attachmentIndex
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkSampleLocationsInfoEXT(&val->sampleLocationsInfo);
     return bufferSize;
 }
@@ -17395,8 +15649,7 @@ static inline void vt_unserialize_VkAttachmentSampleLocationsEXT(VkAttachmentSam
 }
 
 static inline int vt_sizeof_VkSubpassSampleLocationsEXT(VkSubpassSampleLocationsEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // subpassIndex
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkSampleLocationsInfoEXT(&val->sampleLocationsInfo);
     return bufferSize;
 }
@@ -17418,10 +15671,7 @@ static inline void vt_unserialize_VkSubpassSampleLocationsEXT(VkSubpassSampleLoc
 }
 
 static inline int vt_sizeof_VkRenderPassSampleLocationsBeginInfoEXT(VkRenderPassSampleLocationsBeginInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // attachmentInitialSampleLocationsCount
-    bufferSize += 4;
+    int bufferSize = 20;
     if (val->pAttachmentInitialSampleLocations) {
         int arrSize = val->attachmentInitialSampleLocationsCount ? val->attachmentInitialSampleLocationsCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -17429,8 +15679,6 @@ static inline int vt_sizeof_VkRenderPassSampleLocationsBeginInfoEXT(VkRenderPass
             bufferSize += vt_sizeof_VkAttachmentSampleLocationsEXT(&val->pAttachmentInitialSampleLocations[i]);
         }
     }
-    bufferSize += 4; // postSubpassSampleLocationsCount
-    bufferSize += 4;
     if (val->pPostSubpassSampleLocations) {
         int arrSize = val->postSubpassSampleLocationsCount ? val->postSubpassSampleLocationsCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -17531,8 +15779,7 @@ static inline void vt_unserialize_VkRenderPassSampleLocationsBeginInfoEXT(VkRend
 }
 
 static inline int vt_sizeof_VkMultisamplePropertiesEXT(VkMultisamplePropertiesEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkExtent2D(&val->maxSampleLocationGridSize);
     return bufferSize;
 }
@@ -17557,8 +15804,7 @@ static inline void vt_unserialize_VkMultisamplePropertiesEXT(VkMultisampleProper
 }
 
 static inline int vt_sizeof_VkBufferMemoryRequirementsInfo2(VkBufferMemoryRequirementsInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkBuffer(val->buffer);
     return bufferSize;
 }
@@ -17597,8 +15843,7 @@ static inline void vt_unserialize_VkBufferMemoryRequirementsInfo2(VkBufferMemory
 }
 
 static inline int vt_sizeof_VkImageMemoryRequirementsInfo2(VkImageMemoryRequirementsInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -17727,8 +15972,7 @@ static inline void vt_unserialize_VkImageMemoryRequirementsInfo2(VkImageMemoryRe
 }
 
 static inline int vt_sizeof_VkImageSparseMemoryRequirementsInfo2(VkImageSparseMemoryRequirementsInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkImage(val->image);
     return bufferSize;
 }
@@ -17767,8 +16011,7 @@ static inline void vt_unserialize_VkImageSparseMemoryRequirementsInfo2(VkImageSp
 }
 
 static inline int vt_sizeof_VkMemoryRequirements2(VkMemoryRequirements2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -17883,8 +16126,7 @@ static inline void vt_unserialize_VkMemoryRequirements2(VkMemoryRequirements2* v
 }
 
 static inline int vt_sizeof_VkSparseImageMemoryRequirements2(VkSparseImageMemoryRequirements2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkSparseImageMemoryRequirements(&val->memoryRequirements);
     return bufferSize;
 }
@@ -17909,16 +16151,8 @@ static inline void vt_unserialize_VkSparseImageMemoryRequirements2(VkSparseImage
 }
 
 static inline int vt_sizeof_VkSamplerYcbcrConversionCreateInfo(VkSamplerYcbcrConversionCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // format
-    bufferSize += 4; // ycbcrModel
-    bufferSize += 4; // ycbcrRange
+    int bufferSize = 32;
     bufferSize += vt_sizeof_VkComponentMapping(&val->components);
-    bufferSize += 4; // xChromaOffset
-    bufferSize += 4; // yChromaOffset
-    bufferSize += 4; // chromaFilter
-    bufferSize += 4; // forceExplicitReconstruction
     return bufferSize;
 }
 
@@ -17970,8 +16204,7 @@ static inline void vt_unserialize_VkSamplerYcbcrConversionCreateInfo(VkSamplerYc
 }
 
 static inline int vt_sizeof_VkSamplerYcbcrConversionInfo(VkSamplerYcbcrConversionInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkSamplerYcbcrConversion(val->conversion);
     return bufferSize;
 }
@@ -18010,10 +16243,7 @@ static inline void vt_unserialize_VkSamplerYcbcrConversionInfo(VkSamplerYcbcrCon
 }
 
 static inline int vt_sizeof_VkBindImagePlaneMemoryInfo(VkBindImagePlaneMemoryInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // planeAspect
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkBindImagePlaneMemoryInfo(VkBindImagePlaneMemoryInfo* val, char* outputBuffer) {
@@ -18036,10 +16266,7 @@ static inline void vt_unserialize_VkBindImagePlaneMemoryInfo(VkBindImagePlaneMem
 }
 
 static inline int vt_sizeof_VkDescriptorSetLayoutBindingFlagsCreateInfo(VkDescriptorSetLayoutBindingFlagsCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // bindingCount
-    bufferSize += 4;
+    int bufferSize = 12;
     bufferSize += val->pBindingFlags ? val->bindingCount * 4 : 0;
     return bufferSize;
 }
@@ -18086,10 +16313,7 @@ static inline void vt_unserialize_VkDescriptorSetLayoutBindingFlagsCreateInfo(Vk
 }
 
 static inline int vt_sizeof_VkDescriptorSetVariableDescriptorCountAllocateInfo(VkDescriptorSetVariableDescriptorCountAllocateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // descriptorSetCount
-    bufferSize += 4;
+    int bufferSize = 12;
     bufferSize += val->pDescriptorCounts ? val->descriptorSetCount * 4 : 0;
     return bufferSize;
 }
@@ -18136,10 +16360,7 @@ static inline void vt_unserialize_VkDescriptorSetVariableDescriptorCountAllocate
 }
 
 static inline int vt_sizeof_VkDescriptorSetVariableDescriptorCountLayoutSupport(VkDescriptorSetVariableDescriptorCountLayoutSupport* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // maxVariableDescriptorCount
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkDescriptorSetVariableDescriptorCountLayoutSupport(VkDescriptorSetVariableDescriptorCountLayoutSupport* val, char* outputBuffer) {
@@ -18162,8 +16383,7 @@ static inline void vt_unserialize_VkDescriptorSetVariableDescriptorCountLayoutSu
 }
 
 static inline int vt_sizeof_VkDescriptorSetLayoutSupport(VkDescriptorSetLayoutSupport* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 8;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -18187,7 +16407,6 @@ static inline int vt_sizeof_VkDescriptorSetLayoutSupport(VkDescriptorSetLayoutSu
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // supported
     return bufferSize;
 }
 
@@ -18278,11 +16497,7 @@ static inline void vt_unserialize_VkDescriptorSetLayoutSupport(VkDescriptorSetLa
 }
 
 static inline int vt_sizeof_VkSemaphoreTypeCreateInfo(VkSemaphoreTypeCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // semaphoreType
-    bufferSize += 8; // initialValue
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkSemaphoreTypeCreateInfo(VkSemaphoreTypeCreateInfo* val, char* outputBuffer) {
@@ -18309,13 +16524,8 @@ static inline void vt_unserialize_VkSemaphoreTypeCreateInfo(VkSemaphoreTypeCreat
 }
 
 static inline int vt_sizeof_VkTimelineSemaphoreSubmitInfo(VkTimelineSemaphoreSubmitInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // waitSemaphoreValueCount
-    bufferSize += 4;
+    int bufferSize = 20;
     bufferSize += val->pWaitSemaphoreValues ? val->waitSemaphoreValueCount * 8 : 0;
-    bufferSize += 4; // signalSemaphoreValueCount
-    bufferSize += 4;
     bufferSize += val->pSignalSemaphoreValues ? val->signalSemaphoreValueCount * 8 : 0;
     return bufferSize;
 }
@@ -18388,17 +16598,12 @@ static inline void vt_unserialize_VkTimelineSemaphoreSubmitInfo(VkTimelineSemaph
 }
 
 static inline int vt_sizeof_VkSemaphoreWaitInfo(VkSemaphoreWaitInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // semaphoreCount
-    bufferSize += 4;
+    int bufferSize = 20;
     if (val->pSemaphores) {
         for (int i = 0; i < val->semaphoreCount; i++) {
             bufferSize += vt_sizeof_VkSemaphore(val->pSemaphores[i]);
         }
     }
-    bufferSize += 4;
     bufferSize += val->pValues ? val->semaphoreCount * 8 : 0;
     return bufferSize;
 }
@@ -18489,10 +16694,8 @@ static inline void vt_unserialize_VkSemaphoreWaitInfo(VkSemaphoreWaitInfo* val, 
 }
 
 static inline int vt_sizeof_VkSemaphoreSignalInfo(VkSemaphoreSignalInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 12;
     bufferSize += vt_sizeof_VkSemaphore(val->semaphore);
-    bufferSize += 8; // value
     return bufferSize;
 }
 
@@ -18533,11 +16736,133 @@ static inline void vt_unserialize_VkSemaphoreSignalInfo(VkSemaphoreSignalInfo* v
     bufferOffset += 8;
 }
 
+static inline int vt_sizeof_VkBufferDeviceAddressInfo(VkBufferDeviceAddressInfo* val) {
+    int bufferSize = 4;
+    bufferSize += vt_sizeof_VkBuffer(val->buffer);
+    return bufferSize;
+}
+
+static inline void vt_serialize_VkBufferDeviceAddressInfo(VkBufferDeviceAddressInfo* val, char* outputBuffer) {
+    int bufferOffset = 0;
+    *(VkStructureType*)(outputBuffer + bufferOffset) = val->sType;
+    bufferOffset += 4;
+
+#ifdef VT_SERVER
+    vt_serialize_VkBuffer(val->buffer, outputBuffer + bufferOffset);
+#else
+    VkObject* bufferObject = VkObject_fromHandle(val->buffer);
+    vt_serialize_VkBuffer((VkBuffer)&bufferObject->id, outputBuffer + bufferOffset);
+#endif
+    bufferOffset += vt_sizeof_VkBuffer(val->buffer);
+}
+
+static inline void vt_unserialize_VkBufferDeviceAddressInfo(VkBufferDeviceAddressInfo* val, char* inputBuffer, MemoryPool* memoryPool) {
+    int bufferOffset = 0;
+    val->sType = *(VkStructureType*)(inputBuffer + bufferOffset);
+    bufferOffset += 4;
+#ifdef VT_SERVER
+    val->pNext = NULL;
+#endif
+
+    uint64_t bufferId;
+    vt_unserialize_VkBuffer((VkBuffer)&bufferId, inputBuffer + bufferOffset, memoryPool);
+#ifdef VT_SERVER
+    val->buffer = VkObject_fromId(bufferId);
+#else
+    VkObject* bufferObject = VkObject_create(VK_OBJECT_TYPE_BUFFER, bufferId);
+    val->buffer = VkObject_toHandle(bufferObject);
+#endif
+    bufferOffset += vt_sizeof_VkBuffer(val->buffer);
+}
+
+static inline int vt_sizeof_VkBufferOpaqueCaptureAddressCreateInfo(VkBufferOpaqueCaptureAddressCreateInfo* val) {
+    return 12;
+}
+
+static inline void vt_serialize_VkBufferOpaqueCaptureAddressCreateInfo(VkBufferOpaqueCaptureAddressCreateInfo* val, char* outputBuffer) {
+    int bufferOffset = 0;
+    *(VkStructureType*)(outputBuffer + bufferOffset) = val->sType;
+    bufferOffset += 4;
+    *(uint64_t*)(outputBuffer + bufferOffset) = val->opaqueCaptureAddress;
+    bufferOffset += 8;
+}
+
+static inline void vt_unserialize_VkBufferOpaqueCaptureAddressCreateInfo(VkBufferOpaqueCaptureAddressCreateInfo* val, char* inputBuffer, MemoryPool* memoryPool) {
+    int bufferOffset = 0;
+    val->sType = *(VkStructureType*)(inputBuffer + bufferOffset);
+    bufferOffset += 4;
+#ifdef VT_SERVER
+    val->pNext = NULL;
+#endif
+    val->opaqueCaptureAddress = *(uint64_t*)(inputBuffer + bufferOffset);
+    bufferOffset += 8;
+}
+
+static inline int vt_sizeof_VkMemoryOpaqueCaptureAddressAllocateInfo(VkMemoryOpaqueCaptureAddressAllocateInfo* val) {
+    return 12;
+}
+
+static inline void vt_serialize_VkMemoryOpaqueCaptureAddressAllocateInfo(VkMemoryOpaqueCaptureAddressAllocateInfo* val, char* outputBuffer) {
+    int bufferOffset = 0;
+    *(VkStructureType*)(outputBuffer + bufferOffset) = val->sType;
+    bufferOffset += 4;
+    *(uint64_t*)(outputBuffer + bufferOffset) = val->opaqueCaptureAddress;
+    bufferOffset += 8;
+}
+
+static inline void vt_unserialize_VkMemoryOpaqueCaptureAddressAllocateInfo(VkMemoryOpaqueCaptureAddressAllocateInfo* val, char* inputBuffer, MemoryPool* memoryPool) {
+    int bufferOffset = 0;
+    val->sType = *(VkStructureType*)(inputBuffer + bufferOffset);
+    bufferOffset += 4;
+#ifdef VT_SERVER
+    val->pNext = NULL;
+#endif
+    val->opaqueCaptureAddress = *(uint64_t*)(inputBuffer + bufferOffset);
+    bufferOffset += 8;
+}
+
+static inline int vt_sizeof_VkDeviceMemoryOpaqueCaptureAddressInfo(VkDeviceMemoryOpaqueCaptureAddressInfo* val) {
+    int bufferSize = 4;
+    bufferSize += vt_sizeof_VkDeviceMemory(val->memory);
+    return bufferSize;
+}
+
+static inline void vt_serialize_VkDeviceMemoryOpaqueCaptureAddressInfo(VkDeviceMemoryOpaqueCaptureAddressInfo* val, char* outputBuffer) {
+    int bufferOffset = 0;
+    *(VkStructureType*)(outputBuffer + bufferOffset) = val->sType;
+    bufferOffset += 4;
+
+#ifdef VT_SERVER
+    vt_serialize_VkDeviceMemory(val->memory, outputBuffer + bufferOffset);
+#else
+    VkObject* memoryObject = VkObject_fromHandle(val->memory);
+    vt_serialize_VkDeviceMemory((VkDeviceMemory)&memoryObject->id, outputBuffer + bufferOffset);
+#endif
+    bufferOffset += vt_sizeof_VkDeviceMemory(val->memory);
+}
+
+static inline void vt_unserialize_VkDeviceMemoryOpaqueCaptureAddressInfo(VkDeviceMemoryOpaqueCaptureAddressInfo* val, char* inputBuffer, MemoryPool* memoryPool) {
+    int bufferOffset = 0;
+    val->sType = *(VkStructureType*)(inputBuffer + bufferOffset);
+    bufferOffset += 4;
+#ifdef VT_SERVER
+    val->pNext = NULL;
+#endif
+
+    uint64_t memoryId;
+    vt_unserialize_VkDeviceMemory((VkDeviceMemory)&memoryId, inputBuffer + bufferOffset, memoryPool);
+#ifdef VT_SERVER
+    val->memory = vortekSerializerCastVkObject ? ((ResourceMemory*)VkObject_fromId(memoryId))->memory : VkObject_fromId(memoryId);
+#else
+    VkObject* memoryObject = VkObject_create(VK_OBJECT_TYPE_DEVICE_MEMORY, memoryId);
+    val->memory = VkObject_toHandle(memoryObject);
+#endif
+    bufferOffset += vt_sizeof_VkDeviceMemory(val->memory);
+}
+
 static inline int vt_sizeof_VkSamplerCustomBorderColorCreateInfoEXT(VkSamplerCustomBorderColorCreateInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkClearColorValue(&val->customBorderColor);
-    bufferSize += 4; // format
     return bufferSize;
 }
 
@@ -18565,17 +16890,8 @@ static inline void vt_unserialize_VkSamplerCustomBorderColorCreateInfoEXT(VkSamp
 }
 
 static inline int vt_sizeof_VkBufferMemoryBarrier2(VkBufferMemoryBarrier2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 8; // srcStageMask
-    bufferSize += 8; // srcAccessMask
-    bufferSize += 8; // dstStageMask
-    bufferSize += 8; // dstAccessMask
-    bufferSize += 4; // srcQueueFamilyIndex
-    bufferSize += 4; // dstQueueFamilyIndex
+    int bufferSize = 60;
     bufferSize += vt_sizeof_VkBuffer(val->buffer);
-    bufferSize += 8; // offset
-    bufferSize += 8; // size
     return bufferSize;
 }
 
@@ -18645,8 +16961,7 @@ static inline void vt_unserialize_VkBufferMemoryBarrier2(VkBufferMemoryBarrier2*
 }
 
 static inline int vt_sizeof_VkImageMemoryBarrier2(VkImageMemoryBarrier2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 52;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -18670,14 +16985,6 @@ static inline int vt_sizeof_VkImageMemoryBarrier2(VkImageMemoryBarrier2* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 8; // srcStageMask
-    bufferSize += 8; // srcAccessMask
-    bufferSize += 8; // dstStageMask
-    bufferSize += 8; // dstAccessMask
-    bufferSize += 4; // oldLayout
-    bufferSize += 4; // newLayout
-    bufferSize += 4; // srcQueueFamilyIndex
-    bufferSize += 4; // dstQueueFamilyIndex
     bufferSize += vt_sizeof_VkImage(val->image);
     bufferSize += vt_sizeof_VkImageSubresourceRange(&val->subresourceRange);
     return bufferSize;
@@ -18820,11 +17127,7 @@ static inline void vt_unserialize_VkImageMemoryBarrier2(VkImageMemoryBarrier2* v
 }
 
 static inline int vt_sizeof_VkDependencyInfo(VkDependencyInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // dependencyFlags
-    bufferSize += 4; // memoryBarrierCount
-    bufferSize += 4;
+    int bufferSize = 32;
     if (val->pMemoryBarriers) {
         int arrSize = val->memoryBarrierCount ? val->memoryBarrierCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -18832,8 +17135,6 @@ static inline int vt_sizeof_VkDependencyInfo(VkDependencyInfo* val) {
             bufferSize += vt_sizeof_VkMemoryBarrier2(&val->pMemoryBarriers[i]);
         }
     }
-    bufferSize += 4; // bufferMemoryBarrierCount
-    bufferSize += 4;
     if (val->pBufferMemoryBarriers) {
         int arrSize = val->bufferMemoryBarrierCount ? val->bufferMemoryBarrierCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -18841,8 +17142,6 @@ static inline int vt_sizeof_VkDependencyInfo(VkDependencyInfo* val) {
             bufferSize += vt_sizeof_VkBufferMemoryBarrier2(&val->pBufferMemoryBarriers[i]);
         }
     }
-    bufferSize += 4; // imageMemoryBarrierCount
-    bufferSize += 4;
     if (val->pImageMemoryBarriers) {
         int arrSize = val->imageMemoryBarrierCount ? val->imageMemoryBarrierCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -18984,11 +17283,7 @@ static inline void vt_unserialize_VkDependencyInfo(VkDependencyInfo* val, char* 
 }
 
 static inline int vt_sizeof_VkSubmitInfo2(VkSubmitInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // waitSemaphoreInfoCount
-    bufferSize += 4;
+    int bufferSize = 32;
     if (val->pWaitSemaphoreInfos) {
         int arrSize = val->waitSemaphoreInfoCount ? val->waitSemaphoreInfoCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -18996,8 +17291,6 @@ static inline int vt_sizeof_VkSubmitInfo2(VkSubmitInfo2* val) {
             bufferSize += vt_sizeof_VkSemaphoreSubmitInfo(&val->pWaitSemaphoreInfos[i]);
         }
     }
-    bufferSize += 4; // commandBufferInfoCount
-    bufferSize += 4;
     if (val->pCommandBufferInfos) {
         int arrSize = val->commandBufferInfoCount ? val->commandBufferInfoCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -19005,8 +17298,6 @@ static inline int vt_sizeof_VkSubmitInfo2(VkSubmitInfo2* val) {
             bufferSize += vt_sizeof_VkCommandBufferSubmitInfo(&val->pCommandBufferInfos[i]);
         }
     }
-    bufferSize += 4; // signalSemaphoreInfoCount
-    bufferSize += 4;
     if (val->pSignalSemaphoreInfos) {
         int arrSize = val->signalSemaphoreInfoCount ? val->signalSemaphoreInfoCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -19148,10 +17439,8 @@ static inline void vt_unserialize_VkSubmitInfo2(VkSubmitInfo2* val, char* inputB
 }
 
 static inline int vt_sizeof_VkSamplerBorderColorComponentMappingCreateInfoEXT(VkSamplerBorderColorComponentMappingCreateInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkComponentMapping(&val->components);
-    bufferSize += 4; // srgb
     return bufferSize;
 }
 
@@ -19179,14 +17468,7 @@ static inline void vt_unserialize_VkSamplerBorderColorComponentMappingCreateInfo
 }
 
 static inline int vt_sizeof_VkColorBlendEquationEXT(VkColorBlendEquationEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // srcColorBlendFactor
-    bufferSize += 4; // dstColorBlendFactor
-    bufferSize += 4; // colorBlendOp
-    bufferSize += 4; // srcAlphaBlendFactor
-    bufferSize += 4; // dstAlphaBlendFactor
-    bufferSize += 4; // alphaBlendOp
-    return bufferSize;
+    return 24;
 }
 
 static inline void vt_serialize_VkColorBlendEquationEXT(VkColorBlendEquationEXT* val, char* outputBuffer) {
@@ -19222,13 +17504,7 @@ static inline void vt_unserialize_VkColorBlendEquationEXT(VkColorBlendEquationEX
 }
 
 static inline int vt_sizeof_VkColorBlendAdvancedEXT(VkColorBlendAdvancedEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // advancedBlendOp
-    bufferSize += 4; // srcPremultiplied
-    bufferSize += 4; // dstPremultiplied
-    bufferSize += 4; // blendOverlap
-    bufferSize += 4; // clampResults
-    return bufferSize;
+    return 20;
 }
 
 static inline void vt_serialize_VkColorBlendAdvancedEXT(VkColorBlendAdvancedEXT* val, char* outputBuffer) {
@@ -19260,9 +17536,7 @@ static inline void vt_unserialize_VkColorBlendAdvancedEXT(VkColorBlendAdvancedEX
 }
 
 static inline int vt_sizeof_VkShaderModuleIdentifierEXT(VkShaderModuleIdentifierEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // identifierSize
+    int bufferSize = 8;
     bufferSize += val->identifierSize;
     return bufferSize;
 }
@@ -19291,9 +17565,7 @@ static inline void vt_unserialize_VkShaderModuleIdentifierEXT(VkShaderModuleIden
 }
 
 static inline int vt_sizeof_VkMutableDescriptorTypeListEXT(VkMutableDescriptorTypeListEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // descriptorTypeCount
-    bufferSize += 4;
+    int bufferSize = 8;
     bufferSize += val->pDescriptorTypes ? val->descriptorTypeCount * 4 : 0;
     return bufferSize;
 }
@@ -19333,10 +17605,7 @@ static inline void vt_unserialize_VkMutableDescriptorTypeListEXT(VkMutableDescri
 }
 
 static inline int vt_sizeof_VkMutableDescriptorTypeCreateInfoEXT(VkMutableDescriptorTypeCreateInfoEXT* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // mutableDescriptorTypeListCount
-    bufferSize += 4;
+    int bufferSize = 12;
     if (val->pMutableDescriptorTypeLists) {
         int arrSize = val->mutableDescriptorTypeListCount ? val->mutableDescriptorTypeListCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -19400,18 +17669,12 @@ static inline void vt_unserialize_VkMutableDescriptorTypeCreateInfoEXT(VkMutable
 }
 
 static inline int vt_sizeof_VkPipelineLayoutCreateInfo(VkPipelineLayoutCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // setLayoutCount
-    bufferSize += 4;
+    int bufferSize = 24;
     if (val->pSetLayouts) {
         for (int i = 0; i < val->setLayoutCount; i++) {
             bufferSize += vt_sizeof_VkDescriptorSetLayout(val->pSetLayouts[i]);
         }
     }
-    bufferSize += 4; // pushConstantRangeCount
-    bufferSize += 4;
     if (val->pPushConstantRanges) {
         int arrSize = val->pushConstantRangeCount ? val->pushConstantRangeCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -19523,10 +17786,7 @@ static inline void vt_unserialize_VkPipelineLayoutCreateInfo(VkPipelineLayoutCre
 }
 
 static inline int vt_sizeof_VkDevicePrivateDataCreateInfo(VkDevicePrivateDataCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // privateDataSlotRequestCount
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkDevicePrivateDataCreateInfo(VkDevicePrivateDataCreateInfo* val, char* outputBuffer) {
@@ -19549,16 +17809,9 @@ static inline void vt_unserialize_VkDevicePrivateDataCreateInfo(VkDevicePrivateD
 }
 
 static inline int vt_sizeof_VkRenderPassMultiviewCreateInfo(VkRenderPassMultiviewCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // subpassCount
-    bufferSize += 4;
+    int bufferSize = 28;
     bufferSize += val->pViewMasks ? val->subpassCount * 4 : 0;
-    bufferSize += 4; // dependencyCount
-    bufferSize += 4;
     bufferSize += val->pViewOffsets ? val->dependencyCount * 4 : 0;
-    bufferSize += 4; // correlationMaskCount
-    bufferSize += 4;
     bufferSize += val->pCorrelationMasks ? val->correlationMaskCount * 4 : 0;
     return bufferSize;
 }
@@ -19657,11 +17910,7 @@ static inline void vt_unserialize_VkRenderPassMultiviewCreateInfo(VkRenderPassMu
 }
 
 static inline int vt_sizeof_VkMemoryAllocateFlagsInfo(VkMemoryAllocateFlagsInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // deviceMask
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkMemoryAllocateFlagsInfo(VkMemoryAllocateFlagsInfo* val, char* outputBuffer) {
@@ -19688,10 +17937,7 @@ static inline void vt_unserialize_VkMemoryAllocateFlagsInfo(VkMemoryAllocateFlag
 }
 
 static inline int vt_sizeof_VkBindBufferMemoryDeviceGroupInfo(VkBindBufferMemoryDeviceGroupInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // deviceIndexCount
-    bufferSize += 4;
+    int bufferSize = 12;
     bufferSize += val->pDeviceIndices ? val->deviceIndexCount * 4 : 0;
     return bufferSize;
 }
@@ -19738,13 +17984,8 @@ static inline void vt_unserialize_VkBindBufferMemoryDeviceGroupInfo(VkBindBuffer
 }
 
 static inline int vt_sizeof_VkBindImageMemoryDeviceGroupInfo(VkBindImageMemoryDeviceGroupInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // deviceIndexCount
-    bufferSize += 4;
+    int bufferSize = 20;
     bufferSize += val->pDeviceIndices ? val->deviceIndexCount * 4 : 0;
-    bufferSize += 4; // splitInstanceBindRegionCount
-    bufferSize += 4;
     if (val->pSplitInstanceBindRegions) {
         int arrSize = val->splitInstanceBindRegionCount ? val->splitInstanceBindRegionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -19834,10 +18075,7 @@ static inline void vt_unserialize_VkBindImageMemoryDeviceGroupInfo(VkBindImageMe
 }
 
 static inline int vt_sizeof_VkDeviceGroupCommandBufferBeginInfo(VkDeviceGroupCommandBufferBeginInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // deviceMask
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkDeviceGroupCommandBufferBeginInfo(VkDeviceGroupCommandBufferBeginInfo* val, char* outputBuffer) {
@@ -19860,16 +18098,9 @@ static inline void vt_unserialize_VkDeviceGroupCommandBufferBeginInfo(VkDeviceGr
 }
 
 static inline int vt_sizeof_VkDeviceGroupSubmitInfo(VkDeviceGroupSubmitInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // waitSemaphoreCount
-    bufferSize += 4;
+    int bufferSize = 28;
     bufferSize += val->pWaitSemaphoreDeviceIndices ? val->waitSemaphoreCount * 4 : 0;
-    bufferSize += 4; // commandBufferCount
-    bufferSize += 4;
     bufferSize += val->pCommandBufferDeviceMasks ? val->commandBufferCount * 4 : 0;
-    bufferSize += 4; // signalSemaphoreCount
-    bufferSize += 4;
     bufferSize += val->pSignalSemaphoreDeviceIndices ? val->signalSemaphoreCount * 4 : 0;
     return bufferSize;
 }
@@ -19968,11 +18199,7 @@ static inline void vt_unserialize_VkDeviceGroupSubmitInfo(VkDeviceGroupSubmitInf
 }
 
 static inline int vt_sizeof_VkDeviceGroupBindSparseInfo(VkDeviceGroupBindSparseInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // resourceDeviceIndex
-    bufferSize += 4; // memoryDeviceIndex
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkDeviceGroupBindSparseInfo(VkDeviceGroupBindSparseInfo* val, char* outputBuffer) {
@@ -19999,10 +18226,7 @@ static inline void vt_unserialize_VkDeviceGroupBindSparseInfo(VkDeviceGroupBindS
 }
 
 static inline int vt_sizeof_VkDeviceGroupDeviceCreateInfo(VkDeviceGroupDeviceCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // physicalDeviceCount
-    bufferSize += 4;
+    int bufferSize = 12;
     if (val->pPhysicalDevices) {
         for (int i = 0; i < val->physicalDeviceCount; i++) {
             bufferSize += vt_sizeof_VkPhysicalDevice(val->pPhysicalDevices[i]);
@@ -20071,10 +18295,7 @@ static inline void vt_unserialize_VkDeviceGroupDeviceCreateInfo(VkDeviceGroupDev
 }
 
 static inline int vt_sizeof_VkProtectedSubmitInfo(VkProtectedSubmitInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // protectedSubmit
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkProtectedSubmitInfo(VkProtectedSubmitInfo* val, char* outputBuffer) {
@@ -20097,10 +18318,7 @@ static inline void vt_unserialize_VkProtectedSubmitInfo(VkProtectedSubmitInfo* v
 }
 
 static inline int vt_sizeof_VkSamplerReductionModeCreateInfo(VkSamplerReductionModeCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // reductionMode
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkSamplerReductionModeCreateInfo(VkSamplerReductionModeCreateInfo* val, char* outputBuffer) {
@@ -20123,10 +18341,7 @@ static inline void vt_unserialize_VkSamplerReductionModeCreateInfo(VkSamplerRedu
 }
 
 static inline int vt_sizeof_VkWriteDescriptorSetInlineUniformBlock(VkWriteDescriptorSetInlineUniformBlock* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // dataSize
-    bufferSize += 4;
+    int bufferSize = 12;
     bufferSize += val->pData ? val->dataSize : 0;
     return bufferSize;
 }
@@ -20171,10 +18386,7 @@ static inline void vt_unserialize_VkWriteDescriptorSetInlineUniformBlock(VkWrite
 }
 
 static inline int vt_sizeof_VkDescriptorPoolInlineUniformBlockCreateInfo(VkDescriptorPoolInlineUniformBlockCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // maxInlineUniformBlockBindings
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkDescriptorPoolInlineUniformBlockCreateInfo(VkDescriptorPoolInlineUniformBlockCreateInfo* val, char* outputBuffer) {
@@ -20196,39 +18408,9 @@ static inline void vt_unserialize_VkDescriptorPoolInlineUniformBlockCreateInfo(V
     bufferOffset += 4;
 }
 
-static inline int vt_sizeof_VkBufferOpaqueCaptureAddressCreateInfo(VkBufferOpaqueCaptureAddressCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 8; // opaqueCaptureAddress
-    return bufferSize;
-}
-
-static inline void vt_serialize_VkBufferOpaqueCaptureAddressCreateInfo(VkBufferOpaqueCaptureAddressCreateInfo* val, char* outputBuffer) {
-    int bufferOffset = 0;
-    *(VkStructureType*)(outputBuffer + bufferOffset) = val->sType;
-    bufferOffset += 4;
-    *(uint64_t*)(outputBuffer + bufferOffset) = val->opaqueCaptureAddress;
-    bufferOffset += 8;
-}
-
-static inline void vt_unserialize_VkBufferOpaqueCaptureAddressCreateInfo(VkBufferOpaqueCaptureAddressCreateInfo* val, char* inputBuffer, MemoryPool* memoryPool) {
-    int bufferOffset = 0;
-    val->sType = *(VkStructureType*)(inputBuffer + bufferOffset);
-    bufferOffset += 4;
-#ifdef VT_SERVER
-    val->pNext = NULL;
-#endif
-    val->opaqueCaptureAddress = *(uint64_t*)(inputBuffer + bufferOffset);
-    bufferOffset += 8;
-}
-
 static inline int vt_sizeof_VkPipelineCreationFeedbackCreateInfo(VkPipelineCreationFeedbackCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4;
+    int bufferSize = 16;
     bufferSize += val->pPipelineCreationFeedback ? vt_sizeof_VkPipelineCreationFeedback(val->pPipelineCreationFeedback) : 0;
-    bufferSize += 4; // pipelineStageCreationFeedbackCount
-    bufferSize += 4;
     if (val->pPipelineStageCreationFeedbacks) {
         int arrSize = val->pipelineStageCreationFeedbackCount ? val->pipelineStageCreationFeedbackCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -20312,40 +18494,9 @@ static inline void vt_unserialize_VkPipelineCreationFeedbackCreateInfo(VkPipelin
     else val->pPipelineStageCreationFeedbacks = NULL;
 }
 
-static inline int vt_sizeof_VkMemoryOpaqueCaptureAddressAllocateInfo(VkMemoryOpaqueCaptureAddressAllocateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 8; // opaqueCaptureAddress
-    return bufferSize;
-}
-
-static inline void vt_serialize_VkMemoryOpaqueCaptureAddressAllocateInfo(VkMemoryOpaqueCaptureAddressAllocateInfo* val, char* outputBuffer) {
-    int bufferOffset = 0;
-    *(VkStructureType*)(outputBuffer + bufferOffset) = val->sType;
-    bufferOffset += 4;
-    *(uint64_t*)(outputBuffer + bufferOffset) = val->opaqueCaptureAddress;
-    bufferOffset += 8;
-}
-
-static inline void vt_unserialize_VkMemoryOpaqueCaptureAddressAllocateInfo(VkMemoryOpaqueCaptureAddressAllocateInfo* val, char* inputBuffer, MemoryPool* memoryPool) {
-    int bufferOffset = 0;
-    val->sType = *(VkStructureType*)(inputBuffer + bufferOffset);
-    bufferOffset += 4;
-#ifdef VT_SERVER
-    val->pNext = NULL;
-#endif
-    val->opaqueCaptureAddress = *(uint64_t*)(inputBuffer + bufferOffset);
-    bufferOffset += 8;
-}
-
 static inline int vt_sizeof_VkInstanceCreateInfo(VkInstanceCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4;
+    int bufferSize = 28;
     bufferSize += val->pApplicationInfo ? vt_sizeof_VkApplicationInfo(val->pApplicationInfo) : 0;
-    bufferSize += 4; // enabledLayerCount
-    bufferSize += 4;
     if (val->ppEnabledLayerNames) {
         int arrSize = val->enabledLayerCount ? val->enabledLayerCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -20353,8 +18504,6 @@ static inline int vt_sizeof_VkInstanceCreateInfo(VkInstanceCreateInfo* val) {
             bufferSize += strlen(val->ppEnabledLayerNames[i]) + 1;
         }
     }
-    bufferSize += 4; // enabledExtensionCount
-    bufferSize += 4;
     if (val->ppEnabledExtensionNames) {
         int arrSize = val->enabledExtensionCount ? val->enabledExtensionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -20478,8 +18627,7 @@ static inline void vt_unserialize_VkInstanceCreateInfo(VkInstanceCreateInfo* val
 }
 
 static inline int vt_sizeof_VkDeviceCreateInfo(VkDeviceCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 36;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -20778,9 +18926,6 @@ static inline int vt_sizeof_VkDeviceCreateInfo(VkDeviceCreateInfo* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // queueCreateInfoCount
-    bufferSize += 4;
     if (val->pQueueCreateInfos) {
         int arrSize = val->queueCreateInfoCount ? val->queueCreateInfoCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -20788,8 +18933,6 @@ static inline int vt_sizeof_VkDeviceCreateInfo(VkDeviceCreateInfo* val) {
             bufferSize += vt_sizeof_VkDeviceQueueCreateInfo(&val->pQueueCreateInfos[i]);
         }
     }
-    bufferSize += 4; // enabledLayerCount
-    bufferSize += 4;
     if (val->ppEnabledLayerNames) {
         int arrSize = val->enabledLayerCount ? val->enabledLayerCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -20797,8 +18940,6 @@ static inline int vt_sizeof_VkDeviceCreateInfo(VkDeviceCreateInfo* val) {
             bufferSize += strlen(val->ppEnabledLayerNames[i]) + 1;
         }
     }
-    bufferSize += 4; // enabledExtensionCount
-    bufferSize += 4;
     if (val->ppEnabledExtensionNames) {
         int arrSize = val->enabledExtensionCount ? val->enabledExtensionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -20806,7 +18947,6 @@ static inline int vt_sizeof_VkDeviceCreateInfo(VkDeviceCreateInfo* val) {
             bufferSize += strlen(val->ppEnabledExtensionNames[i]) + 1;
         }
     }
-    bufferSize += 4;
     bufferSize += val->pEnabledFeatures ? vt_sizeof_VkPhysicalDeviceFeatures(val->pEnabledFeatures) : 0;
     return bufferSize;
 }
@@ -22348,9 +20488,8 @@ static inline void vt_unserialize_VkDeviceCreateInfo(VkDeviceCreateInfo* val, ch
 }
 
 static inline int vt_sizeof_VkExtensionProperties(VkExtensionProperties* val) {
-    int bufferSize = 0;
+    int bufferSize = 4;
     bufferSize += strlen(val->extensionName) + 1;
-    bufferSize += 4; // specVersion
     return bufferSize;
 }
 
@@ -22379,8 +20518,7 @@ static inline void vt_unserialize_VkExtensionProperties(VkExtensionProperties* v
 }
 
 static inline int vt_sizeof_VkSubmitInfo(VkSubmitInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 32;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -22414,24 +20552,17 @@ static inline int vt_sizeof_VkSubmitInfo(VkSubmitInfo* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // waitSemaphoreCount
-    bufferSize += 4;
     if (val->pWaitSemaphores) {
         for (int i = 0; i < val->waitSemaphoreCount; i++) {
             bufferSize += vt_sizeof_VkSemaphore(val->pWaitSemaphores[i]);
         }
     }
-    bufferSize += 4;
     bufferSize += val->pWaitDstStageMask ? val->waitSemaphoreCount * 4 : 0;
-    bufferSize += 4; // commandBufferCount
-    bufferSize += 4;
     if (val->pCommandBuffers) {
         for (int i = 0; i < val->commandBufferCount; i++) {
             bufferSize += vt_sizeof_VkCommandBuffer(val->pCommandBuffers[i]);
         }
     }
-    bufferSize += 4; // signalSemaphoreCount
-    bufferSize += 4;
     if (val->pSignalSemaphores) {
         for (int i = 0; i < val->signalSemaphoreCount; i++) {
             bufferSize += vt_sizeof_VkSemaphore(val->pSignalSemaphores[i]);
@@ -22725,8 +20856,7 @@ static inline void vt_unserialize_VkSubmitInfo(VkSubmitInfo* val, char* inputBuf
 }
 
 static inline int vt_sizeof_VkMemoryAllocateInfo(VkMemoryAllocateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 16;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -22770,8 +20900,6 @@ static inline int vt_sizeof_VkMemoryAllocateInfo(VkMemoryAllocateInfo* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 8; // allocationSize
-    bufferSize += 4; // memoryTypeIndex
     return bufferSize;
 }
 
@@ -22962,11 +21090,8 @@ static inline void vt_unserialize_VkMemoryAllocateInfo(VkMemoryAllocateInfo* val
 }
 
 static inline int vt_sizeof_VkMappedMemoryRange(VkMappedMemoryRange* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 20;
     bufferSize += vt_sizeof_VkDeviceMemory(val->memory);
-    bufferSize += 8; // offset
-    bufferSize += 8; // size
     return bufferSize;
 }
 
@@ -23012,8 +21137,7 @@ static inline void vt_unserialize_VkMappedMemoryRange(VkMappedMemoryRange* val, 
 }
 
 static inline int vt_sizeof_VkBindSparseInfo(VkBindSparseInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 44;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -23042,15 +21166,11 @@ static inline int vt_sizeof_VkBindSparseInfo(VkBindSparseInfo* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // waitSemaphoreCount
-    bufferSize += 4;
     if (val->pWaitSemaphores) {
         for (int i = 0; i < val->waitSemaphoreCount; i++) {
             bufferSize += vt_sizeof_VkSemaphore(val->pWaitSemaphores[i]);
         }
     }
-    bufferSize += 4; // bufferBindCount
-    bufferSize += 4;
     if (val->pBufferBinds) {
         int arrSize = val->bufferBindCount ? val->bufferBindCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -23058,8 +21178,6 @@ static inline int vt_sizeof_VkBindSparseInfo(VkBindSparseInfo* val) {
             bufferSize += vt_sizeof_VkSparseBufferMemoryBindInfo(&val->pBufferBinds[i]);
         }
     }
-    bufferSize += 4; // imageOpaqueBindCount
-    bufferSize += 4;
     if (val->pImageOpaqueBinds) {
         int arrSize = val->imageOpaqueBindCount ? val->imageOpaqueBindCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -23067,8 +21185,6 @@ static inline int vt_sizeof_VkBindSparseInfo(VkBindSparseInfo* val) {
             bufferSize += vt_sizeof_VkSparseImageOpaqueMemoryBindInfo(&val->pImageOpaqueBinds[i]);
         }
     }
-    bufferSize += 4; // imageBindCount
-    bufferSize += 4;
     if (val->pImageBinds) {
         int arrSize = val->imageBindCount ? val->imageBindCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -23076,8 +21192,6 @@ static inline int vt_sizeof_VkBindSparseInfo(VkBindSparseInfo* val) {
             bufferSize += vt_sizeof_VkSparseImageMemoryBindInfo(&val->pImageBinds[i]);
         }
     }
-    bufferSize += 4; // signalSemaphoreCount
-    bufferSize += 4;
     if (val->pSignalSemaphores) {
         for (int i = 0; i < val->signalSemaphoreCount; i++) {
             bufferSize += vt_sizeof_VkSemaphore(val->pSignalSemaphores[i]);
@@ -23392,8 +21506,7 @@ static inline void vt_unserialize_VkBindSparseInfo(VkBindSparseInfo* val, char* 
 }
 
 static inline int vt_sizeof_VkFenceCreateInfo(VkFenceCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 8;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -23417,7 +21530,6 @@ static inline int vt_sizeof_VkFenceCreateInfo(VkFenceCreateInfo* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -23508,8 +21620,7 @@ static inline void vt_unserialize_VkFenceCreateInfo(VkFenceCreateInfo* val, char
 }
 
 static inline int vt_sizeof_VkSemaphoreCreateInfo(VkSemaphoreCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 8;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -23538,7 +21649,6 @@ static inline int vt_sizeof_VkSemaphoreCreateInfo(VkSemaphoreCreateInfo* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -23653,10 +21763,7 @@ static inline void vt_unserialize_VkSemaphoreCreateInfo(VkSemaphoreCreateInfo* v
 }
 
 static inline int vt_sizeof_VkEventCreateInfo(VkEventCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkEventCreateInfo(VkEventCreateInfo* val, char* outputBuffer) {
@@ -23679,13 +21786,7 @@ static inline void vt_unserialize_VkEventCreateInfo(VkEventCreateInfo* val, char
 }
 
 static inline int vt_sizeof_VkQueryPoolCreateInfo(VkQueryPoolCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // queryType
-    bufferSize += 4; // queryCount
-    bufferSize += 4; // pipelineStatistics
-    return bufferSize;
+    return 20;
 }
 
 static inline void vt_serialize_VkQueryPoolCreateInfo(VkQueryPoolCreateInfo* val, char* outputBuffer) {
@@ -23720,8 +21821,7 @@ static inline void vt_unserialize_VkQueryPoolCreateInfo(VkQueryPoolCreateInfo* v
 }
 
 static inline int vt_sizeof_VkBufferCreateInfo(VkBufferCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 32;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -23749,12 +21849,6 @@ static inline int vt_sizeof_VkBufferCreateInfo(VkBufferCreateInfo* val) {
         sBase->pNext = oldPNext;
         pNext = sBase->pNext;
     }
-    bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 8; // size
-    bufferSize += 4; // usage
-    bufferSize += 4; // sharingMode
-    bufferSize += 4; // queueFamilyIndexCount
     bufferSize += 4;
     bufferSize += val->pQueueFamilyIndices ? val->queueFamilyIndexCount * 4 : 0;
     return bufferSize;
@@ -23909,13 +22003,8 @@ static inline void vt_unserialize_VkBufferCreateInfo(VkBufferCreateInfo* val, ch
 }
 
 static inline int vt_sizeof_VkBufferViewCreateInfo(VkBufferViewCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
+    int bufferSize = 28;
     bufferSize += vt_sizeof_VkBuffer(val->buffer);
-    bufferSize += 4; // format
-    bufferSize += 8; // offset
-    bufferSize += 8; // range
     return bufferSize;
 }
 
@@ -23969,8 +22058,7 @@ static inline void vt_unserialize_VkBufferViewCreateInfo(VkBufferViewCreateInfo*
 }
 
 static inline int vt_sizeof_VkImageCreateInfo(VkImageCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 52;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -24009,20 +22097,8 @@ static inline int vt_sizeof_VkImageCreateInfo(VkImageCreateInfo* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // imageType
-    bufferSize += 4; // format
     bufferSize += vt_sizeof_VkExtent3D(&val->extent);
-    bufferSize += 4; // mipLevels
-    bufferSize += 4; // arrayLayers
-    bufferSize += 4; // samples
-    bufferSize += 4; // tiling
-    bufferSize += 4; // usage
-    bufferSize += 4; // sharingMode
-    bufferSize += 4; // queueFamilyIndexCount
-    bufferSize += 4;
     bufferSize += val->pQueueFamilyIndices ? val->queueFamilyIndexCount * 4 : 0;
-    bufferSize += 4; // initialLayout
     return bufferSize;
 }
 
@@ -24251,13 +22327,7 @@ static inline void vt_unserialize_VkImageCreateInfo(VkImageCreateInfo* val, char
 }
 
 static inline int vt_sizeof_VkSubresourceLayout(VkSubresourceLayout* val) {
-    int bufferSize = 0;
-    bufferSize += 8; // offset
-    bufferSize += 8; // size
-    bufferSize += 8; // rowPitch
-    bufferSize += 8; // arrayPitch
-    bufferSize += 8; // depthPitch
-    return bufferSize;
+    return 40;
 }
 
 static inline void vt_serialize_VkSubresourceLayout(VkSubresourceLayout* val, char* outputBuffer) {
@@ -24289,8 +22359,7 @@ static inline void vt_unserialize_VkSubresourceLayout(VkSubresourceLayout* val, 
 }
 
 static inline int vt_sizeof_VkImageViewCreateInfo(VkImageViewCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 16;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -24319,10 +22388,7 @@ static inline int vt_sizeof_VkImageViewCreateInfo(VkImageViewCreateInfo* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
     bufferSize += vt_sizeof_VkImage(val->image);
-    bufferSize += 4; // viewType
-    bufferSize += 4; // format
     bufferSize += vt_sizeof_VkComponentMapping(&val->components);
     bufferSize += vt_sizeof_VkImageSubresourceRange(&val->subresourceRange);
     return bufferSize;
@@ -24473,11 +22539,7 @@ static inline void vt_unserialize_VkImageViewCreateInfo(VkImageViewCreateInfo* v
 }
 
 static inline int vt_sizeof_VkPipelineCacheCreateInfo(VkPipelineCacheCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 8; // initialDataSize
-    bufferSize += 4;
+    int bufferSize = 20;
     bufferSize += val->pInitialData ? val->initialDataSize : 0;
     return bufferSize;
 }
@@ -24526,8 +22588,7 @@ static inline void vt_unserialize_VkPipelineCacheCreateInfo(VkPipelineCacheCreat
 }
 
 static inline int vt_sizeof_VkGraphicsPipelineCreateInfo(VkGraphicsPipelineCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 60;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -24556,9 +22617,6 @@ static inline int vt_sizeof_VkGraphicsPipelineCreateInfo(VkGraphicsPipelineCreat
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // stageCount
-    bufferSize += 4;
     if (val->pStages) {
         int arrSize = val->stageCount ? val->stageCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -24566,29 +22624,18 @@ static inline int vt_sizeof_VkGraphicsPipelineCreateInfo(VkGraphicsPipelineCreat
             bufferSize += vt_sizeof_VkPipelineShaderStageCreateInfo(&val->pStages[i]);
         }
     }
-    bufferSize += 4;
     bufferSize += val->pVertexInputState ? vt_sizeof_VkPipelineVertexInputStateCreateInfo(val->pVertexInputState) : 0;
-    bufferSize += 4;
     bufferSize += val->pInputAssemblyState ? vt_sizeof_VkPipelineInputAssemblyStateCreateInfo(val->pInputAssemblyState) : 0;
-    bufferSize += 4;
     bufferSize += val->pTessellationState ? vt_sizeof_VkPipelineTessellationStateCreateInfo(val->pTessellationState) : 0;
-    bufferSize += 4;
     bufferSize += val->pViewportState ? vt_sizeof_VkPipelineViewportStateCreateInfo(val->pViewportState) : 0;
-    bufferSize += 4;
     bufferSize += val->pRasterizationState ? vt_sizeof_VkPipelineRasterizationStateCreateInfo(val->pRasterizationState) : 0;
-    bufferSize += 4;
     bufferSize += val->pMultisampleState ? vt_sizeof_VkPipelineMultisampleStateCreateInfo(val->pMultisampleState) : 0;
-    bufferSize += 4;
     bufferSize += val->pDepthStencilState ? vt_sizeof_VkPipelineDepthStencilStateCreateInfo(val->pDepthStencilState) : 0;
-    bufferSize += 4;
     bufferSize += val->pColorBlendState ? vt_sizeof_VkPipelineColorBlendStateCreateInfo(val->pColorBlendState) : 0;
-    bufferSize += 4;
     bufferSize += val->pDynamicState ? vt_sizeof_VkPipelineDynamicStateCreateInfo(val->pDynamicState) : 0;
     bufferSize += vt_sizeof_VkPipelineLayout(val->layout);
     bufferSize += vt_sizeof_VkRenderPass(val->renderPass);
-    bufferSize += 4; // subpass
     bufferSize += vt_sizeof_VkPipeline(val->basePipelineHandle);
-    bufferSize += 4; // basePipelineIndex
     return bufferSize;
 }
 
@@ -24991,8 +23038,7 @@ static inline void vt_unserialize_VkGraphicsPipelineCreateInfo(VkGraphicsPipelin
 }
 
 static inline int vt_sizeof_VkComputePipelineCreateInfo(VkComputePipelineCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 12;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -25016,11 +23062,9 @@ static inline int vt_sizeof_VkComputePipelineCreateInfo(VkComputePipelineCreateI
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
     bufferSize += vt_sizeof_VkPipelineShaderStageCreateInfo(&val->stage);
     bufferSize += vt_sizeof_VkPipelineLayout(val->layout);
     bufferSize += vt_sizeof_VkPipeline(val->basePipelineHandle);
-    bufferSize += 4; // basePipelineIndex
     return bufferSize;
 }
 
@@ -25155,8 +23199,7 @@ static inline void vt_unserialize_VkComputePipelineCreateInfo(VkComputePipelineC
 }
 
 static inline int vt_sizeof_VkSamplerCreateInfo(VkSamplerCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 68;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -25195,22 +23238,6 @@ static inline int vt_sizeof_VkSamplerCreateInfo(VkSamplerCreateInfo* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // magFilter
-    bufferSize += 4; // minFilter
-    bufferSize += 4; // mipmapMode
-    bufferSize += 4; // addressModeU
-    bufferSize += 4; // addressModeV
-    bufferSize += 4; // addressModeW
-    bufferSize += 4; // mipLodBias
-    bufferSize += 4; // anisotropyEnable
-    bufferSize += 4; // maxAnisotropy
-    bufferSize += 4; // compareEnable
-    bufferSize += 4; // compareOp
-    bufferSize += 4; // minLod
-    bufferSize += 4; // maxLod
-    bufferSize += 4; // borderColor
-    bufferSize += 4; // unnormalizedCoordinates
     return bufferSize;
 }
 
@@ -25433,8 +23460,7 @@ static inline void vt_unserialize_VkSamplerCreateInfo(VkSamplerCreateInfo* val, 
 }
 
 static inline int vt_sizeof_VkDescriptorSetLayoutCreateInfo(VkDescriptorSetLayoutCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 16;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -25462,9 +23488,6 @@ static inline int vt_sizeof_VkDescriptorSetLayoutCreateInfo(VkDescriptorSetLayou
         sBase->pNext = oldPNext;
         pNext = sBase->pNext;
     }
-    bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // bindingCount
     bufferSize += 4;
     if (val->pBindings) {
         int arrSize = val->bindingCount ? val->bindingCount : 0;
@@ -25624,8 +23647,7 @@ static inline void vt_unserialize_VkDescriptorSetLayoutCreateInfo(VkDescriptorSe
 }
 
 static inline int vt_sizeof_VkDescriptorPoolCreateInfo(VkDescriptorPoolCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 20;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -25653,10 +23675,6 @@ static inline int vt_sizeof_VkDescriptorPoolCreateInfo(VkDescriptorPoolCreateInf
         sBase->pNext = oldPNext;
         pNext = sBase->pNext;
     }
-    bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // maxSets
-    bufferSize += 4; // poolSizeCount
     bufferSize += 4;
     if (val->pPoolSizes) {
         int arrSize = val->poolSizeCount ? val->poolSizeCount : 0;
@@ -25820,8 +23838,7 @@ static inline void vt_unserialize_VkDescriptorPoolCreateInfo(VkDescriptorPoolCre
 }
 
 static inline int vt_sizeof_VkDescriptorSetAllocateInfo(VkDescriptorSetAllocateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 12;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -25846,8 +23863,6 @@ static inline int vt_sizeof_VkDescriptorSetAllocateInfo(VkDescriptorSetAllocateI
     }
     bufferSize += 4;
     bufferSize += vt_sizeof_VkDescriptorPool(val->descriptorPool);
-    bufferSize += 4; // descriptorSetCount
-    bufferSize += 4;
     if (val->pSetLayouts) {
         for (int i = 0; i < val->descriptorSetCount; i++) {
             bufferSize += vt_sizeof_VkDescriptorSetLayout(val->pSetLayouts[i]);
@@ -26001,8 +24016,7 @@ static inline void vt_unserialize_VkDescriptorSetAllocateInfo(VkDescriptorSetAll
 }
 
 static inline int vt_sizeof_VkWriteDescriptorSet(VkWriteDescriptorSet* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 32;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -26027,11 +24041,6 @@ static inline int vt_sizeof_VkWriteDescriptorSet(VkWriteDescriptorSet* val) {
     }
     bufferSize += 4;
     bufferSize += vt_sizeof_VkDescriptorSet(val->dstSet);
-    bufferSize += 4; // dstBinding
-    bufferSize += 4; // dstArrayElement
-    bufferSize += 4; // descriptorCount
-    bufferSize += 4; // descriptorType
-    bufferSize += 4;
     if (val->pImageInfo) {
         int arrSize = val->descriptorCount ? val->descriptorCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -26039,7 +24048,6 @@ static inline int vt_sizeof_VkWriteDescriptorSet(VkWriteDescriptorSet* val) {
             bufferSize += vt_sizeof_VkDescriptorImageInfo(&val->pImageInfo[i]);
         }
     }
-    bufferSize += 4;
     if (val->pBufferInfo) {
         int arrSize = val->descriptorCount ? val->descriptorCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -26047,7 +24055,6 @@ static inline int vt_sizeof_VkWriteDescriptorSet(VkWriteDescriptorSet* val) {
             bufferSize += vt_sizeof_VkDescriptorBufferInfo(&val->pBufferInfo[i]);
         }
     }
-    bufferSize += 4;
     if (val->pTexelBufferView) {
         for (int i = 0; i < val->descriptorCount; i++) {
             bufferSize += vt_sizeof_VkBufferView(val->pTexelBufferView[i]);
@@ -26279,15 +24286,9 @@ static inline void vt_unserialize_VkWriteDescriptorSet(VkWriteDescriptorSet* val
 }
 
 static inline int vt_sizeof_VkCopyDescriptorSet(VkCopyDescriptorSet* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 24;
     bufferSize += vt_sizeof_VkDescriptorSet(val->srcSet);
-    bufferSize += 4; // srcBinding
-    bufferSize += 4; // srcArrayElement
     bufferSize += vt_sizeof_VkDescriptorSet(val->dstSet);
-    bufferSize += 4; // dstBinding
-    bufferSize += 4; // dstArrayElement
-    bufferSize += 4; // descriptorCount
     return bufferSize;
 }
 
@@ -26363,8 +24364,7 @@ static inline void vt_unserialize_VkCopyDescriptorSet(VkCopyDescriptorSet* val, 
 }
 
 static inline int vt_sizeof_VkFramebufferCreateInfo(VkFramebufferCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 28;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -26388,18 +24388,12 @@ static inline int vt_sizeof_VkFramebufferCreateInfo(VkFramebufferCreateInfo* val
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
     bufferSize += vt_sizeof_VkRenderPass(val->renderPass);
-    bufferSize += 4; // attachmentCount
-    bufferSize += 4;
     if (val->pAttachments) {
         for (int i = 0; i < val->attachmentCount; i++) {
             bufferSize += vt_sizeof_VkImageView(val->pAttachments[i]);
         }
     }
-    bufferSize += 4; // width
-    bufferSize += 4; // height
-    bufferSize += 4; // layers
     return bufferSize;
 }
 
@@ -26564,8 +24558,7 @@ static inline void vt_unserialize_VkFramebufferCreateInfo(VkFramebufferCreateInf
 }
 
 static inline int vt_sizeof_VkRenderPassCreateInfo(VkRenderPassCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 32;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -26594,9 +24587,6 @@ static inline int vt_sizeof_VkRenderPassCreateInfo(VkRenderPassCreateInfo* val) 
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // flags
-    bufferSize += 4; // attachmentCount
-    bufferSize += 4;
     if (val->pAttachments) {
         int arrSize = val->attachmentCount ? val->attachmentCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -26604,8 +24594,6 @@ static inline int vt_sizeof_VkRenderPassCreateInfo(VkRenderPassCreateInfo* val) 
             bufferSize += vt_sizeof_VkAttachmentDescription(&val->pAttachments[i]);
         }
     }
-    bufferSize += 4; // subpassCount
-    bufferSize += 4;
     if (val->pSubpasses) {
         int arrSize = val->subpassCount ? val->subpassCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -26613,8 +24601,6 @@ static inline int vt_sizeof_VkRenderPassCreateInfo(VkRenderPassCreateInfo* val) 
             bufferSize += vt_sizeof_VkSubpassDescription(&val->pSubpasses[i]);
         }
     }
-    bufferSize += 4; // dependencyCount
-    bufferSize += 4;
     if (val->pDependencies) {
         int arrSize = val->dependencyCount ? val->dependencyCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -26847,11 +24833,7 @@ static inline void vt_unserialize_VkRenderPassCreateInfo(VkRenderPassCreateInfo*
 }
 
 static inline int vt_sizeof_VkCommandPoolCreateInfo(VkCommandPoolCreateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // queueFamilyIndex
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkCommandPoolCreateInfo(VkCommandPoolCreateInfo* val, char* outputBuffer) {
@@ -26878,11 +24860,8 @@ static inline void vt_unserialize_VkCommandPoolCreateInfo(VkCommandPoolCreateInf
 }
 
 static inline int vt_sizeof_VkCommandBufferAllocateInfo(VkCommandBufferAllocateInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 12;
     bufferSize += vt_sizeof_VkCommandPool(val->commandPool);
-    bufferSize += 4; // level
-    bufferSize += 4; // commandBufferCount
     return bufferSize;
 }
 
@@ -26928,8 +24907,7 @@ static inline void vt_unserialize_VkCommandBufferAllocateInfo(VkCommandBufferAll
 }
 
 static inline int vt_sizeof_VkCommandBufferBeginInfo(VkCommandBufferBeginInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 12;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -26952,8 +24930,6 @@ static inline int vt_sizeof_VkCommandBufferBeginInfo(VkCommandBufferBeginInfo* v
         sBase->pNext = oldPNext;
         pNext = sBase->pNext;
     }
-    bufferSize += 4;
-    bufferSize += 4; // flags
     bufferSize += 4;
     bufferSize += val->pInheritanceInfo ? vt_sizeof_VkCommandBufferInheritanceInfo(val->pInheritanceInfo) : 0;
     return bufferSize;
@@ -27067,11 +25043,7 @@ static inline void vt_unserialize_VkCommandBufferBeginInfo(VkCommandBufferBeginI
 }
 
 static inline int vt_sizeof_VkBufferCopy(VkBufferCopy* val) {
-    int bufferSize = 0;
-    bufferSize += 8; // srcOffset
-    bufferSize += 8; // dstOffset
-    bufferSize += 8; // size
-    return bufferSize;
+    return 24;
 }
 
 static inline void vt_serialize_VkBufferCopy(VkBufferCopy* val, char* outputBuffer) {
@@ -27166,10 +25138,7 @@ static inline void vt_unserialize_VkImageBlit(VkImageBlit* val, char* inputBuffe
 }
 
 static inline int vt_sizeof_VkBufferImageCopy(VkBufferImageCopy* val) {
-    int bufferSize = 0;
-    bufferSize += 8; // bufferOffset
-    bufferSize += 4; // bufferRowLength
-    bufferSize += 4; // bufferImageHeight
+    int bufferSize = 16;
     bufferSize += vt_sizeof_VkImageSubresourceLayers(&val->imageSubresource);
     bufferSize += vt_sizeof_VkOffset3D(&val->imageOffset);
     bufferSize += vt_sizeof_VkExtent3D(&val->imageExtent);
@@ -27209,9 +25178,7 @@ static inline void vt_unserialize_VkBufferImageCopy(VkBufferImageCopy* val, char
 }
 
 static inline int vt_sizeof_VkClearAttachment(VkClearAttachment* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // aspectMask
-    bufferSize += 4; // colorAttachment
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkClearValue(&val->clearValue);
     return bufferSize;
 }
@@ -27237,10 +25204,8 @@ static inline void vt_unserialize_VkClearAttachment(VkClearAttachment* val, char
 }
 
 static inline int vt_sizeof_VkClearRect(VkClearRect* val) {
-    int bufferSize = 0;
+    int bufferSize = 8;
     bufferSize += vt_sizeof_VkRect2D(&val->rect);
-    bufferSize += 4; // baseArrayLayer
-    bufferSize += 4; // layerCount
     return bufferSize;
 }
 
@@ -27303,11 +25268,7 @@ static inline void vt_unserialize_VkImageResolve(VkImageResolve* val, char* inpu
 }
 
 static inline int vt_sizeof_VkMemoryBarrier(VkMemoryBarrier* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // srcAccessMask
-    bufferSize += 4; // dstAccessMask
-    return bufferSize;
+    return 12;
 }
 
 static inline void vt_serialize_VkMemoryBarrier(VkMemoryBarrier* val, char* outputBuffer) {
@@ -27334,15 +25295,8 @@ static inline void vt_unserialize_VkMemoryBarrier(VkMemoryBarrier* val, char* in
 }
 
 static inline int vt_sizeof_VkBufferMemoryBarrier(VkBufferMemoryBarrier* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // srcAccessMask
-    bufferSize += 4; // dstAccessMask
-    bufferSize += 4; // srcQueueFamilyIndex
-    bufferSize += 4; // dstQueueFamilyIndex
+    int bufferSize = 36;
     bufferSize += vt_sizeof_VkBuffer(val->buffer);
-    bufferSize += 8; // offset
-    bufferSize += 8; // size
     return bufferSize;
 }
 
@@ -27404,8 +25358,7 @@ static inline void vt_unserialize_VkBufferMemoryBarrier(VkBufferMemoryBarrier* v
 }
 
 static inline int vt_sizeof_VkImageMemoryBarrier(VkImageMemoryBarrier* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 28;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -27429,12 +25382,6 @@ static inline int vt_sizeof_VkImageMemoryBarrier(VkImageMemoryBarrier* val) {
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // srcAccessMask
-    bufferSize += 4; // dstAccessMask
-    bufferSize += 4; // oldLayout
-    bufferSize += 4; // newLayout
-    bufferSize += 4; // srcQueueFamilyIndex
-    bufferSize += 4; // dstQueueFamilyIndex
     bufferSize += vt_sizeof_VkImage(val->image);
     bufferSize += vt_sizeof_VkImageSubresourceRange(&val->subresourceRange);
     return bufferSize;
@@ -27569,8 +25516,7 @@ static inline void vt_unserialize_VkImageMemoryBarrier(VkImageMemoryBarrier* val
 }
 
 static inline int vt_sizeof_VkRenderPassBeginInfo(VkRenderPassBeginInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 12;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -27607,8 +25553,6 @@ static inline int vt_sizeof_VkRenderPassBeginInfo(VkRenderPassBeginInfo* val) {
     bufferSize += vt_sizeof_VkRenderPass(val->renderPass);
     bufferSize += vt_sizeof_VkFramebuffer(val->framebuffer);
     bufferSize += vt_sizeof_VkRect2D(&val->renderArea);
-    bufferSize += 4; // clearValueCount
-    bufferSize += 4;
     if (val->pClearValues) {
         int arrSize = val->clearValueCount ? val->clearValueCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -27827,12 +25771,7 @@ static inline void vt_unserialize_VkRenderPassBeginInfo(VkRenderPassBeginInfo* v
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceExternalBufferInfo(VkPhysicalDeviceExternalBufferInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // usage
-    bufferSize += 4; // handleType
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceExternalBufferInfo(VkPhysicalDeviceExternalBufferInfo* val, char* outputBuffer) {
@@ -27863,8 +25802,7 @@ static inline void vt_unserialize_VkPhysicalDeviceExternalBufferInfo(VkPhysicalD
 }
 
 static inline int vt_sizeof_VkExternalBufferProperties(VkExternalBufferProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 4;
     bufferSize += vt_sizeof_VkExternalMemoryProperties(&val->externalMemoryProperties);
     return bufferSize;
 }
@@ -27889,8 +25827,7 @@ static inline void vt_unserialize_VkExternalBufferProperties(VkExternalBufferPro
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceExternalSemaphoreInfo(VkPhysicalDeviceExternalSemaphoreInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 8;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -27914,7 +25851,6 @@ static inline int vt_sizeof_VkPhysicalDeviceExternalSemaphoreInfo(VkPhysicalDevi
         pNext = sBase->pNext;
     }
     bufferSize += 4;
-    bufferSize += 4; // handleType
     return bufferSize;
 }
 
@@ -28005,12 +25941,7 @@ static inline void vt_unserialize_VkPhysicalDeviceExternalSemaphoreInfo(VkPhysic
 }
 
 static inline int vt_sizeof_VkExternalSemaphoreProperties(VkExternalSemaphoreProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // exportFromImportedHandleTypes
-    bufferSize += 4; // compatibleHandleTypes
-    bufferSize += 4; // externalSemaphoreFeatures
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkExternalSemaphoreProperties(VkExternalSemaphoreProperties* val, char* outputBuffer) {
@@ -28041,10 +25972,7 @@ static inline void vt_unserialize_VkExternalSemaphoreProperties(VkExternalSemaph
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceExternalFenceInfo(VkPhysicalDeviceExternalFenceInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // handleType
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkPhysicalDeviceExternalFenceInfo(VkPhysicalDeviceExternalFenceInfo* val, char* outputBuffer) {
@@ -28067,12 +25995,7 @@ static inline void vt_unserialize_VkPhysicalDeviceExternalFenceInfo(VkPhysicalDe
 }
 
 static inline int vt_sizeof_VkExternalFenceProperties(VkExternalFenceProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // exportFromImportedHandleTypes
-    bufferSize += 4; // compatibleHandleTypes
-    bufferSize += 4; // externalFenceFeatures
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkExternalFenceProperties(VkExternalFenceProperties* val, char* outputBuffer) {
@@ -28103,11 +26026,8 @@ static inline void vt_unserialize_VkExternalFenceProperties(VkExternalFencePrope
 }
 
 static inline int vt_sizeof_VkPhysicalDeviceGroupProperties(VkPhysicalDeviceGroupProperties* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // physicalDeviceCount
+    int bufferSize = 12;
     bufferSize += val->physicalDeviceCount * vt_sizeof_VkPhysicalDevice(val->physicalDevices[0]);
-    bufferSize += 4; // subsetAllocation
     return bufferSize;
 }
 
@@ -28160,8 +26080,7 @@ static inline void vt_unserialize_VkPhysicalDeviceGroupProperties(VkPhysicalDevi
 }
 
 static inline int vt_sizeof_VkBindBufferMemoryInfo(VkBindBufferMemoryInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 12;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -28187,7 +26106,6 @@ static inline int vt_sizeof_VkBindBufferMemoryInfo(VkBindBufferMemoryInfo* val) 
     bufferSize += 4;
     bufferSize += vt_sizeof_VkBuffer(val->buffer);
     bufferSize += vt_sizeof_VkDeviceMemory(val->memory);
-    bufferSize += 8; // memoryOffset
     return bufferSize;
 }
 
@@ -28314,8 +26232,7 @@ static inline void vt_unserialize_VkBindBufferMemoryInfo(VkBindBufferMemoryInfo*
 }
 
 static inline int vt_sizeof_VkBindImageMemoryInfo(VkBindImageMemoryInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 12;
     void* pNext = val->pNext;
     while (pNext) {
         bufferSize += 4;
@@ -28351,7 +26268,6 @@ static inline int vt_sizeof_VkBindImageMemoryInfo(VkBindImageMemoryInfo* val) {
     bufferSize += 4;
     bufferSize += vt_sizeof_VkImage(val->image);
     bufferSize += vt_sizeof_VkDeviceMemory(val->memory);
-    bufferSize += 8; // memoryOffset
     return bufferSize;
 }
 
@@ -28526,9 +26442,7 @@ static inline void vt_unserialize_VkBindImageMemoryInfo(VkBindImageMemoryInfo* v
 }
 
 static inline int vt_sizeof_VkDeviceBufferMemoryRequirements(VkDeviceBufferMemoryRequirements* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4;
+    int bufferSize = 8;
     bufferSize += val->pCreateInfo ? vt_sizeof_VkBufferCreateInfo(val->pCreateInfo) : 0;
     return bufferSize;
 }
@@ -28570,11 +26484,8 @@ static inline void vt_unserialize_VkDeviceBufferMemoryRequirements(VkDeviceBuffe
 }
 
 static inline int vt_sizeof_VkDeviceImageMemoryRequirements(VkDeviceImageMemoryRequirements* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4;
+    int bufferSize = 12;
     bufferSize += val->pCreateInfo ? vt_sizeof_VkImageCreateInfo(val->pCreateInfo) : 0;
-    bufferSize += 4; // planeAspect
     return bufferSize;
 }
 
@@ -28619,12 +26530,7 @@ static inline void vt_unserialize_VkDeviceImageMemoryRequirements(VkDeviceImageM
 }
 
 static inline int vt_sizeof_VkDeviceQueueInfo2(VkDeviceQueueInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // flags
-    bufferSize += 4; // queueFamilyIndex
-    bufferSize += 4; // queueIndex
-    return bufferSize;
+    return 16;
 }
 
 static inline void vt_serialize_VkDeviceQueueInfo2(VkDeviceQueueInfo2* val, char* outputBuffer) {
@@ -28655,10 +26561,7 @@ static inline void vt_unserialize_VkDeviceQueueInfo2(VkDeviceQueueInfo2* val, ch
 }
 
 static inline int vt_sizeof_VkCalibratedTimestampInfoKHR(VkCalibratedTimestampInfoKHR* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += 4; // timeDomain
-    return bufferSize;
+    return 8;
 }
 
 static inline void vt_serialize_VkCalibratedTimestampInfoKHR(VkCalibratedTimestampInfoKHR* val, char* outputBuffer) {
@@ -28680,93 +26583,10 @@ static inline void vt_unserialize_VkCalibratedTimestampInfoKHR(VkCalibratedTimes
     bufferOffset += 4;
 }
 
-static inline int vt_sizeof_VkBufferDeviceAddressInfo(VkBufferDeviceAddressInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += vt_sizeof_VkBuffer(val->buffer);
-    return bufferSize;
-}
-
-static inline void vt_serialize_VkBufferDeviceAddressInfo(VkBufferDeviceAddressInfo* val, char* outputBuffer) {
-    int bufferOffset = 0;
-    *(VkStructureType*)(outputBuffer + bufferOffset) = val->sType;
-    bufferOffset += 4;
-
-#ifdef VT_SERVER
-    vt_serialize_VkBuffer(val->buffer, outputBuffer + bufferOffset);
-#else
-    VkObject* bufferObject = VkObject_fromHandle(val->buffer);
-    vt_serialize_VkBuffer((VkBuffer)&bufferObject->id, outputBuffer + bufferOffset);
-#endif
-    bufferOffset += vt_sizeof_VkBuffer(val->buffer);
-}
-
-static inline void vt_unserialize_VkBufferDeviceAddressInfo(VkBufferDeviceAddressInfo* val, char* inputBuffer, MemoryPool* memoryPool) {
-    int bufferOffset = 0;
-    val->sType = *(VkStructureType*)(inputBuffer + bufferOffset);
-    bufferOffset += 4;
-#ifdef VT_SERVER
-    val->pNext = NULL;
-#endif
-
-    uint64_t bufferId;
-    vt_unserialize_VkBuffer((VkBuffer)&bufferId, inputBuffer + bufferOffset, memoryPool);
-#ifdef VT_SERVER
-    val->buffer = VkObject_fromId(bufferId);
-#else
-    VkObject* bufferObject = VkObject_create(VK_OBJECT_TYPE_BUFFER, bufferId);
-    val->buffer = VkObject_toHandle(bufferObject);
-#endif
-    bufferOffset += vt_sizeof_VkBuffer(val->buffer);
-}
-
-static inline int vt_sizeof_VkDeviceMemoryOpaqueCaptureAddressInfo(VkDeviceMemoryOpaqueCaptureAddressInfo* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
-    bufferSize += vt_sizeof_VkDeviceMemory(val->memory);
-    return bufferSize;
-}
-
-static inline void vt_serialize_VkDeviceMemoryOpaqueCaptureAddressInfo(VkDeviceMemoryOpaqueCaptureAddressInfo* val, char* outputBuffer) {
-    int bufferOffset = 0;
-    *(VkStructureType*)(outputBuffer + bufferOffset) = val->sType;
-    bufferOffset += 4;
-
-#ifdef VT_SERVER
-    vt_serialize_VkDeviceMemory(val->memory, outputBuffer + bufferOffset);
-#else
-    VkObject* memoryObject = VkObject_fromHandle(val->memory);
-    vt_serialize_VkDeviceMemory((VkDeviceMemory)&memoryObject->id, outputBuffer + bufferOffset);
-#endif
-    bufferOffset += vt_sizeof_VkDeviceMemory(val->memory);
-}
-
-static inline void vt_unserialize_VkDeviceMemoryOpaqueCaptureAddressInfo(VkDeviceMemoryOpaqueCaptureAddressInfo* val, char* inputBuffer, MemoryPool* memoryPool) {
-    int bufferOffset = 0;
-    val->sType = *(VkStructureType*)(inputBuffer + bufferOffset);
-    bufferOffset += 4;
-#ifdef VT_SERVER
-    val->pNext = NULL;
-#endif
-
-    uint64_t memoryId;
-    vt_unserialize_VkDeviceMemory((VkDeviceMemory)&memoryId, inputBuffer + bufferOffset, memoryPool);
-#ifdef VT_SERVER
-    val->memory = vortekSerializerCastVkObject ? ((ResourceMemory*)VkObject_fromId(memoryId))->memory : VkObject_fromId(memoryId);
-#else
-    VkObject* memoryObject = VkObject_create(VK_OBJECT_TYPE_DEVICE_MEMORY, memoryId);
-    val->memory = VkObject_toHandle(memoryObject);
-#endif
-    bufferOffset += vt_sizeof_VkDeviceMemory(val->memory);
-}
-
 static inline int vt_sizeof_VkCopyBufferInfo2(VkCopyBufferInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 12;
     bufferSize += vt_sizeof_VkBuffer(val->srcBuffer);
     bufferSize += vt_sizeof_VkBuffer(val->dstBuffer);
-    bufferSize += 4; // regionCount
-    bufferSize += 4;
     if (val->pRegions) {
         int arrSize = val->regionCount ? val->regionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -28866,14 +26686,9 @@ static inline void vt_unserialize_VkCopyBufferInfo2(VkCopyBufferInfo2* val, char
 }
 
 static inline int vt_sizeof_VkCopyImageInfo2(VkCopyImageInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 20;
     bufferSize += vt_sizeof_VkImage(val->srcImage);
-    bufferSize += 4; // srcImageLayout
     bufferSize += vt_sizeof_VkImage(val->dstImage);
-    bufferSize += 4; // dstImageLayout
-    bufferSize += 4; // regionCount
-    bufferSize += 4;
     if (val->pRegions) {
         int arrSize = val->regionCount ? val->regionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -28981,14 +26796,9 @@ static inline void vt_unserialize_VkCopyImageInfo2(VkCopyImageInfo2* val, char* 
 }
 
 static inline int vt_sizeof_VkBlitImageInfo2(VkBlitImageInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 24;
     bufferSize += vt_sizeof_VkImage(val->srcImage);
-    bufferSize += 4; // srcImageLayout
     bufferSize += vt_sizeof_VkImage(val->dstImage);
-    bufferSize += 4; // dstImageLayout
-    bufferSize += 4; // regionCount
-    bufferSize += 4;
     if (val->pRegions) {
         int arrSize = val->regionCount ? val->regionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -28996,7 +26806,6 @@ static inline int vt_sizeof_VkBlitImageInfo2(VkBlitImageInfo2* val) {
             bufferSize += vt_sizeof_VkImageBlit2(&val->pRegions[i]);
         }
     }
-    bufferSize += 4; // filter
     return bufferSize;
 }
 
@@ -29101,13 +26910,9 @@ static inline void vt_unserialize_VkBlitImageInfo2(VkBlitImageInfo2* val, char* 
 }
 
 static inline int vt_sizeof_VkCopyBufferToImageInfo2(VkCopyBufferToImageInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 16;
     bufferSize += vt_sizeof_VkBuffer(val->srcBuffer);
     bufferSize += vt_sizeof_VkImage(val->dstImage);
-    bufferSize += 4; // dstImageLayout
-    bufferSize += 4; // regionCount
-    bufferSize += 4;
     if (val->pRegions) {
         int arrSize = val->regionCount ? val->regionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -29211,13 +27016,9 @@ static inline void vt_unserialize_VkCopyBufferToImageInfo2(VkCopyBufferToImageIn
 }
 
 static inline int vt_sizeof_VkCopyImageToBufferInfo2(VkCopyImageToBufferInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 16;
     bufferSize += vt_sizeof_VkImage(val->srcImage);
-    bufferSize += 4; // srcImageLayout
     bufferSize += vt_sizeof_VkBuffer(val->dstBuffer);
-    bufferSize += 4; // regionCount
-    bufferSize += 4;
     if (val->pRegions) {
         int arrSize = val->regionCount ? val->regionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -29321,14 +27122,9 @@ static inline void vt_unserialize_VkCopyImageToBufferInfo2(VkCopyImageToBufferIn
 }
 
 static inline int vt_sizeof_VkResolveImageInfo2(VkResolveImageInfo2* val) {
-    int bufferSize = 0;
-    bufferSize += 4; // sType
+    int bufferSize = 20;
     bufferSize += vt_sizeof_VkImage(val->srcImage);
-    bufferSize += 4; // srcImageLayout
     bufferSize += vt_sizeof_VkImage(val->dstImage);
-    bufferSize += 4; // dstImageLayout
-    bufferSize += 4; // regionCount
-    bufferSize += 4;
     if (val->pRegions) {
         int arrSize = val->regionCount ? val->regionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -29436,10 +27232,8 @@ static inline void vt_unserialize_VkResolveImageInfo2(VkResolveImageInfo2* val, 
 }
 
 static inline int vt_sizeof_vkCreateInstance(const VkInstanceCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkInstance* pInstance) {
-    int bufferSize = 0;
-    bufferSize += 4;
+    int bufferSize = 5;
     bufferSize += pCreateInfo ? vt_sizeof_VkInstanceCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pInstance ? vt_sizeof_VkInstance(*pInstance) : 0;
     return bufferSize;
 }
@@ -29488,8 +27282,7 @@ static inline void vt_unserialize_vkCreateInstance(const VkInstanceCreateInfo* p
 }
 
 static inline int vt_sizeof_vkDestroyInstance(VkInstance instance, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 1;
     bufferSize += instance ? vt_sizeof_VkInstance(instance) : 0;
     return bufferSize;
 }
@@ -29518,12 +27311,9 @@ static inline void vt_unserialize_vkDestroyInstance(VkInstance instance, const V
 }
 
 static inline int vt_sizeof_vkEnumeratePhysicalDevices(VkInstance instance, uint32_t* pPhysicalDeviceCount, VkPhysicalDevice* pPhysicalDevices) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += instance ? vt_sizeof_VkInstance(instance) : 0;
-    bufferSize += 4;
     bufferSize += pPhysicalDeviceCount ? 4 : 0;
-    bufferSize += 4;
     if (pPhysicalDevices) {
         for (int i = 0; i < *pPhysicalDeviceCount; i++) {
             bufferSize += vt_sizeof_VkPhysicalDevice(pPhysicalDevices[i]);
@@ -29615,10 +27405,8 @@ static inline void vt_unserialize_vkEnumeratePhysicalDevices(VkInstance instance
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceProperties(VkPhysicalDevice physicalDevice, VkPhysicalDeviceProperties* pProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pProperties ? vt_sizeof_VkPhysicalDeviceProperties(pProperties) : 0;
     return bufferSize;
 }
@@ -29667,12 +27455,9 @@ static inline void vt_unserialize_vkGetPhysicalDeviceProperties(VkPhysicalDevice
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice physicalDevice, uint32_t* pQueueFamilyPropertyCount, VkQueueFamilyProperties* pQueueFamilyProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pQueueFamilyPropertyCount ? 4 : 0;
-    bufferSize += 4;
     if (pQueueFamilyProperties) {
         int arrSize = pQueueFamilyPropertyCount ? *pQueueFamilyPropertyCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -29759,10 +27544,8 @@ static inline void vt_unserialize_vkGetPhysicalDeviceQueueFamilyProperties(VkPhy
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceMemoryProperties(VkPhysicalDevice physicalDevice, VkPhysicalDeviceMemoryProperties* pMemoryProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pMemoryProperties ? vt_sizeof_VkPhysicalDeviceMemoryProperties(pMemoryProperties) : 0;
     return bufferSize;
 }
@@ -29811,10 +27594,8 @@ static inline void vt_unserialize_vkGetPhysicalDeviceMemoryProperties(VkPhysical
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceFeatures(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures* pFeatures) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pFeatures ? vt_sizeof_VkPhysicalDeviceFeatures(pFeatures) : 0;
     return bufferSize;
 }
@@ -29863,11 +27644,8 @@ static inline void vt_unserialize_vkGetPhysicalDeviceFeatures(VkPhysicalDevice p
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceFormatProperties(VkPhysicalDevice physicalDevice, VkFormat format, VkFormatProperties* pFormatProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4; // format
-    bufferSize += 4;
     bufferSize += pFormatProperties ? vt_sizeof_VkFormatProperties(pFormatProperties) : 0;
     return bufferSize;
 }
@@ -29920,15 +27698,8 @@ static inline void vt_unserialize_vkGetPhysicalDeviceFormatProperties(VkPhysical
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceImageFormatProperties(VkPhysicalDevice physicalDevice, VkFormat format, VkImageType type, VkImageTiling tiling, VkImageUsageFlags usage, VkImageCreateFlags flags, VkImageFormatProperties* pImageFormatProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 25;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4; // format
-    bufferSize += 4; // type
-    bufferSize += 4; // tiling
-    bufferSize += 4; // usage
-    bufferSize += 4; // flags
-    bufferSize += 4;
     bufferSize += pImageFormatProperties ? vt_sizeof_VkImageFormatProperties(pImageFormatProperties) : 0;
     return bufferSize;
 }
@@ -29997,12 +27768,9 @@ static inline void vt_unserialize_vkGetPhysicalDeviceImageFormatProperties(VkPhy
 }
 
 static inline int vt_sizeof_vkCreateDevice(VkPhysicalDevice physicalDevice, const VkDeviceCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDevice* pDevice) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkDeviceCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pDevice ? vt_sizeof_VkDevice(*pDevice) : 0;
     return bufferSize;
 }
@@ -30066,8 +27834,7 @@ static inline void vt_unserialize_vkCreateDevice(VkPhysicalDevice physicalDevice
 }
 
 static inline int vt_sizeof_vkDestroyDevice(VkDevice device, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 1;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
     return bufferSize;
 }
@@ -30096,8 +27863,7 @@ static inline void vt_unserialize_vkDestroyDevice(VkDevice device, const VkAlloc
 }
 
 static inline int vt_sizeof_vkEnumerateInstanceVersion(uint32_t* pApiVersion) {
-    int bufferSize = 0;
-    bufferSize += 4;
+    int bufferSize = 4;
     bufferSize += pApiVersion ? 4 : 0;
     return bufferSize;
 }
@@ -30131,12 +27897,9 @@ static inline void vt_unserialize_vkEnumerateInstanceVersion(uint32_t* pApiVersi
 }
 
 static inline int vt_sizeof_vkEnumerateInstanceExtensionProperties(const char* pLayerName, uint32_t* pPropertyCount, VkExtensionProperties* pProperties) {
-    int bufferSize = 0;
-    bufferSize += 4;
+    int bufferSize = 12;
     bufferSize += pLayerName ? strlen(pLayerName) + 1 : 0;
-    bufferSize += 4;
     bufferSize += pPropertyCount ? 4 : 0;
-    bufferSize += 4;
     if (pProperties) {
         int arrSize = pPropertyCount ? *pPropertyCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -30229,14 +27992,10 @@ static inline void vt_unserialize_vkEnumerateInstanceExtensionProperties(char* p
 }
 
 static inline int vt_sizeof_vkEnumerateDeviceExtensionProperties(VkPhysicalDevice physicalDevice, const char* pLayerName, uint32_t* pPropertyCount, VkExtensionProperties* pProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pLayerName ? strlen(pLayerName) + 1 : 0;
-    bufferSize += 4;
     bufferSize += pPropertyCount ? 4 : 0;
-    bufferSize += 4;
     if (pProperties) {
         int arrSize = pPropertyCount ? *pPropertyCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -30344,12 +28103,8 @@ static inline void vt_unserialize_vkEnumerateDeviceExtensionProperties(VkPhysica
 }
 
 static inline int vt_sizeof_vkGetDeviceQueue(VkDevice device, uint32_t queueFamilyIndex, uint32_t queueIndex, VkQueue* pQueue) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4; // queueFamilyIndex
-    bufferSize += 4; // queueIndex
-    bufferSize++;
     bufferSize += pQueue ? vt_sizeof_VkQueue(*pQueue) : 0;
     return bufferSize;
 }
@@ -30401,11 +28156,8 @@ static inline void vt_unserialize_vkGetDeviceQueue(VkDevice device, uint32_t* qu
 }
 
 static inline int vt_sizeof_vkQueueSubmit(VkQueue queue, uint32_t submitCount, const VkSubmitInfo* pSubmits, VkFence fence) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += queue ? vt_sizeof_VkQueue(queue) : 0;
-    bufferSize += 4; // submitCount
-    bufferSize += 4;
     if (pSubmits) {
         int arrSize = submitCount ? submitCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -30413,7 +28165,6 @@ static inline int vt_sizeof_vkQueueSubmit(VkQueue queue, uint32_t submitCount, c
             bufferSize += vt_sizeof_VkSubmitInfo(&pSubmits[i]);
         }
     }
-    bufferSize++;
     bufferSize += fence ? vt_sizeof_VkFence(fence) : 0;
     return bufferSize;
 }
@@ -30493,8 +28244,7 @@ static inline void vt_unserialize_vkQueueSubmit(VkQueue queue, uint32_t* submitC
 }
 
 static inline int vt_sizeof_vkQueueWaitIdle(VkQueue queue) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 1;
     bufferSize += queue ? vt_sizeof_VkQueue(queue) : 0;
     return bufferSize;
 }
@@ -30523,8 +28273,7 @@ static inline void vt_unserialize_vkQueueWaitIdle(VkQueue queue, char* inputBuff
 }
 
 static inline int vt_sizeof_vkDeviceWaitIdle(VkDevice device) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 1;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
     return bufferSize;
 }
@@ -30553,12 +28302,9 @@ static inline void vt_unserialize_vkDeviceWaitIdle(VkDevice device, char* inputB
 }
 
 static inline int vt_sizeof_vkAllocateMemory(VkDevice device, const VkMemoryAllocateInfo* pAllocateInfo, const VkAllocationCallbacks* pAllocator, VkDeviceMemory* pMemory) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pAllocateInfo ? vt_sizeof_VkMemoryAllocateInfo(pAllocateInfo) : 0;
-    bufferSize++;
     bufferSize += pMemory ? vt_sizeof_VkDeviceMemory(*pMemory) : 0;
     return bufferSize;
 }
@@ -30622,10 +28368,8 @@ static inline void vt_unserialize_vkAllocateMemory(VkDevice device, const VkMemo
 }
 
 static inline int vt_sizeof_vkFreeMemory(VkDevice device, VkDeviceMemory memory, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += memory ? vt_sizeof_VkDeviceMemory(memory) : 0;
     return bufferSize;
 }
@@ -30669,14 +28413,9 @@ static inline void vt_unserialize_vkFreeMemory(VkDevice device, VkDeviceMemory m
 }
 
 static inline int vt_sizeof_vkMapMemory(VkDevice device, VkDeviceMemory memory, VkDeviceSize offset, VkDeviceSize size, VkMemoryMapFlags flags, void** ppData) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 22;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += memory ? vt_sizeof_VkDeviceMemory(memory) : 0;
-    bufferSize += 8; // offset
-    bufferSize += 8; // size
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -30731,10 +28470,8 @@ static inline void vt_unserialize_vkMapMemory(VkDevice device, VkDeviceMemory me
 }
 
 static inline int vt_sizeof_vkUnmapMemory(VkDevice device, VkDeviceMemory memory) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += memory ? vt_sizeof_VkDeviceMemory(memory) : 0;
     return bufferSize;
 }
@@ -30778,11 +28515,8 @@ static inline void vt_unserialize_vkUnmapMemory(VkDevice device, VkDeviceMemory 
 }
 
 static inline int vt_sizeof_vkFlushMappedMemoryRanges(VkDevice device, uint32_t memoryRangeCount, const VkMappedMemoryRange* pMemoryRanges) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4; // memoryRangeCount
-    bufferSize += 4;
     if (pMemoryRanges) {
         int arrSize = memoryRangeCount ? memoryRangeCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -30853,11 +28587,8 @@ static inline void vt_unserialize_vkFlushMappedMemoryRanges(VkDevice device, uin
 }
 
 static inline int vt_sizeof_vkInvalidateMappedMemoryRanges(VkDevice device, uint32_t memoryRangeCount, const VkMappedMemoryRange* pMemoryRanges) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4; // memoryRangeCount
-    bufferSize += 4;
     if (pMemoryRanges) {
         int arrSize = memoryRangeCount ? memoryRangeCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -30928,12 +28659,9 @@ static inline void vt_unserialize_vkInvalidateMappedMemoryRanges(VkDevice device
 }
 
 static inline int vt_sizeof_vkGetDeviceMemoryCommitment(VkDevice device, VkDeviceMemory memory, VkDeviceSize* pCommittedMemoryInBytes) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += memory ? vt_sizeof_VkDeviceMemory(memory) : 0;
-    bufferSize += 4;
     bufferSize += pCommittedMemoryInBytes ? 8 : 0;
     return bufferSize;
 }
@@ -30997,12 +28725,9 @@ static inline void vt_unserialize_vkGetDeviceMemoryCommitment(VkDevice device, V
 }
 
 static inline int vt_sizeof_vkGetBufferMemoryRequirements(VkDevice device, VkBuffer buffer, VkMemoryRequirements* pMemoryRequirements) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += buffer ? vt_sizeof_VkBuffer(buffer) : 0;
-    bufferSize += 4;
     bufferSize += pMemoryRequirements ? vt_sizeof_VkMemoryRequirements(pMemoryRequirements) : 0;
     return bufferSize;
 }
@@ -31066,14 +28791,10 @@ static inline void vt_unserialize_vkGetBufferMemoryRequirements(VkDevice device,
 }
 
 static inline int vt_sizeof_vkBindBufferMemory(VkDevice device, VkBuffer buffer, VkDeviceMemory memory, VkDeviceSize memoryOffset) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 11;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += buffer ? vt_sizeof_VkBuffer(buffer) : 0;
-    bufferSize++;
     bufferSize += memory ? vt_sizeof_VkDeviceMemory(memory) : 0;
-    bufferSize += 8; // memoryOffset
     return bufferSize;
 }
 
@@ -31135,12 +28856,9 @@ static inline void vt_unserialize_vkBindBufferMemory(VkDevice device, VkBuffer b
 }
 
 static inline int vt_sizeof_vkGetImageMemoryRequirements(VkDevice device, VkImage image, VkMemoryRequirements* pMemoryRequirements) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += image ? vt_sizeof_VkImage(image) : 0;
-    bufferSize += 4;
     bufferSize += pMemoryRequirements ? vt_sizeof_VkMemoryRequirements(pMemoryRequirements) : 0;
     return bufferSize;
 }
@@ -31204,14 +28922,10 @@ static inline void vt_unserialize_vkGetImageMemoryRequirements(VkDevice device, 
 }
 
 static inline int vt_sizeof_vkBindImageMemory(VkDevice device, VkImage image, VkDeviceMemory memory, VkDeviceSize memoryOffset) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 11;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += image ? vt_sizeof_VkImage(image) : 0;
-    bufferSize++;
     bufferSize += memory ? vt_sizeof_VkDeviceMemory(memory) : 0;
-    bufferSize += 8; // memoryOffset
     return bufferSize;
 }
 
@@ -31273,14 +28987,10 @@ static inline void vt_unserialize_vkBindImageMemory(VkDevice device, VkImage ima
 }
 
 static inline int vt_sizeof_vkGetImageSparseMemoryRequirements(VkDevice device, VkImage image, uint32_t* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements* pSparseMemoryRequirements) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += image ? vt_sizeof_VkImage(image) : 0;
-    bufferSize += 4;
     bufferSize += pSparseMemoryRequirementCount ? 4 : 0;
-    bufferSize += 4;
     if (pSparseMemoryRequirements) {
         int arrSize = pSparseMemoryRequirementCount ? *pSparseMemoryRequirementCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -31382,17 +29092,9 @@ static inline void vt_unserialize_vkGetImageSparseMemoryRequirements(VkDevice de
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceSparseImageFormatProperties(VkPhysicalDevice physicalDevice, VkFormat format, VkImageType type, VkSampleCountFlagBits samples, VkImageUsageFlags usage, VkImageTiling tiling, uint32_t* pPropertyCount, VkSparseImageFormatProperties* pProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 29;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4; // format
-    bufferSize += 4; // type
-    bufferSize += 4; // samples
-    bufferSize += 4; // usage
-    bufferSize += 4; // tiling
-    bufferSize += 4;
     bufferSize += pPropertyCount ? 4 : 0;
-    bufferSize += 4;
     if (pProperties) {
         int arrSize = pPropertyCount ? *pPropertyCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -31499,11 +29201,8 @@ static inline void vt_unserialize_vkGetPhysicalDeviceSparseImageFormatProperties
 }
 
 static inline int vt_sizeof_vkQueueBindSparse(VkQueue queue, uint32_t bindInfoCount, const VkBindSparseInfo* pBindInfo, VkFence fence) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += queue ? vt_sizeof_VkQueue(queue) : 0;
-    bufferSize += 4; // bindInfoCount
-    bufferSize += 4;
     if (pBindInfo) {
         int arrSize = bindInfoCount ? bindInfoCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -31511,7 +29210,6 @@ static inline int vt_sizeof_vkQueueBindSparse(VkQueue queue, uint32_t bindInfoCo
             bufferSize += vt_sizeof_VkBindSparseInfo(&pBindInfo[i]);
         }
     }
-    bufferSize++;
     bufferSize += fence ? vt_sizeof_VkFence(fence) : 0;
     return bufferSize;
 }
@@ -31591,12 +29289,9 @@ static inline void vt_unserialize_vkQueueBindSparse(VkQueue queue, uint32_t* bin
 }
 
 static inline int vt_sizeof_vkCreateFence(VkDevice device, const VkFenceCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkFence* pFence) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkFenceCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pFence ? vt_sizeof_VkFence(*pFence) : 0;
     return bufferSize;
 }
@@ -31660,10 +29355,8 @@ static inline void vt_unserialize_vkCreateFence(VkDevice device, const VkFenceCr
 }
 
 static inline int vt_sizeof_vkDestroyFence(VkDevice device, VkFence fence, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += fence ? vt_sizeof_VkFence(fence) : 0;
     return bufferSize;
 }
@@ -31707,11 +29400,8 @@ static inline void vt_unserialize_vkDestroyFence(VkDevice device, VkFence fence,
 }
 
 static inline int vt_sizeof_vkResetFences(VkDevice device, uint32_t fenceCount, const VkFence* pFences) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4; // fenceCount
-    bufferSize += 4;
     if (pFences) {
         for (int i = 0; i < fenceCount; i++) {
             bufferSize += vt_sizeof_VkFence(pFences[i]);
@@ -31787,10 +29477,8 @@ static inline void vt_unserialize_vkResetFences(VkDevice device, uint32_t* fence
 }
 
 static inline int vt_sizeof_vkGetFenceStatus(VkDevice device, VkFence fence) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += fence ? vt_sizeof_VkFence(fence) : 0;
     return bufferSize;
 }
@@ -31834,18 +29522,13 @@ static inline void vt_unserialize_vkGetFenceStatus(VkDevice device, VkFence fenc
 }
 
 static inline int vt_sizeof_vkWaitForFences(VkDevice device, uint32_t fenceCount, const VkFence* pFences, VkBool32 waitAll, uint64_t timeout) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 21;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4; // fenceCount
-    bufferSize += 4;
     if (pFences) {
         for (int i = 0; i < fenceCount; i++) {
             bufferSize += vt_sizeof_VkFence(pFences[i]);
         }
     }
-    bufferSize += 4; // waitAll
-    bufferSize += 8; // timeout
     return bufferSize;
 }
 
@@ -31924,12 +29607,9 @@ static inline void vt_unserialize_vkWaitForFences(VkDevice device, uint32_t* fen
 }
 
 static inline int vt_sizeof_vkCreateSemaphore(VkDevice device, const VkSemaphoreCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkSemaphore* pSemaphore) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkSemaphoreCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pSemaphore ? vt_sizeof_VkSemaphore(*pSemaphore) : 0;
     return bufferSize;
 }
@@ -31993,10 +29673,8 @@ static inline void vt_unserialize_vkCreateSemaphore(VkDevice device, const VkSem
 }
 
 static inline int vt_sizeof_vkDestroySemaphore(VkDevice device, VkSemaphore semaphore, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += semaphore ? vt_sizeof_VkSemaphore(semaphore) : 0;
     return bufferSize;
 }
@@ -32040,12 +29718,9 @@ static inline void vt_unserialize_vkDestroySemaphore(VkDevice device, VkSemaphor
 }
 
 static inline int vt_sizeof_vkCreateEvent(VkDevice device, const VkEventCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkEvent* pEvent) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkEventCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pEvent ? vt_sizeof_VkEvent(*pEvent) : 0;
     return bufferSize;
 }
@@ -32109,10 +29784,8 @@ static inline void vt_unserialize_vkCreateEvent(VkDevice device, const VkEventCr
 }
 
 static inline int vt_sizeof_vkDestroyEvent(VkDevice device, VkEvent event, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += event ? vt_sizeof_VkEvent(event) : 0;
     return bufferSize;
 }
@@ -32156,10 +29829,8 @@ static inline void vt_unserialize_vkDestroyEvent(VkDevice device, VkEvent event,
 }
 
 static inline int vt_sizeof_vkGetEventStatus(VkDevice device, VkEvent event) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += event ? vt_sizeof_VkEvent(event) : 0;
     return bufferSize;
 }
@@ -32203,10 +29874,8 @@ static inline void vt_unserialize_vkGetEventStatus(VkDevice device, VkEvent even
 }
 
 static inline int vt_sizeof_vkSetEvent(VkDevice device, VkEvent event) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += event ? vt_sizeof_VkEvent(event) : 0;
     return bufferSize;
 }
@@ -32250,10 +29919,8 @@ static inline void vt_unserialize_vkSetEvent(VkDevice device, VkEvent event, cha
 }
 
 static inline int vt_sizeof_vkResetEvent(VkDevice device, VkEvent event) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += event ? vt_sizeof_VkEvent(event) : 0;
     return bufferSize;
 }
@@ -32297,12 +29964,9 @@ static inline void vt_unserialize_vkResetEvent(VkDevice device, VkEvent event, c
 }
 
 static inline int vt_sizeof_vkCreateQueryPool(VkDevice device, const VkQueryPoolCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkQueryPool* pQueryPool) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkQueryPoolCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pQueryPool ? vt_sizeof_VkQueryPool(*pQueryPool) : 0;
     return bufferSize;
 }
@@ -32366,10 +30030,8 @@ static inline void vt_unserialize_vkCreateQueryPool(VkDevice device, const VkQue
 }
 
 static inline int vt_sizeof_vkDestroyQueryPool(VkDevice device, VkQueryPool queryPool, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += queryPool ? vt_sizeof_VkQueryPool(queryPool) : 0;
     return bufferSize;
 }
@@ -32413,18 +30075,10 @@ static inline void vt_unserialize_vkDestroyQueryPool(VkDevice device, VkQueryPoo
 }
 
 static inline int vt_sizeof_vkGetQueryPoolResults(VkDevice device, VkQueryPool queryPool, uint32_t firstQuery, uint32_t queryCount, size_t dataSize, void* pData, VkDeviceSize stride, VkQueryResultFlags flags) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 34;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += queryPool ? vt_sizeof_VkQueryPool(queryPool) : 0;
-    bufferSize += 4; // firstQuery
-    bufferSize += 4; // queryCount
-    bufferSize += 8; // dataSize
-    bufferSize += 4;
     bufferSize += pData ? dataSize : 0;
-    bufferSize += 8; // stride
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -32506,13 +30160,9 @@ static inline void vt_unserialize_vkGetQueryPoolResults(VkDevice device, VkQuery
 }
 
 static inline int vt_sizeof_vkResetQueryPool(VkDevice device, VkQueryPool queryPool, uint32_t firstQuery, uint32_t queryCount) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += queryPool ? vt_sizeof_VkQueryPool(queryPool) : 0;
-    bufferSize += 4; // firstQuery
-    bufferSize += 4; // queryCount
     return bufferSize;
 }
 
@@ -32563,12 +30213,9 @@ static inline void vt_unserialize_vkResetQueryPool(VkDevice device, VkQueryPool 
 }
 
 static inline int vt_sizeof_vkCreateBuffer(VkDevice device, const VkBufferCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkBuffer* pBuffer) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkBufferCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pBuffer ? vt_sizeof_VkBuffer(*pBuffer) : 0;
     return bufferSize;
 }
@@ -32632,10 +30279,8 @@ static inline void vt_unserialize_vkCreateBuffer(VkDevice device, const VkBuffer
 }
 
 static inline int vt_sizeof_vkDestroyBuffer(VkDevice device, VkBuffer buffer, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += buffer ? vt_sizeof_VkBuffer(buffer) : 0;
     return bufferSize;
 }
@@ -32679,12 +30324,9 @@ static inline void vt_unserialize_vkDestroyBuffer(VkDevice device, VkBuffer buff
 }
 
 static inline int vt_sizeof_vkCreateBufferView(VkDevice device, const VkBufferViewCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkBufferView* pView) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkBufferViewCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pView ? vt_sizeof_VkBufferView(*pView) : 0;
     return bufferSize;
 }
@@ -32748,10 +30390,8 @@ static inline void vt_unserialize_vkCreateBufferView(VkDevice device, const VkBu
 }
 
 static inline int vt_sizeof_vkDestroyBufferView(VkDevice device, VkBufferView bufferView, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += bufferView ? vt_sizeof_VkBufferView(bufferView) : 0;
     return bufferSize;
 }
@@ -32795,12 +30435,9 @@ static inline void vt_unserialize_vkDestroyBufferView(VkDevice device, VkBufferV
 }
 
 static inline int vt_sizeof_vkCreateImage(VkDevice device, const VkImageCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkImage* pImage) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkImageCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pImage ? vt_sizeof_VkImage(*pImage) : 0;
     return bufferSize;
 }
@@ -32864,10 +30501,8 @@ static inline void vt_unserialize_vkCreateImage(VkDevice device, const VkImageCr
 }
 
 static inline int vt_sizeof_vkDestroyImage(VkDevice device, VkImage image, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += image ? vt_sizeof_VkImage(image) : 0;
     return bufferSize;
 }
@@ -32911,14 +30546,10 @@ static inline void vt_unserialize_vkDestroyImage(VkDevice device, VkImage image,
 }
 
 static inline int vt_sizeof_vkGetImageSubresourceLayout(VkDevice device, VkImage image, const VkImageSubresource* pSubresource, VkSubresourceLayout* pLayout) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += image ? vt_sizeof_VkImage(image) : 0;
-    bufferSize += 4;
     bufferSize += pSubresource ? vt_sizeof_VkImageSubresource(pSubresource) : 0;
-    bufferSize += 4;
     bufferSize += pLayout ? vt_sizeof_VkSubresourceLayout(pLayout) : 0;
     return bufferSize;
 }
@@ -33002,12 +30633,9 @@ static inline void vt_unserialize_vkGetImageSubresourceLayout(VkDevice device, V
 }
 
 static inline int vt_sizeof_vkCreateImageView(VkDevice device, const VkImageViewCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkImageView* pView) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkImageViewCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pView ? vt_sizeof_VkImageView(*pView) : 0;
     return bufferSize;
 }
@@ -33071,10 +30699,8 @@ static inline void vt_unserialize_vkCreateImageView(VkDevice device, const VkIma
 }
 
 static inline int vt_sizeof_vkDestroyImageView(VkDevice device, VkImageView imageView, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += imageView ? vt_sizeof_VkImageView(imageView) : 0;
     return bufferSize;
 }
@@ -33118,12 +30744,9 @@ static inline void vt_unserialize_vkDestroyImageView(VkDevice device, VkImageVie
 }
 
 static inline int vt_sizeof_vkCreateShaderModule(VkDevice device, const VkShaderModuleCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkShaderModule* pShaderModule) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkShaderModuleCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pShaderModule ? vt_sizeof_VkShaderModule(*pShaderModule) : 0;
     return bufferSize;
 }
@@ -33187,10 +30810,8 @@ static inline void vt_unserialize_vkCreateShaderModule(VkDevice device, const Vk
 }
 
 static inline int vt_sizeof_vkDestroyShaderModule(VkDevice device, VkShaderModule shaderModule, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += shaderModule ? vt_sizeof_VkShaderModule(shaderModule) : 0;
     return bufferSize;
 }
@@ -33234,12 +30855,9 @@ static inline void vt_unserialize_vkDestroyShaderModule(VkDevice device, VkShade
 }
 
 static inline int vt_sizeof_vkCreatePipelineCache(VkDevice device, const VkPipelineCacheCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkPipelineCache* pPipelineCache) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkPipelineCacheCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pPipelineCache ? vt_sizeof_VkPipelineCache(*pPipelineCache) : 0;
     return bufferSize;
 }
@@ -33303,10 +30921,8 @@ static inline void vt_unserialize_vkCreatePipelineCache(VkDevice device, const V
 }
 
 static inline int vt_sizeof_vkDestroyPipelineCache(VkDevice device, VkPipelineCache pipelineCache, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += pipelineCache ? vt_sizeof_VkPipelineCache(pipelineCache) : 0;
     return bufferSize;
 }
@@ -33350,14 +30966,10 @@ static inline void vt_unserialize_vkDestroyPipelineCache(VkDevice device, VkPipe
 }
 
 static inline int vt_sizeof_vkGetPipelineCacheData(VkDevice device, VkPipelineCache pipelineCache, size_t* pDataSize, void* pData) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += pipelineCache ? vt_sizeof_VkPipelineCache(pipelineCache) : 0;
-    bufferSize += 4;
     bufferSize += pDataSize ? 8 : 0;
-    bufferSize += 4;
     bufferSize += pData ? *pDataSize : 0;
     return bufferSize;
 }
@@ -33440,13 +31052,9 @@ static inline void vt_unserialize_vkGetPipelineCacheData(VkDevice device, VkPipe
 }
 
 static inline int vt_sizeof_vkMergePipelineCaches(VkDevice device, VkPipelineCache dstCache, uint32_t srcCacheCount, const VkPipelineCache* pSrcCaches) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += dstCache ? vt_sizeof_VkPipelineCache(dstCache) : 0;
-    bufferSize += 4; // srcCacheCount
-    bufferSize += 4;
     if (pSrcCaches) {
         for (int i = 0; i < srcCacheCount; i++) {
             bufferSize += vt_sizeof_VkPipelineCache(pSrcCaches[i]);
@@ -33537,13 +31145,9 @@ static inline void vt_unserialize_vkMergePipelineCaches(VkDevice device, VkPipel
 }
 
 static inline int vt_sizeof_vkCreateGraphicsPipelines(VkDevice device, VkPipelineCache pipelineCache, uint32_t createInfoCount, const VkGraphicsPipelineCreateInfo* pCreateInfos, const VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 14;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += pipelineCache ? vt_sizeof_VkPipelineCache(pipelineCache) : 0;
-    bufferSize += 4; // createInfoCount
-    bufferSize += 4;
     if (pCreateInfos) {
         int arrSize = createInfoCount ? createInfoCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -33551,7 +31155,6 @@ static inline int vt_sizeof_vkCreateGraphicsPipelines(VkDevice device, VkPipelin
             bufferSize += vt_sizeof_VkGraphicsPipelineCreateInfo(&pCreateInfos[i]);
         }
     }
-    bufferSize += 4;
     if (pPipelines) {
         for (int i = 0; i < createInfoCount; i++) {
             bufferSize += vt_sizeof_VkPipeline(pPipelines[i]);
@@ -33674,13 +31277,9 @@ static inline void vt_unserialize_vkCreateGraphicsPipelines(VkDevice device, VkP
 }
 
 static inline int vt_sizeof_vkCreateComputePipelines(VkDevice device, VkPipelineCache pipelineCache, uint32_t createInfoCount, const VkComputePipelineCreateInfo* pCreateInfos, const VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 14;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += pipelineCache ? vt_sizeof_VkPipelineCache(pipelineCache) : 0;
-    bufferSize += 4; // createInfoCount
-    bufferSize += 4;
     if (pCreateInfos) {
         int arrSize = createInfoCount ? createInfoCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -33688,7 +31287,6 @@ static inline int vt_sizeof_vkCreateComputePipelines(VkDevice device, VkPipeline
             bufferSize += vt_sizeof_VkComputePipelineCreateInfo(&pCreateInfos[i]);
         }
     }
-    bufferSize += 4;
     if (pPipelines) {
         for (int i = 0; i < createInfoCount; i++) {
             bufferSize += vt_sizeof_VkPipeline(pPipelines[i]);
@@ -33811,10 +31409,8 @@ static inline void vt_unserialize_vkCreateComputePipelines(VkDevice device, VkPi
 }
 
 static inline int vt_sizeof_vkDestroyPipeline(VkDevice device, VkPipeline pipeline, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += pipeline ? vt_sizeof_VkPipeline(pipeline) : 0;
     return bufferSize;
 }
@@ -33858,12 +31454,9 @@ static inline void vt_unserialize_vkDestroyPipeline(VkDevice device, VkPipeline 
 }
 
 static inline int vt_sizeof_vkCreatePipelineLayout(VkDevice device, const VkPipelineLayoutCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkPipelineLayout* pPipelineLayout) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkPipelineLayoutCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pPipelineLayout ? vt_sizeof_VkPipelineLayout(*pPipelineLayout) : 0;
     return bufferSize;
 }
@@ -33927,10 +31520,8 @@ static inline void vt_unserialize_vkCreatePipelineLayout(VkDevice device, const 
 }
 
 static inline int vt_sizeof_vkDestroyPipelineLayout(VkDevice device, VkPipelineLayout pipelineLayout, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += pipelineLayout ? vt_sizeof_VkPipelineLayout(pipelineLayout) : 0;
     return bufferSize;
 }
@@ -33974,12 +31565,9 @@ static inline void vt_unserialize_vkDestroyPipelineLayout(VkDevice device, VkPip
 }
 
 static inline int vt_sizeof_vkCreateSampler(VkDevice device, const VkSamplerCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkSampler* pSampler) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkSamplerCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pSampler ? vt_sizeof_VkSampler(*pSampler) : 0;
     return bufferSize;
 }
@@ -34043,10 +31631,8 @@ static inline void vt_unserialize_vkCreateSampler(VkDevice device, const VkSampl
 }
 
 static inline int vt_sizeof_vkDestroySampler(VkDevice device, VkSampler sampler, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += sampler ? vt_sizeof_VkSampler(sampler) : 0;
     return bufferSize;
 }
@@ -34090,12 +31676,9 @@ static inline void vt_unserialize_vkDestroySampler(VkDevice device, VkSampler sa
 }
 
 static inline int vt_sizeof_vkCreateDescriptorSetLayout(VkDevice device, const VkDescriptorSetLayoutCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDescriptorSetLayout* pSetLayout) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkDescriptorSetLayoutCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pSetLayout ? vt_sizeof_VkDescriptorSetLayout(*pSetLayout) : 0;
     return bufferSize;
 }
@@ -34159,10 +31742,8 @@ static inline void vt_unserialize_vkCreateDescriptorSetLayout(VkDevice device, c
 }
 
 static inline int vt_sizeof_vkDestroyDescriptorSetLayout(VkDevice device, VkDescriptorSetLayout descriptorSetLayout, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += descriptorSetLayout ? vt_sizeof_VkDescriptorSetLayout(descriptorSetLayout) : 0;
     return bufferSize;
 }
@@ -34206,12 +31787,9 @@ static inline void vt_unserialize_vkDestroyDescriptorSetLayout(VkDevice device, 
 }
 
 static inline int vt_sizeof_vkCreateDescriptorPool(VkDevice device, const VkDescriptorPoolCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDescriptorPool* pDescriptorPool) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkDescriptorPoolCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pDescriptorPool ? vt_sizeof_VkDescriptorPool(*pDescriptorPool) : 0;
     return bufferSize;
 }
@@ -34275,10 +31853,8 @@ static inline void vt_unserialize_vkCreateDescriptorPool(VkDevice device, const 
 }
 
 static inline int vt_sizeof_vkDestroyDescriptorPool(VkDevice device, VkDescriptorPool descriptorPool, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += descriptorPool ? vt_sizeof_VkDescriptorPool(descriptorPool) : 0;
     return bufferSize;
 }
@@ -34322,12 +31898,9 @@ static inline void vt_unserialize_vkDestroyDescriptorPool(VkDevice device, VkDes
 }
 
 static inline int vt_sizeof_vkResetDescriptorPool(VkDevice device, VkDescriptorPool descriptorPool, VkDescriptorPoolResetFlags flags) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += descriptorPool ? vt_sizeof_VkDescriptorPool(descriptorPool) : 0;
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -34374,12 +31947,9 @@ static inline void vt_unserialize_vkResetDescriptorPool(VkDevice device, VkDescr
 }
 
 static inline int vt_sizeof_vkAllocateDescriptorSets(VkDevice device, const VkDescriptorSetAllocateInfo* pAllocateInfo, VkDescriptorSet* pDescriptorSets) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pAllocateInfo ? vt_sizeof_VkDescriptorSetAllocateInfo(pAllocateInfo) : 0;
-    bufferSize += 4;
     if (pDescriptorSets) {
         for (int i = 0; i < pAllocateInfo->descriptorSetCount; i++) {
             bufferSize += vt_sizeof_VkDescriptorSet(pDescriptorSets[i]);
@@ -34471,13 +32041,9 @@ static inline void vt_unserialize_vkAllocateDescriptorSets(VkDevice device, cons
 }
 
 static inline int vt_sizeof_vkFreeDescriptorSets(VkDevice device, VkDescriptorPool descriptorPool, uint32_t descriptorSetCount, const VkDescriptorSet* pDescriptorSets) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += descriptorPool ? vt_sizeof_VkDescriptorPool(descriptorPool) : 0;
-    bufferSize += 4; // descriptorSetCount
-    bufferSize += 4;
     if (pDescriptorSets) {
         for (int i = 0; i < descriptorSetCount; i++) {
             bufferSize += vt_sizeof_VkDescriptorSet(pDescriptorSets[i]);
@@ -34568,11 +32134,8 @@ static inline void vt_unserialize_vkFreeDescriptorSets(VkDevice device, VkDescri
 }
 
 static inline int vt_sizeof_vkUpdateDescriptorSets(VkDevice device, uint32_t descriptorWriteCount, const VkWriteDescriptorSet* pDescriptorWrites, uint32_t descriptorCopyCount, const VkCopyDescriptorSet* pDescriptorCopies) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 17;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4; // descriptorWriteCount
-    bufferSize += 4;
     if (pDescriptorWrites) {
         int arrSize = descriptorWriteCount ? descriptorWriteCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -34580,8 +32143,6 @@ static inline int vt_sizeof_vkUpdateDescriptorSets(VkDevice device, uint32_t des
             bufferSize += vt_sizeof_VkWriteDescriptorSet(&pDescriptorWrites[i]);
         }
     }
-    bufferSize += 4; // descriptorCopyCount
-    bufferSize += 4;
     if (pDescriptorCopies) {
         int arrSize = descriptorCopyCount ? descriptorCopyCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -34688,12 +32249,9 @@ static inline void vt_unserialize_vkUpdateDescriptorSets(VkDevice device, uint32
 }
 
 static inline int vt_sizeof_vkCreateFramebuffer(VkDevice device, const VkFramebufferCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkFramebuffer* pFramebuffer) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkFramebufferCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pFramebuffer ? vt_sizeof_VkFramebuffer(*pFramebuffer) : 0;
     return bufferSize;
 }
@@ -34757,10 +32315,8 @@ static inline void vt_unserialize_vkCreateFramebuffer(VkDevice device, const VkF
 }
 
 static inline int vt_sizeof_vkDestroyFramebuffer(VkDevice device, VkFramebuffer framebuffer, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += framebuffer ? vt_sizeof_VkFramebuffer(framebuffer) : 0;
     return bufferSize;
 }
@@ -34804,12 +32360,9 @@ static inline void vt_unserialize_vkDestroyFramebuffer(VkDevice device, VkFrameb
 }
 
 static inline int vt_sizeof_vkCreateRenderPass(VkDevice device, const VkRenderPassCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkRenderPass* pRenderPass) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkRenderPassCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pRenderPass ? vt_sizeof_VkRenderPass(*pRenderPass) : 0;
     return bufferSize;
 }
@@ -34873,10 +32426,8 @@ static inline void vt_unserialize_vkCreateRenderPass(VkDevice device, const VkRe
 }
 
 static inline int vt_sizeof_vkDestroyRenderPass(VkDevice device, VkRenderPass renderPass, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += renderPass ? vt_sizeof_VkRenderPass(renderPass) : 0;
     return bufferSize;
 }
@@ -34920,12 +32471,9 @@ static inline void vt_unserialize_vkDestroyRenderPass(VkDevice device, VkRenderP
 }
 
 static inline int vt_sizeof_vkGetRenderAreaGranularity(VkDevice device, VkRenderPass renderPass, VkExtent2D* pGranularity) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += renderPass ? vt_sizeof_VkRenderPass(renderPass) : 0;
-    bufferSize += 4;
     bufferSize += pGranularity ? vt_sizeof_VkExtent2D(pGranularity) : 0;
     return bufferSize;
 }
@@ -34989,12 +32537,9 @@ static inline void vt_unserialize_vkGetRenderAreaGranularity(VkDevice device, Vk
 }
 
 static inline int vt_sizeof_vkCreateCommandPool(VkDevice device, const VkCommandPoolCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkCommandPool* pCommandPool) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkCommandPoolCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pCommandPool ? vt_sizeof_VkCommandPool(*pCommandPool) : 0;
     return bufferSize;
 }
@@ -35058,10 +32603,8 @@ static inline void vt_unserialize_vkCreateCommandPool(VkDevice device, const VkC
 }
 
 static inline int vt_sizeof_vkDestroyCommandPool(VkDevice device, VkCommandPool commandPool, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += commandPool ? vt_sizeof_VkCommandPool(commandPool) : 0;
     return bufferSize;
 }
@@ -35105,12 +32648,9 @@ static inline void vt_unserialize_vkDestroyCommandPool(VkDevice device, VkComman
 }
 
 static inline int vt_sizeof_vkResetCommandPool(VkDevice device, VkCommandPool commandPool, VkCommandPoolResetFlags flags) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += commandPool ? vt_sizeof_VkCommandPool(commandPool) : 0;
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -35157,12 +32697,9 @@ static inline void vt_unserialize_vkResetCommandPool(VkDevice device, VkCommandP
 }
 
 static inline int vt_sizeof_vkAllocateCommandBuffers(VkDevice device, const VkCommandBufferAllocateInfo* pAllocateInfo, VkCommandBuffer* pCommandBuffers) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pAllocateInfo ? vt_sizeof_VkCommandBufferAllocateInfo(pAllocateInfo) : 0;
-    bufferSize += 4;
     if (pCommandBuffers) {
         for (int i = 0; i < pAllocateInfo->commandBufferCount; i++) {
             bufferSize += vt_sizeof_VkCommandBuffer(pCommandBuffers[i]);
@@ -35254,13 +32791,9 @@ static inline void vt_unserialize_vkAllocateCommandBuffers(VkDevice device, cons
 }
 
 static inline int vt_sizeof_vkFreeCommandBuffers(VkDevice device, VkCommandPool commandPool, uint32_t commandBufferCount, const VkCommandBuffer* pCommandBuffers) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += commandPool ? vt_sizeof_VkCommandPool(commandPool) : 0;
-    bufferSize += 4; // commandBufferCount
-    bufferSize += 4;
     if (pCommandBuffers) {
         for (int i = 0; i < commandBufferCount; i++) {
             bufferSize += vt_sizeof_VkCommandBuffer(pCommandBuffers[i]);
@@ -35351,10 +32884,8 @@ static inline void vt_unserialize_vkFreeCommandBuffers(VkDevice device, VkComman
 }
 
 static inline int vt_sizeof_vkBeginCommandBuffer(VkCommandBuffer commandBuffer, const VkCommandBufferBeginInfo* pBeginInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pBeginInfo ? vt_sizeof_VkCommandBufferBeginInfo(pBeginInfo) : 0;
     return bufferSize;
 }
@@ -35403,8 +32934,7 @@ static inline void vt_unserialize_vkBeginCommandBuffer(VkCommandBuffer commandBu
 }
 
 static inline int vt_sizeof_vkEndCommandBuffer(VkCommandBuffer commandBuffer) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 1;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
     return bufferSize;
 }
@@ -35433,10 +32963,8 @@ static inline void vt_unserialize_vkEndCommandBuffer(VkCommandBuffer commandBuff
 }
 
 static inline int vt_sizeof_vkResetCommandBuffer(VkCommandBuffer commandBuffer, VkCommandBufferResetFlags flags) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -35468,11 +32996,8 @@ static inline void vt_unserialize_vkResetCommandBuffer(VkCommandBuffer commandBu
 }
 
 static inline int vt_sizeof_vkCmdBindPipeline(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipeline pipeline) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // pipelineBindPoint
-    bufferSize++;
     bufferSize += pipeline ? vt_sizeof_VkPipeline(pipeline) : 0;
     return bufferSize;
 }
@@ -35520,12 +33045,8 @@ static inline void vt_unserialize_vkCmdBindPipeline(VkCommandBuffer commandBuffe
 }
 
 static inline int vt_sizeof_vkCmdSetViewport(VkCommandBuffer commandBuffer, uint32_t firstViewport, uint32_t viewportCount, const VkViewport* pViewports) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // firstViewport
-    bufferSize += 4; // viewportCount
-    bufferSize += 4;
     if (pViewports) {
         int arrSize = viewportCount ? viewportCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -35600,12 +33121,8 @@ static inline void vt_unserialize_vkCmdSetViewport(VkCommandBuffer commandBuffer
 }
 
 static inline int vt_sizeof_vkCmdSetScissor(VkCommandBuffer commandBuffer, uint32_t firstScissor, uint32_t scissorCount, const VkRect2D* pScissors) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // firstScissor
-    bufferSize += 4; // scissorCount
-    bufferSize += 4;
     if (pScissors) {
         int arrSize = scissorCount ? scissorCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -35680,10 +33197,8 @@ static inline void vt_unserialize_vkCmdSetScissor(VkCommandBuffer commandBuffer,
 }
 
 static inline int vt_sizeof_vkCmdSetLineWidth(VkCommandBuffer commandBuffer, float lineWidth) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // lineWidth
     return bufferSize;
 }
 
@@ -35715,12 +33230,8 @@ static inline void vt_unserialize_vkCmdSetLineWidth(VkCommandBuffer commandBuffe
 }
 
 static inline int vt_sizeof_vkCmdSetDepthBias(VkCommandBuffer commandBuffer, float depthBiasConstantFactor, float depthBiasClamp, float depthBiasSlopeFactor) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // depthBiasConstantFactor
-    bufferSize += 4; // depthBiasClamp
-    bufferSize += 4; // depthBiasSlopeFactor
     return bufferSize;
 }
 
@@ -35760,8 +33271,7 @@ static inline void vt_unserialize_vkCmdSetDepthBias(VkCommandBuffer commandBuffe
 }
 
 static inline int vt_sizeof_vkCmdSetBlendConstants(VkCommandBuffer commandBuffer, const float blendConstants[4]) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 1;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
     bufferSize += 4 * 4;
     return bufferSize;
@@ -35795,11 +33305,8 @@ static inline void vt_unserialize_vkCmdSetBlendConstants(VkCommandBuffer command
 }
 
 static inline int vt_sizeof_vkCmdSetDepthBounds(VkCommandBuffer commandBuffer, float minDepthBounds, float maxDepthBounds) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // minDepthBounds
-    bufferSize += 4; // maxDepthBounds
     return bufferSize;
 }
 
@@ -35835,11 +33342,8 @@ static inline void vt_unserialize_vkCmdSetDepthBounds(VkCommandBuffer commandBuf
 }
 
 static inline int vt_sizeof_vkCmdSetStencilCompareMask(VkCommandBuffer commandBuffer, VkStencilFaceFlags faceMask, uint32_t compareMask) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // faceMask
-    bufferSize += 4; // compareMask
     return bufferSize;
 }
 
@@ -35875,11 +33379,8 @@ static inline void vt_unserialize_vkCmdSetStencilCompareMask(VkCommandBuffer com
 }
 
 static inline int vt_sizeof_vkCmdSetStencilWriteMask(VkCommandBuffer commandBuffer, VkStencilFaceFlags faceMask, uint32_t writeMask) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // faceMask
-    bufferSize += 4; // writeMask
     return bufferSize;
 }
 
@@ -35915,11 +33416,8 @@ static inline void vt_unserialize_vkCmdSetStencilWriteMask(VkCommandBuffer comma
 }
 
 static inline int vt_sizeof_vkCmdSetStencilReference(VkCommandBuffer commandBuffer, VkStencilFaceFlags faceMask, uint32_t reference) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // faceMask
-    bufferSize += 4; // reference
     return bufferSize;
 }
 
@@ -35955,22 +33453,14 @@ static inline void vt_unserialize_vkCmdSetStencilReference(VkCommandBuffer comma
 }
 
 static inline int vt_sizeof_vkCmdBindDescriptorSets(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint32_t firstSet, uint32_t descriptorSetCount, const VkDescriptorSet* pDescriptorSets, uint32_t dynamicOffsetCount, const uint32_t* pDynamicOffsets) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 26;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // pipelineBindPoint
-    bufferSize++;
     bufferSize += layout ? vt_sizeof_VkPipelineLayout(layout) : 0;
-    bufferSize += 4; // firstSet
-    bufferSize += 4; // descriptorSetCount
-    bufferSize += 4;
     if (pDescriptorSets) {
         for (int i = 0; i < descriptorSetCount; i++) {
             bufferSize += vt_sizeof_VkDescriptorSet(pDescriptorSets[i]);
         }
     }
-    bufferSize += 4; // dynamicOffsetCount
-    bufferSize += 4;
     bufferSize += pDynamicOffsets ? dynamicOffsetCount * 4 : 0;
     return bufferSize;
 }
@@ -36090,13 +33580,9 @@ static inline void vt_unserialize_vkCmdBindDescriptorSets(VkCommandBuffer comman
 }
 
 static inline int vt_sizeof_vkCmdBindIndexBuffer(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, VkIndexType indexType) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 14;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += buffer ? vt_sizeof_VkBuffer(buffer) : 0;
-    bufferSize += 8; // offset
-    bufferSize += 4; // indexType
     return bufferSize;
 }
 
@@ -36147,18 +33633,13 @@ static inline void vt_unserialize_vkCmdBindIndexBuffer(VkCommandBuffer commandBu
 }
 
 static inline int vt_sizeof_vkCmdBindVertexBuffers(VkCommandBuffer commandBuffer, uint32_t firstBinding, uint32_t bindingCount, const VkBuffer* pBuffers, const VkDeviceSize* pOffsets) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 17;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // firstBinding
-    bufferSize += 4; // bindingCount
-    bufferSize += 4;
     if (pBuffers) {
         for (int i = 0; i < bindingCount; i++) {
             bufferSize += vt_sizeof_VkBuffer(pBuffers[i]);
         }
     }
-    bufferSize += 4;
     bufferSize += pOffsets ? bindingCount * 8 : 0;
     return bufferSize;
 }
@@ -36255,13 +33736,8 @@ static inline void vt_unserialize_vkCmdBindVertexBuffers(VkCommandBuffer command
 }
 
 static inline int vt_sizeof_vkCmdDraw(VkCommandBuffer commandBuffer, uint32_t vertexCount, uint32_t instanceCount, uint32_t firstVertex, uint32_t firstInstance) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 17;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // vertexCount
-    bufferSize += 4; // instanceCount
-    bufferSize += 4; // firstVertex
-    bufferSize += 4; // firstInstance
     return bufferSize;
 }
 
@@ -36305,14 +33781,8 @@ static inline void vt_unserialize_vkCmdDraw(VkCommandBuffer commandBuffer, uint3
 }
 
 static inline int vt_sizeof_vkCmdDrawIndexed(VkCommandBuffer commandBuffer, uint32_t indexCount, uint32_t instanceCount, uint32_t firstIndex, int32_t vertexOffset, uint32_t firstInstance) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 21;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // indexCount
-    bufferSize += 4; // instanceCount
-    bufferSize += 4; // firstIndex
-    bufferSize += 4; // vertexOffset
-    bufferSize += 4; // firstInstance
     return bufferSize;
 }
 
@@ -36360,14 +33830,9 @@ static inline void vt_unserialize_vkCmdDrawIndexed(VkCommandBuffer commandBuffer
 }
 
 static inline int vt_sizeof_vkCmdDrawIndirect(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, uint32_t drawCount, uint32_t stride) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 18;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += buffer ? vt_sizeof_VkBuffer(buffer) : 0;
-    bufferSize += 8; // offset
-    bufferSize += 4; // drawCount
-    bufferSize += 4; // stride
     return bufferSize;
 }
 
@@ -36422,14 +33887,9 @@ static inline void vt_unserialize_vkCmdDrawIndirect(VkCommandBuffer commandBuffe
 }
 
 static inline int vt_sizeof_vkCmdDrawIndexedIndirect(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, uint32_t drawCount, uint32_t stride) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 18;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += buffer ? vt_sizeof_VkBuffer(buffer) : 0;
-    bufferSize += 8; // offset
-    bufferSize += 4; // drawCount
-    bufferSize += 4; // stride
     return bufferSize;
 }
 
@@ -36484,12 +33944,8 @@ static inline void vt_unserialize_vkCmdDrawIndexedIndirect(VkCommandBuffer comma
 }
 
 static inline int vt_sizeof_vkCmdDispatch(VkCommandBuffer commandBuffer, uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // groupCountX
-    bufferSize += 4; // groupCountY
-    bufferSize += 4; // groupCountZ
     return bufferSize;
 }
 
@@ -36529,12 +33985,9 @@ static inline void vt_unserialize_vkCmdDispatch(VkCommandBuffer commandBuffer, u
 }
 
 static inline int vt_sizeof_vkCmdDispatchIndirect(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += buffer ? vt_sizeof_VkBuffer(buffer) : 0;
-    bufferSize += 8; // offset
     return bufferSize;
 }
 
@@ -36581,15 +34034,10 @@ static inline void vt_unserialize_vkCmdDispatchIndirect(VkCommandBuffer commandB
 }
 
 static inline int vt_sizeof_vkCmdCopyBuffer(VkCommandBuffer commandBuffer, VkBuffer srcBuffer, VkBuffer dstBuffer, uint32_t regionCount, const VkBufferCopy* pRegions) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 11;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += srcBuffer ? vt_sizeof_VkBuffer(srcBuffer) : 0;
-    bufferSize++;
     bufferSize += dstBuffer ? vt_sizeof_VkBuffer(dstBuffer) : 0;
-    bufferSize += 4; // regionCount
-    bufferSize += 4;
     if (pRegions) {
         int arrSize = regionCount ? regionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -36690,17 +34138,10 @@ static inline void vt_unserialize_vkCmdCopyBuffer(VkCommandBuffer commandBuffer,
 }
 
 static inline int vt_sizeof_vkCmdCopyImage(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint32_t regionCount, const VkImageCopy* pRegions) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 19;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += srcImage ? vt_sizeof_VkImage(srcImage) : 0;
-    bufferSize += 4; // srcImageLayout
-    bufferSize++;
     bufferSize += dstImage ? vt_sizeof_VkImage(dstImage) : 0;
-    bufferSize += 4; // dstImageLayout
-    bufferSize += 4; // regionCount
-    bufferSize += 4;
     if (pRegions) {
         int arrSize = regionCount ? regionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -36809,17 +34250,10 @@ static inline void vt_unserialize_vkCmdCopyImage(VkCommandBuffer commandBuffer, 
 }
 
 static inline int vt_sizeof_vkCmdBlitImage(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint32_t regionCount, const VkImageBlit* pRegions, VkFilter filter) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 23;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += srcImage ? vt_sizeof_VkImage(srcImage) : 0;
-    bufferSize += 4; // srcImageLayout
-    bufferSize++;
     bufferSize += dstImage ? vt_sizeof_VkImage(dstImage) : 0;
-    bufferSize += 4; // dstImageLayout
-    bufferSize += 4; // regionCount
-    bufferSize += 4;
     if (pRegions) {
         int arrSize = regionCount ? regionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -36827,7 +34261,6 @@ static inline int vt_sizeof_vkCmdBlitImage(VkCommandBuffer commandBuffer, VkImag
             bufferSize += vt_sizeof_VkImageBlit(&pRegions[i]);
         }
     }
-    bufferSize += 4; // filter
     return bufferSize;
 }
 
@@ -36933,16 +34366,10 @@ static inline void vt_unserialize_vkCmdBlitImage(VkCommandBuffer commandBuffer, 
 }
 
 static inline int vt_sizeof_vkCmdCopyBufferToImage(VkCommandBuffer commandBuffer, VkBuffer srcBuffer, VkImage dstImage, VkImageLayout dstImageLayout, uint32_t regionCount, const VkBufferImageCopy* pRegions) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 15;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += srcBuffer ? vt_sizeof_VkBuffer(srcBuffer) : 0;
-    bufferSize++;
     bufferSize += dstImage ? vt_sizeof_VkImage(dstImage) : 0;
-    bufferSize += 4; // dstImageLayout
-    bufferSize += 4; // regionCount
-    bufferSize += 4;
     if (pRegions) {
         int arrSize = regionCount ? regionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -37047,16 +34474,10 @@ static inline void vt_unserialize_vkCmdCopyBufferToImage(VkCommandBuffer command
 }
 
 static inline int vt_sizeof_vkCmdCopyImageToBuffer(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkBuffer dstBuffer, uint32_t regionCount, const VkBufferImageCopy* pRegions) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 15;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += srcImage ? vt_sizeof_VkImage(srcImage) : 0;
-    bufferSize += 4; // srcImageLayout
-    bufferSize++;
     bufferSize += dstBuffer ? vt_sizeof_VkBuffer(dstBuffer) : 0;
-    bufferSize += 4; // regionCount
-    bufferSize += 4;
     if (pRegions) {
         int arrSize = regionCount ? regionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -37161,14 +34582,9 @@ static inline void vt_unserialize_vkCmdCopyImageToBuffer(VkCommandBuffer command
 }
 
 static inline int vt_sizeof_vkCmdUpdateBuffer(VkCommandBuffer commandBuffer, VkBuffer dstBuffer, VkDeviceSize dstOffset, VkDeviceSize dataSize, const void* pData) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 22;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += dstBuffer ? vt_sizeof_VkBuffer(dstBuffer) : 0;
-    bufferSize += 8; // dstOffset
-    bufferSize += 8; // dataSize
-    bufferSize += 4;
     bufferSize += pData ? dataSize : 0;
     return bufferSize;
 }
@@ -37239,14 +34655,9 @@ static inline void vt_unserialize_vkCmdUpdateBuffer(VkCommandBuffer commandBuffe
 }
 
 static inline int vt_sizeof_vkCmdFillBuffer(VkCommandBuffer commandBuffer, VkBuffer dstBuffer, VkDeviceSize dstOffset, VkDeviceSize size, uint32_t data) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 22;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += dstBuffer ? vt_sizeof_VkBuffer(dstBuffer) : 0;
-    bufferSize += 8; // dstOffset
-    bufferSize += 8; // size
-    bufferSize += 4; // data
     return bufferSize;
 }
 
@@ -37301,16 +34712,10 @@ static inline void vt_unserialize_vkCmdFillBuffer(VkCommandBuffer commandBuffer,
 }
 
 static inline int vt_sizeof_vkCmdClearColorImage(VkCommandBuffer commandBuffer, VkImage image, VkImageLayout imageLayout, const VkClearColorValue* pColor, uint32_t rangeCount, const VkImageSubresourceRange* pRanges) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 18;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += image ? vt_sizeof_VkImage(image) : 0;
-    bufferSize += 4; // imageLayout
-    bufferSize += 4;
     bufferSize += pColor ? vt_sizeof_VkClearColorValue(pColor) : 0;
-    bufferSize += 4; // rangeCount
-    bufferSize += 4;
     if (pRanges) {
         int arrSize = rangeCount ? rangeCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -37420,16 +34825,10 @@ static inline void vt_unserialize_vkCmdClearColorImage(VkCommandBuffer commandBu
 }
 
 static inline int vt_sizeof_vkCmdClearDepthStencilImage(VkCommandBuffer commandBuffer, VkImage image, VkImageLayout imageLayout, const VkClearDepthStencilValue* pDepthStencil, uint32_t rangeCount, const VkImageSubresourceRange* pRanges) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 18;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += image ? vt_sizeof_VkImage(image) : 0;
-    bufferSize += 4; // imageLayout
-    bufferSize += 4;
     bufferSize += pDepthStencil ? vt_sizeof_VkClearDepthStencilValue(pDepthStencil) : 0;
-    bufferSize += 4; // rangeCount
-    bufferSize += 4;
     if (pRanges) {
         int arrSize = rangeCount ? rangeCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -37539,11 +34938,8 @@ static inline void vt_unserialize_vkCmdClearDepthStencilImage(VkCommandBuffer co
 }
 
 static inline int vt_sizeof_vkCmdClearAttachments(VkCommandBuffer commandBuffer, uint32_t attachmentCount, const VkClearAttachment* pAttachments, uint32_t rectCount, const VkClearRect* pRects) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 17;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // attachmentCount
-    bufferSize += 4;
     if (pAttachments) {
         int arrSize = attachmentCount ? attachmentCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -37551,8 +34947,6 @@ static inline int vt_sizeof_vkCmdClearAttachments(VkCommandBuffer commandBuffer,
             bufferSize += vt_sizeof_VkClearAttachment(&pAttachments[i]);
         }
     }
-    bufferSize += 4; // rectCount
-    bufferSize += 4;
     if (pRects) {
         int arrSize = rectCount ? rectCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -37659,17 +35053,10 @@ static inline void vt_unserialize_vkCmdClearAttachments(VkCommandBuffer commandB
 }
 
 static inline int vt_sizeof_vkCmdResolveImage(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint32_t regionCount, const VkImageResolve* pRegions) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 19;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += srcImage ? vt_sizeof_VkImage(srcImage) : 0;
-    bufferSize += 4; // srcImageLayout
-    bufferSize++;
     bufferSize += dstImage ? vt_sizeof_VkImage(dstImage) : 0;
-    bufferSize += 4; // dstImageLayout
-    bufferSize += 4; // regionCount
-    bufferSize += 4;
     if (pRegions) {
         int arrSize = regionCount ? regionCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -37778,12 +35165,9 @@ static inline void vt_unserialize_vkCmdResolveImage(VkCommandBuffer commandBuffe
 }
 
 static inline int vt_sizeof_vkCmdSetEvent(VkCommandBuffer commandBuffer, VkEvent event, VkPipelineStageFlags stageMask) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += event ? vt_sizeof_VkEvent(event) : 0;
-    bufferSize += 4; // stageMask
     return bufferSize;
 }
 
@@ -37830,12 +35214,9 @@ static inline void vt_unserialize_vkCmdSetEvent(VkCommandBuffer commandBuffer, V
 }
 
 static inline int vt_sizeof_vkCmdResetEvent(VkCommandBuffer commandBuffer, VkEvent event, VkPipelineStageFlags stageMask) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += event ? vt_sizeof_VkEvent(event) : 0;
-    bufferSize += 4; // stageMask
     return bufferSize;
 }
 
@@ -37882,20 +35263,13 @@ static inline void vt_unserialize_vkCmdResetEvent(VkCommandBuffer commandBuffer,
 }
 
 static inline int vt_sizeof_vkCmdWaitEvents(VkCommandBuffer commandBuffer, uint32_t eventCount, const VkEvent* pEvents, VkPipelineStageFlags srcStageMask, VkPipelineStageFlags dstStageMask, uint32_t memoryBarrierCount, const VkMemoryBarrier* pMemoryBarriers, uint32_t bufferMemoryBarrierCount, const VkBufferMemoryBarrier* pBufferMemoryBarriers, uint32_t imageMemoryBarrierCount, const VkImageMemoryBarrier* pImageMemoryBarriers) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 41;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // eventCount
-    bufferSize += 4;
     if (pEvents) {
         for (int i = 0; i < eventCount; i++) {
             bufferSize += vt_sizeof_VkEvent(pEvents[i]);
         }
     }
-    bufferSize += 4; // srcStageMask
-    bufferSize += 4; // dstStageMask
-    bufferSize += 4; // memoryBarrierCount
-    bufferSize += 4;
     if (pMemoryBarriers) {
         int arrSize = memoryBarrierCount ? memoryBarrierCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -37903,8 +35277,6 @@ static inline int vt_sizeof_vkCmdWaitEvents(VkCommandBuffer commandBuffer, uint3
             bufferSize += vt_sizeof_VkMemoryBarrier(&pMemoryBarriers[i]);
         }
     }
-    bufferSize += 4; // bufferMemoryBarrierCount
-    bufferSize += 4;
     if (pBufferMemoryBarriers) {
         int arrSize = bufferMemoryBarrierCount ? bufferMemoryBarrierCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -37912,8 +35284,6 @@ static inline int vt_sizeof_vkCmdWaitEvents(VkCommandBuffer commandBuffer, uint3
             bufferSize += vt_sizeof_VkBufferMemoryBarrier(&pBufferMemoryBarriers[i]);
         }
     }
-    bufferSize += 4; // imageMemoryBarrierCount
-    bufferSize += 4;
     if (pImageMemoryBarriers) {
         int arrSize = imageMemoryBarrierCount ? imageMemoryBarrierCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -38107,14 +35477,8 @@ static inline void vt_unserialize_vkCmdWaitEvents(VkCommandBuffer commandBuffer,
 }
 
 static inline int vt_sizeof_vkCmdPipelineBarrier(VkCommandBuffer commandBuffer, VkPipelineStageFlags srcStageMask, VkPipelineStageFlags dstStageMask, VkDependencyFlags dependencyFlags, uint32_t memoryBarrierCount, const VkMemoryBarrier* pMemoryBarriers, uint32_t bufferMemoryBarrierCount, const VkBufferMemoryBarrier* pBufferMemoryBarriers, uint32_t imageMemoryBarrierCount, const VkImageMemoryBarrier* pImageMemoryBarriers) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 37;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // srcStageMask
-    bufferSize += 4; // dstStageMask
-    bufferSize += 4; // dependencyFlags
-    bufferSize += 4; // memoryBarrierCount
-    bufferSize += 4;
     if (pMemoryBarriers) {
         int arrSize = memoryBarrierCount ? memoryBarrierCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -38122,8 +35486,6 @@ static inline int vt_sizeof_vkCmdPipelineBarrier(VkCommandBuffer commandBuffer, 
             bufferSize += vt_sizeof_VkMemoryBarrier(&pMemoryBarriers[i]);
         }
     }
-    bufferSize += 4; // bufferMemoryBarrierCount
-    bufferSize += 4;
     if (pBufferMemoryBarriers) {
         int arrSize = bufferMemoryBarrierCount ? bufferMemoryBarrierCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -38131,8 +35493,6 @@ static inline int vt_sizeof_vkCmdPipelineBarrier(VkCommandBuffer commandBuffer, 
             bufferSize += vt_sizeof_VkBufferMemoryBarrier(&pBufferMemoryBarriers[i]);
         }
     }
-    bufferSize += 4; // imageMemoryBarrierCount
-    bufferSize += 4;
     if (pImageMemoryBarriers) {
         int arrSize = imageMemoryBarrierCount ? imageMemoryBarrierCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -38287,13 +35647,9 @@ static inline void vt_unserialize_vkCmdPipelineBarrier(VkCommandBuffer commandBu
 }
 
 static inline int vt_sizeof_vkCmdBeginQuery(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint32_t query, VkQueryControlFlags flags) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += queryPool ? vt_sizeof_VkQueryPool(queryPool) : 0;
-    bufferSize += 4; // query
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -38344,12 +35700,9 @@ static inline void vt_unserialize_vkCmdBeginQuery(VkCommandBuffer commandBuffer,
 }
 
 static inline int vt_sizeof_vkCmdEndQuery(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint32_t query) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += queryPool ? vt_sizeof_VkQueryPool(queryPool) : 0;
-    bufferSize += 4; // query
     return bufferSize;
 }
 
@@ -38396,10 +35749,8 @@ static inline void vt_unserialize_vkCmdEndQuery(VkCommandBuffer commandBuffer, V
 }
 
 static inline int vt_sizeof_vkCmdBeginConditionalRenderingEXT(VkCommandBuffer commandBuffer, const VkConditionalRenderingBeginInfoEXT* pConditionalRenderingBegin) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pConditionalRenderingBegin ? vt_sizeof_VkConditionalRenderingBeginInfoEXT(pConditionalRenderingBegin) : 0;
     return bufferSize;
 }
@@ -38448,8 +35799,7 @@ static inline void vt_unserialize_vkCmdBeginConditionalRenderingEXT(VkCommandBuf
 }
 
 static inline int vt_sizeof_vkCmdEndConditionalRenderingEXT(VkCommandBuffer commandBuffer) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 1;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
     return bufferSize;
 }
@@ -38478,13 +35828,9 @@ static inline void vt_unserialize_vkCmdEndConditionalRenderingEXT(VkCommandBuffe
 }
 
 static inline int vt_sizeof_vkCmdResetQueryPool(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint32_t firstQuery, uint32_t queryCount) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += queryPool ? vt_sizeof_VkQueryPool(queryPool) : 0;
-    bufferSize += 4; // firstQuery
-    bufferSize += 4; // queryCount
     return bufferSize;
 }
 
@@ -38535,13 +35881,9 @@ static inline void vt_unserialize_vkCmdResetQueryPool(VkCommandBuffer commandBuf
 }
 
 static inline int vt_sizeof_vkCmdWriteTimestamp(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits pipelineStage, VkQueryPool queryPool, uint32_t query) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // pipelineStage
-    bufferSize++;
     bufferSize += queryPool ? vt_sizeof_VkQueryPool(queryPool) : 0;
-    bufferSize += 4; // query
     return bufferSize;
 }
 
@@ -38592,18 +35934,10 @@ static inline void vt_unserialize_vkCmdWriteTimestamp(VkCommandBuffer commandBuf
 }
 
 static inline int vt_sizeof_vkCmdCopyQueryPoolResults(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint32_t firstQuery, uint32_t queryCount, VkBuffer dstBuffer, VkDeviceSize dstOffset, VkDeviceSize stride, VkQueryResultFlags flags) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 31;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += queryPool ? vt_sizeof_VkQueryPool(queryPool) : 0;
-    bufferSize += 4; // firstQuery
-    bufferSize += 4; // queryCount
-    bufferSize++;
     bufferSize += dstBuffer ? vt_sizeof_VkBuffer(dstBuffer) : 0;
-    bufferSize += 8; // dstOffset
-    bufferSize += 8; // stride
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -38681,15 +36015,9 @@ static inline void vt_unserialize_vkCmdCopyQueryPoolResults(VkCommandBuffer comm
 }
 
 static inline int vt_sizeof_vkCmdPushConstants(VkCommandBuffer commandBuffer, VkPipelineLayout layout, VkShaderStageFlags stageFlags, uint32_t offset, uint32_t size, const void* pValues) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 18;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += layout ? vt_sizeof_VkPipelineLayout(layout) : 0;
-    bufferSize += 4; // stageFlags
-    bufferSize += 4; // offset
-    bufferSize += 4; // size
-    bufferSize += 4;
     bufferSize += pValues ? size : 0;
     return bufferSize;
 }
@@ -38764,12 +36092,9 @@ static inline void vt_unserialize_vkCmdPushConstants(VkCommandBuffer commandBuff
 }
 
 static inline int vt_sizeof_vkCmdBeginRenderPass(VkCommandBuffer commandBuffer, const VkRenderPassBeginInfo* pRenderPassBegin, VkSubpassContents contents) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pRenderPassBegin ? vt_sizeof_VkRenderPassBeginInfo(pRenderPassBegin) : 0;
-    bufferSize += 4; // contents
     return bufferSize;
 }
 
@@ -38821,10 +36146,8 @@ static inline void vt_unserialize_vkCmdBeginRenderPass(VkCommandBuffer commandBu
 }
 
 static inline int vt_sizeof_vkCmdNextSubpass(VkCommandBuffer commandBuffer, VkSubpassContents contents) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // contents
     return bufferSize;
 }
 
@@ -38856,8 +36179,7 @@ static inline void vt_unserialize_vkCmdNextSubpass(VkCommandBuffer commandBuffer
 }
 
 static inline int vt_sizeof_vkCmdEndRenderPass(VkCommandBuffer commandBuffer) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 1;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
     return bufferSize;
 }
@@ -38886,11 +36208,8 @@ static inline void vt_unserialize_vkCmdEndRenderPass(VkCommandBuffer commandBuff
 }
 
 static inline int vt_sizeof_vkCmdExecuteCommands(VkCommandBuffer commandBuffer, uint32_t commandBufferCount, const VkCommandBuffer* pCommandBuffers) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // commandBufferCount
-    bufferSize += 4;
     if (pCommandBuffers) {
         for (int i = 0; i < commandBufferCount; i++) {
             bufferSize += vt_sizeof_VkCommandBuffer(pCommandBuffers[i]);
@@ -38966,12 +36285,9 @@ static inline void vt_unserialize_vkCmdExecuteCommands(VkCommandBuffer commandBu
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceSurfaceCapabilitiesKHR(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, VkSurfaceCapabilitiesKHR* pSurfaceCapabilities) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize++;
     bufferSize += surface ? vt_sizeof_VkSurfaceKHR(surface) : 0;
-    bufferSize += 4;
     bufferSize += pSurfaceCapabilities ? vt_sizeof_VkSurfaceCapabilitiesKHR(pSurfaceCapabilities) : 0;
     return bufferSize;
 }
@@ -39035,14 +36351,10 @@ static inline void vt_unserialize_vkGetPhysicalDeviceSurfaceCapabilitiesKHR(VkPh
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceSurfaceFormatsKHR(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, uint32_t* pSurfaceFormatCount, VkSurfaceFormatKHR* pSurfaceFormats) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize++;
     bufferSize += surface ? vt_sizeof_VkSurfaceKHR(surface) : 0;
-    bufferSize += 4;
     bufferSize += pSurfaceFormatCount ? 4 : 0;
-    bufferSize += 4;
     if (pSurfaceFormats) {
         int arrSize = pSurfaceFormatCount ? *pSurfaceFormatCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -39144,14 +36456,10 @@ static inline void vt_unserialize_vkGetPhysicalDeviceSurfaceFormatsKHR(VkPhysica
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceSurfacePresentModesKHR(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, uint32_t* pPresentModeCount, VkPresentModeKHR* pPresentModes) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize++;
     bufferSize += surface ? vt_sizeof_VkSurfaceKHR(surface) : 0;
-    bufferSize += 4;
     bufferSize += pPresentModeCount ? 4 : 0;
-    bufferSize += 4;
     bufferSize += pPresentModes ? *pPresentModeCount * 4 : 0;
     return bufferSize;
 }
@@ -39236,12 +36544,9 @@ static inline void vt_unserialize_vkGetPhysicalDeviceSurfacePresentModesKHR(VkPh
 }
 
 static inline int vt_sizeof_vkCreateSwapchainKHR(VkDevice device, const VkSwapchainCreateInfoKHR* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkSwapchainKHR* pSwapchain) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkSwapchainCreateInfoKHR(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pSwapchain ? vt_sizeof_VkSwapchainKHR(*pSwapchain) : 0;
     return bufferSize;
 }
@@ -39305,10 +36610,8 @@ static inline void vt_unserialize_vkCreateSwapchainKHR(VkDevice device, const Vk
 }
 
 static inline int vt_sizeof_vkDestroySwapchainKHR(VkDevice device, VkSwapchainKHR swapchain, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += swapchain ? vt_sizeof_VkSwapchainKHR(swapchain) : 0;
     return bufferSize;
 }
@@ -39352,14 +36655,10 @@ static inline void vt_unserialize_vkDestroySwapchainKHR(VkDevice device, VkSwapc
 }
 
 static inline int vt_sizeof_vkGetSwapchainImagesKHR(VkDevice device, VkSwapchainKHR swapchain, uint32_t* pSwapchainImageCount, VkImage* pSwapchainImages) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += swapchain ? vt_sizeof_VkSwapchainKHR(swapchain) : 0;
-    bufferSize += 4;
     bufferSize += pSwapchainImageCount ? 4 : 0;
-    bufferSize += 4;
     if (pSwapchainImages) {
         for (int i = 0; i < *pSwapchainImageCount; i++) {
             bufferSize += vt_sizeof_VkImage(pSwapchainImages[i]);
@@ -39466,17 +36765,11 @@ static inline void vt_unserialize_vkGetSwapchainImagesKHR(VkDevice device, VkSwa
 }
 
 static inline int vt_sizeof_vkAcquireNextImageKHR(VkDevice device, VkSwapchainKHR swapchain, uint64_t timeout, VkSemaphore semaphore, VkFence fence, uint32_t* pImageIndex) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 16;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += swapchain ? vt_sizeof_VkSwapchainKHR(swapchain) : 0;
-    bufferSize += 8; // timeout
-    bufferSize++;
     bufferSize += semaphore ? vt_sizeof_VkSemaphore(semaphore) : 0;
-    bufferSize++;
     bufferSize += fence ? vt_sizeof_VkFence(fence) : 0;
-    bufferSize += 4;
     bufferSize += pImageIndex ? 4 : 0;
     return bufferSize;
 }
@@ -39574,10 +36867,8 @@ static inline void vt_unserialize_vkAcquireNextImageKHR(VkDevice device, VkSwapc
 }
 
 static inline int vt_sizeof_vkQueuePresentKHR(VkQueue queue, const VkPresentInfoKHR* pPresentInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += queue ? vt_sizeof_VkQueue(queue) : 0;
-    bufferSize += 4;
     bufferSize += pPresentInfo ? vt_sizeof_VkPresentInfoKHR(pPresentInfo) : 0;
     return bufferSize;
 }
@@ -39626,10 +36917,8 @@ static inline void vt_unserialize_vkQueuePresentKHR(VkQueue queue, const VkPrese
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceFeatures2(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures2* pFeatures) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pFeatures ? vt_sizeof_VkPhysicalDeviceFeatures2(pFeatures) : 0;
     return bufferSize;
 }
@@ -39678,10 +36967,8 @@ static inline void vt_unserialize_vkGetPhysicalDeviceFeatures2(VkPhysicalDevice 
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceProperties2(VkPhysicalDevice physicalDevice, VkPhysicalDeviceProperties2* pProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pProperties ? vt_sizeof_VkPhysicalDeviceProperties2(pProperties) : 0;
     return bufferSize;
 }
@@ -39730,11 +37017,8 @@ static inline void vt_unserialize_vkGetPhysicalDeviceProperties2(VkPhysicalDevic
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceFormatProperties2(VkPhysicalDevice physicalDevice, VkFormat format, VkFormatProperties2* pFormatProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4; // format
-    bufferSize += 4;
     bufferSize += pFormatProperties ? vt_sizeof_VkFormatProperties2(pFormatProperties) : 0;
     return bufferSize;
 }
@@ -39787,12 +37071,9 @@ static inline void vt_unserialize_vkGetPhysicalDeviceFormatProperties2(VkPhysica
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceImageFormatProperties2(VkPhysicalDevice physicalDevice, const VkPhysicalDeviceImageFormatInfo2* pImageFormatInfo, VkImageFormatProperties2* pImageFormatProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pImageFormatInfo ? vt_sizeof_VkPhysicalDeviceImageFormatInfo2(pImageFormatInfo) : 0;
-    bufferSize += 4;
     bufferSize += pImageFormatProperties ? vt_sizeof_VkImageFormatProperties2(pImageFormatProperties) : 0;
     return bufferSize;
 }
@@ -39861,12 +37142,9 @@ static inline void vt_unserialize_vkGetPhysicalDeviceImageFormatProperties2(VkPh
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceQueueFamilyProperties2(VkPhysicalDevice physicalDevice, uint32_t* pQueueFamilyPropertyCount, VkQueueFamilyProperties2* pQueueFamilyProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pQueueFamilyPropertyCount ? 4 : 0;
-    bufferSize += 4;
     if (pQueueFamilyProperties) {
         int arrSize = pQueueFamilyPropertyCount ? *pQueueFamilyPropertyCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -39953,10 +37231,8 @@ static inline void vt_unserialize_vkGetPhysicalDeviceQueueFamilyProperties2(VkPh
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceMemoryProperties2(VkPhysicalDevice physicalDevice, VkPhysicalDeviceMemoryProperties2* pMemoryProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pMemoryProperties ? vt_sizeof_VkPhysicalDeviceMemoryProperties2(pMemoryProperties) : 0;
     return bufferSize;
 }
@@ -40005,14 +37281,10 @@ static inline void vt_unserialize_vkGetPhysicalDeviceMemoryProperties2(VkPhysica
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceSparseImageFormatProperties2(VkPhysicalDevice physicalDevice, const VkPhysicalDeviceSparseImageFormatInfo2* pFormatInfo, uint32_t* pPropertyCount, VkSparseImageFormatProperties2* pProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pFormatInfo ? vt_sizeof_VkPhysicalDeviceSparseImageFormatInfo2(pFormatInfo) : 0;
-    bufferSize += 4;
     bufferSize += pPropertyCount ? 4 : 0;
-    bufferSize += 4;
     if (pProperties) {
         int arrSize = pPropertyCount ? *pPropertyCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -40119,15 +37391,9 @@ static inline void vt_unserialize_vkGetPhysicalDeviceSparseImageFormatProperties
 }
 
 static inline int vt_sizeof_vkCmdPushDescriptorSetKHR(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint32_t set, uint32_t descriptorWriteCount, const VkWriteDescriptorSet* pDescriptorWrites) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 18;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // pipelineBindPoint
-    bufferSize++;
     bufferSize += layout ? vt_sizeof_VkPipelineLayout(layout) : 0;
-    bufferSize += 4; // set
-    bufferSize += 4; // descriptorWriteCount
-    bufferSize += 4;
     if (pDescriptorWrites) {
         int arrSize = descriptorWriteCount ? descriptorWriteCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -40221,12 +37487,9 @@ static inline void vt_unserialize_vkCmdPushDescriptorSetKHR(VkCommandBuffer comm
 }
 
 static inline int vt_sizeof_vkTrimCommandPool(VkDevice device, VkCommandPool commandPool, VkCommandPoolTrimFlags flags) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += commandPool ? vt_sizeof_VkCommandPool(commandPool) : 0;
-    bufferSize += 4; // flags
     return bufferSize;
 }
 
@@ -40273,12 +37536,9 @@ static inline void vt_unserialize_vkTrimCommandPool(VkDevice device, VkCommandPo
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceExternalBufferProperties(VkPhysicalDevice physicalDevice, const VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo, VkExternalBufferProperties* pExternalBufferProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pExternalBufferInfo ? vt_sizeof_VkPhysicalDeviceExternalBufferInfo(pExternalBufferInfo) : 0;
-    bufferSize += 4;
     bufferSize += pExternalBufferProperties ? vt_sizeof_VkExternalBufferProperties(pExternalBufferProperties) : 0;
     return bufferSize;
 }
@@ -40347,12 +37607,9 @@ static inline void vt_unserialize_vkGetPhysicalDeviceExternalBufferProperties(Vk
 }
 
 static inline int vt_sizeof_vkGetMemoryFdKHR(VkDevice device, const VkMemoryGetFdInfoKHR* pGetFdInfo, int* pFd) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pGetFdInfo ? vt_sizeof_VkMemoryGetFdInfoKHR(pGetFdInfo) : 0;
-    bufferSize += 4;
     bufferSize += pFd ? 4 : 0;
     return bufferSize;
 }
@@ -40421,12 +37678,9 @@ static inline void vt_unserialize_vkGetMemoryFdKHR(VkDevice device, const VkMemo
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceExternalSemaphoreProperties(VkPhysicalDevice physicalDevice, const VkPhysicalDeviceExternalSemaphoreInfo* pExternalSemaphoreInfo, VkExternalSemaphoreProperties* pExternalSemaphoreProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pExternalSemaphoreInfo ? vt_sizeof_VkPhysicalDeviceExternalSemaphoreInfo(pExternalSemaphoreInfo) : 0;
-    bufferSize += 4;
     bufferSize += pExternalSemaphoreProperties ? vt_sizeof_VkExternalSemaphoreProperties(pExternalSemaphoreProperties) : 0;
     return bufferSize;
 }
@@ -40495,12 +37749,9 @@ static inline void vt_unserialize_vkGetPhysicalDeviceExternalSemaphoreProperties
 }
 
 static inline int vt_sizeof_vkGetSemaphoreFdKHR(VkDevice device, const VkSemaphoreGetFdInfoKHR* pGetFdInfo, int* pFd) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pGetFdInfo ? vt_sizeof_VkSemaphoreGetFdInfoKHR(pGetFdInfo) : 0;
-    bufferSize += 4;
     bufferSize += pFd ? 4 : 0;
     return bufferSize;
 }
@@ -40569,12 +37820,9 @@ static inline void vt_unserialize_vkGetSemaphoreFdKHR(VkDevice device, const VkS
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceExternalFenceProperties(VkPhysicalDevice physicalDevice, const VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo, VkExternalFenceProperties* pExternalFenceProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pExternalFenceInfo ? vt_sizeof_VkPhysicalDeviceExternalFenceInfo(pExternalFenceInfo) : 0;
-    bufferSize += 4;
     bufferSize += pExternalFenceProperties ? vt_sizeof_VkExternalFenceProperties(pExternalFenceProperties) : 0;
     return bufferSize;
 }
@@ -40643,12 +37891,9 @@ static inline void vt_unserialize_vkGetPhysicalDeviceExternalFenceProperties(VkP
 }
 
 static inline int vt_sizeof_vkGetFenceFdKHR(VkDevice device, const VkFenceGetFdInfoKHR* pGetFdInfo, int* pFd) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pGetFdInfo ? vt_sizeof_VkFenceGetFdInfoKHR(pGetFdInfo) : 0;
-    bufferSize += 4;
     bufferSize += pFd ? 4 : 0;
     return bufferSize;
 }
@@ -40717,12 +37962,9 @@ static inline void vt_unserialize_vkGetFenceFdKHR(VkDevice device, const VkFence
 }
 
 static inline int vt_sizeof_vkEnumeratePhysicalDeviceGroups(VkInstance instance, uint32_t* pPhysicalDeviceGroupCount, VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += instance ? vt_sizeof_VkInstance(instance) : 0;
-    bufferSize += 4;
     bufferSize += pPhysicalDeviceGroupCount ? 4 : 0;
-    bufferSize += 4;
     if (pPhysicalDeviceGroupProperties) {
         int arrSize = pPhysicalDeviceGroupCount ? *pPhysicalDeviceGroupCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -40809,13 +38051,8 @@ static inline void vt_unserialize_vkEnumeratePhysicalDeviceGroups(VkInstance ins
 }
 
 static inline int vt_sizeof_vkGetDeviceGroupPeerMemoryFeatures(VkDevice device, uint32_t heapIndex, uint32_t localDeviceIndex, uint32_t remoteDeviceIndex, VkPeerMemoryFeatureFlags* pPeerMemoryFeatures) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 17;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4; // heapIndex
-    bufferSize += 4; // localDeviceIndex
-    bufferSize += 4; // remoteDeviceIndex
-    bufferSize += 4;
     bufferSize += pPeerMemoryFeatures ? 4 : 0;
     return bufferSize;
 }
@@ -40876,11 +38113,8 @@ static inline void vt_unserialize_vkGetDeviceGroupPeerMemoryFeatures(VkDevice de
 }
 
 static inline int vt_sizeof_vkBindBufferMemory2(VkDevice device, uint32_t bindInfoCount, const VkBindBufferMemoryInfo* pBindInfos) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4; // bindInfoCount
-    bufferSize += 4;
     if (pBindInfos) {
         int arrSize = bindInfoCount ? bindInfoCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -40951,11 +38185,8 @@ static inline void vt_unserialize_vkBindBufferMemory2(VkDevice device, uint32_t*
 }
 
 static inline int vt_sizeof_vkBindImageMemory2(VkDevice device, uint32_t bindInfoCount, const VkBindImageMemoryInfo* pBindInfos) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4; // bindInfoCount
-    bufferSize += 4;
     if (pBindInfos) {
         int arrSize = bindInfoCount ? bindInfoCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -41026,10 +38257,8 @@ static inline void vt_unserialize_vkBindImageMemory2(VkDevice device, uint32_t* 
 }
 
 static inline int vt_sizeof_vkCmdSetDeviceMask(VkCommandBuffer commandBuffer, uint32_t deviceMask) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // deviceMask
     return bufferSize;
 }
 
@@ -41061,12 +38290,9 @@ static inline void vt_unserialize_vkCmdSetDeviceMask(VkCommandBuffer commandBuff
 }
 
 static inline int vt_sizeof_vkAcquireNextImage2KHR(VkDevice device, const VkAcquireNextImageInfoKHR* pAcquireInfo, uint32_t* pImageIndex) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pAcquireInfo ? vt_sizeof_VkAcquireNextImageInfoKHR(pAcquireInfo) : 0;
-    bufferSize += 4;
     bufferSize += pImageIndex ? 4 : 0;
     return bufferSize;
 }
@@ -41135,15 +38361,8 @@ static inline void vt_unserialize_vkAcquireNextImage2KHR(VkDevice device, const 
 }
 
 static inline int vt_sizeof_vkCmdDispatchBase(VkCommandBuffer commandBuffer, uint32_t baseGroupX, uint32_t baseGroupY, uint32_t baseGroupZ, uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 25;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // baseGroupX
-    bufferSize += 4; // baseGroupY
-    bufferSize += 4; // baseGroupZ
-    bufferSize += 4; // groupCountX
-    bufferSize += 4; // groupCountY
-    bufferSize += 4; // groupCountZ
     return bufferSize;
 }
 
@@ -41195,14 +38414,10 @@ static inline void vt_unserialize_vkCmdDispatchBase(VkCommandBuffer commandBuffe
 }
 
 static inline int vt_sizeof_vkGetPhysicalDevicePresentRectanglesKHR(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, uint32_t* pRectCount, VkRect2D* pRects) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize++;
     bufferSize += surface ? vt_sizeof_VkSurfaceKHR(surface) : 0;
-    bufferSize += 4;
     bufferSize += pRectCount ? 4 : 0;
-    bufferSize += 4;
     if (pRects) {
         int arrSize = pRectCount ? *pRectCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -41304,10 +38519,8 @@ static inline void vt_unserialize_vkGetPhysicalDevicePresentRectanglesKHR(VkPhys
 }
 
 static inline int vt_sizeof_vkCmdSetSampleLocationsEXT(VkCommandBuffer commandBuffer, const VkSampleLocationsInfoEXT* pSampleLocationsInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pSampleLocationsInfo ? vt_sizeof_VkSampleLocationsInfoEXT(pSampleLocationsInfo) : 0;
     return bufferSize;
 }
@@ -41356,11 +38569,8 @@ static inline void vt_unserialize_vkCmdSetSampleLocationsEXT(VkCommandBuffer com
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceMultisamplePropertiesEXT(VkPhysicalDevice physicalDevice, VkSampleCountFlagBits samples, VkMultisamplePropertiesEXT* pMultisampleProperties) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4; // samples
-    bufferSize += 4;
     bufferSize += pMultisampleProperties ? vt_sizeof_VkMultisamplePropertiesEXT(pMultisampleProperties) : 0;
     return bufferSize;
 }
@@ -41413,12 +38623,9 @@ static inline void vt_unserialize_vkGetPhysicalDeviceMultisamplePropertiesEXT(Vk
 }
 
 static inline int vt_sizeof_vkGetBufferMemoryRequirements2(VkDevice device, const VkBufferMemoryRequirementsInfo2* pInfo, VkMemoryRequirements2* pMemoryRequirements) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pInfo ? vt_sizeof_VkBufferMemoryRequirementsInfo2(pInfo) : 0;
-    bufferSize += 4;
     bufferSize += pMemoryRequirements ? vt_sizeof_VkMemoryRequirements2(pMemoryRequirements) : 0;
     return bufferSize;
 }
@@ -41487,12 +38694,9 @@ static inline void vt_unserialize_vkGetBufferMemoryRequirements2(VkDevice device
 }
 
 static inline int vt_sizeof_vkGetImageMemoryRequirements2(VkDevice device, const VkImageMemoryRequirementsInfo2* pInfo, VkMemoryRequirements2* pMemoryRequirements) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pInfo ? vt_sizeof_VkImageMemoryRequirementsInfo2(pInfo) : 0;
-    bufferSize += 4;
     bufferSize += pMemoryRequirements ? vt_sizeof_VkMemoryRequirements2(pMemoryRequirements) : 0;
     return bufferSize;
 }
@@ -41561,14 +38765,10 @@ static inline void vt_unserialize_vkGetImageMemoryRequirements2(VkDevice device,
 }
 
 static inline int vt_sizeof_vkGetImageSparseMemoryRequirements2(VkDevice device, const VkImageSparseMemoryRequirementsInfo2* pInfo, uint32_t* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements2* pSparseMemoryRequirements) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pInfo ? vt_sizeof_VkImageSparseMemoryRequirementsInfo2(pInfo) : 0;
-    bufferSize += 4;
     bufferSize += pSparseMemoryRequirementCount ? 4 : 0;
-    bufferSize += 4;
     if (pSparseMemoryRequirements) {
         int arrSize = pSparseMemoryRequirementCount ? *pSparseMemoryRequirementCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -41675,12 +38875,9 @@ static inline void vt_unserialize_vkGetImageSparseMemoryRequirements2(VkDevice d
 }
 
 static inline int vt_sizeof_vkGetDeviceBufferMemoryRequirements(VkDevice device, const VkDeviceBufferMemoryRequirements* pInfo, VkMemoryRequirements2* pMemoryRequirements) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pInfo ? vt_sizeof_VkDeviceBufferMemoryRequirements(pInfo) : 0;
-    bufferSize += 4;
     bufferSize += pMemoryRequirements ? vt_sizeof_VkMemoryRequirements2(pMemoryRequirements) : 0;
     return bufferSize;
 }
@@ -41749,12 +38946,9 @@ static inline void vt_unserialize_vkGetDeviceBufferMemoryRequirements(VkDevice d
 }
 
 static inline int vt_sizeof_vkGetDeviceImageMemoryRequirements(VkDevice device, const VkDeviceImageMemoryRequirements* pInfo, VkMemoryRequirements2* pMemoryRequirements) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pInfo ? vt_sizeof_VkDeviceImageMemoryRequirements(pInfo) : 0;
-    bufferSize += 4;
     bufferSize += pMemoryRequirements ? vt_sizeof_VkMemoryRequirements2(pMemoryRequirements) : 0;
     return bufferSize;
 }
@@ -41823,14 +39017,10 @@ static inline void vt_unserialize_vkGetDeviceImageMemoryRequirements(VkDevice de
 }
 
 static inline int vt_sizeof_vkGetDeviceImageSparseMemoryRequirements(VkDevice device, const VkDeviceImageMemoryRequirements* pInfo, uint32_t* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements2* pSparseMemoryRequirements) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pInfo ? vt_sizeof_VkDeviceImageMemoryRequirements(pInfo) : 0;
-    bufferSize += 4;
     bufferSize += pSparseMemoryRequirementCount ? 4 : 0;
-    bufferSize += 4;
     if (pSparseMemoryRequirements) {
         int arrSize = pSparseMemoryRequirementCount ? *pSparseMemoryRequirementCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -41937,12 +39127,9 @@ static inline void vt_unserialize_vkGetDeviceImageSparseMemoryRequirements(VkDev
 }
 
 static inline int vt_sizeof_vkCreateSamplerYcbcrConversion(VkDevice device, const VkSamplerYcbcrConversionCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkSamplerYcbcrConversion* pYcbcrConversion) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkSamplerYcbcrConversionCreateInfo(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pYcbcrConversion ? vt_sizeof_VkSamplerYcbcrConversion(*pYcbcrConversion) : 0;
     return bufferSize;
 }
@@ -42006,10 +39193,8 @@ static inline void vt_unserialize_vkCreateSamplerYcbcrConversion(VkDevice device
 }
 
 static inline int vt_sizeof_vkDestroySamplerYcbcrConversion(VkDevice device, VkSamplerYcbcrConversion ycbcrConversion, const VkAllocationCallbacks* pAllocator) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 2;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += ycbcrConversion ? vt_sizeof_VkSamplerYcbcrConversion(ycbcrConversion) : 0;
     return bufferSize;
 }
@@ -42053,12 +39238,9 @@ static inline void vt_unserialize_vkDestroySamplerYcbcrConversion(VkDevice devic
 }
 
 static inline int vt_sizeof_vkGetDeviceQueue2(VkDevice device, const VkDeviceQueueInfo2* pQueueInfo, VkQueue* pQueue) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pQueueInfo ? vt_sizeof_VkDeviceQueueInfo2(pQueueInfo) : 0;
-    bufferSize++;
     bufferSize += pQueue ? vt_sizeof_VkQueue(*pQueue) : 0;
     return bufferSize;
 }
@@ -42122,12 +39304,9 @@ static inline void vt_unserialize_vkGetDeviceQueue2(VkDevice device, const VkDev
 }
 
 static inline int vt_sizeof_vkGetDescriptorSetLayoutSupport(VkDevice device, const VkDescriptorSetLayoutCreateInfo* pCreateInfo, VkDescriptorSetLayoutSupport* pSupport) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkDescriptorSetLayoutCreateInfo(pCreateInfo) : 0;
-    bufferSize += 4;
     bufferSize += pSupport ? vt_sizeof_VkDescriptorSetLayoutSupport(pSupport) : 0;
     return bufferSize;
 }
@@ -42196,12 +39375,9 @@ static inline void vt_unserialize_vkGetDescriptorSetLayoutSupport(VkDevice devic
 }
 
 static inline int vt_sizeof_vkGetPhysicalDeviceCalibrateableTimeDomainsKHR(VkPhysicalDevice physicalDevice, uint32_t* pTimeDomainCount, VkTimeDomainKHR* pTimeDomains) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += physicalDevice ? vt_sizeof_VkPhysicalDevice(physicalDevice) : 0;
-    bufferSize += 4;
     bufferSize += pTimeDomainCount ? 4 : 0;
-    bufferSize += 4;
     bufferSize += pTimeDomains ? *pTimeDomainCount * 4 : 0;
     return bufferSize;
 }
@@ -42271,11 +39447,8 @@ static inline void vt_unserialize_vkGetPhysicalDeviceCalibrateableTimeDomainsKHR
 }
 
 static inline int vt_sizeof_vkGetCalibratedTimestampsKHR(VkDevice device, uint32_t timestampCount, const VkCalibratedTimestampInfoKHR* pTimestampInfos, uint64_t* pTimestamps, uint64_t* pMaxDeviation) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 17;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4; // timestampCount
-    bufferSize += 4;
     if (pTimestampInfos) {
         int arrSize = timestampCount ? timestampCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -42283,9 +39456,7 @@ static inline int vt_sizeof_vkGetCalibratedTimestampsKHR(VkDevice device, uint32
             bufferSize += vt_sizeof_VkCalibratedTimestampInfoKHR(&pTimestampInfos[i]);
         }
     }
-    bufferSize += 4;
     bufferSize += pTimestamps ? timestampCount * 8 : 0;
-    bufferSize += 4;
     bufferSize += pMaxDeviation ? 8 : 0;
     return bufferSize;
 }
@@ -42391,12 +39562,9 @@ static inline void vt_unserialize_vkGetCalibratedTimestampsKHR(VkDevice device, 
 }
 
 static inline int vt_sizeof_vkCreateRenderPass2(VkDevice device, const VkRenderPassCreateInfo2* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkRenderPass* pRenderPass) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkRenderPassCreateInfo2(pCreateInfo) : 0;
-    bufferSize++;
     bufferSize += pRenderPass ? vt_sizeof_VkRenderPass(*pRenderPass) : 0;
     return bufferSize;
 }
@@ -42460,12 +39628,9 @@ static inline void vt_unserialize_vkCreateRenderPass2(VkDevice device, const VkR
 }
 
 static inline int vt_sizeof_vkCmdBeginRenderPass2(VkCommandBuffer commandBuffer, const VkRenderPassBeginInfo* pRenderPassBegin, const VkSubpassBeginInfo* pSubpassBeginInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pRenderPassBegin ? vt_sizeof_VkRenderPassBeginInfo(pRenderPassBegin) : 0;
-    bufferSize += 4;
     bufferSize += pSubpassBeginInfo ? vt_sizeof_VkSubpassBeginInfo(pSubpassBeginInfo) : 0;
     return bufferSize;
 }
@@ -42534,12 +39699,9 @@ static inline void vt_unserialize_vkCmdBeginRenderPass2(VkCommandBuffer commandB
 }
 
 static inline int vt_sizeof_vkCmdNextSubpass2(VkCommandBuffer commandBuffer, const VkSubpassBeginInfo* pSubpassBeginInfo, const VkSubpassEndInfo* pSubpassEndInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pSubpassBeginInfo ? vt_sizeof_VkSubpassBeginInfo(pSubpassBeginInfo) : 0;
-    bufferSize += 4;
     bufferSize += pSubpassEndInfo ? vt_sizeof_VkSubpassEndInfo(pSubpassEndInfo) : 0;
     return bufferSize;
 }
@@ -42608,10 +39770,8 @@ static inline void vt_unserialize_vkCmdNextSubpass2(VkCommandBuffer commandBuffe
 }
 
 static inline int vt_sizeof_vkCmdEndRenderPass2(VkCommandBuffer commandBuffer, const VkSubpassEndInfo* pSubpassEndInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pSubpassEndInfo ? vt_sizeof_VkSubpassEndInfo(pSubpassEndInfo) : 0;
     return bufferSize;
 }
@@ -42660,12 +39820,9 @@ static inline void vt_unserialize_vkCmdEndRenderPass2(VkCommandBuffer commandBuf
 }
 
 static inline int vt_sizeof_vkGetSemaphoreCounterValue(VkDevice device, VkSemaphore semaphore, uint64_t* pValue) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += semaphore ? vt_sizeof_VkSemaphore(semaphore) : 0;
-    bufferSize += 4;
     bufferSize += pValue ? 8 : 0;
     return bufferSize;
 }
@@ -42729,12 +39886,9 @@ static inline void vt_unserialize_vkGetSemaphoreCounterValue(VkDevice device, Vk
 }
 
 static inline int vt_sizeof_vkWaitSemaphores(VkDevice device, const VkSemaphoreWaitInfo* pWaitInfo, uint64_t timeout) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pWaitInfo ? vt_sizeof_VkSemaphoreWaitInfo(pWaitInfo) : 0;
-    bufferSize += 8; // timeout
     return bufferSize;
 }
 
@@ -42786,10 +39940,8 @@ static inline void vt_unserialize_vkWaitSemaphores(VkDevice device, const VkSema
 }
 
 static inline int vt_sizeof_vkSignalSemaphore(VkDevice device, const VkSemaphoreSignalInfo* pSignalInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pSignalInfo ? vt_sizeof_VkSemaphoreSignalInfo(pSignalInfo) : 0;
     return bufferSize;
 }
@@ -42838,17 +39990,10 @@ static inline void vt_unserialize_vkSignalSemaphore(VkDevice device, const VkSem
 }
 
 static inline int vt_sizeof_vkCmdDrawIndirectCount(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, VkBuffer countBuffer, VkDeviceSize countBufferOffset, uint32_t maxDrawCount, uint32_t stride) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 27;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += buffer ? vt_sizeof_VkBuffer(buffer) : 0;
-    bufferSize += 8; // offset
-    bufferSize++;
     bufferSize += countBuffer ? vt_sizeof_VkBuffer(countBuffer) : 0;
-    bufferSize += 8; // countBufferOffset
-    bufferSize += 4; // maxDrawCount
-    bufferSize += 4; // stride
     return bufferSize;
 }
 
@@ -42922,17 +40067,10 @@ static inline void vt_unserialize_vkCmdDrawIndirectCount(VkCommandBuffer command
 }
 
 static inline int vt_sizeof_vkCmdDrawIndexedIndirectCount(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, VkBuffer countBuffer, VkDeviceSize countBufferOffset, uint32_t maxDrawCount, uint32_t stride) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 27;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += buffer ? vt_sizeof_VkBuffer(buffer) : 0;
-    bufferSize += 8; // offset
-    bufferSize++;
     bufferSize += countBuffer ? vt_sizeof_VkBuffer(countBuffer) : 0;
-    bufferSize += 8; // countBufferOffset
-    bufferSize += 4; // maxDrawCount
-    bufferSize += 4; // stride
     return bufferSize;
 }
 
@@ -43006,20 +40144,14 @@ static inline void vt_unserialize_vkCmdDrawIndexedIndirectCount(VkCommandBuffer 
 }
 
 static inline int vt_sizeof_vkCmdBindTransformFeedbackBuffersEXT(VkCommandBuffer commandBuffer, uint32_t firstBinding, uint32_t bindingCount, const VkBuffer* pBuffers, const VkDeviceSize* pOffsets, const VkDeviceSize* pSizes) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 21;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // firstBinding
-    bufferSize += 4; // bindingCount
-    bufferSize += 4;
     if (pBuffers) {
         for (int i = 0; i < bindingCount; i++) {
             bufferSize += vt_sizeof_VkBuffer(pBuffers[i]);
         }
     }
-    bufferSize += 4;
     bufferSize += pOffsets ? bindingCount * 8 : 0;
-    bufferSize += 4;
     bufferSize += pSizes ? bindingCount * 8 : 0;
     return bufferSize;
 }
@@ -43137,18 +40269,13 @@ static inline void vt_unserialize_vkCmdBindTransformFeedbackBuffersEXT(VkCommand
 }
 
 static inline int vt_sizeof_vkCmdBeginTransformFeedbackEXT(VkCommandBuffer commandBuffer, uint32_t firstCounterBuffer, uint32_t counterBufferCount, const VkBuffer* pCounterBuffers, const VkDeviceSize* pCounterBufferOffsets) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 17;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // firstCounterBuffer
-    bufferSize += 4; // counterBufferCount
-    bufferSize += 4;
     if (pCounterBuffers) {
         for (int i = 0; i < counterBufferCount; i++) {
             bufferSize += vt_sizeof_VkBuffer(pCounterBuffers[i]);
         }
     }
-    bufferSize += 4;
     bufferSize += pCounterBufferOffsets ? counterBufferCount * 8 : 0;
     return bufferSize;
 }
@@ -43245,18 +40372,13 @@ static inline void vt_unserialize_vkCmdBeginTransformFeedbackEXT(VkCommandBuffer
 }
 
 static inline int vt_sizeof_vkCmdEndTransformFeedbackEXT(VkCommandBuffer commandBuffer, uint32_t firstCounterBuffer, uint32_t counterBufferCount, const VkBuffer* pCounterBuffers, const VkDeviceSize* pCounterBufferOffsets) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 17;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // firstCounterBuffer
-    bufferSize += 4; // counterBufferCount
-    bufferSize += 4;
     if (pCounterBuffers) {
         for (int i = 0; i < counterBufferCount; i++) {
             bufferSize += vt_sizeof_VkBuffer(pCounterBuffers[i]);
         }
     }
-    bufferSize += 4;
     bufferSize += pCounterBufferOffsets ? counterBufferCount * 8 : 0;
     return bufferSize;
 }
@@ -43353,14 +40475,9 @@ static inline void vt_unserialize_vkCmdEndTransformFeedbackEXT(VkCommandBuffer c
 }
 
 static inline int vt_sizeof_vkCmdBeginQueryIndexedEXT(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint32_t query, VkQueryControlFlags flags, uint32_t index) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 14;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += queryPool ? vt_sizeof_VkQueryPool(queryPool) : 0;
-    bufferSize += 4; // query
-    bufferSize += 4; // flags
-    bufferSize += 4; // index
     return bufferSize;
 }
 
@@ -43415,13 +40532,9 @@ static inline void vt_unserialize_vkCmdBeginQueryIndexedEXT(VkCommandBuffer comm
 }
 
 static inline int vt_sizeof_vkCmdEndQueryIndexedEXT(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint32_t query, uint32_t index) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += queryPool ? vt_sizeof_VkQueryPool(queryPool) : 0;
-    bufferSize += 4; // query
-    bufferSize += 4; // index
     return bufferSize;
 }
 
@@ -43472,16 +40585,9 @@ static inline void vt_unserialize_vkCmdEndQueryIndexedEXT(VkCommandBuffer comman
 }
 
 static inline int vt_sizeof_vkCmdDrawIndirectByteCountEXT(VkCommandBuffer commandBuffer, uint32_t instanceCount, uint32_t firstInstance, VkBuffer counterBuffer, VkDeviceSize counterBufferOffset, uint32_t counterOffset, uint32_t vertexStride) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 26;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // instanceCount
-    bufferSize += 4; // firstInstance
-    bufferSize++;
     bufferSize += counterBuffer ? vt_sizeof_VkBuffer(counterBuffer) : 0;
-    bufferSize += 8; // counterBufferOffset
-    bufferSize += 4; // counterOffset
-    bufferSize += 4; // vertexStride
     return bufferSize;
 }
 
@@ -43544,10 +40650,8 @@ static inline void vt_unserialize_vkCmdDrawIndirectByteCountEXT(VkCommandBuffer 
 }
 
 static inline int vt_sizeof_vkGetBufferOpaqueCaptureAddress(VkDevice device, const VkBufferDeviceAddressInfo* pInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pInfo ? vt_sizeof_VkBufferDeviceAddressInfo(pInfo) : 0;
     return bufferSize;
 }
@@ -43596,10 +40700,8 @@ static inline void vt_unserialize_vkGetBufferOpaqueCaptureAddress(VkDevice devic
 }
 
 static inline int vt_sizeof_vkGetBufferDeviceAddress(VkDevice device, const VkBufferDeviceAddressInfo* pInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pInfo ? vt_sizeof_VkBufferDeviceAddressInfo(pInfo) : 0;
     return bufferSize;
 }
@@ -43648,10 +40750,8 @@ static inline void vt_unserialize_vkGetBufferDeviceAddress(VkDevice device, cons
 }
 
 static inline int vt_sizeof_vkGetDeviceMemoryOpaqueCaptureAddress(VkDevice device, const VkDeviceMemoryOpaqueCaptureAddressInfo* pInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pInfo ? vt_sizeof_VkDeviceMemoryOpaqueCaptureAddressInfo(pInfo) : 0;
     return bufferSize;
 }
@@ -43700,11 +40800,8 @@ static inline void vt_unserialize_vkGetDeviceMemoryOpaqueCaptureAddress(VkDevice
 }
 
 static inline int vt_sizeof_vkCmdSetLineStippleKHR(VkCommandBuffer commandBuffer, uint32_t lineStippleFactor, uint16_t lineStipplePattern) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 7;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // lineStippleFactor
-    bufferSize += 2; // lineStipplePattern
     return bufferSize;
 }
 
@@ -43740,10 +40837,8 @@ static inline void vt_unserialize_vkCmdSetLineStippleKHR(VkCommandBuffer command
 }
 
 static inline int vt_sizeof_vkCmdSetCullMode(VkCommandBuffer commandBuffer, VkCullModeFlags cullMode) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // cullMode
     return bufferSize;
 }
 
@@ -43775,10 +40870,8 @@ static inline void vt_unserialize_vkCmdSetCullMode(VkCommandBuffer commandBuffer
 }
 
 static inline int vt_sizeof_vkCmdSetFrontFace(VkCommandBuffer commandBuffer, VkFrontFace frontFace) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // frontFace
     return bufferSize;
 }
 
@@ -43810,10 +40903,8 @@ static inline void vt_unserialize_vkCmdSetFrontFace(VkCommandBuffer commandBuffe
 }
 
 static inline int vt_sizeof_vkCmdSetPrimitiveTopology(VkCommandBuffer commandBuffer, VkPrimitiveTopology primitiveTopology) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // primitiveTopology
     return bufferSize;
 }
 
@@ -43845,11 +40936,8 @@ static inline void vt_unserialize_vkCmdSetPrimitiveTopology(VkCommandBuffer comm
 }
 
 static inline int vt_sizeof_vkCmdSetViewportWithCount(VkCommandBuffer commandBuffer, uint32_t viewportCount, const VkViewport* pViewports) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // viewportCount
-    bufferSize += 4;
     if (pViewports) {
         int arrSize = viewportCount ? viewportCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -43920,11 +41008,8 @@ static inline void vt_unserialize_vkCmdSetViewportWithCount(VkCommandBuffer comm
 }
 
 static inline int vt_sizeof_vkCmdSetScissorWithCount(VkCommandBuffer commandBuffer, uint32_t scissorCount, const VkRect2D* pScissors) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // scissorCount
-    bufferSize += 4;
     if (pScissors) {
         int arrSize = scissorCount ? scissorCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -43995,22 +41080,15 @@ static inline void vt_unserialize_vkCmdSetScissorWithCount(VkCommandBuffer comma
 }
 
 static inline int vt_sizeof_vkCmdBindVertexBuffers2(VkCommandBuffer commandBuffer, uint32_t firstBinding, uint32_t bindingCount, const VkBuffer* pBuffers, const VkDeviceSize* pOffsets, const VkDeviceSize* pSizes, const VkDeviceSize* pStrides) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 25;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // firstBinding
-    bufferSize += 4; // bindingCount
-    bufferSize += 4;
     if (pBuffers) {
         for (int i = 0; i < bindingCount; i++) {
             bufferSize += vt_sizeof_VkBuffer(pBuffers[i]);
         }
     }
-    bufferSize += 4;
     bufferSize += pOffsets ? bindingCount * 8 : 0;
-    bufferSize += 4;
     bufferSize += pSizes ? bindingCount * 8 : 0;
-    bufferSize += 4;
     bufferSize += pStrides ? bindingCount * 8 : 0;
     return bufferSize;
 }
@@ -44149,10 +41227,8 @@ static inline void vt_unserialize_vkCmdBindVertexBuffers2(VkCommandBuffer comman
 }
 
 static inline int vt_sizeof_vkCmdSetDepthTestEnable(VkCommandBuffer commandBuffer, VkBool32 depthTestEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // depthTestEnable
     return bufferSize;
 }
 
@@ -44184,10 +41260,8 @@ static inline void vt_unserialize_vkCmdSetDepthTestEnable(VkCommandBuffer comman
 }
 
 static inline int vt_sizeof_vkCmdSetDepthWriteEnable(VkCommandBuffer commandBuffer, VkBool32 depthWriteEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // depthWriteEnable
     return bufferSize;
 }
 
@@ -44219,10 +41293,8 @@ static inline void vt_unserialize_vkCmdSetDepthWriteEnable(VkCommandBuffer comma
 }
 
 static inline int vt_sizeof_vkCmdSetDepthCompareOp(VkCommandBuffer commandBuffer, VkCompareOp depthCompareOp) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // depthCompareOp
     return bufferSize;
 }
 
@@ -44254,10 +41326,8 @@ static inline void vt_unserialize_vkCmdSetDepthCompareOp(VkCommandBuffer command
 }
 
 static inline int vt_sizeof_vkCmdSetDepthBoundsTestEnable(VkCommandBuffer commandBuffer, VkBool32 depthBoundsTestEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // depthBoundsTestEnable
     return bufferSize;
 }
 
@@ -44289,10 +41359,8 @@ static inline void vt_unserialize_vkCmdSetDepthBoundsTestEnable(VkCommandBuffer 
 }
 
 static inline int vt_sizeof_vkCmdSetStencilTestEnable(VkCommandBuffer commandBuffer, VkBool32 stencilTestEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // stencilTestEnable
     return bufferSize;
 }
 
@@ -44324,14 +41392,8 @@ static inline void vt_unserialize_vkCmdSetStencilTestEnable(VkCommandBuffer comm
 }
 
 static inline int vt_sizeof_vkCmdSetStencilOp(VkCommandBuffer commandBuffer, VkStencilFaceFlags faceMask, VkStencilOp failOp, VkStencilOp passOp, VkStencilOp depthFailOp, VkCompareOp compareOp) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 21;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // faceMask
-    bufferSize += 4; // failOp
-    bufferSize += 4; // passOp
-    bufferSize += 4; // depthFailOp
-    bufferSize += 4; // compareOp
     return bufferSize;
 }
 
@@ -44379,10 +41441,8 @@ static inline void vt_unserialize_vkCmdSetStencilOp(VkCommandBuffer commandBuffe
 }
 
 static inline int vt_sizeof_vkCmdSetRasterizerDiscardEnable(VkCommandBuffer commandBuffer, VkBool32 rasterizerDiscardEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // rasterizerDiscardEnable
     return bufferSize;
 }
 
@@ -44414,10 +41474,8 @@ static inline void vt_unserialize_vkCmdSetRasterizerDiscardEnable(VkCommandBuffe
 }
 
 static inline int vt_sizeof_vkCmdSetDepthBiasEnable(VkCommandBuffer commandBuffer, VkBool32 depthBiasEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // depthBiasEnable
     return bufferSize;
 }
 
@@ -44449,10 +41507,8 @@ static inline void vt_unserialize_vkCmdSetDepthBiasEnable(VkCommandBuffer comman
 }
 
 static inline int vt_sizeof_vkCmdSetPrimitiveRestartEnable(VkCommandBuffer commandBuffer, VkBool32 primitiveRestartEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // primitiveRestartEnable
     return bufferSize;
 }
 
@@ -44484,10 +41540,8 @@ static inline void vt_unserialize_vkCmdSetPrimitiveRestartEnable(VkCommandBuffer
 }
 
 static inline int vt_sizeof_vkCmdSetTessellationDomainOriginEXT(VkCommandBuffer commandBuffer, VkTessellationDomainOrigin domainOrigin) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // domainOrigin
     return bufferSize;
 }
 
@@ -44519,10 +41573,8 @@ static inline void vt_unserialize_vkCmdSetTessellationDomainOriginEXT(VkCommandB
 }
 
 static inline int vt_sizeof_vkCmdSetDepthClampEnableEXT(VkCommandBuffer commandBuffer, VkBool32 depthClampEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // depthClampEnable
     return bufferSize;
 }
 
@@ -44554,10 +41606,8 @@ static inline void vt_unserialize_vkCmdSetDepthClampEnableEXT(VkCommandBuffer co
 }
 
 static inline int vt_sizeof_vkCmdSetPolygonModeEXT(VkCommandBuffer commandBuffer, VkPolygonMode polygonMode) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // polygonMode
     return bufferSize;
 }
 
@@ -44589,10 +41639,8 @@ static inline void vt_unserialize_vkCmdSetPolygonModeEXT(VkCommandBuffer command
 }
 
 static inline int vt_sizeof_vkCmdSetRasterizationSamplesEXT(VkCommandBuffer commandBuffer, VkSampleCountFlagBits rasterizationSamples) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // rasterizationSamples
     return bufferSize;
 }
 
@@ -44624,10 +41672,8 @@ static inline void vt_unserialize_vkCmdSetRasterizationSamplesEXT(VkCommandBuffe
 }
 
 static inline int vt_sizeof_vkCmdSetSampleMaskEXT(VkCommandBuffer commandBuffer, VkSampleCountFlagBits samples, const VkSampleMask* pSampleMask) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // samples
     return bufferSize;
 }
 
@@ -44660,10 +41706,8 @@ static inline void vt_unserialize_vkCmdSetSampleMaskEXT(VkCommandBuffer commandB
 }
 
 static inline int vt_sizeof_vkCmdSetAlphaToCoverageEnableEXT(VkCommandBuffer commandBuffer, VkBool32 alphaToCoverageEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // alphaToCoverageEnable
     return bufferSize;
 }
 
@@ -44695,10 +41739,8 @@ static inline void vt_unserialize_vkCmdSetAlphaToCoverageEnableEXT(VkCommandBuff
 }
 
 static inline int vt_sizeof_vkCmdSetAlphaToOneEnableEXT(VkCommandBuffer commandBuffer, VkBool32 alphaToOneEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // alphaToOneEnable
     return bufferSize;
 }
 
@@ -44730,10 +41772,8 @@ static inline void vt_unserialize_vkCmdSetAlphaToOneEnableEXT(VkCommandBuffer co
 }
 
 static inline int vt_sizeof_vkCmdSetLogicOpEnableEXT(VkCommandBuffer commandBuffer, VkBool32 logicOpEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // logicOpEnable
     return bufferSize;
 }
 
@@ -44765,12 +41805,8 @@ static inline void vt_unserialize_vkCmdSetLogicOpEnableEXT(VkCommandBuffer comma
 }
 
 static inline int vt_sizeof_vkCmdSetColorBlendEnableEXT(VkCommandBuffer commandBuffer, uint32_t firstAttachment, uint32_t attachmentCount, const VkBool32* pColorBlendEnables) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // firstAttachment
-    bufferSize += 4; // attachmentCount
-    bufferSize += 4;
     bufferSize += pColorBlendEnables ? attachmentCount * 4 : 0;
     return bufferSize;
 }
@@ -44828,12 +41864,8 @@ static inline void vt_unserialize_vkCmdSetColorBlendEnableEXT(VkCommandBuffer co
 }
 
 static inline int vt_sizeof_vkCmdSetColorBlendEquationEXT(VkCommandBuffer commandBuffer, uint32_t firstAttachment, uint32_t attachmentCount, const VkColorBlendEquationEXT* pColorBlendEquations) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // firstAttachment
-    bufferSize += 4; // attachmentCount
-    bufferSize += 4;
     if (pColorBlendEquations) {
         int arrSize = attachmentCount ? attachmentCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -44908,12 +41940,8 @@ static inline void vt_unserialize_vkCmdSetColorBlendEquationEXT(VkCommandBuffer 
 }
 
 static inline int vt_sizeof_vkCmdSetColorWriteMaskEXT(VkCommandBuffer commandBuffer, uint32_t firstAttachment, uint32_t attachmentCount, const VkColorComponentFlags* pColorWriteMasks) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // firstAttachment
-    bufferSize += 4; // attachmentCount
-    bufferSize += 4;
     bufferSize += pColorWriteMasks ? attachmentCount * 4 : 0;
     return bufferSize;
 }
@@ -44971,10 +41999,8 @@ static inline void vt_unserialize_vkCmdSetColorWriteMaskEXT(VkCommandBuffer comm
 }
 
 static inline int vt_sizeof_vkCmdSetRasterizationStreamEXT(VkCommandBuffer commandBuffer, uint32_t rasterizationStream) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // rasterizationStream
     return bufferSize;
 }
 
@@ -45006,10 +42032,8 @@ static inline void vt_unserialize_vkCmdSetRasterizationStreamEXT(VkCommandBuffer
 }
 
 static inline int vt_sizeof_vkCmdSetConservativeRasterizationModeEXT(VkCommandBuffer commandBuffer, VkConservativeRasterizationModeEXT conservativeRasterizationMode) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // conservativeRasterizationMode
     return bufferSize;
 }
 
@@ -45041,10 +42065,8 @@ static inline void vt_unserialize_vkCmdSetConservativeRasterizationModeEXT(VkCom
 }
 
 static inline int vt_sizeof_vkCmdSetExtraPrimitiveOverestimationSizeEXT(VkCommandBuffer commandBuffer, float extraPrimitiveOverestimationSize) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // extraPrimitiveOverestimationSize
     return bufferSize;
 }
 
@@ -45076,10 +42098,8 @@ static inline void vt_unserialize_vkCmdSetExtraPrimitiveOverestimationSizeEXT(Vk
 }
 
 static inline int vt_sizeof_vkCmdSetDepthClipEnableEXT(VkCommandBuffer commandBuffer, VkBool32 depthClipEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // depthClipEnable
     return bufferSize;
 }
 
@@ -45111,10 +42131,8 @@ static inline void vt_unserialize_vkCmdSetDepthClipEnableEXT(VkCommandBuffer com
 }
 
 static inline int vt_sizeof_vkCmdSetSampleLocationsEnableEXT(VkCommandBuffer commandBuffer, VkBool32 sampleLocationsEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // sampleLocationsEnable
     return bufferSize;
 }
 
@@ -45146,12 +42164,8 @@ static inline void vt_unserialize_vkCmdSetSampleLocationsEnableEXT(VkCommandBuff
 }
 
 static inline int vt_sizeof_vkCmdSetColorBlendAdvancedEXT(VkCommandBuffer commandBuffer, uint32_t firstAttachment, uint32_t attachmentCount, const VkColorBlendAdvancedEXT* pColorBlendAdvanced) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // firstAttachment
-    bufferSize += 4; // attachmentCount
-    bufferSize += 4;
     if (pColorBlendAdvanced) {
         int arrSize = attachmentCount ? attachmentCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -45226,10 +42240,8 @@ static inline void vt_unserialize_vkCmdSetColorBlendAdvancedEXT(VkCommandBuffer 
 }
 
 static inline int vt_sizeof_vkCmdSetProvokingVertexModeEXT(VkCommandBuffer commandBuffer, VkProvokingVertexModeEXT provokingVertexMode) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // provokingVertexMode
     return bufferSize;
 }
 
@@ -45261,10 +42273,8 @@ static inline void vt_unserialize_vkCmdSetProvokingVertexModeEXT(VkCommandBuffer
 }
 
 static inline int vt_sizeof_vkCmdSetLineRasterizationModeEXT(VkCommandBuffer commandBuffer, VkLineRasterizationModeEXT lineRasterizationMode) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // lineRasterizationMode
     return bufferSize;
 }
 
@@ -45296,10 +42306,8 @@ static inline void vt_unserialize_vkCmdSetLineRasterizationModeEXT(VkCommandBuff
 }
 
 static inline int vt_sizeof_vkCmdSetLineStippleEnableEXT(VkCommandBuffer commandBuffer, VkBool32 stippledLineEnable) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // stippledLineEnable
     return bufferSize;
 }
 
@@ -45331,10 +42339,8 @@ static inline void vt_unserialize_vkCmdSetLineStippleEnableEXT(VkCommandBuffer c
 }
 
 static inline int vt_sizeof_vkCmdSetDepthClipNegativeOneToOneEXT(VkCommandBuffer commandBuffer, VkBool32 negativeOneToOne) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // negativeOneToOne
     return bufferSize;
 }
 
@@ -45366,10 +42372,8 @@ static inline void vt_unserialize_vkCmdSetDepthClipNegativeOneToOneEXT(VkCommand
 }
 
 static inline int vt_sizeof_vkCmdCopyBuffer2(VkCommandBuffer commandBuffer, const VkCopyBufferInfo2* pCopyBufferInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pCopyBufferInfo ? vt_sizeof_VkCopyBufferInfo2(pCopyBufferInfo) : 0;
     return bufferSize;
 }
@@ -45418,10 +42422,8 @@ static inline void vt_unserialize_vkCmdCopyBuffer2(VkCommandBuffer commandBuffer
 }
 
 static inline int vt_sizeof_vkCmdCopyImage2(VkCommandBuffer commandBuffer, const VkCopyImageInfo2* pCopyImageInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pCopyImageInfo ? vt_sizeof_VkCopyImageInfo2(pCopyImageInfo) : 0;
     return bufferSize;
 }
@@ -45470,10 +42472,8 @@ static inline void vt_unserialize_vkCmdCopyImage2(VkCommandBuffer commandBuffer,
 }
 
 static inline int vt_sizeof_vkCmdBlitImage2(VkCommandBuffer commandBuffer, const VkBlitImageInfo2* pBlitImageInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pBlitImageInfo ? vt_sizeof_VkBlitImageInfo2(pBlitImageInfo) : 0;
     return bufferSize;
 }
@@ -45522,10 +42522,8 @@ static inline void vt_unserialize_vkCmdBlitImage2(VkCommandBuffer commandBuffer,
 }
 
 static inline int vt_sizeof_vkCmdCopyBufferToImage2(VkCommandBuffer commandBuffer, const VkCopyBufferToImageInfo2* pCopyBufferToImageInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pCopyBufferToImageInfo ? vt_sizeof_VkCopyBufferToImageInfo2(pCopyBufferToImageInfo) : 0;
     return bufferSize;
 }
@@ -45574,10 +42572,8 @@ static inline void vt_unserialize_vkCmdCopyBufferToImage2(VkCommandBuffer comman
 }
 
 static inline int vt_sizeof_vkCmdCopyImageToBuffer2(VkCommandBuffer commandBuffer, const VkCopyImageToBufferInfo2* pCopyImageToBufferInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pCopyImageToBufferInfo ? vt_sizeof_VkCopyImageToBufferInfo2(pCopyImageToBufferInfo) : 0;
     return bufferSize;
 }
@@ -45626,10 +42622,8 @@ static inline void vt_unserialize_vkCmdCopyImageToBuffer2(VkCommandBuffer comman
 }
 
 static inline int vt_sizeof_vkCmdResolveImage2(VkCommandBuffer commandBuffer, const VkResolveImageInfo2* pResolveImageInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pResolveImageInfo ? vt_sizeof_VkResolveImageInfo2(pResolveImageInfo) : 0;
     return bufferSize;
 }
@@ -45678,11 +42672,8 @@ static inline void vt_unserialize_vkCmdResolveImage2(VkCommandBuffer commandBuff
 }
 
 static inline int vt_sizeof_vkCmdSetColorWriteEnableEXT(VkCommandBuffer commandBuffer, uint32_t attachmentCount, const VkBool32* pColorWriteEnables) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // attachmentCount
-    bufferSize += 4;
     bufferSize += pColorWriteEnables ? attachmentCount * 4 : 0;
     return bufferSize;
 }
@@ -45736,12 +42727,9 @@ static inline void vt_unserialize_vkCmdSetColorWriteEnableEXT(VkCommandBuffer co
 }
 
 static inline int vt_sizeof_vkCmdSetEvent2(VkCommandBuffer commandBuffer, VkEvent event, const VkDependencyInfo* pDependencyInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += event ? vt_sizeof_VkEvent(event) : 0;
-    bufferSize += 4;
     bufferSize += pDependencyInfo ? vt_sizeof_VkDependencyInfo(pDependencyInfo) : 0;
     return bufferSize;
 }
@@ -45805,12 +42793,9 @@ static inline void vt_unserialize_vkCmdSetEvent2(VkCommandBuffer commandBuffer, 
 }
 
 static inline int vt_sizeof_vkCmdResetEvent2(VkCommandBuffer commandBuffer, VkEvent event, VkPipelineStageFlags2 stageMask) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize++;
     bufferSize += event ? vt_sizeof_VkEvent(event) : 0;
-    bufferSize += 8; // stageMask
     return bufferSize;
 }
 
@@ -45857,17 +42842,13 @@ static inline void vt_unserialize_vkCmdResetEvent2(VkCommandBuffer commandBuffer
 }
 
 static inline int vt_sizeof_vkCmdWaitEvents2(VkCommandBuffer commandBuffer, uint32_t eventCount, const VkEvent* pEvents, const VkDependencyInfo* pDependencyInfos) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 13;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4; // eventCount
-    bufferSize += 4;
     if (pEvents) {
         for (int i = 0; i < eventCount; i++) {
             bufferSize += vt_sizeof_VkEvent(pEvents[i]);
         }
     }
-    bufferSize += 4;
     if (pDependencyInfos) {
         int arrSize = eventCount ? eventCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -45977,10 +42958,8 @@ static inline void vt_unserialize_vkCmdWaitEvents2(VkCommandBuffer commandBuffer
 }
 
 static inline int vt_sizeof_vkCmdPipelineBarrier2(VkCommandBuffer commandBuffer, const VkDependencyInfo* pDependencyInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pDependencyInfo ? vt_sizeof_VkDependencyInfo(pDependencyInfo) : 0;
     return bufferSize;
 }
@@ -46029,11 +43008,8 @@ static inline void vt_unserialize_vkCmdPipelineBarrier2(VkCommandBuffer commandB
 }
 
 static inline int vt_sizeof_vkQueueSubmit2(VkQueue queue, uint32_t submitCount, const VkSubmitInfo2* pSubmits, VkFence fence) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 10;
     bufferSize += queue ? vt_sizeof_VkQueue(queue) : 0;
-    bufferSize += 4; // submitCount
-    bufferSize += 4;
     if (pSubmits) {
         int arrSize = submitCount ? submitCount : 0;
         for (int i = 0; i < arrSize; i++) {
@@ -46041,7 +43017,6 @@ static inline int vt_sizeof_vkQueueSubmit2(VkQueue queue, uint32_t submitCount, 
             bufferSize += vt_sizeof_VkSubmitInfo2(&pSubmits[i]);
         }
     }
-    bufferSize++;
     bufferSize += fence ? vt_sizeof_VkFence(fence) : 0;
     return bufferSize;
 }
@@ -46121,13 +43096,9 @@ static inline void vt_unserialize_vkQueueSubmit2(VkQueue queue, uint32_t* submit
 }
 
 static inline int vt_sizeof_vkCmdWriteTimestamp2(VkCommandBuffer commandBuffer, VkPipelineStageFlags2 stage, VkQueryPool queryPool, uint32_t query) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 14;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 8; // stage
-    bufferSize++;
     bufferSize += queryPool ? vt_sizeof_VkQueryPool(queryPool) : 0;
-    bufferSize += 4; // query
     return bufferSize;
 }
 
@@ -46178,10 +43149,8 @@ static inline void vt_unserialize_vkCmdWriteTimestamp2(VkCommandBuffer commandBu
 }
 
 static inline int vt_sizeof_vkCmdBeginRendering(VkCommandBuffer commandBuffer, const VkRenderingInfo* pRenderingInfo) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 5;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
-    bufferSize += 4;
     bufferSize += pRenderingInfo ? vt_sizeof_VkRenderingInfo(pRenderingInfo) : 0;
     return bufferSize;
 }
@@ -46230,8 +43199,7 @@ static inline void vt_unserialize_vkCmdBeginRendering(VkCommandBuffer commandBuf
 }
 
 static inline int vt_sizeof_vkCmdEndRendering(VkCommandBuffer commandBuffer) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 1;
     bufferSize += commandBuffer ? vt_sizeof_VkCommandBuffer(commandBuffer) : 0;
     return bufferSize;
 }
@@ -46260,12 +43228,9 @@ static inline void vt_unserialize_vkCmdEndRendering(VkCommandBuffer commandBuffe
 }
 
 static inline int vt_sizeof_vkGetShaderModuleIdentifierEXT(VkDevice device, VkShaderModule shaderModule, VkShaderModuleIdentifierEXT* pIdentifier) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 6;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize++;
     bufferSize += shaderModule ? vt_sizeof_VkShaderModule(shaderModule) : 0;
-    bufferSize += 4;
     bufferSize += pIdentifier ? vt_sizeof_VkShaderModuleIdentifierEXT(pIdentifier) : 0;
     return bufferSize;
 }
@@ -46329,12 +43294,9 @@ static inline void vt_unserialize_vkGetShaderModuleIdentifierEXT(VkDevice device
 }
 
 static inline int vt_sizeof_vkGetShaderModuleCreateInfoIdentifierEXT(VkDevice device, const VkShaderModuleCreateInfo* pCreateInfo, VkShaderModuleIdentifierEXT* pIdentifier) {
-    int bufferSize = 0;
-    bufferSize++;
+    int bufferSize = 9;
     bufferSize += device ? vt_sizeof_VkDevice(device) : 0;
-    bufferSize += 4;
     bufferSize += pCreateInfo ? vt_sizeof_VkShaderModuleCreateInfo(pCreateInfo) : 0;
-    bufferSize += 4;
     bufferSize += pIdentifier ? vt_sizeof_VkShaderModuleIdentifierEXT(pIdentifier) : 0;
     return bufferSize;
 }
