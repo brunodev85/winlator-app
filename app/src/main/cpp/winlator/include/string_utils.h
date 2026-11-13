@@ -211,6 +211,34 @@ static inline char* strwrd(char* haystack, char* needle, char** endPtr) {
     return result;
 }
 
+static inline char* stristr(char* haystack, char* needle) {
+    char first = tolower(*needle);
+    char* chr = haystack;
+    int len = strlen(needle);
+
+    while (*chr) {
+        if (tolower(*chr) != first) {
+            while (*(++chr) && tolower(*chr) != first);
+        }
+
+        if (*chr) {
+            char* pi = chr + 1;
+            char* pj = needle + 1;
+            int n = 1;
+            while (*pi && *pj) {
+                if (tolower(*pi) == tolower(*pj)) n++;
+                pi++;
+                pj++;
+            }
+            if (n == len) return chr;
+        }
+        else break;
+        chr++;
+    }
+
+    return NULL;
+}
+
 static inline char* str_replace(char* search, char* replace, char* subject) {
     int strSize = strlen(subject) + 1;
     char* result = malloc(strSize);
