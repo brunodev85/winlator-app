@@ -15,9 +15,9 @@ void vt_handle_vkCreateInstance(VkContext* context) {
     createInfo.ppEnabledLayerNames = validationLayers;
     createInfo.enabledLayerCount = ARRAY_SIZE(validationLayers);
 
-    const char* extraExtensions[] = {"VK_KHR_get_physical_device_properties2", "VK_KHR_external_memory_capabilities", "VK_KHR_external_fence_capabilities", "VK_EXT_debug_report"};
+    const char* extraExtensions[] = {"VK_KHR_get_physical_device_properties2", "VK_KHR_external_memory_capabilities", "VK_EXT_debug_report"};
 #else
-    const char* extraExtensions[] = {"VK_KHR_get_physical_device_properties2", "VK_KHR_external_memory_capabilities", "VK_KHR_external_fence_capabilities"};
+    const char* extraExtensions[] = {"VK_KHR_get_physical_device_properties2", "VK_KHR_external_memory_capabilities"};
 #endif
 
     injectExtensions(context, (char***)&createInfo.ppEnabledExtensionNames, &createInfo.enabledExtensionCount,
@@ -159,7 +159,7 @@ void vt_handle_vkCreateDevice(VkContext* context) {
 
     disableUnsupportedDeviceFeatures(physicalDevice, &createInfo);
 
-    const char* extraExtensions[] = {"VK_KHR_get_memory_requirements2", "VK_KHR_dedicated_allocation", "VK_KHR_external_memory", "VK_KHR_external_memory_fd", "VK_KHR_external_fence", "VK_KHR_external_fence_fd", "VK_ANDROID_external_memory_android_hardware_buffer", "VK_EXT_queue_family_foreign"};
+    const char* extraExtensions[] = {"VK_KHR_get_memory_requirements2", "VK_KHR_dedicated_allocation", "VK_KHR_external_memory", "VK_KHR_external_memory_fd", "VK_ANDROID_external_memory_android_hardware_buffer", "VK_EXT_queue_family_foreign"};
     injectExtensions(context, (char***)&createInfo.ppEnabledExtensionNames, &createInfo.enabledExtensionCount,
                      extraExtensions, ARRAY_SIZE(extraExtensions),
                      globalImplementedDeviceExtensions, ARRAY_SIZE(globalImplementedDeviceExtensions));
@@ -2019,6 +2019,7 @@ void vt_handle_vkGetSwapchainImagesKHR(VkContext* context) {
     vt_unserialize_vkGetSwapchainImagesKHR((VkDevice)&deviceId, (VkSwapchainKHR)&swapchainId, &swapchainImageCount, NULL, context->inputBuffer, &context->memoryPool);
     VkDevice device = VkObject_fromId(deviceId);
     XWindowSwapchain* swapchain = VkObject_fromId(swapchainId);
+    if (swapchainImageCount > 0) swapchainImageCount = MIN(swapchainImageCount, swapchain->imageCount);
 
     VkImage* swapchainImages = swapchainImageCount > 0 ? calloc(swapchain->imageCount, sizeof(XWindowSwapchain)) : NULL;
     if (swapchainImages) {
@@ -3444,7 +3445,13 @@ void vt_handle_vkGetShaderModuleIdentifierEXT(VkContext* context) {
     VkDevice device = VkObject_fromId(deviceId);
     ShaderModule* shaderModule = VkObject_fromId(shaderModuleId);
 
-    vulkanWrapper.vkGetShaderModuleIdentifier(device, shaderModule->module, &identifier);
+    if (!shaderModule->module) {
+        VkShaderModuleCreateInfo createInfo = {0};
+        createInfo.codeSize = shaderModule->codeSize;
+        createInfo.pCode = shaderModule->code;
+        vulkanWrapper.vkGetShaderModuleCreateInfoIdentifier(device, &createInfo, &identifier);
+    }
+    else vulkanWrapper.vkGetShaderModuleIdentifier(device, shaderModule->module, &identifier);
 
     VT_SERIALIZE_CMD(VkShaderModuleIdentifierEXT, &identifier);
     vt_send(context->clientRing, VK_SUCCESS, outputBuffer, bufferSize);
