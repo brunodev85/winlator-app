@@ -38,4 +38,9 @@ extern void checkDeviceProperties(VkContext* context, VkPhysicalDeviceProperties
 extern void checkDeviceFeatures(VkPhysicalDeviceFeatures* features, void* pNext);
 extern void destroyVkObject(VkObjectType type, VkDevice device, void* handle);
 
+#define VK_ENGINE_ID_UNKNOWN 0
+#define VK_ENGINE_ID_DXVK 1
+#define VK_ENGINE_ID_VKD3D 2
+#define VK_ENGINE_ID_ZINK 3
+
 #endif

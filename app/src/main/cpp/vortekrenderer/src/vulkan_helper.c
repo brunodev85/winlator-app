@@ -2,6 +2,7 @@
 
 #include "vulkan_helper.h"
 #include "dma_utils.h"
+#include "string_utils.h"
 
 #define VK_MAKE_VERSION_STR(s, v) sprintf(s, "%d.%d.%d", VK_VERSION_MAJOR(v), VK_VERSION_MINOR(v), VK_VERSION_PATCH(v))
 
@@ -29,12 +30,10 @@ static bool isExternalMemoryHandleTypeSupported(VkPhysicalDevice physicalDevice,
 }
 
 static void setupExposedDeviceExtensions(VkContext* context) {
-    if (!context->engineName) return;
-
     ArrayList_free(context->disabledDeviceExtensions, true);
     context->disabledDeviceExtensions = NULL;
 
-    if (strcmp(context->engineName, "DXVK") == 0) {
+    if (context->engineID == VK_ENGINE_ID_DXVK) {
         bool isMaliDevice = context->driverID == VK_DRIVER_ID_ARM_PROPRIETARY;
         bool isXclipseDevice = context->driverID == VK_DRIVER_ID_SAMSUNG_PROPRIETARY;
         bool isAdrenoDevice = context->driverID == VK_DRIVER_ID_QUALCOMM_PROPRIETARY;
@@ -52,7 +51,7 @@ static void setupExposedDeviceExtensions(VkContext* context) {
             context->disabledDeviceExtensions = ArrayList_fromStrings(disabledDeviceExtensions, ARRAY_SIZE(disabledDeviceExtensions));
         }
     }
-    else if (strcmp(context->engineName, "mesa zink") == 0) {
+    else if (context->engineID == VK_ENGINE_ID_ZINK) {
         const char* disabledDeviceExtensions[] = {"VK_EXT_extended_dynamic_state", "VK_EXT_extended_dynamic_state2", "VK_EXT_extended_dynamic_state3", "VK_EXT_color_write_enable", "VK_KHR_push_descriptor"};
         context->disabledDeviceExtensions = ArrayList_fromStrings(disabledDeviceExtensions, ARRAY_SIZE(disabledDeviceExtensions));
         ArrayList_free(context->exposedDeviceExtensions, true);
@@ -98,8 +97,19 @@ void initVulkanInstance(VkContext* context, VkInstance instance, const VkApplica
     context->hasExternalMemoryDMABuf = isExternalMemoryHandleTypeSupported(physicalDevices[0], VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT);
 
     if (applicationInfo) {
-        MEMFREE(context->engineName);
-        context->engineName = applicationInfo->pEngineName ? strdup(applicationInfo->pEngineName) : NULL;
+        if (applicationInfo->pEngineName) {
+            context->engineID = VK_ENGINE_ID_UNKNOWN;
+            if (stristr(applicationInfo->pEngineName, "dxvk")) {
+                context->engineID = VK_ENGINE_ID_DXVK;
+            }
+            else if (stristr(applicationInfo->pEngineName, "vkd3d")) {
+                context->engineID = VK_ENGINE_ID_VKD3D;
+            }
+            else if (stristr(applicationInfo->pEngineName, "zink")) {
+                context->engineID = VK_ENGINE_ID_ZINK;
+            }
+
+        }
         context->engineVersion = applicationInfo->engineVersion;
     }
 
@@ -416,6 +426,17 @@ void checkDeviceProperties(VkContext* context, VkPhysicalDeviceProperties* prope
                 vulkan12Properties->shaderDenormPreserveFloat32 = VK_FALSE;
                 vulkan12Properties->shaderDenormPreserveFloat64 = VK_FALSE;
             }
+        }
+    }
+
+    if (context->engineID == VK_ENGINE_ID_VKD3D) {
+        VkPhysicalDeviceVulkan11Properties* vulkan11Properties = findNextVkStructure(pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES);
+        if (vulkan11Properties) BITMASK_UNSET(vulkan11Properties->subgroupSupportedOperations, VK_SUBGROUP_FEATURE_BALLOT_BIT);
+
+        VkPhysicalDeviceVulkan13Properties* vulkan13Properties = findNextVkStructure(pNext, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_3_PROPERTIES);
+        if (vulkan13Properties) {
+            vulkan13Properties->storageTexelBufferOffsetSingleTexelAlignment = VK_TRUE;
+            vulkan13Properties->uniformTexelBufferOffsetSingleTexelAlignment = VK_TRUE;
         }
     }
 

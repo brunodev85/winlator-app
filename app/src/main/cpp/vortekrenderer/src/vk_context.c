@@ -190,7 +190,6 @@ void destroyVkContext(JNIEnv* env, VkContext* context) {
     pthread_mutex_destroy(&context->extraDataRequestsMutex);
 
     MEMFREE(context->memoryPool.data);
-    MEMFREE(context->engineName);
     free(context);
 }
 

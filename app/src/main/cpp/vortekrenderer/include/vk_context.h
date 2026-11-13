@@ -46,7 +46,7 @@ typedef struct VkContext {
     pthread_mutex_t extraDataRequestsMutex;
 
     JMethods jmethods;
-    char* engineName;
+    uint8_t engineID;
     uint32_t engineVersion;
     VkDriverId driverID;
 } VkContext;

@@ -591,7 +591,7 @@ ShaderInspector* ShaderInspector_create(VkContext* context, VkPhysicalDevice phy
     shaderInspector->convertFormatScaled = true;
 
     bool isMaliDevice = context->driverID == VK_DRIVER_ID_ARM_PROPRIETARY;
-    bool isDXVKEngine = context->engineName ? strcmp(context->engineName, "DXVK") == 0 : false;
+    bool isDXVKEngine = context->engineID == VK_ENGINE_ID_DXVK;
 
     shaderInspector->removeImageBoundCheck = isMaliDevice && isDXVKEngine;
     if (isDXVKEngine && context->engineVersion > MAKE_ENGINE_VERSION(2, 3, 1)) {
