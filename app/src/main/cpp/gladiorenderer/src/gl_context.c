@@ -80,19 +80,30 @@ static void destroyDisplayBufAttachment(GLContext* context) {
 static void setCurrentRenderWindow(GLContext* context, int windowId) {
     if (windowId == 0) return;
     JMethods* jmethods = &context->jmethods;
-    (*jmethods->env)->CallVoidMethod(jmethods->env, jmethods->obj, jmethods->clearWindowContent, windowId);
-    if (currentRenderer->displayBuffer > 0) return;
 
     short width;
     short height;
-    getWindowSize(&context->jmethods, windowId, &width, &height);
+    getWindowSize(jmethods, windowId, &width, &height);
     if (width == 0 || height == 0) return;
 
     bool resized = currentRenderer->displaySize[0] != width || currentRenderer->displaySize[1] != height;
+    context->currentWindowId = windowId;
+
+    // displayBuffer 已经就绪且尺寸没变：直接返回，并且不要清空窗口内容，
+    // 否则每次 MakeCurrent 都会销毁窗口纹理，使窗口化下出现黑屏。
+    if (currentRenderer->displayBuffer > 0 && !resized) return;
+
+    // 注意：这里不能调用 clearWindowContent。窗口化 ddraw 游戏的 present 走
+    // wined3d 的 GDI 路径（不经过 glXSwapBuffers），窗口内容靠 X11 2D 绘图更新
+    // drawable 的 CPU data；clearWindowContent 会把 data 置空，永久摧毁该窗口
+    // 的 2D 显示路径导致黑屏。GL 接管窗口由 Java 端 updateWindowContent 在首次
+    // 成功拷贝时自行 setData(null) 完成，无需在此提前清除。
+
     currentRenderer->displaySize[0] = width;
     currentRenderer->displaySize[1] = height;
 
-    if (resized) destroyDisplayBufAttachment(context);
+    destroyDisplayBuffer();
+    destroyDisplayBufAttachment(context);
     createDisplayBufAttachment(context);
     createDisplayBuffer(context);
 
@@ -109,19 +120,50 @@ static void setCurrentRenderWindow(GLContext* context, int windowId) {
 static void swapDisplayBuffers(GLContext* context, int drawableId) {
     GLuint framebuffer = currentRenderer->clientState.framebuffer[indexOfGLTarget(GL_FRAMEBUFFER)];
     GLuint drawFramebuffer = currentRenderer->clientState.framebuffer[indexOfGLTarget(GL_DRAW_FRAMEBUFFER)];
+    GLuint readFramebuffer = currentRenderer->clientState.framebuffer[indexOfGLTarget(GL_READ_FRAMEBUFFER)];
     if (framebuffer != drawFramebuffer) GLFramebuffer_bind(GL_FRAMEBUFFER, drawFramebuffer);
+
+    // glXSwapBuffers 提交的是默认帧缓冲，而 Java 端 updateWindowContent 内部用
+    // glCopyTexImage2D 从"当前 GL_READ_FRAMEBUFFER"读取像素。客户端(wined3d 等)在
+    // present 时往往把 GL_READ_FRAMEBUFFER 留在自己的离屏 back buffer FBO 上，
+    // 那份内容是 top-down 的且尺寸不一定等于窗口，会造成全屏画面上下颠倒、窗口化黑屏。
+    // 因此这里强制把读源切到 displayBuffer，拷贝完成后再恢复客户端原来的读绑定。
+    GLuint displayBuffer = currentRenderer->displayBuffer;
+    bool readSourceOverridden = displayBuffer > 0 && readFramebuffer != displayBuffer;
+    if (readSourceOverridden) GLFramebuffer_bind(GL_READ_FRAMEBUFFER, displayBuffer);
 
     JMethods* jmethods = &context->jmethods;
     bool result = (*jmethods->env)->CallBooleanMethod(jmethods->env, jmethods->obj, jmethods->updateWindowContent, drawableId, currentRenderer->displaySize[0], currentRenderer->displaySize[1], JNI_TRUE);
     if (result) {
         GLTexture* texture = GLTexture_getBound(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, texture ? texture->id : 0);
+        if (readSourceOverridden) GLFramebuffer_bind(GL_READ_FRAMEBUFFER, readFramebuffer);
     }
     else {
         destroyDisplayBuffer();
         destroyDisplayBufAttachment(context);
         setCurrentRenderWindow(context, drawableId);
     }
+}
+
+// ddraw 等客户端在窗口模式下会把 primary(front buffer) 当作绘制目标（wined3d 用
+// glBlitFramebuffer 拷到 FBO 0 再 glFlush），并且从不调用 glXSwapBuffers。
+// 真实 X11 语义下 front buffer 是即画即显的，这里在 flush/blit 边界补上这一步：
+// 若当前 draw framebuffer 正是 displayBuffer，就把内容推送给窗口合成器。
+void gd_presentIfFrontBufferBound(GLContext* context) {
+    if (!currentRenderer || currentRenderer->displayBuffer == 0 || context->currentWindowId == 0) return;
+
+    GLuint drawFramebuffer = currentRenderer->clientState.framebuffer[indexOfGLTarget(GL_DRAW_FRAMEBUFFER)];
+    if (drawFramebuffer != currentRenderer->displayBuffer) return;
+
+    static uint64_t lastPresentNs = 0;
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    uint64_t nowNs = (uint64_t)ts.tv_sec * 1000000000ull + (uint64_t)ts.tv_nsec;
+    if (lastPresentNs != 0 && nowNs - lastPresentNs < 6000000ull) return;
+    lastPresentNs = nowNs;
+
+    swapDisplayBuffers(context, context->currentWindowId);
 }
 
 static bool isCanDrawImmediate(short requestCode) {
