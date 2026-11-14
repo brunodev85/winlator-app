@@ -245,7 +245,7 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
             @Override
             public void onMapWindow(Window window) {
                 if (!flags[0] && window.isRenderable() && !window.getClassName().isEmpty()) {
-                    xServerView.getRenderer().setCursorVisible(true);
+                    updateCursorVisibility();
                     preloaderDialog.closeOnUiThread();
                     flags[0] = true;
                 }
@@ -693,15 +693,8 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
         touchpadView.setSensitivity(profile.getCursorSpeed() * globalCursorSpeed);
         touchpadView.setPointerButtonRightEnabled(false);
 
-        GLRenderer renderer = xServerView.getRenderer();
-        if (profile.isDisableMouseInput()) {
-            renderer.setCursorVisible(false);
-            touchpadView.setEnabled(false);
-        }
-        else {
-            renderer.setCursorVisible(true);
-            touchpadView.setEnabled(true);
-        }
+        touchpadView.setEnabled(!profile.isDisableMouseInput());
+        updateCursorVisibility();
 
         inputControlsView.invalidate();
     }
@@ -715,12 +708,15 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
         touchpadView.setPointerButtonLeftEnabled(true);
         touchpadView.setPointerButtonRightEnabled(true);
 
-        if (!touchpadView.isEnabled()) {
-            touchpadView.setEnabled(true);
-            xServerView.getRenderer().setCursorVisible(true);
-        }
+        touchpadView.setEnabled(true);
+        updateCursorVisibility();
 
         inputControlsView.invalidate();
+    }
+
+    private void updateCursorVisibility() {
+        ControlsProfile profile = inputControlsView.getProfile();
+        xServerView.getRenderer().setCursorVisible(profile == null || profile.isCursorVisible());
     }
 
     private void extractGraphicsDriverFiles() {

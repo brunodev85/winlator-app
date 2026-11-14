@@ -206,8 +206,7 @@ public class InputControlsManager {
             String profileName = null;
             float cursorSpeed = Float.NaN;
             boolean disableMouseInput = false;
-            int fieldsRead = 0;
-            final byte numFieldsToBreak = 4;
+            boolean hideMouseCursor = false;
 
             reader.beginObject();
             while (reader.hasNext()) {
@@ -215,22 +214,20 @@ public class InputControlsManager {
 
                 if (name.equals("id")) {
                     profileId = reader.nextInt();
-                    fieldsRead++;
                 }
                 else if (name.equals("name")) {
                     profileName = reader.nextString();
-                    fieldsRead++;
                 }
                 else if (name.equals("cursorSpeed")) {
                     cursorSpeed = (float)reader.nextDouble();
-                    fieldsRead++;
                 }
                 else if (name.equals("disableMouseInput")) {
                     disableMouseInput = reader.nextBoolean();
-                    fieldsRead++;
+                }
+                else if (name.equals("hideMouseCursor")) {
+                    hideMouseCursor = reader.nextBoolean();
                 }
                 else {
-                    if (fieldsRead == numFieldsToBreak) break;
                     reader.skipValue();
                 }
             }
@@ -239,6 +236,7 @@ public class InputControlsManager {
             profile.setName(profileName);
             profile.setCursorSpeed(cursorSpeed);
             profile.setDisableMouseInput(disableMouseInput);
+            profile.setHideMouseCursor(hideMouseCursor);
             return profile;
         }
         catch (IOException e) {
