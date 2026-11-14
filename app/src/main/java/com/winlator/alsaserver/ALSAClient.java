@@ -33,6 +33,8 @@ public class ALSAClient {
     private byte frameBytes;
     private short previousUnderrunCount = 0;
     private int bufferCapacity;
+    private int trackBufferFrames;
+    private static final int MAX_START_LATENCY_MILLIS = 40;
     private ByteBuffer sharedBuffer;
     private ByteBuffer auxBuffer;
     protected final Options options;
@@ -122,6 +124,9 @@ public class ALSAClient {
             .build();
 
         bufferCapacity = audioTrack.getBufferCapacityInFrames();
+        int startFrames = Math.max(bufferSize, sampleRate * MAX_START_LATENCY_MILLIS / 1000);
+        trackBufferFrames = audioTrack.getBufferSizeInFrames();
+        if (trackBufferFrames > startFrames) trackBufferFrames = audioTrack.setBufferSizeInFrames(startFrames);
         if (options.volume != 1.0f) audioTrack.setVolume(options.volume);
         audioTrack.play();
     }
@@ -178,10 +183,9 @@ public class ALSAClient {
 
     private void increaseBufferSizeIfUnderrunOccurs() {
         int underrunCount = audioTrack.getUnderrunCount();
-        if (underrunCount > previousUnderrunCount && bufferSize < bufferCapacity) {
+        if (underrunCount > previousUnderrunCount && trackBufferFrames < bufferCapacity) {
             previousUnderrunCount = (short)underrunCount;
-            bufferSize += framesPerBuffer;
-            audioTrack.setBufferSizeInFrames(bufferSize);
+            trackBufferFrames = audioTrack.setBufferSizeInFrames(Math.min(trackBufferFrames + framesPerBuffer, bufferCapacity));
         }
     }
 
