@@ -115,6 +115,8 @@ public class ContainerManager {
                 return null;
             }
 
+            installSystemCjkFonts(containerDir);
+
             container.saveData();
             maxContainerId++;
             containers.add(container);
@@ -267,5 +269,28 @@ public class ContainerManager {
             File file = new File(installedWineDir, "container-pattern-"+wineInfo.fullVersion()+".tzst");
             return TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, file, containerDir);
         }
+    }
+
+    // Open-source CJK fonts already shipped on Android (Noto CJK / DroidSansFallback, SIL OFL).
+    // Copying them into the container fixes garbled Chinese (Simplified/Traditional) and Japanese text.
+    private static final String[][] CJK_FONTS = {
+        {"/system/fonts/NotoSansCJK-Regular.ttc", "NotoSansCJK-Regular.ttc"},
+        {"/system/fonts/NotoSansCJK-Regular.ttf", "NotoSansCJK-Regular.ttf"},
+        {"/system/fonts/DroidSansFallback.ttf", "DroidSansFallback.ttf"},
+        {"/system/fonts/NotoSansCJKsc-Regular.otf", "NotoSansCJKsc-Regular.otf"},
+    };
+
+    private void installSystemCjkFonts(File containerDir) {
+        try {
+            File fontsDir = new File(containerDir, ".wine/drive_c/windows/Fonts");
+            if (!fontsDir.exists()) fontsDir.mkdirs();
+            for (String[] font : CJK_FONTS) {
+                File src = new File(font[0]);
+                if (src.exists()) {
+                    FileUtils.copy(src, new File(fontsDir, font[1]));
+                }
+            }
+        }
+        catch (Exception ignored) {}
     }
 }

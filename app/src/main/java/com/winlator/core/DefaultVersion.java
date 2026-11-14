@@ -15,10 +15,10 @@ public abstract class DefaultVersion {
     public static final String D8VK = "1.0";
     public static final String VKD3D = "2.14.1";
     public static final String WINED3D = WineInfo.MAIN_WINE_VERSION;
-    public static final String CNC_DDRAW = "6.6";
+    public static final String CNC_DDRAW = "7.1";
     public static final String SOUNDFONT = "SONiVOX-EAS-GM-Wavetable";
     public static final String MINOR_DXVK = "1.10.3";
-    public static final String MAJOR_DXVK = "2.4.1";
+    public static final String MAJOR_DXVK = "3.1.1";
 
     public static String DXVK() {
         return DXVK(null);
