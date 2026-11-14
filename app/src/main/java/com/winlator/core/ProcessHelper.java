@@ -71,7 +71,12 @@ public abstract class ProcessHelper {
         int pid = -1;
         try {
             ProcessBuilder processBuilder = (new ProcessBuilder(splitCommand(command))).directory(workingDir);
-            if (debugCallbacks.isEmpty()) processBuilder.redirectOutput(new File("/dev/null")).redirectErrorStream(true);
+            if (debugCallbacks.isEmpty()) {
+                // GalgameShell: keep the last run's output on disk instead of /dev/null so
+                // launch failures are diagnosable; overwritten on every exec.
+                File logFile = new File("/data/data/com.winlator/files/wine_exec.log");
+                processBuilder.redirectOutput(logFile).redirectErrorStream(true);
+            }
 
             Map<String, String> environment = processBuilder.environment();
             for (String name : envVars) environment.put(name, envVars.get(name));
