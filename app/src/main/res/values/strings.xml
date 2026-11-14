@@ -243,6 +243,7 @@
     <string name="copying_files">Copying Files...</string>
     <string name="removing_files">Removing Files...</string>
     <string name="disable_mouse_input">Disable Mouse Input</string>
+    <string name="hide_mouse_cursor">Hide mouse cursor</string>
     <string name="move_cursor_to_touchpoint">Move Cursor to Touchpoint</string>
     <string name="dpi_font_size">DPI (Font Size)</string>
     <string name="gamepad_model">Gamepad Model</string>

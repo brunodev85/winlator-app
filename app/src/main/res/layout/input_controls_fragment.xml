@@ -86,6 +86,12 @@
             android:text="@string/disable_mouse_input"
             android:layout_marginTop="8dp" />
 
+        <CheckBox
+            android:id="@+id/CBHideMouseCursor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hide_mouse_cursor" />
+
         <View
             style="@style/HorizontalLine"
             android:layout_marginTop="16dp" />
