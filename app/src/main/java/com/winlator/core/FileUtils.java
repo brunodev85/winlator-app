@@ -56,7 +56,10 @@ public abstract class FileUtils {
     }
 
     public static String readString(File file) {
-        return new String(read(file), StandardCharsets.UTF_8);
+        // GalgameShell：read() 在文件缺失/IO 异常时返回 null，此处判空避免 new String(null) 触发 NPE
+        // （XServerDisplayActivity 启动链路经 WineUtils.isWineprefixWasUpdated 调用，缺失 .update-timestamp 即崩）
+        byte[] data = read(file);
+        return data != null ? new String(data, StandardCharsets.UTF_8) : null;
     }
 
     public static String readString(Context context, Uri uri) {
