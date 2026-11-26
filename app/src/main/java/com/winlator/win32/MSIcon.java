@@ -25,6 +25,8 @@ public class MSIcon {
     }
 
     public static Bitmap decodeByteArray(byte[] bytes, int offset, int length) {
+        if (offset < 0 || length <= 0 || offset + length > bytes.length) return null;
+
         ByteBuffer data = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
         data.position(offset);
 
@@ -38,8 +40,13 @@ public class MSIcon {
             short colorPlanes = data.getShort();
             short bitCount = data.getShort();
 
+            // bitmapOffset 是 BITMAPINFOHEADER 大小，调色板/像素数据从其后开始；
+            // ico 内的 bmpHeight 是图像高度的两倍（含 AND 掩码）
+            int bmpHeightHalf = Math.abs(bmpHeight) / 2;
+            if (bmpWidth <= 0 || bitmapOffset < 16 || bitmapOffset > length) return null;
+
             data.position(offset + bitmapOffset);
-            return MSBitmap.decodeBuffer(bmpWidth, bmpWidth, bitCount, data);
+            return MSBitmap.decodeBuffer(bmpWidth, bmpHeightHalf > 0 ? bmpHeightHalf : bmpWidth, bitCount, data);
         }
     }
 
@@ -55,6 +62,7 @@ public class MSIcon {
         short numberOfImages = data.getShort();
 
         if (reserved != 0 || imageType != 1 || (numberOfImages <= 0 || numberOfImages >= 32)) return null;
+        if (bytes.length < 6 + numberOfImages * 16) return null;
 
         ArrayList<IconDirEntry> entries = new ArrayList<>();
 
@@ -78,6 +86,8 @@ public class MSIcon {
         });
 
         IconDirEntry firstEntry = entries.get(0);
+        if (firstEntry.imageOffset <= 0 || firstEntry.imageSize <= 0 ||
+            firstEntry.imageOffset + firstEntry.imageSize > bytes.length) return null;
         return decodeByteArray(data.array(), firstEntry.imageOffset, firstEntry.imageSize);
     }
 }

@@ -13,9 +13,9 @@ import java.nio.ByteOrder;
 
 public abstract class MSBitmap {
     public static Bitmap decodeBuffer(int width, int height, int bitCount, ByteBuffer data) {
-        if (width == 0 || height == 0) return null;
-        byte r, g, b, a;
-        int i, j, x, y, line;
+        if (width <= 0 || height == 0) return null;
+        if (bitCount != 1 && bitCount != 2 && bitCount != 4 && bitCount != 8 &&
+            bitCount != 24 && bitCount != 32) return null;
 
         boolean invertY = true;
         if (height < 0) {
@@ -23,70 +23,60 @@ public abstract class MSBitmap {
             invertY = false;
         }
 
+        // data.position() 处为调色板（bitCount <= 8）或像素数据起始；行按 4 字节对齐
+        final int colorTableOffset = data.position();
+        final int colorTableSize = bitCount <= 8 ? (1 << bitCount) * 4 : 0;
+        final int rowSize = ((width * bitCount + 31) / 32) * 4;
+        final int dataOffset = colorTableOffset + colorTableSize;
+        final int maskRowSize = ((width + 31) / 32) * 4;
+        final int maskOffset = dataOffset + rowSize * height;
+
+        // 数据长度不足（如损坏的 ico）时直接返回，避免越界崩溃
+        if (dataOffset + rowSize * height > data.limit()) return null;
+
+        // 图标格式在 32 位以外都带 AND 掩码，用它还原透明区域
+        final boolean hasMask = bitCount != 32 && maskOffset + maskRowSize * height <= data.limit();
+
         ByteBuffer pixels = ByteBuffer.allocate(width * height * 4);
 
-        if (bitCount == 32) {
-            for (y = height - 1, i = data.position(); y >= 0; y--) {
-                line = invertY ? y : height - 1 - y;
+        for (int row = 0; row < height; row++) {
+            final int line = invertY ? height - 1 - row : row;
+            final int rowOffset = dataOffset + row * rowSize;
 
-                for (x = 0; x < width; x++) {
-                    b = data.get(i++);
-                    g = data.get(i++);
-                    r = data.get(i++);
-                    a = data.get(i++);
+            for (int x = 0, j = line * width * 4; x < width; x++, j += 4) {
+                int b, g, r, a = 255;
 
-                    j = line * width * 4 + x * 4;
-                    pixels.put(j+2, b);
-                    pixels.put(j+1, g);
-                    pixels.put(j+0, r);
-                    pixels.put(j+3, a);
+                if (bitCount == 32) {
+                    final int i = rowOffset + x * 4;
+                    b = data.get(i+0) & 0xff;
+                    g = data.get(i+1) & 0xff;
+                    r = data.get(i+2) & 0xff;
+                    a = data.get(i+3) & 0xff;
+                }
+                else if (bitCount == 24) {
+                    final int i = rowOffset + x * 3;
+                    b = data.get(i+0) & 0xff;
+                    g = data.get(i+1) & 0xff;
+                    r = data.get(i+2) & 0xff;
+                }
+                else {
+                    final int bitOffset = x * bitCount;
+                    final int colorIndex = (((data.get(rowOffset + (bitOffset >>> 3)) & 0xff) >>
+                        (8 - bitCount - (bitOffset & 7))) & ((1 << bitCount) - 1)) * 4;
+                    b = data.get(colorTableOffset + colorIndex + 0) & 0xff;
+                    g = data.get(colorTableOffset + colorIndex + 1) & 0xff;
+                    r = data.get(colorTableOffset + colorIndex + 2) & 0xff;
                 }
 
-                i += width % 4;
-            }
-        }
-        else if (bitCount == 24) {
-            for (y = height - 1, i = data.position(); y >= 0; y--) {
-                line = invertY ? y : height - 1 - y;
-
-                for (x = 0; x < width; x++) {
-                    b = data.get(i++);
-                    g = data.get(i++);
-                    r = data.get(i++);
-
-                    j = line * width * 4 + x * 4;
-                    pixels.put(j+2, b);
-                    pixels.put(j+1, g);
-                    pixels.put(j+0, r);
-                    pixels.put(j+3, (byte)255);
+                if (hasMask) {
+                    final int maskByte = data.get(maskOffset + row * maskRowSize + (x >>> 3)) & 0xff;
+                    if ((maskByte & (0x80 >>> (x & 7))) != 0) a = 0;
                 }
 
-                i += width % 4;
-            }
-        }
-        else if (bitCount <= 8) {
-            final int colorTableOffset = data.position();
-            final int colorTableSize = (int)(Math.pow(2, bitCount) * 4);
-            int colorIndex;
-
-            for (y = height - 1, i = data.position() + colorTableSize; y >= 0; y--) {
-                line = invertY ? y : height - 1 - y;
-
-                for (x = 0; x < width; x++) {
-                    colorIndex = Byte.toUnsignedInt(data.get(i++)) * 4;
-
-                    b = data.get(colorTableOffset + colorIndex + 0);
-                    g = data.get(colorTableOffset + colorIndex + 1);
-                    r = data.get(colorTableOffset + colorIndex + 2);
-
-                    j = line * width * 4 + x * 4;
-                    pixels.put(j+2, b);
-                    pixels.put(j+1, g);
-                    pixels.put(j+0, r);
-                    pixels.put(j+3, (byte)255);
-                }
-
-                i += width % 4;
+                pixels.put(j+0, (byte)r);
+                pixels.put(j+1, (byte)g);
+                pixels.put(j+2, (byte)b);
+                pixels.put(j+3, (byte)a);
             }
         }
 
