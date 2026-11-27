@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.winlator.core.AppUtils;
+import com.winlator.core.DexUtils;
 import com.winlator.math.Mathf;
 import com.winlator.math.XForm;
 import com.winlator.renderer.ViewTransformation;
@@ -39,11 +40,20 @@ public class TouchpadView extends View implements View.OnCapturedPointerListener
     private boolean scrolling = false;
     private final XServer xServer;
     private Runnable fourFingersTapCallback;
+    private boolean captureAllowed = true;
+    private int edgePushCount = 0;
+    private PointerCaptureListener pointerCaptureListener;
     private final float[] xform = XForm.getInstance();
+
+    public interface PointerCaptureListener {
+        void onPointerCaptureChange(boolean hasCapture);
+        void onEdgeExit();
+    }
 
     public TouchpadView(Context context, XServer xServer, boolean capturePointerOnExternalMouse) {
         super(context);
         this.xServer = xServer;
+        this.captureAllowed = capturePointerOnExternalMouse;
         setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         setBackground(createTransparentBackground());
         setClickable(true);
@@ -54,9 +64,55 @@ public class TouchpadView extends View implements View.OnCapturedPointerListener
         if (capturePointerOnExternalMouse) {
             setOnCapturedPointerListener(this);
             setOnClickListener(view -> {
-                if (requestFocus()) requestPointerCapture();
+                if (captureAllowed && requestFocus()) requestPointerCapture();
             });
         }
+    }
+
+    public void setCaptureAllowed(boolean captureAllowed) {
+        this.captureAllowed = captureAllowed;
+        if (!captureAllowed) {
+            edgePushCount = 0;
+            releaseCapture();
+        }
+    }
+
+    public void releaseCapture() {
+        if (hasPointerCapture()) releasePointerCapture();
+    }
+
+    public void setPointerCaptureListener(PointerCaptureListener pointerCaptureListener) {
+        this.pointerCaptureListener = pointerCaptureListener;
+    }
+
+    @Override
+    public void onPointerCaptureChange(boolean hasCapture) {
+        super.onPointerCaptureChange(hasCapture);
+        if (pointerCaptureListener != null) pointerCaptureListener.onPointerCaptureChange(hasCapture);
+    }
+
+    private void trackEdgeExit(int dx, int dy) {
+        if (!DexUtils.isDesktopMode(getContext())) {
+            edgePushCount = 0;
+            return;
+        }
+        if (!captureAllowed || xServer.isRelativeMouseMovement() || !hasPointerCapture()) {
+            edgePushCount = 0;
+            return;
+        }
+        int maxX = xServer.screenInfo.width - 1;
+        int maxY = xServer.screenInfo.height - 1;
+        short cx = xServer.pointer.getClampedX();
+        short cy = xServer.pointer.getClampedY();
+        boolean pushingOut = (cx <= 0 && dx < 0) || (cx >= maxX && dx > 0) || (cy <= 0 && dy < 0) || (cy >= maxY && dy > 0);
+        if (pushingOut) {
+            if (++edgePushCount >= 8) {
+                edgePushCount = 0;
+                releasePointerCapture();
+                if (pointerCaptureListener != null) pointerCaptureListener.onEdgeExit();
+            }
+        }
+        else edgePushCount = 0;
     }
 
     private static StateListDrawable createTransparentBackground() {
@@ -262,6 +318,7 @@ public class TouchpadView extends View implements View.OnCapturedPointerListener
                     winHandler.mouseEvent(MouseEventFlags.MOVE, dx, dy, 0);
                 }
                 else xServer.injectPointerMoveDelta(dx, dy);
+                trackEdgeExit(dx, dy);
             }
         }
     }
@@ -425,7 +482,10 @@ public class TouchpadView extends View implements View.OnCapturedPointerListener
             float dy = event.getY() * sensitivity;
             if (Math.abs(dy) > CURSOR_ACCELERATION_THRESHOLD) dy *= CURSOR_ACCELERATION;
 
-            xServer.injectPointerMoveDelta(Mathf.roundPoint(dx), Mathf.roundPoint(dy));
+            int rdx = Mathf.roundPoint(dx);
+            int rdy = Mathf.roundPoint(dy);
+            xServer.injectPointerMoveDelta(rdx, rdy);
+            trackEdgeExit(rdx, rdy);
             return true;
         }
         else {

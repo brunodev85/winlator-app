@@ -27,6 +27,13 @@
     </LinearLayout>
 
     <CheckBox
+        android:id="@+id/CBGameMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="@string/game_mode" />
+
+    <CheckBox
         android:id="@+id/CBShowTouchscreenControls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -27,6 +27,7 @@
         <activity android:name="com.winlator.MainActivity"
             android:theme="@style/AppThemeDark"
             android:exported="true"
+            android:resizeableActivity="true"
             android:screenOrientation="sensor"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|density|navigation">
             <intent-filter>
@@ -39,6 +40,7 @@
             android:exported="false"
             android:theme="@style/AppThemeFullscreenDark"
             android:supportsPictureInPicture="true"
+            android:resizeableActivity="true"
             android:launchMode="singleTask"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|density|navigation"
             android:screenOrientation="sensorLandscape" />

@@ -91,6 +91,7 @@ public abstract class AppUtils {
     }
 
     public static void hideSystemUI(final Activity activity) {
+        if (DexUtils.isDesktopMode(activity)) return;
         Window window = activity.getWindow();
         final View decorView = window.getDecorView();
 
