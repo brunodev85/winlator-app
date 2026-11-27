@@ -68,6 +68,7 @@ import org.json.JSONException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -504,10 +505,29 @@ public class SettingsFragment extends Fragment {
     public static void resetPreferenceVersions(AppCompatActivity activity) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("box64_version", DefaultVersion.BOX64);
+        String box64Version = preferences.getString("box64_version", DefaultVersion.BOX64);
+        if (!isRunnableBox64(box64Version, activity)) {
+            editor.putString("box64_version", DefaultVersion.BOX64);
+        }
         editor.remove("current_box64_version");
         editor.remove("current_graphics_driver");
         editor.apply();
+    }
+
+    private static boolean isRunnableBox64(String version, Context context) {
+        List<String> builtinNames = GeneralComponents.getBuiltinComponentNames(GeneralComponents.Type.BOX64);
+        List<String> installedNames = GeneralComponents.getInstalledComponentNames(GeneralComponents.Type.BOX64, context);
+        return isKnownBox64Version(version, builtinNames, installedNames);
+    }
+
+    static boolean isKnownBox64Version(String version, List<String> builtinNames, List<String> installedNames) {
+        for (String name : builtinNames) {
+            if (name.equalsIgnoreCase(version)) return true;
+        }
+        for (String name : installedNames) {
+            if (StringUtils.parseIdentifier(name).equals(version)) return true;
+        }
+        return false;
     }
 
     private void loadMIDIInputDeviceSpinner(final Spinner sMIDIInputDevice, final String selectedValue) {
