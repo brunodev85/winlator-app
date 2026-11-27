@@ -359,4 +359,15 @@
     <string name="fgs_notification_content_else">Winlator is running in the background</string>
     <string name="save_mem_on_run_from_steam">Save memory on run from Steam</string>
     <string name="present_mode">Present Mode</string>
+    <string name="game_mode">Game Mode</string>
+    <string name="game_mode_enabled">Game mode: relative mouse enabled</string>
+    <string name="office_mode_enabled">Office mode: absolute mouse, no pointer capture</string>
+    <string name="release_pointer_capture">Release mouse</string>
+    <string name="pointer_capture_released">Mouse released — click the window to resume</string>
+    <string name="dex_mode_enabled">DeX mode: absolute mouse, clipboard sync on</string>
+    <string name="quick_actions">Quick actions</string>
+    <string name="toggle_game_office_mode">Toggle game/office mode</string>
+    <string name="open_menu">Open menu</string>
+    <string name="touchpad_help_pointer_capture_title">Release Mouse (DeX / external mouse)</string>
+    <string name="touchpad_help_pointer_capture_description">Push the mouse to a screen edge, tap the exit button, or press Ctrl+Alt+G</string>
 </resources>

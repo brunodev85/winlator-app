@@ -42,6 +42,7 @@ import com.winlator.contentdialog.ContentDialog;
 import com.winlator.contentdialog.VortekConfigDialog;
 import com.winlator.core.AppUtils;
 import com.winlator.core.Callback;
+import com.winlator.core.DexUtils;
 import com.winlator.container.DXWrapperPicker;
 import com.winlator.core.EnvVars;
 import com.winlator.core.FileUtils;
@@ -134,7 +135,7 @@ public class ContainerDetailFragment extends Fragment {
         final Spinner sWineVersion = view.findViewById(R.id.SWineVersion);
         if (wineInfos.size() > 1) loadWineVersionSpinner(view, sWineVersion, wineInfos);
 
-        loadScreenSizeSpinner(view, isEditMode() ? container.getScreenSize() : Container.DEFAULT_SCREEN_SIZE);
+        loadScreenSizeSpinner(view, isEditMode() ? container.getScreenSize() : getDefaultScreenSize(context));
 
         final String oldGraphicsDriverConfig = isEditMode() ? container.getGraphicsDriverConfig() : "";
         String selectedGraphicsDriver = isEditMode() ? container.getGraphicsDriver() : GraphicsDrivers.getDefaultDriver(context);
@@ -344,6 +345,10 @@ public class ContainerDetailFragment extends Fragment {
         }
     }
 
+    public static String getDefaultScreenSize(Context context) {
+        return (DexUtils.isDesktopMode(context) || DexUtils.hasExternalDisplay(context)) ? "1920x1080" : Container.DEFAULT_SCREEN_SIZE;
+    }
+
     public static String getScreenSize(View view) {
         Spinner sScreenSize = view.findViewById(R.id.SScreenSize);
         String value = sScreenSize.getSelectedItem().toString();
@@ -436,7 +441,12 @@ public class ContainerDetailFragment extends Fragment {
     private EnvVarsView createEnvVarsTab(final View view) {
         final Context context = view.getContext();
         final EnvVarsView envVarsView = view.findViewById(R.id.EnvVarsView);
-        envVarsView.setEnvVars(new EnvVars(isEditMode() ? container.getEnvVars() : Container.DEFAULT_ENV_VARS));
+        EnvVars defaultEnvVars = new EnvVars(isEditMode() ? container.getEnvVars() : Container.DEFAULT_ENV_VARS);
+        if (!isEditMode() && (DexUtils.isDesktopMode(context) || DexUtils.hasExternalDisplay(context))
+            && !defaultEnvVars.has("WINEDLLOVERRIDES")) {
+            defaultEnvVars.put("WINEDLLOVERRIDES", "powershell.exe=d");
+        }
+        envVarsView.setEnvVars(defaultEnvVars);
         view.findViewById(R.id.BTAddEnvVar).setOnClickListener((v) -> (new AddEnvVarDialog(context, envVarsView)).show());
         return envVarsView;
     }

@@ -16,6 +16,7 @@
         <item>1440x900 (16:10)</item>
         <item>1600x900 (16:9)</item>
         <item>1920x1080 (16:9)</item>
+        <item>2560x1440 (16:9)</item>
     </string-array>
     <string-array name="audio_driver_entries">
         <item>ALSA</item>
