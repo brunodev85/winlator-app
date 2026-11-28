@@ -151,7 +151,9 @@ public class PEParser {
     private static String readUnicodeString(ByteBuffer data) {
         ByteBuffer stringBuf = ByteBuffer.allocate(512).order(ByteOrder.LITTLE_ENDIAN);
         short value;
-        while ((value = data.getShort()) != 0) stringBuf.putShort(value);
+        while (data.remaining() >= 2 && (value = data.getShort()) != 0) {
+            if (stringBuf.hasRemaining()) stringBuf.putShort(value);
+        }
         return new String(Arrays.copyOf(stringBuf.array(), stringBuf.position()), StandardCharsets.UTF_16LE);
     }
 
@@ -163,6 +165,10 @@ public class PEParser {
         private final String value;
 
         private StringHdr(ByteBuffer data) {
+            if (data.remaining() < 6) {
+                length = 0; valueLength = 0; type = 0; key = ""; value = null;
+                return;
+            }
             int position = data.position();
             length = data.getShort();
             valueLength = data.getShort();
@@ -170,15 +176,15 @@ public class PEParser {
 
             key = readUnicodeString(data);
             int offset = data.position() - position;
-            if ((offset & 3) != 0) data.getShort();
+            if ((offset & 3) != 0 && data.remaining() >= 2) data.getShort();
 
-            if (valueLength > 0) {
+            if (valueLength > 0 && data.remaining() >= valueLength * 2) {
                 byte[] bytes = new byte[valueLength * 2];
                 data.get(bytes, 0, bytes.length);
                 value = readUnicodeString(ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN));
             }
             else value = null;
-            if ((length & 3) != 0) data.getShort();
+            if ((length & 3) != 0 && data.remaining() >= 2) data.getShort();
         }
     }
 
@@ -190,21 +196,26 @@ public class PEParser {
         private final ArrayList<StringHdr> stringHdrs = new ArrayList<>();
 
         private StringTable(ByteBuffer data) {
+            if (data.remaining() < 6) {
+                length = 0; valueLength = 0; type = 0; key = "";
+                return;
+            }
             int position = data.position();
             length = data.getShort();
             valueLength = data.getShort();
             type = data.getShort();
             key = readUnicodeString(data);
             int offset = data.position() - position;
-            if ((offset & 3) != 0) data.getShort();
+            if ((offset & 3) != 0 && data.remaining() >= 2) data.getShort();
             int remaining = length - offset;
 
-            while (remaining > 0) {
+            while (remaining > 0 && data.remaining() >= 6) {
                 StringHdr stringhdr = new StringHdr(data);
+                if (stringhdr.length <= 0) break;
                 stringHdrs.add(stringhdr);
                 remaining -= stringhdr.length;
             }
-            if ((length & 3) != 0) data.getShort();
+            if ((length & 3) != 0 && data.remaining() >= 2) data.getShort();
         }
     }
 
@@ -216,6 +227,10 @@ public class PEParser {
         private final ArrayList<StringTable> stringTables = new ArrayList<>();
 
         private StringFileInfo(ByteBuffer data) {
+            if (data.remaining() < 6) {
+                length = 0; valueLength = 0; type = 0; key = "";
+                return;
+            }
             int position = data.position();
             length = data.getShort();
             valueLength = data.getShort();
@@ -223,15 +238,16 @@ public class PEParser {
             key = readUnicodeString(data);
             if (!key.equals("StringFileInfo")) return;
             int offset = data.position() - position;
-            if ((offset & 3) != 0) data.getShort();
+            if ((offset & 3) != 0 && data.remaining() >= 2) data.getShort();
             int remaining = length - offset;
 
-            while (remaining > 0) {
+            while (remaining > 0 && data.remaining() >= 6) {
                 StringTable stringTable = new StringTable(data);
+                if (stringTable.length <= 0) break;
                 stringTables.add(stringTable);
                 remaining -= stringTable.length;
             }
-            if ((length & 3) != 0) data.getShort();
+            if ((length & 3) != 0 && data.remaining() >= 2) data.getShort();
         }
     }
 
@@ -244,21 +260,25 @@ public class PEParser {
         private final StringFileInfo stringFileInfo;
 
         private VSVersionInfo(ByteBuffer data) {
+            if (data.remaining() < 6) {
+                length = 0; valueLength = 0; type = 0; key = ""; value = null; stringFileInfo = null;
+                return;
+            }
             int position = data.position();
             length = data.getShort();
             valueLength = data.getShort();
             type = data.getShort();
             key = readUnicodeString(data);
             int offset = data.position() - position;
-            if ((offset & 3) != 0) data.getShort();
-            value = valueLength > 0 ? new VSFixedFileInfo(data) : null;
+            if ((offset & 3) != 0 && data.remaining() >= 2) data.getShort();
+            value = (valueLength > 0 && data.remaining() >= 52) ? new VSFixedFileInfo(data) : null;
 
             if (value == null || value.dwStrucVersion != 0x10000) {
                 stringFileInfo = null;
                 return;
             }
 
-            stringFileInfo = new StringFileInfo(data);
+            stringFileInfo = data.remaining() >= 6 ? new StringFileInfo(data) : null;
         }
     }
 
@@ -319,7 +339,7 @@ public class PEParser {
                 sectionHeader.get(nameBytes);
                 String name = StringUtils.fromANSIString(nameBytes);
 
-                if (name.equals(".rsrc")) {
+                if (name.startsWith(".rsrc") || name.startsWith("rsrc")) {
                     sectionHeader.getInt();
                     resourcesRVA = sectionHeader.getInt();
                     resourcesSize = sectionHeader.getInt();
@@ -429,69 +449,82 @@ public class PEParser {
     public static FileVersionInfo getFileVersionInfo(File peFile) {
         if (!peFile.isFile()) return null;
 
-        PEParser peParser = new PEParser(peFile);
-        ImageResourceDirectory rootDirectory = peParser.readImageResourceDirectory(RT_VERSION);
-        if (rootDirectory == null) return null;
-        ArrayList<ImageResourceDataEntry> dataEntries = peParser.readImageResourceDataEntries(rootDirectory);
-        if (dataEntries.size() != 1) return null;
+        try {
+            PEParser peParser = new PEParser(peFile);
+            ImageResourceDirectory rootDirectory = peParser.readImageResourceDirectory(RT_VERSION);
+            if (rootDirectory == null) return null;
+            ArrayList<ImageResourceDataEntry> dataEntries = peParser.readImageResourceDataEntries(rootDirectory);
+            if (dataEntries.size() != 1) return null;
 
-        ImageResourceDataEntry dataEntry = dataEntries.get(0);
-        int fileOffset = dataEntry.offsetToData - peParser.resourcesRVA + peParser.resourcesOffset;
-        ByteBuffer resourceData = peParser.readResourceData(fileOffset, dataEntry.size);
-        if (resourceData == null) return null;
+            ImageResourceDataEntry dataEntry = dataEntries.get(0);
+            int fileOffset = dataEntry.offsetToData - peParser.resourcesRVA + peParser.resourcesOffset;
+            ByteBuffer resourceData = peParser.readResourceData(fileOffset, dataEntry.size);
+            if (resourceData == null) return null;
 
-        VSVersionInfo versionInfo = new VSVersionInfo(resourceData);
+            VSVersionInfo versionInfo = new VSVersionInfo(resourceData);
 
-        if (versionInfo.stringFileInfo != null) {
-            final String englishLangID = "0409";
-            FileVersionInfo fileVersionInfo = new FileVersionInfo();
-            for (StringTable stringTable : versionInfo.stringFileInfo.stringTables) {
-                if (stringTable.key.startsWith(englishLangID) || stringTable.key.startsWith("0000") || stringTable.key.startsWith("ffff")) {
-                    for (StringHdr stringHdr : stringTable.stringHdrs) {
-                        switch (stringHdr.key) {
-                            case "Comments":
-                                fileVersionInfo.Comments = stringHdr.value;
-                                break;
-                            case "CompanyName":
-                                fileVersionInfo.CompanyName = stringHdr.value;
-                                break;
-                            case "FileDescription":
-                                fileVersionInfo.FileDescription = stringHdr.value;
-                                break;
-                            case "FileVersion":
-                                fileVersionInfo.FileVersion = stringHdr.value;
-                                break;
-                            case "InternalName":
-                                fileVersionInfo.InternalName = stringHdr.value;
-                                break;
-                            case "LegalCopyright":
-                                fileVersionInfo.LegalCopyright = stringHdr.value;
-                                break;
-                            case "LegalTrademarks":
-                                fileVersionInfo.LegalTrademarks = stringHdr.value;
-                                break;
-                            case "OriginalFilename":
-                                fileVersionInfo.OriginalFilename = stringHdr.value;
-                                break;
-                            case "PrivateBuild":
-                                fileVersionInfo.PrivateBuild = stringHdr.value;
-                                break;
-                            case "ProductName":
-                                fileVersionInfo.ProductName = stringHdr.value;
-                                break;
-                            case "ProductVersion":
-                                fileVersionInfo.ProductVersion = stringHdr.value;
-                                break;
-                            case "SpecialBuildprivate":
-                                fileVersionInfo.SpecialBuildprivate = stringHdr.value;
-                                break;
-                        }
+            if (versionInfo.stringFileInfo != null && !versionInfo.stringFileInfo.stringTables.isEmpty()) {
+                FileVersionInfo fileVersionInfo = new FileVersionInfo();
+
+                StringTable targetTable = null;
+                for (StringTable stringTable : versionInfo.stringFileInfo.stringTables) {
+                    if (stringTable.key.startsWith("0409")) {
+                        targetTable = stringTable;
+                        break;
                     }
                 }
+                if (targetTable == null)
+                    targetTable = versionInfo.stringFileInfo.stringTables.get(0);
+
+                for (StringHdr stringHdr : targetTable.stringHdrs) {
+                    if (stringHdr.key == null) continue;
+                    String stringHdrValue = stringHdr.value != null ? stringHdr.value : "";
+                    switch (stringHdr.key) {
+                        case "Comments":
+                            fileVersionInfo.Comments = stringHdrValue;
+                            break;
+                        case "CompanyName":
+                            fileVersionInfo.CompanyName = stringHdrValue;
+                            break;
+                        case "FileDescription":
+                            fileVersionInfo.FileDescription = stringHdrValue;
+                            break;
+                        case "FileVersion":
+                            fileVersionInfo.FileVersion = stringHdrValue;
+                            break;
+                        case "InternalName":
+                            fileVersionInfo.InternalName = stringHdrValue;
+                            break;
+                        case "LegalCopyright":
+                            fileVersionInfo.LegalCopyright = stringHdrValue;
+                            break;
+                        case "LegalTrademarks":
+                            fileVersionInfo.LegalTrademarks = stringHdrValue;
+                            break;
+                        case "OriginalFilename":
+                            fileVersionInfo.OriginalFilename = stringHdrValue;
+                            break;
+                        case "PrivateBuild":
+                            fileVersionInfo.PrivateBuild = stringHdrValue;
+                            break;
+                        case "ProductName":
+                            fileVersionInfo.ProductName = stringHdrValue;
+                            break;
+                        case "ProductVersion":
+                            fileVersionInfo.ProductVersion = stringHdrValue;
+                            break;
+                        case "SpecialBuildprivate":
+                            fileVersionInfo.SpecialBuildprivate = stringHdrValue;
+                            break;
+                    }
+                }
+                return fileVersionInfo;
             }
-            return fileVersionInfo;
         }
-        else return null;
+        catch (Exception e) {
+            return null;
+        }
+        return null;
     }
 
     public static Bitmap extractIcon(File peFile) {
