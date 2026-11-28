@@ -103,12 +103,36 @@ public class ShortcutSettingsDialog extends ContentDialog {
             if (peFile == null) return;
 
             PEParser.FileVersionInfo fileVersionInfo = PEParser.getFileVersionInfo(peFile);
-            if (fileVersionInfo != null && !fileVersionInfo.FileDescription.isEmpty() &&
-                                           !fileVersionInfo.OriginalFilename.isEmpty()) {
-                PopupMenu popupMenu = new PopupMenu(context, v);
-                Menu menu = popupMenu.getMenu();
-                menu.add(fileVersionInfo.FileDescription);
-                menu.add(FileUtils.getBasename(fileVersionInfo.OriginalFilename));
+            PopupMenu popupMenu = new PopupMenu(context, v);
+            Menu menu = popupMenu.getMenu();
+
+            if (fileVersionInfo != null) {
+                if (fileVersionInfo.FileDescription != null && !fileVersionInfo.FileDescription.isEmpty())
+                    menu.add(fileVersionInfo.FileDescription);
+                if (fileVersionInfo.ProductName != null && !fileVersionInfo.ProductName.isEmpty() &&
+                        !fileVersionInfo.ProductName.equals(fileVersionInfo.FileDescription))
+                    menu.add(fileVersionInfo.ProductName);
+                if (fileVersionInfo.OriginalFilename != null && !fileVersionInfo.OriginalFilename.isEmpty()) {
+                    String origName = FileUtils.getBasename(fileVersionInfo.OriginalFilename);
+                    if (!origName.isEmpty() && !origName.equals(fileVersionInfo.FileDescription)) {
+                        menu.add(origName);
+                    }
+                }
+            }
+
+            String exeBasename = FileUtils.getBasename(peFile.getName());
+            if (!exeBasename.isEmpty()) {
+                boolean exists = false;
+                for (int i = 0; i < menu.size(); i++) {
+                    if (menu.getItem(i).getTitle().toString().equalsIgnoreCase(exeBasename)) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists) menu.add(exeBasename);
+            }
+
+            if (menu.size() > 0) {
                 popupMenu.setOnMenuItemClickListener((menuItem) -> {
                     etName.setText(String.valueOf(menuItem.getTitle()));
                     return true;

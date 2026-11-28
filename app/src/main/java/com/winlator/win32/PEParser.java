@@ -339,7 +339,7 @@ public class PEParser {
                 sectionHeader.get(nameBytes);
                 String name = StringUtils.fromANSIString(nameBytes);
 
-                if (name.equals(".rsrc")) {
+                if (name.startsWith(".rsrc") || name.startsWith("rsrc")) {
                     sectionHeader.getInt();
                     resourcesRVA = sectionHeader.getInt();
                     resourcesSize = sectionHeader.getInt();
@@ -463,53 +463,59 @@ public class PEParser {
 
             VSVersionInfo versionInfo = new VSVersionInfo(resourceData);
 
-            if (versionInfo.stringFileInfo != null) {
-                final String englishLangID = "0409";
+            if (versionInfo.stringFileInfo != null && !versionInfo.stringFileInfo.stringTables.isEmpty()) {
                 FileVersionInfo fileVersionInfo = new FileVersionInfo();
+
+                StringTable targetTable = null;
                 for (StringTable stringTable : versionInfo.stringFileInfo.stringTables) {
-                    if (stringTable.key.startsWith(englishLangID) || stringTable.key.startsWith("0000") || stringTable.key.startsWith("ffff")) {
-                        for (StringHdr stringHdr : stringTable.stringHdrs) {
-                            if (stringHdr.key == null) continue;
-                            String stringHdrValue = stringHdr.value != null ? stringHdr.value : "";
-                            switch (stringHdr.key) {
-                                case "Comments":
-                                    fileVersionInfo.Comments = stringHdrValue;
-                                    break;
-                                case "CompanyName":
-                                    fileVersionInfo.CompanyName = stringHdrValue;
-                                    break;
-                                case "FileDescription":
-                                    fileVersionInfo.FileDescription = stringHdrValue;
-                                    break;
-                                case "FileVersion":
-                                    fileVersionInfo.FileVersion = stringHdrValue;
-                                    break;
-                                case "InternalName":
-                                    fileVersionInfo.InternalName = stringHdrValue;
-                                    break;
-                                case "LegalCopyright":
-                                    fileVersionInfo.LegalCopyright = stringHdrValue;
-                                    break;
-                                case "LegalTrademarks":
-                                    fileVersionInfo.LegalTrademarks = stringHdrValue;
-                                    break;
-                                case "OriginalFilename":
-                                    fileVersionInfo.OriginalFilename = stringHdrValue;
-                                    break;
-                                case "PrivateBuild":
-                                    fileVersionInfo.PrivateBuild = stringHdrValue;
-                                    break;
-                                case "ProductName":
-                                    fileVersionInfo.ProductName = stringHdrValue;
-                                    break;
-                                case "ProductVersion":
-                                    fileVersionInfo.ProductVersion = stringHdrValue;
-                                    break;
-                                case "SpecialBuildprivate":
-                                    fileVersionInfo.SpecialBuildprivate = stringHdrValue;
-                                    break;
-                            }
-                        }
+                    if (stringTable.key.startsWith("0409")) {
+                        targetTable = stringTable;
+                        break;
+                    }
+                }
+                if (targetTable == null)
+                    targetTable = versionInfo.stringFileInfo.stringTables.get(0);
+
+                for (StringHdr stringHdr : targetTable.stringHdrs) {
+                    if (stringHdr.key == null) continue;
+                    String stringHdrValue = stringHdr.value != null ? stringHdr.value : "";
+                    switch (stringHdr.key) {
+                        case "Comments":
+                            fileVersionInfo.Comments = stringHdrValue;
+                            break;
+                        case "CompanyName":
+                            fileVersionInfo.CompanyName = stringHdrValue;
+                            break;
+                        case "FileDescription":
+                            fileVersionInfo.FileDescription = stringHdrValue;
+                            break;
+                        case "FileVersion":
+                            fileVersionInfo.FileVersion = stringHdrValue;
+                            break;
+                        case "InternalName":
+                            fileVersionInfo.InternalName = stringHdrValue;
+                            break;
+                        case "LegalCopyright":
+                            fileVersionInfo.LegalCopyright = stringHdrValue;
+                            break;
+                        case "LegalTrademarks":
+                            fileVersionInfo.LegalTrademarks = stringHdrValue;
+                            break;
+                        case "OriginalFilename":
+                            fileVersionInfo.OriginalFilename = stringHdrValue;
+                            break;
+                        case "PrivateBuild":
+                            fileVersionInfo.PrivateBuild = stringHdrValue;
+                            break;
+                        case "ProductName":
+                            fileVersionInfo.ProductName = stringHdrValue;
+                            break;
+                        case "ProductVersion":
+                            fileVersionInfo.ProductVersion = stringHdrValue;
+                            break;
+                        case "SpecialBuildprivate":
+                            fileVersionInfo.SpecialBuildprivate = stringHdrValue;
+                            break;
                     }
                 }
                 return fileVersionInfo;
